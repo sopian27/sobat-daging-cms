@@ -1,0 +1,11 @@
+{
+    "name": "sopian/kasir-composer",
+    "description": "for downloading library",
+    "type": "project",
+    "license": "GPL",
+    "config": { "platform-check": false },
+    "require": {
+        "picqer/php-barcode-generator": "^2.0",
+        "dompdf/dompdf": "^1.1"
+    }
+}

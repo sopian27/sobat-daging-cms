@@ -1,0 +1,299 @@
+<?php
+
+function dateForShow($create_date)
+{
+    $year = substr($create_date, 0, 4);
+    $month = substr($create_date, 4, 2);
+    $day = substr($create_date, 6, 2);
+
+    if ($month == "01") {
+        $month = "Januari";
+    } else if ($month == "02") {
+        $month = "Februari";
+    } else if ($month == "03") {
+        $month = "Maret";
+    } else if ($month == "04") {
+        $month = "April";
+    } else if ($month == "05") {
+        $month = "Mei";
+    } else if ($month == "06") {
+        $month = "Juni";
+    } else if ($month == "07") {
+        $month = "Juli";
+    } else if ($month == "08") {
+        $month = "Agustus";
+    } else if ($month == "09") {
+        $month = "September";
+    } else if ($month == "10") {
+        $month = "Oktober";
+    } else if ($month == "11") {
+        $month = "November";
+    } else if ($month == "12") {
+        $month = "Desember";
+    }
+
+    return $day . " " . $month . " " . $year;
+}
+
+?>
+
+<div class="container-fluid mt-3">
+    <div class="col-md-3 offset-md-1">
+        <h2><?= ucfirst($data['judul']) ?></h2>
+    </div>
+    <hr style="width: 1570px;margin-left:160px;border-width: 2px;border-style: solid;border-color:white">
+    <div class="row">
+        <div class="col-md-3 offset-md-9 "><?= $data['date'] ?></div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row justify-content-center" id="form-invoice-customer">
+            <div class="container">
+
+                <?php if (isset($data['historyOrderData']) && isset($data['no_surat_jalan'])) { ?>
+
+                    <form method="post" action="<?php echo base_url() ?>/paymentinvoice/co_detail_save" name="form-invoice-customer-data" id="form-invoice-customer-data">
+                        <div class="row">
+                            <div class="col-md-2 offset-md-1">
+                                <div>
+                                    <a class="form-control-button btn" style="background-color: #a5662f;border:none;padding:10px"> Invoice Costumer </a>
+                                </div>
+                                <div style="margin-top:30px">
+                                    <a class="form-control-button btn btn-outline-light button-action" style="padding:10px" onclick="showInvoicePembelian();"> Invoice Pembelian </a>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group row">
+                                    <label for="" class="col-sm-4 col-form-label"><?= $data['no_invoice_co'] ?> </label>
+                                </div>
+                                <div class="form-group row" style="margin-top:30px">
+                                    <label for="" class="col-sm-3 col-form-label">Nomor Surat Jalan </label>
+                                    <div class="col-sm-1">:</div>
+                                    <div class="col-sm-4">
+                                        <label for="" class=" col-form-label"><?php echo $data['historyOrderData'][0]['no_surat_jalan'] ?></label>
+                                        <input type="hidden" class="form-control" id="no_surat_jalan" name="no_surat_jalan" value="<?php echo $data['historyOrderData'][0]['no_surat_jalan'] ?>">
+                                        <input type="hidden" class="form-control" id="id_trx_payment" name="id_trx_payment" value="<?= $data['no_invoice_co'] ?>">
+                                        <input type="hidden" class="form-control" id="total_tagihan" name="total_tagihan" value="<?= $data['sumTotal'][0]['total'] ?>">
+                                    </div>
+                                </div>
+                                <hr style="width: 530px;border-width: 2px;border-style: solid;border-color:white">
+                                <div class="form-group row">
+                                    <label for="" class="col-sm-3 col-form-label">Nomor Invoice </label>
+                                    <div class="col-sm-1">:</div>
+                                    <div class="col-sm-4">
+                                        <label for="" class=" col-form-label"><?php echo $data['historyOrderData'][0]['id_trx_order'] ?> </label>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="" class="col-sm-3 col-form-label">Nama Pelanggan </label>
+                                    <div class="col-sm-1">:</div>
+                                    <div class="col-sm-4">
+                                        <label for="" class=" col-form-label"><?php echo ucwords($data['historyOrderData'][0]['nama_pelanggan']) ?></label>
+                                    </div>
+                                </div>
+                                <div class="form-group row" style="margin-top: 10px;">
+                                    <label for="" class="col-sm-3 col-form-label">Nomor Hp </label>
+                                    <div class="col-sm-1">:</div>
+                                    <div class="col-sm-4">
+                                        <label for="" class=" col-form-label"><?php echo $data['historyOrderData'][0]['nomor_hp1'] ?></label>
+                                    </div>
+                                </div>
+                                <div class="form-group row" style="margin-top: 10px;">
+                                    <label for="" class="col-sm-3 col-form-label">Alamat Pengiriman </label>
+                                    <div class="col-sm-1">:</div>
+                                    <div class="col-sm-4">
+                                        <label for="" class=" col-form-label"><?php echo $data['historyOrderData'][0]['alamat1'] ?></label>
+                                    </div>
+                                </div>
+                                <div class="form-group row" style="margin-top: 10px;">
+                                    <label for="" class="col-sm-3 col-form-label">Tanggal Pengiriman </label>
+                                    <div class="col-sm-1">:</div>
+                                    <div class="col-sm-4">
+                                        <label for="" class=" col-form-label">
+                                            <?php echo dateForShow($data['historyOrderData'][0]['tgl_pengiriman']); ?>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group row" style="margin-top: 10px;">
+                                    <label for="" class="col-sm-3 col-form-label">Total Tagihan </label>
+                                    <div class="col-sm-1">:</div>
+                                    <div class="col-sm-4">
+                                        <label for="" class=" col-form-label"><?php echo "Rp. " . $data['sumTotal'][0]['total'] ?></label>
+                                    </div>
+                                </div>
+                                <div class="form-group row" style="margin-top: 10px;">
+                                    <label for="" class="col-sm-3 col-form-label">Bonus </label>
+                                    <div class="col-sm-1">:</div>
+                                    <div class="col-sm-4">
+                                        <input type="text" name="bonus" id="bonus" class="form-control-label">
+                                    </div>
+                                    <div class="col-sm-1"><span class="fa fa-pencil"><span></div>
+                                </div>
+                                <div class="form-group row" style="margin-top: 10px;">
+                                    <label for="" class="col-sm-3 col-form-label">Jatuh Tempo </label>
+                                    <div class="col-sm-1">:</div>
+                                    <div class="col-sm-4">
+                                        <input type="text" name="jatuh_tempo" id="jatuh_tempo" class="form-control-label">
+                                    </div>
+                                    <div class="col-sm-1"><span class="fa fa-pencil"><span></div>
+                                </div>
+                                <div class="form-group row" style="margin-top: 10px;">
+                                    <label for="" class="col-sm-3 col-form-label">Bank Tujuan </label>
+                                    <div class="col-sm-1">:</div>
+                                    <div class="col-sm-4">
+                                        <input type="text" name="bank_tujuan" id="bank_tujuan" class="form-control-label" />
+                                    </div>
+                                    <div class="col-sm-1"><span class="fa fa-pencil"><span></div>
+                                </div>
+                                <div class="form-group row" style="margin-top: 10px;">
+                                    <label for="" class="col-sm-3 col-form-label">No. Rekening </label>
+                                    <div class="col-sm-1">:</div>
+                                    <div class="col-sm-4">
+                                        <input type="text" name="no_rekening" id="no_rekening" class="form-control-label" />
+                                    </div>
+                                    <div class="col-sm-1"><span class="fa fa-pencil"><span></div>
+                                </div>
+                                <div class="form-group row" style="margin-top: 10px;">
+                                    <label for="" class="col-sm-3 col-form-label">Atas Nama </label>
+                                    <div class="col-sm-1">:</div>
+                                    <div class="col-sm-4">
+                                        <input type="text" name="atas_nama" id="atas_nama" class="form-control-label" />
+                                    </div>
+                                    <div class="col-sm-1"><span class="fa fa-pencil"><span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 50px;">
+                            <div class="col-md-7 offset-md-2 justify-content-center">
+                                <div class="row mt-2 ">
+                                    <table class="table table-dark table-bordered data" id="tableInv">
+                                        <thead>
+                                            <tr class="align-middle">
+                                                <th rowspan="2"> Kode </th>
+                                                <th rowspan="2"> Nama Barang </th>
+                                                <th rowspan="1" colspan="2"> Quantity</th>
+                                                <th rowspan="2"> Harga Satuan </th>
+                                                <th rowspan="2"> Harga Total </th>
+                                            </tr>
+                                            <tr>
+                                                <th> Quantity / Kg </th>
+                                                <th> Pcs / Bungkus </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id='tbody-table-data'>
+                                            <?php for ($i = 0; $i < count($data['historyOrderData']); $i++) { ?>
+                                                <tr>
+                                                    <td><?php echo $data['historyOrderData'][$i]['kode'] ?></td>
+                                                    <td><?php echo $data['historyOrderData'][$i]['nama_barang'] ?></td>
+                                                    <td><?php echo $data['historyOrderData'][$i]['quantity'] . " " . $data['historyOrderData'][$i]['satuan'] ?></td>
+                                                    <td style="width: 180px;"><?php echo $data['historyOrderData'][$i]['bungkusan'] ?></td>
+                                                    <td><?php echo $data['historyOrderData'][$i]['harga_satuan'] ?></td>
+                                                    <td><?php echo $data['historyOrderData'][$i]['harga_total'] ?></td>
+                                                <tr>
+                                                <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row d-flex offset-md-7" style="margin-top: 30px;">
+                            <div class="col-md-2">
+                                <button class="form-control-button btn btn-outline-light button-action"> Clear All </button>
+                            </div>
+                            <div class="col-md-2">
+                                <button class="form-control-button btn btn-outline-light button-action" onclick="confirmDataCo();"> Confirm </button>
+                            </div>
+                        </div>
+                    </form>
+
+                <?php } else { ?>
+
+                    <form method="post" action="<?php echo base_url() ?>/paymentinvoice" name="form-invoice-customer-data" id="form-invoice-customer-data">
+                        <div class="row">
+                            <div class="col-md-2 offset-md-1">
+                                <div>
+                                    <a class="form-control-button btn" style="background-color: #a5662f;border:none;padding:10px"> Invoice Costumer </a>
+                                </div>
+                                <div style="margin-top:30px">
+                                    <a class="form-control-button btn btn-outline-light button-action" style="padding:10px" onclick="showInvoicePembelian();"> Invoice Pembelian </a>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group row">
+                                    <label for="" class="col-sm-4 col-form-label"><?= $data['no_invoice_co'] ?> </label>
+                                </div>
+                                <div class="form-group row" style="margin-top:30px">
+                                    <label for="" class="col-sm-3 col-form-label">Nomor Surat Jalan </label>
+                                    <div class="col-sm-1">:</div>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control-label" id="no_surat_jalan" name="no_surat_jalan">
+                                        <input type="hidden" class="form-control" id="no_invoice_co" name="no_invoice_co" value="<?= $data['no_invoice_co'] ?>">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                <?php } ?>
+            </div>
+        </div>
+
+        <div class="row justify-content-center" style="display: none;" id="form-invoice-pembelian">
+            <div class="container">
+                <form method="post" action="<?php echo base_url() ?>/paymentinvoice" name="form-invoice-pembelian-data" id="form-invoice-pembelian-data">
+                    <div class="row">
+                        <div class="col-md-2 offset-md-1">
+                            <div>
+                                <a class="form-control-button btn btn-outline-light button-action" onclick="showInvoiceCustomer();"> Invoice Costumer </a>
+                            </div>
+                            <div style="margin-top:30px">
+                                <a class="form-control-button btn" style="background-color: #a5662f;border:none;padding:10px"> Invoice Pembelian </a>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group row">
+                                <label for="" class="col-sm-4 col-form-label"><?= $data['no_invoice_co_po'] ?> </label>
+                            </div>
+                            <div class="form-group row" style="margin-top:30px">
+                                <label for="" class="col-sm-3 col-form-label">Kode Po </label>
+                                <div class="col-sm-1">:</div>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control-label" id="kode_po" name="kode_po">
+                                    <input type="hidden" class="form-control" id="no_invoice_co_po" name="no_invoice_co_po" value="<?=$data['no_invoice_co_po'] ?>">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div style="margin-top:60px"></div>
+</div>
+
+<script>
+    function showInvoicePembelian() {
+        $("#form-invoice-customer").hide();
+        $("#form-invoice-pembelian").show();
+    }
+
+    function showInvoiceCustomer() {
+        $("#form-invoice-customer").show();
+        $("#form-invoice-pembelian").hide();
+    }
+
+    function confirmDataPo() {
+
+    }
+
+    function confirmDataCo() {
+        $("#form-invoice-customer-data").submit();
+    }
+
+    $(function() {
+        $("#jatuh_tempo").datepicker({
+            format: "yyyy/mm/dd",
+            todayHighlight: true
+            //autoclose: true
+        })
+    });
+</script>
