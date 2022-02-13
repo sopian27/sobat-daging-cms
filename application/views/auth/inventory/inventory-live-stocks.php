@@ -148,10 +148,10 @@
 
                     for (i = 0; i < data.length; i++) {
 
-                        if (create_date != "" && i == 0) {
-                            dataload += '<h4 id="div-create-date" style="text-decoration: underline;margin-top:10px">' + dateForShow(create_date) + '</h4>'
+                        if (create_date != "") {
+                            dataload += '<h4 style="text-decoration: underline;margin-top:10px">' + dateForShow(create_date) + '</h4>'
                         } else {
-                            dataload += '<h4 id="div-create-date" style="text-decoration: underline;margin-top:10px">' + dateForShow(data.data[i].update_date) + '</h4>'
+                            dataload += '<h4 style="text-decoration: underline;margin-top:10px">' + dateForShow(data.data[i].update_date) + '</h4>'
                         }
 
                         var id_trx_po = data.data[i].id_trx_po;

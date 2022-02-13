@@ -207,7 +207,10 @@ $route['inventory-livestock/confirm'] = 'auth/InventoryLiveStock/confirmData';
 /* inventory-mutasibarang*/
 $route['inventory-mutasibarang'] = 'auth/InventoryMutasi';
 $route['inventory-mutasibarang/get_ajax'] = 'auth/InventoryMutasi/get_ajax';
-$route['inventory-mutasibarang/insertmutasi'] = 'auth/InventoryMutasi/insertMutasi';
+$route['inventory-mutasibarang/insert-mutasi'] = 'auth/InventoryMutasi/insertMutasi';
+$route['inventory-mutasibarang/loadpo'] = 'auth/InventoryMutasi/loadPo';
+$route['inventory-mutasibarang/clear-all'] = 'auth/InventoryMutasi/clearAll';
+$route['inventory-mutasibarang/update-mutasi'] = 'auth/InventoryMutasi/updateMutasi';
 
 /* inventory-history*/
 $route['inventory-historypo'] = 'auth/InventoryHistory';
@@ -217,7 +220,13 @@ $route['inventory-history/gethistory'] = 'auth/InventoryHistory/getHistoryData';
 /* update-stock-pst*/
 $route['inventory-updatestockpst'] = 'auth/InventoryPst';
 $route['inventory-updatestockpst/getdata'] = 'auth/InventoryPst/getPstData';
+$route['inventory-updatestockpst/getdatapusat'] = 'auth/InventoryPst/getPstDataPusat';
+$route['inventory-updatestockpst/clear-all'] = 'auth/InventoryPst/clearAll';
+$route['inventory-updatestockpst/confirm'] = 'auth/InventoryPst/confirmData';
 $route['inventory-updatestockpst/pusatsave'] = 'auth/InventoryPst/pusatSave';
+$route['inventory-updatestockpst/getdatasobat'] = 'auth/InventoryPst/getPstDataSobat';
 $route['inventory-updatestockpst/sobatsave'] = 'auth/InventoryPst/sobatSave';
+$route['inventory-updatestockpst/clear-all-sobat'] = 'auth/InventoryPst/clearAllSobat';
+$route['inventory-updatestockpst/confirmsobat'] = 'auth/InventoryPst/confirmDataSobat';
 $route['inventory/save-pst'] = 'auth/inventory/inventorySavePSTMenu';
 

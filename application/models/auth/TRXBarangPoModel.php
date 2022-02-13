@@ -350,27 +350,79 @@ class TRXBarangPoModel extends CI_Model
     }
 
     /* history po */
-    public function getHistoryPoData($create_date)
+    public function getHistoryPoData($create_date, $keyword, $halaman, $batasTampilData)
     {
-        $query = " SELECT tbo.id_trx_po, s.nama, tbo.create_date,tbo.status
+
+        $query = "";
+
+        if (isset($keyword) && $keyword != "") {
+
+            $query = " SELECT tbo.id_trx_po, s.nama, tbo.create_date,tbo.status
+            FROM 
+                trx_barang_po tbo, 
+                supplier s 
+            WHERE 
+                tbo.id_supplier = s.id 
+                and tbo.status='3' 
+                and tbo.id_trx_live_stocks !='' 
+                and s.nama= '$keyword'
+            GROUP BY tbo.id_trx_po,substring(tbo.create_date,5,2)
+            limit " . $halaman . "," . $batasTampilData;
+        } else {
+
+            $query = " SELECT tbo.id_trx_po, s.nama, tbo.create_date,tbo.status
                     FROM 
                         trx_barang_po tbo, 
                         supplier s 
                     WHERE 
                         tbo.id_supplier = s.id 
-                        /*and tbo.status='0' */
-                        and tbo.id_trx_update !=''
-                        /*and tbo.id_trx_live_stocks ='' */
+                        and tbo.status='3' 
+                        and tbo.id_trx_live_stocks !='' 
                         and substring(tbo.create_date,1,6) ='$create_date'
                     GROUP BY tbo.id_trx_po,substring(tbo.create_date,5,2)
+                    limit " . $halaman . "," . $batasTampilData;
+        }
 
-                ";
 
         return $this->db->query($query)->result();
     }
 
     /* history po */
-    public function getDataByIdHistory($id_trx_po)
+    public function getHistoryPoDataCount($create_date, $keyword)
+    {
+        $query = "";
+
+        if (isset($keyword) && $keyword != "") {
+
+            $query = " SELECT tbo.id_trx_po, s.nama, tbo.create_date,tbo.status
+            FROM 
+                trx_barang_po tbo, 
+                supplier s 
+            WHERE 
+                tbo.id_supplier = s.id 
+                and tbo.status='3' 
+                and tbo.id_trx_live_stocks !='' 
+                and s.nama= '$keyword'
+            GROUP BY tbo.id_trx_po,substring(tbo.create_date,5,2)";
+        } else {
+
+            $query = " SELECT tbo.id_trx_po, s.nama, tbo.create_date,tbo.status
+                    FROM 
+                        trx_barang_po tbo, 
+                        supplier s 
+                    WHERE 
+                        tbo.id_supplier = s.id 
+                        and tbo.status='3' 
+                        and tbo.id_trx_live_stocks !='' 
+                        and substring(tbo.create_date,1,6) ='$create_date'
+                    GROUP BY tbo.id_trx_po,substring(tbo.create_date,5,2)";
+        }
+
+        return $this->db->query($query)->result();
+    }
+
+    /* history po */
+    public function getDataByIdHistory($id_trx_po, $halaman, $batasTampilData)
     {
         $query = " SELECT 
                         tbo.kode, 
@@ -384,6 +436,50 @@ class TRXBarangPoModel extends CI_Model
                         s.nama,
                         tbo.create_date,
                         b.create_date as create_date_penerimaan
+                    FROM 
+                        trx_barang_po tbo,
+                        supplier s,
+                        barang b
+                    WHERE 
+                        tbo.id_supplier = s.id 
+                        and tbo.kode = b.kode
+                        and tbo.id_trx_po = '$id_trx_po'
+                        limit " . $halaman . "," . $batasTampilData;
+
+        return $this->db->query($query)->result();
+    }
+
+    /* history po */
+    public function getDataByIdHistoryCounter($id_trx_po)
+    {
+        $query = " SELECT 
+                        tbo.kode, 
+                        tbo.nama_barang, 
+                        tbo.satuan, 
+                        tbo.harga_satuan,
+                        tbo.id,
+                        tbo.quantity, 
+                        tbo.id_trx_po,
+                        tbo.quantity_check,
+                        s.nama,
+                        tbo.create_date,
+                        b.create_date as create_date_penerimaan
+                    FROM 
+                        trx_barang_po tbo,
+                        supplier s,
+                        barang b
+                    WHERE 
+                        tbo.id_supplier = s.id 
+                        and tbo.kode = b.kode
+                        and tbo.id_trx_po = '$id_trx_po'";
+
+        return $this->db->query($query)->result();
+    }
+
+    /* history po */
+    public function getDataByIdHistorySum($id_trx_po)
+    {
+        $query = "  SELECT sum(tbo.harga_total) as total
                     FROM 
                         trx_barang_po tbo,
                         supplier s,

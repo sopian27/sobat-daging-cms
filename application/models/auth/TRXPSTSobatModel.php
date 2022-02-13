@@ -15,6 +15,7 @@ class TRXPSTSobatModel extends CI_Model
         return $this->db->query($query)->result();
     }
 
+    /*
     public function saveData($data)
     {
         $query = " INSERT INTO 
@@ -38,6 +39,7 @@ class TRXPSTSobatModel extends CI_Model
         $this->db->execute();
         return $this->db->rowCount();
     }
+    */
 
     public function getPstData()
     {
@@ -51,5 +53,31 @@ class TRXPSTSobatModel extends CI_Model
     {
         $this->db->insert('trx_update_pst_sobat', $data);
         return $this->db->insert_id();
+    }
+
+    public function getTrxSobat($id_trx_pst,$halaman,$batasTampilData){
+        $query="SELECT b.id,b.kode,b.nama_barang,b.quantity_sobat,trx.update_quantity,b.satuan,trx.status,trx.note
+        from barang b left join trx_update_pst_sobat trx on b.kode=trx.kode limit " . $halaman . ", " . $batasTampilData;
+
+        return $this->db->query($query)->result();
+    }
+
+    public function getTrxSobatCount($id_trx_pst){
+        $query="SELECT b.id,b.kode,b.nama_barang,b.quantity_pusat,trx.update_quantity,b.satuan
+        from barang b left join trx_update_pst_sobat trx on b.kode=trx.kode";
+
+        return $this->db->query($query)->result();
+    }
+
+    public function deleteData($where)
+    {
+        $this->db->delete('trx_update_pst_sobat', $where);
+    }
+
+    public function update($data, $where)
+    {
+        $this->db->set($data);
+        $this->db->where($where);
+        $this->db->update('trx_update_pst_sobat');
     }
 }

@@ -129,7 +129,7 @@
             border-top: none;
             border-left: none;
             border-right: none;
-            margin-top: -10px;
+            margin-top: -5px;
         }
 
         .form-control-label:focus {

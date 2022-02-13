@@ -40,6 +40,46 @@ class InventoryPst extends CI_Controller
         $this->load->view('auth/templates/footer');
     }
 
+    public function getPstDataPusat()
+    {
+
+        $batasTampilData = $_POST['batastampil'];
+        $id_trx_pst = $_POST['id_trx_pst'];
+        $halaman = (isset($_POST['halaman'])) ? $halaman = $_POST['halaman'] : $halaman = 1;
+        $halamanAwal = ($halaman > 1) ? ($halaman * $batasTampilData) - $batasTampilData : 0;
+
+        $allDataPo = $this->pst_pusat_model->getTrxPusat($id_trx_pst, $halamanAwal, $batasTampilData);
+        $allDataPoCounter = $this->pst_pusat_model->getTrxPusatCount($id_trx_pst);
+        $output = array(
+            "length" => count($allDataPo),
+            "data" => $allDataPo,
+            "length_paging" => count($allDataPoCounter)
+
+        );
+
+        echo json_encode($output);
+    }
+
+    public function getPstDataSobat()
+    {
+
+        $batasTampilData = $_POST['batastampil'];
+        $id_trx_sobat = $_POST['id_trx_sobat'];
+        $halaman = (isset($_POST['halaman'])) ? $halaman = $_POST['halaman'] : $halaman = 1;
+        $halamanAwal = ($halaman > 1) ? ($halaman * $batasTampilData) - $batasTampilData : 0;
+
+        $allDataPo = $this->pst_sobat_model->getTrxSobat($id_trx_sobat, $halamanAwal, $batasTampilData);
+        $allDataPoCounter = $this->pst_sobat_model->getTrxSobatCount($id_trx_sobat);
+        $output = array(
+            "length" => count($allDataPo),
+            "data" => $allDataPo,
+            "length_paging" => count($allDataPoCounter)
+
+        );
+
+        echo json_encode($output);
+    }
+
     public function getPstData(){
 
         $dataPusat = $this->pst_pusat_model->getPstData();
@@ -54,37 +94,85 @@ class InventoryPst extends CI_Controller
     }
 
     public function pusatSave(){
+
         $post = $_POST;
         $data=array(
-            "kode"            => $post['pusat_kode'],
+            "kode"            => $post['kode'],
             "create_date"     => date('YmdHis'),
             "update_date"     => date('YmdHis'),
-            "quantity"        => $post['pusat_stock'],
-            "update_quantity" => $post['pusat_stock_update'],
-            "note"            => $post['pusat_note'],
-            "trx_pst_pusat"   => $post['trx_pst_pusat']
+            "quantity"        => $post['quantity_pusat'],
+            "update_quantity" => $post['quantity_update'],
+            "note"            => $post['note'],
+            "trx_pst_pusat"   => $post['id_trx_pusat'],
+            "status"          => "0"
         );
 
         $this->pst_pusat_model->insertData($data);
 
-        redirect('inventory-updatestockpst');
+        echo json_encode("success");
     }
 
     public function sobatSave(){
         $post = $_POST;
         $data=array(
-            "kode"            => $post['sobat_kode'],
+            "kode"            => $post['kode'],
             "create_date"     => date('YmdHis'),
             "update_date"     => date('YmdHis'),
-            "quantity"        => $post['sobat_stock'],
-            "update_quantity" => $post['sobat_stock_update'],
-            "note"            => $post['sobat_note'],
-            "trx_pst_sobat"   => $post['trx_pst_sobat']
+            "quantity"        => $post['quantity_sobat'],
+            "update_quantity" => $post['quantity_update'],
+            "note"            => $post['note'],
+            "trx_pst_sobat"   => $post['id_trx_sobat'],
+            "status"          => "0"
         );
 
         $this->pst_sobat_model->insertData($data);
 
-        redirect('inventory-updatestockpst');
+        echo json_encode("success");
+    }
+
+
+    public function clearAll()
+    {
+
+        $data_post = $_POST;
+        $where = array("status" =>"0");
+
+        $this->pst_pusat_model->deleteData($where);
+
+        echo json_encode("success");
+    }
+
+    public function confirmData(){
+
+        $where = array("status" => '0');
+        $dataUpdate = array(
+            "status"            =>  "1"
+        );
+
+        $this->pst_pusat_model->update($dataUpdate, $where);
+        echo json_encode("success");
+    }
+
+    public function clearAllSobat()
+    {
+
+        $data_post = $_POST;
+        $where = array("status" =>"0");
+
+        $this->pst_sobat_model->deleteData($where);
+
+        echo json_encode("success");
+    }
+
+    public function confirmDataSobat(){
+
+        $where = array("status" => '0');
+        $dataUpdate = array(
+            "status"            =>  "1"
+        );
+
+        $this->pst_sobat_model->update($dataUpdate, $where);
+        echo json_encode("success");
     }
     
 }

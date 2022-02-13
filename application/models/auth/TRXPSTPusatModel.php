@@ -29,4 +29,31 @@ class TRXPSTPusatModel extends CI_Model
         return $this->db->insert_id();
     }
 
+    public function getTrxPusat($id_trx_pst,$halaman,$batasTampilData){
+        $query="SELECT b.id,b.kode,b.nama_barang,b.quantity_pusat,trx.update_quantity,b.satuan,trx.status,trx.note
+        from barang b left join trx_update_pst_pusat trx on b.kode=trx.kode limit " . $halaman . ", " . $batasTampilData;
+
+        return $this->db->query($query)->result();
+    }
+
+    public function getTrxPusatCount($id_trx_pst){
+        $query="SELECT b.id,b.kode,b.nama_barang,b.quantity_pusat,trx.update_quantity,b.satuan
+        from barang b left join trx_update_pst_pusat trx on b.kode=trx.kode";
+
+        return $this->db->query($query)->result();
+    }
+
+    public function deleteData($where)
+    {
+        $this->db->delete('trx_update_pst_pusat', $where);
+    }
+
+    public function update($data, $where)
+    {
+        $this->db->set($data);
+        $this->db->where($where);
+        $this->db->update('trx_update_pst_pusat');
+    }
+
+
 }

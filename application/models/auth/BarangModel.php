@@ -104,14 +104,6 @@ class BarangModel extends CI_Model
         return $this->db->query($query)->result();
     }
 
-
-    public function getDataBarang()
-    {
-        $query = " SELECT * FROM barang order by create_date";
-
-        return $this->db->query($query)->result();
-    }
-
     public function updateData($data, $where)
     {
         $this->db->set($data);
