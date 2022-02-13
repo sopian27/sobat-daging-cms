@@ -1,0 +1,344 @@
+<?php 
+
+function dateForShow($create_date) {
+    $year = substr($create_date,0,4);
+    $month = substr($create_date,4,2);
+    $day = substr($create_date,6,2);
+
+    if ($month == "01") {
+        $month = "Januari";
+    } else if ($month == "02") {
+        $month = "Februari";
+    } else if ($month == "03") {
+        $month = "Maret";
+    } else if ($month == "04") {
+        $month = "April";
+    } else if ($month == "05") {
+        $month = "Mei";
+    } else if ($month == "06") {
+        $month = "Juni";
+    } else if ($month == "07") {
+        $month = "Juli";
+    } else if ($month == "08") {
+        $month = "Agustus";
+    } else if ($month == "09") {
+        $month = "September";
+    } else if ($month == "10") {
+        $month = "Oktober";
+    } else if ($month == "11") {
+        $month = "November";
+    } else if ($month == "12") {
+        $month = "Desember";
+    }
+
+    return $day." ".$month." ".$year;
+}
+
+?>
+<div class="container-fluid mt-3">
+    <div class="col-md-3 offset-md-1">
+        <h2><?= ucfirst($judul) ?></h2>
+    </div>
+    <hr style="width: 1570px;margin-left:160px;border-width: 2px;border-style: solid;border-color:white">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2 offset-md-1">
+                <input type="text" id="search" name="search" placeholder="search..." class="form-search">
+            </div>
+            <div class="col-md-2 offset-md-6">
+                <input type="text" id="create_date" name="create_date" class="form-search" placeholder="dd/mm/yyyy">
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="row" style="margin-top: 50px;">
+                <div class="col-md-7 offset-md-1">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h4 id="div-create-date" style="text-decoration: underline;"><?php
+                                if (isset($date_show_data)) {
+                                    if($flag==="1"){
+                                       
+                                        ?>
+                                        <a style="color:white" href="#" onclick="liveOrderDetail('<?php echo $date_show_data?>','<?php echo $flag?>','<?php  echo dateForShow($date_show_data);?>')"><?php  echo dateForShow($date_show_data);?></a>
+                                        <?php
+                                    }else{
+                                        ?>
+                                         <a style="color:white" href="#" onclick="liveOrderDetail('<?php echo $date_show_data?>','<?php echo $flag?>','<?php  echo $date_show_data;?>')"><?php  echo $date_show_data;?></a>
+                                        <?php
+                                    } 
+                                }
+                            ?>
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="row mt-2 ">
+                        <div class="collapse-content">
+                            <div class="container">
+                                <div class="row">
+                                    <?php if (isset($detailData)) {
+                                        $iterator=0;
+                                        foreach ($detailData as $data_loop) {
+                                    ?>
+                                            <div class="col-md-6" style="margin-top: 5px;">
+                                                <a style="color:#a5662f;text-decoration:none" data-bs-toggle="collapse" 
+                                                href="#collapseExample<?php echo $iterator?>" 
+                                                onclick="getDetailTrx('<?php echo $data_loop->id_trx_order?>','<?php echo $iterator?>')">
+                                                <?php 
+                                                    if($flag==="2"){
+                                                        echo ucwords($data_loop->nama_pelanggan)." - ".dateForShow($data_loop->create_date);
+                                                    }else{
+                                                        echo ucwords($data_loop->nama_pelanggan); 
+                                                    }
+                                                    
+                                                ?></a>
+                                            </div>
+                                            <div class="col-md-2"  style="margin-top: 5px;display:none">
+                                                <a class="form-control-button add btn btn-outline-light button-action">Show</a>
+                                            </div>
+                                            <div class="col-md-2" style="margin-top: 5px;">
+                                            <?php
+                                                  $url_encrypt = str_replace("/", "_",$data_loop->id_trx_order); 
+                                                  $url=site_url()."/live-order/live-order-detailtrx/".$url_encrypt;
+                                                  echo "<a class='form-control-button add btn btn-outline-light button-action' href='".$url."'>Detail</a>";
+                                            ?>
+                                
+                                            </div>
+
+                                            <div class="collapse" id="collapseExample<?php echo $iterator?>">
+                                                <div class="card card-body" id="collapse-content<?php echo $iterator?>" style="background-color: transparent;border:none;">
+                                                </div>
+                                            </div>
+                                    <?php $iterator++;
+                                    } } ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="margin-top: 60px;"><div>
+    <form method="post" action="<?php echo site_url() ?>/live-order/live-order-detail" name="form-live-order" id="form-live-order">
+        <input type="hidden" name="createdate" id="createdate" />
+        <input type="hidden" name="createDateFormater" id="createDateFormater" />
+        <input type="hidden" name="flag" id="flag" />
+    </form>
+    <form method="post" id="form-live-order-date" name="form-live-order-date" action="<?php echo site_url() ?>/live-order">
+        <input type="hidden" name="date_show" id="date_show">
+    </form>
+    <form method="post" id="form-live-order-search" name="form-live-order-search" action="<?php echo site_url() ?>/live-order">
+        <input type="hidden" name="data_search" id="data_search">
+    </form>
+</div>
+<script>
+    $(function() {
+        $("#create_date").datepicker({
+            format: "yyyymmdd",
+            todayHighlight: true
+            //autoclose: true
+        })
+
+        $("#create_date").val("sort....");
+    });
+
+    $(document).on('change', '#create_date', function() {
+        var create_date = document.getElementById("create_date").value;
+        $("#date_show").val(create_date.replaceAll("/", ""));
+        $("#form-live-order-date").submit();
+    });
+
+
+    $(document).on('change', '#create_date3', function() {
+
+        var create_date = document.getElementById("create_date").value;
+        var create_date_new = convertDate(create_date);
+        console.log("create_date:" + create_date_new);
+
+        $.ajax({
+            url: '<?= site_url() ?>/live-order/getdatabydate',
+            method: 'post',
+            dataType: 'json',
+            data: {
+                'date_choosen': create_date_new
+            },
+            success: function(data) {
+                console.log(data);
+                if (data.length > 0) {
+                    $("#div-create-date").html(dateForShow(create_date));
+                    var dataload = "";
+                    dataload += '<div class="container"> ';
+                    dataload += '<div class="row"> ';
+
+                    for (i = 0; i < data.length; i++) {
+
+                        var id_trx_order_data = data[i].id_trx_order.replace(/\//g, '(+)');
+                        var functionOnclick = 'getDetailTrx("' + id_trx_order_data + '","' + i + '")';
+
+                        dataload += '<div class="col-md-6"> ';
+                        dataload += '<a style="color:#a5662f;text-decoration:none" data-bs-toggle="collapse" ';
+                        dataload += 'href="#collapseExample' + i + '"  ';
+                        dataload += "onclick=" + functionOnclick + ">" + data[i].nama_pelanggan + '</a>';
+                        dataload += '</div>';
+
+                        dataload += '<div class="col-md-1 offset-md-2"> ';
+                        dataload += '<input type="checkbox" name="' + data[i].id + '" class=""/>';
+                        dataload += '</div>';
+
+
+                        dataload += '<div class="collapse" id="collapseExample' + i + '">';
+                        dataload += '<div class="card card-body" id="collapse-content' + i + '" style="background-color: transparent;border:none;">';
+                        dataload += '</div>';
+                        dataload += '</div>';
+
+
+                    }
+                    dataload += '</div>';
+                    dataload += '</div>';
+                    /*
+                    dataload +='<div class="row offset-md-5" style="margin-top: 20px;">';
+                    dataload +='<div class="col-md-2">';
+                    dataload +="<button class='form-control-button btn btn-outline-light' onclick='liveOrderDetail("+'"'+create_date+'"'+");'> Show </button>";
+                    dataload +='</div>';
+                    dataload +='<div class="col-md-2">';
+                    dataload +='<button class="form-control-button btn btn-outline-light" onclick="confirmData();"> Confirm </button>';
+                    dataload +='</div>'; 
+                    */
+
+                    $('.collapse-content').append(dataload);
+
+                } else {
+                    $("#div-create-date").html("");
+                    $('.collapse-content').html("");
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log("Failed");
+                console.log(error);
+            }
+
+        });
+
+    });
+
+    function liveOrderDetail(createDate,flag,createDateFormater) {
+
+        console.log("createDate:" + createDate);
+
+        $("#createdate").val(createDate.replaceAll("Search By ",""));
+        $("#createDateFormater").val(createDateFormater);
+        $("#flag").val(flag);
+        $("#form-live-order").submit();
+
+    }
+
+    function getDetailTrx(id_trx_order, index) {
+
+        id_trx_order = id_trx_order.replaceAll('(+)', '/');
+        console.log("id_trx_order:" + id_trx_order);
+
+        $.ajax({
+            url: '<?= site_url() ?>/live-order/get-detail-trx',
+            method: 'post',
+            dataType: 'json',
+            data: {
+                'id_trx_order': id_trx_order
+            },
+            success: function(data) {
+                console.log(data);
+                if (data.length > 0) {
+
+                    var dataload = "";
+                    dataload += '<div class="container"> ';
+                    dataload += '<div class="row"> ';
+
+                    for (i = 0; i < data.length; i++) {
+
+                        dataload += '<div class="col-md-6"> ';
+                        dataload += data[i].nama_barang;
+                        dataload += '</div>';
+                        dataload += '<div class="col-md-2" style="margin-left:-150px"> ';
+                        dataload += data[i].quantity + " " + data[i].satuan;
+                        dataload += '</div>';
+                        //dataload += '<div class="col-md-3" style="margin-left:13px">';
+                        //dataload += '<input type="checkbox" name="' + data[i].id + '"/>';
+                        //dataload += '</div>';
+                    }
+                    dataload += '</div>';
+                    dataload += '</div>';
+
+                    document.getElementById("collapse-content" + index).innerHTML = dataload;
+
+                } else {
+                    document.getElementById(index).innerHTML = "";
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log("Failed");
+                console.log(error);
+            }
+
+        });
+    }
+
+    function convertDate(create_date) {
+        var date_split = create_date.split("/");
+        var year = date_split[2];
+        var month = date_split[1];
+        var day = date_split[0];
+        return year + month + day;
+    }
+
+    /*
+    function dateForShow(create_date) {
+        var date_split = create_date.split("/");
+        var year = date_split[2];
+        var month = date_split[1];
+        var day = date_split[0];
+
+        if (month == "01") {
+            month = "Januari";
+        } else if (month == "02") {
+            month = "Februari";
+        } else if (month == "03") {
+            month = "Maret";
+        } else if (month == "04") {
+            month = "April";
+        } else if (month == "05") {
+            month = "Mei";
+        } else if (month == "06") {
+            month = "Juni";
+        } else if (month == "07") {
+            month = "Juli";
+        } else if (month == "08") {
+            month = "Agustus";
+        } else if (month == "09") {
+            month = "September";
+        } else if (month == "10") {
+            month = "Oktober";
+        } else if (month == "11") {
+            month = "November";
+        } else if (month == "12") {
+            month = "Desember";
+        }
+
+        return day + " " + month + " " + year;
+    }
+    */
+
+    $("#search").keyup(function(e) {
+
+        if (e.keyCode == 13) {
+            e.preventDefault();
+
+            var search = document.getElementById("search").value;
+            $("#data_search").val(search);
+
+            $("#form-live-order-search").submit();
+
+        }
+
+    });
+</script>

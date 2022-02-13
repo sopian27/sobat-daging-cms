@@ -23,16 +23,19 @@ class OrderReceived extends CI_Controller{
         $trxId = $trxData[0]->trx_id;
         $lastNoUrut = substr($trxId, 5,4);
         $nextNoUrut = intval($lastNoUrut)+1;
+
         $kodePo = 'ORCO-'. sprintf('%04s',$nextNoUrut)."/".$current_date;
         $kodeInvoice = 'INV-CO'. sprintf('%04s',$nextNoUrut)."/".$current_date;
         $kodeSuratJalan = 'SJ-'. sprintf('%04s',$nextNoUrut)."/".$current_date;
         $kodeHistory = 'PO-CO'. sprintf('%04s',$nextNoUrut)."/".$current_date;
+        
         $data['kodePO'] = $kodePo;
         $data['kodeInv'] = $kodeInvoice;
         $data['kodeSsj'] = $kodeSuratJalan;
         $data['kodeHistory'] = $kodeHistory;
         $data['date'] = date("d F Y", $t);
         $data['subMenu'] = "ORDER RECEIVED";
+        
         $countDataBarang = $this->brg_model->countDataBarang();
         $dataBarangCount =  $countDataBarang[0]->CountData;
         $data['dataBarangCount'] = $dataBarangCount;
@@ -54,11 +57,12 @@ class OrderReceived extends CI_Controller{
      * 
      */ 
     public function orderSave(){
-    
+
         /*step 1 & step 2*/
-        $getPelangganId ="";
-        $getTelephoneId ="";
-        $alamatId ="";
+        $getPelangganId =array();
+        $getTelephoneId =array();
+        $alamatId =array();
+        $dataInsert=array();
 
         for($i=0; $i<count($_POST["id_barang"]); $i++){
             
@@ -79,18 +83,15 @@ class OrderReceived extends CI_Controller{
                 );
 
                 $getPelangganId = $this->plg_model->getWhere($where);
-        
-                if ($getPelangganId == "") {
-                        $getPelangganId = $this->plg_model->insertData($data);
-                        $_POST['id_pelanggan'] = $getPelangganId['id'];
-                    
-                } else {
-                    $_POST['id_pelanggan'] = $getPelangganId['id'];
-                }
+
+                if (empty($getPelangganId)) {
+                        $getPelangganId = $this->plg_model->insertData($data); 
+                }              
+                
 
                 $dataTelephone = array(
                     "nomor"=>$_POST['nomor_hp1'],
-                    "id_pelanggan" => $getPelangganId['id']
+                    "id_pelanggan" => $getPelangganId[0]->id
                 );
 
                 $whereTelephone = array(
@@ -99,33 +100,30 @@ class OrderReceived extends CI_Controller{
 
                 $getTelephoneId = $this->tlp_model->getWhere($whereTelephone);
         
-                if ($getTelephoneId == "") {
-                    $getTelephoneId = $this->tlp_model->insertData($dataTelephone);
-                    
+                if (empty($getTelephoneId)) {
+                    $getTelephoneId = $this->tlp_model->insertData($dataTelephone); 
                 }
 
                 $dataAlamat = array(
                     "alamat"=>$_POST['alamat1'],
-                    "id_pelanggan" => $getPelangganId['id']
+                    "id_pelanggan" => $getPelangganId[0]->id
                 );
 
                 $whereAlamat = array(
-                    "lower(trim(alamat)"=>$_POST['alamat1']
+                    "lower(trim(alamat))"=>$_POST['alamat1']
                 );
                 
                 $alamatId = $this->alamat_model->getWhere($whereAlamat);
         
-                if ($alamatId == "") {
+                if (empty($alamatId)) {
                      $alamatId = $this->alamat_model->insertData($dataAlamat);
-
                 }
 
             }
-     
 
             /*step 3 */
             $j=0;
-            $dataTrx=array(
+            $dataInsert[] =array(
                 "id_barang" => $_POST["id_barang"][$j],
                 "quantity"  => $_POST["quantity"][$j],
                 "harga_satuan" => $_POST["harga_satuan"][$j],
@@ -134,18 +132,19 @@ class OrderReceived extends CI_Controller{
                 "tgl_pengiriman" => $_POST["tgl_pengiriman"],
                 "id_trx_order" => $_POST["kode_po"],
                 "keterangan" => $_POST["keterangan"][$j],
-                "id_pelanggan" => $getPelangganId['id'],
+                "id_pelanggan" => $getPelangganId[0]->id,
                 "no_invoice" => $_POST["kode_inv"],
                 "no_surat_jalan" => $_POST["kode_ssj"],
-                "id_alamat" => $alamatId['id'],
-                "id_telephone" => $getTelephoneId['id'],
+                "id_alamat" => $alamatId[0]->id,
+                "id_telephone" => $getTelephoneId[0]->id,
                 "create_date"=>date('YmdHis'),
-                "update_date"=>date('YmdHis')
+                "update_date"=>date('YmdHis'),
+                "status"=>"0"
             );
 
-            $this->trx_order_recv_model->insertData($dataTrx);
         }
 
+        $this->trx_order_recv_model->insertDataBatch($dataInsert);
         echo "success";
 
     }

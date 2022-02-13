@@ -15,10 +15,19 @@ class Barang extends CI_Controller
         $batasTampilData = 10;
         $halaman = (isset($_POST['halaman'])) ? $halaman = $_POST['halaman'] : $halaman = 1;
         $halamanAwal = ($halaman > 1) ? ($halaman * $batasTampilData) - $batasTampilData : 0;
+        $keyword = (isset($_POST['keyword'])) ? $keyword = $_POST['keyword'] : "";
 
 
-        $allData = $this->barang_model->selectDataPaging($halamanAwal, $batasTampilData);
-        echo json_encode($allData);
+        $allData = $this->barang_model->selectDataPaging($halamanAwal, $batasTampilData,$keyword);
+        $allDataCount = $this->barang_model->selectDataPagingCount($keyword);
+     
+        $output = array(
+            "length"=>count($allData),
+            "data"=>$allData,
+            "length_paging"=>count($allDataCount)
+        );
+
+        echo json_encode($output);
     }
 
     public function TotalDataBarang()

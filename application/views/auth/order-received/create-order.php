@@ -62,7 +62,6 @@
                                 <input type="text" class="form-control-label" id="tgl_pengiriman" name="tgl_pengiriman">
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -84,11 +83,9 @@
                                     <th> Harga Satuan </th>
                                     <th> Harga Total </th>
                                     <th colspan="2"> Note </th>
-                                    <!-- <th> Action </th> -->
                                 </tr>
                             </thead>
                             <tbody id='tbody-table-data'>
-
                             </tbody>
                         </table>
                     </div>
@@ -99,6 +96,8 @@
                         <div class="col-md-2">
                             <button class="form-control-button btn btn-outline-light button-action" onclick="confirmData();"> Confirm </button>
                         </div>
+                    </div>
+                    <div class="row d-flex justify-content-start formSubmitData" id="formSubmitData">
                     </div>
                 </div>
                 <div class="col-md-3 justify-content-center">
@@ -119,12 +118,11 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                
+                </div> 
             </div>
-
         </div>
     </div>
+    <div style="margin-top:60px"></div>
 </div>
 
 <script>
@@ -142,7 +140,7 @@
         dataload += '    <td class="data " data-dat="kode"><input type="text" name="kode[]" value="" class="form-control data-kode"></td> '
         dataload += '    <td class="data" data-dat="nama_barang">'
         dataload += '       <input type="text" name="nama_barang[]" value="" class="form-control ">'
-        dataload += '       <input type="hidden" name="id_barang[]" value="" class="form-control ">'
+        dataload += '       <input type="hidden" name="id_barang[]" class="form-control ">'
         dataload += '    </td>'
         dataload += '    <td class="data" data-dat="quantity" ><input type="text" name="quantity[]" value="" class="form-control data-quantity"></td> '
         dataload += '    <td class="data" data-dat="satuan select-wrapper" style="width: 7%;"> '
@@ -273,7 +271,7 @@
                 success: function(data) {
                     if (data == "success") {
                         alert("success insert data");
-                        location.href = "<?= site_url() ?>/order-received";
+                        location.reload();
                     }
                 },
                 error: function(xhr, status, error) {
@@ -287,7 +285,15 @@
         }
     }
 
-    $(document).on('keyup', '.data-kode', function() {
+    
+    $(document).on('keyup', '.data-kode', function(e) {
+
+        if (e.keyCode == 13) {
+            e.preventDefault();
+            autoCompleteKode();
+
+        }
+        /*
         var input = document.getElementsByName('kode[]');
         var k = "";
         for (var i = 0; i < input.length; i++) {
@@ -303,8 +309,29 @@
                 setDetailKode(index, value);
             }
 
-        }
+        }*/
     });
+    
+    function autoCompleteKode(){
+
+        var input = document.getElementsByName('kode[]');
+
+        var k = "";
+        for (var i = 0; i < input.length; i++) {
+            var a = input[i];
+            k = k + "array[" + i + "].value= " +
+                a.value + " ";
+            var index = i;
+            var value = a.value;
+
+            console.log("array[" + index + "] => " + value + " => length:" + value.length);
+
+            //if (value.length >= 7) {
+                setDetailKode(index, value);
+            //}
+
+        }
+    }
 
     function setDetailKode(index, value) {
 
@@ -321,9 +348,9 @@
             },
             success: function(data) {
                 if (data["nama_barang"] != "undefined") {
-                    nama_barang[index].value = data["nama_barang"];
-                    harga_satuan[index].value = data["harga_satuan"];
-                    id_barang[index].value = data["id"];
+                    nama_barang[index].value = data[0]["nama_barang"];
+                    harga_satuan[index].value = data[0]["harga_satuan"];
+                    id_barang[index].value = data[0]["id"];
                 }
             },
             error: function(xhr, status, error) {
@@ -357,7 +384,7 @@
         }
     });
 
-
+    /*
     $(document).on('keyup', '#nama_pelanggan', function() {
 
         var nama_pelanggan = document.getElementById("nama_pelanggan").value;
@@ -385,9 +412,11 @@
         });
     });
 
+    */
+
     $(function() {
         $("#tgl_pengiriman").datepicker({
-            format: "yyyy/mm/dd",
+            format: "yyyymmdd",
             todayHighlight: true,
             autoclose: true
         })

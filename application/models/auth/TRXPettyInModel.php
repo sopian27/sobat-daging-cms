@@ -47,7 +47,7 @@ class TRXPettyInModel extends CI_Model
 
     public function getDataByDate($data)
     {
-        $date = substr($data['date_value']);
+        $date = $data['date_value'];
         $query = " SELECT id_trx_petty_cash as kode,tambahan_saldo,keterangan 
                    FROM trx_petty_in 
                    WHERE substring(create_date,1,6) ='$date'";

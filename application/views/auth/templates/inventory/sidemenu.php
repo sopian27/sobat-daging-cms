@@ -1,5 +1,4 @@
 <body class="bg-dark text-white">
-    <!-- <body class=""> -->
     <div class="container-fluid bg-dark" style="width: 1600px;">
         <div class="row">
             <div class="col mt-3">
@@ -38,7 +37,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col justify-content-end" style="position: absolute;margin-left:600px">
+                    <div class="col justify-content-end" style="position:relative;margin-left:600px;margin-top:-134px">
                         <button class="btn btn-outline-light" type="button" data-bs-toggle="collapse" data-bs-target="#user-collapse" aria-expanded="false" aria-controls="user-collapse">
                             <i class="fas fa-bars"></i>
                         </button>
@@ -48,9 +47,9 @@
         </div>
         <div class="row">
             <div class="col mt-3">
-                <a href="<?php echo site_url(); ?>/home" style="color:white"><span class="fa fa-arrow-left"> Back</span><a>
+                 <a href="<?php echo site_url();?>/home" style="color:white"><span class="fa fa-arrow-left"> Back</span><a>
             </div>
-            <h1 class="text-center">Inventory</h1>
+            <h1 class="text-center"><?php echo "INVENTORY";?></h1>
         </div>
     </div>
     <nav class="navbar navbar-expand-lg bg-dark text-uppercase" id="mainNav">
@@ -60,13 +59,13 @@
                 <i class="fas fa-bars"></i>
             </button>
             <div class="collapse navbar-collapse justify-content-md-center" id="navbarResponsive">
-                <ul class="navbar-nav ">
+                <ul class="navbar-nav " style="text-transform: none !important;">
                     <li class="nav-item mx-0"><a class="nav-link py-3 px-0 px-lg-3 border border-default" href="<?= site_url() ?>/inventory">Create PO</a></li>
                     <li class="nav-item mx-0"><a class="nav-link py-3 px-0 px-lg-3 border border-default" href="<?= site_url() ?>/inventory-updatepo">Update PO</a></li>
                     <li class="nav-item mx-0"><a class="nav-link py-3 px-0 px-lg-3 border border-default" href="<?= site_url() ?>/inventory-livestock">Live Stock</a></li>
                     <li class="nav-item mx-0"><a class="nav-link py-3 px-0 px-lg-3 border border-default" href="<?= site_url() ?>/inventory-mutasibarang">Mutasi Barang</a></li>
                     <li class="nav-item mx-0"><a class="nav-link py-3 px-0 px-lg-3 border border-default" href="<?= site_url() ?>/inventory-historypo">History PO</a></li>
-                    <li class="nav-item mx-0"><a class="nav-link py-3 px-0 px-lg-3 border border-default" href="<?= site_url() ?>/inventory-updatestockpts">Update Stock PST</a></li>
+                    <li class="nav-item mx-0"><a class="nav-link py-3 px-0 px-lg-3 border border-default" href="<?= site_url() ?>/inventory-updatestockpst">Update Stock PST</a></li>
                 </ul>
             </div>
         </div>

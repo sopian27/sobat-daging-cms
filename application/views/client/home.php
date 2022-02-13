@@ -45,13 +45,13 @@
     </header>
     <!-- ===== End of Header Navigation ===== -->
 
-    <div class="container" style="margin-top: 240px;">
+    <div class="container-fluid" style="margin-top: 240px; margin-left:160px;margin-right:280px">
         <div class="text-center">
             <p style="color: white;font-size:50px;font-family:macklins;">Sobat Daging Administrator
             <p>
         </div>
-        <div class="row text-center" style="background: #3e3737;padding:0px 0px 40px 0px;margin-top:70px">
-            <div class="col-md-3 col-sm-6">
+        <div class="row text-center" style="background: #3e3737;padding:0px 0px 20px 0px;margin-top:70px">
+            <div class="col-md-2 col-sm-4" style="width: 20%;">
                 <div class="card-dashboard card-dashboard-block">
                     <div class="dashboard-div">
                         <a href="<?= site_url() ?>/inventory"><img src="<?php echo base_url() ?>assets/client/images/img/inventory.png" class="dashboard-image img-dashboard"></a>
@@ -62,7 +62,7 @@
                     <p class="card-dashboard-text">Semua item yang berhubungan dengan stock</p>
                 </div>
             </div>
-            <div class="col-md-3 col-sm-6">
+            <div class="col-md-2 col-sm-4" style="width: 20%;">
                 <div class="card-dashboard card-dashboard-block">
                     <div class="dashboard-div">
                         <a href="<?= site_url() ?>/order-received"><img src="<?php echo base_url() ?>assets/client/images/img/order_received.png" class="dashboard-image img-dashboard"></a>
@@ -73,7 +73,7 @@
                     <p class="card-dashboard-text">Semua hal yang berhubungan dengan pengiriman</p>
                 </div>
             </div>
-            <div class="col-md-3 col-sm-6">
+            <div class="col-md-2 col-sm-4" style="width: 20%;">
                 <div class="card-dashboard card-dashboard-block">
                     <div class="dashboard-div">
                         <a href="<?= site_url() ?>/return-cancel"><img src="<?php echo base_url() ?>assets/client/images/img/return.png" class="dashboard-image img-dashboard"></a>
@@ -84,7 +84,7 @@
                     <p class="card-dashboard-text">Semua hal yang berhubungan dengan pengembalian barang</p>
                 </div>
             </div>
-            <div class="col-md-3 col-sm-6">
+            <div class="col-md-2 col-sm-4" style="width: 20%;">
                 <div class="card-dashboard card-dashboard-block">
                     <div class="dashboard-div">
                         <a href="<?php echo site_url() ?>/petty-cash"><img src="<?php echo base_url() ?>assets/client/images/img/petty_cash.png" class="dashboard-image img-dashboard"></a>
@@ -95,22 +95,22 @@
                     <p class="card-dashboard-text">Semua hal yang berhubungan dengan Petty Cash</p>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="container" style="margin-top: 80px;">
-        <div class="row text-center" style="background: #3e3737;padding:0px 0px 40px 0px;">
-            <div class="col-md-3 col-sm-6">
+            <div class="col-md-2 col-sm-4" style="width: 20%;">
                 <div class="card-dashboard card-dashboard-block">
                     <div class="dashboard-div">
                         <a href="<?=site_url()?>/expenses"><img src="<?php echo base_url() ?>assets/client/images/img/summary.png" class="dashboard-image img-dashboard"></a>
                     </div>
                     <div style="margin-top: 60px;">
-                        <h5 class="card-dashboard-title mt-3 mb-3">Expenses</h5>
+                        <h5 class="card-dashboard-title mt-2 mb-2">Expenses</h5>
                     </div>
                     <p class="card-dashboard-text">Semua hal yang berhubungan dengan Pengeluaran</p>
                 </div>
             </div>
-            <div class="col-md-3 col-sm-6">
+        </div>
+    </div>
+    <div class="container-fluid" style="margin-top: 80px; margin-left:160px;margin-right:280px">
+        <div class="row text-center" style="background: #3e3737;padding:0px 0px 40px 0px;">
+            <div class="col-md-2 col-sm-4" style="width: 20%;">
                 <div class="card-dashboard card-dashboard-block">
                     <div class="dashboard-div">
                         <a href="<?=site_url()?>/other"><img src="<?php echo base_url() ?>assets/client/images/img/order_income.png" class="dashboard-image img-dashboard"></a>
@@ -121,7 +121,7 @@
                     <p class="card-dashboard-text">Semua data pemasukkan tambahan</p>
                 </div>
             </div>
-            <div class="col-md-3 col-sm-6">
+            <div class="col-md-2 col-sm-4" style="width: 20%;">
                 <div class="card-dashboard card-dashboard-block">
                     <div class="dashboard-div">
                         <a href="<?php echo site_url() ?>/payment"><img src="<?php echo base_url() ?>assets/client/images/img/payment.png" class="dashboard-image img-dashboard"></a>
@@ -132,7 +132,7 @@
                     <p class="card-dashboard-text">Menu untuk mengkonfirmasi sebuah pembayaran</p>
                 </div>
             </div>
-            <div class="col-md-3 col-sm-6">
+            <div class="col-md-2 col-sm-4" style="width: 20%;">
                 <div class="card-dashboard card-dashboard-block">
                     <div class="dashboard-div">
                         <a href="<?=site_url()?>/ap"><img src="<?php echo base_url() ?>assets/client/images/img/database.png" class="dashboard-image img-dashboard"></a>
@@ -143,11 +143,7 @@
                     <p class="card-dashboard-text">Sebuah recap data yang terkait dari semua menu</p>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="container" style="margin-top: 80px;">
-        <div class="row text-center" style="background: #3e3737;padding:0px 0px 40px 0px;">
-            <div class="col-md-3 col-sm-6">
+            <div class="col-md-2 col-sm-4" style="width: 20%;">
                 <div class="card-dashboard card-dashboard-block">
                     <div class="dashboard-div">
                         <a href="#"><img src="<?php echo base_url() ?>assets/client/images/img/summary.png" class="dashboard-image img-dashboard"></a>
@@ -160,7 +156,5 @@
             </div>
         </div>
     </div>
-    <div class="container" style="margin-top: 100px;">
-    </div>
-    <br>
+    <div class="container" style="margin-top: 100px;"></div>
 </body>

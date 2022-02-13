@@ -59,7 +59,7 @@
                 <i class="fas fa-bars"></i>
             </button>
             <div class="collapse navbar-collapse justify-content-md-center" id="navbarResponsive">
-                <ul class="navbar-nav ">
+                <ul class="navbar-nav " style="text-transform: none !important;">
                     <li class="nav-item mx-0 "><a class="nav-link py-3 px-0 px-lg-3 border border-default" href="<?= site_url() ?>/order-received">Create Order</a></li>
                     <li class="nav-item mx-0 "><a class="nav-link py-3 px-0 px-lg-3 border border-default" href="<?= site_url() ?>/live-order">Live Order</a></li>
                     <li class="nav-item mx-0 "><a class="nav-link py-3 px-0 px-lg-3 border border-default" href="<?= site_url() ?>/history-order">History Order</a></li>

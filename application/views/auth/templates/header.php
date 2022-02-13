@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1, user-scalable=no">
-    <title><?= "Sobat Daging "?></title>
+    <title><?= "Sobat Daging " ?></title>
 
     <!-- Meta Tags - Description for Search Engine purposes -->
     <meta name="description" content="Cloudify - Web Hosting HTML Template">
@@ -24,13 +24,13 @@
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     <link rel="stylesheet" href="<?php echo base_url() ?>/assets/auth/css/bootstrap-datepicker.css" />
 
-    
+
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.jqueryui.min.css">
 
-    
+
     <script src="<?= base_url() ?>/assets/client/js/jquery-3.1.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
@@ -141,6 +141,63 @@
 
         }
 
+        .form-control-paging {
+            display: block;
+            width: 70%;
+            padding: .375rem .75rem;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: white;
+            background-color: transparent;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            border-radius: 0;
+            transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+            margin-top: 0px;
+            border-right: none;
+        }
+
+        .form-control-paging:focus {
+            background-color: transparent;
+            box-shadow: none;
+            color: white;
+            border-color: white;
+            outline: 0;
+
+        }
+
+        .form-control-paging-date {
+            display: block;
+            width: 70%;
+            padding: .375rem .75rem;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: white;
+            background-color: transparent;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            border-radius: 0;
+            transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+            margin-top: 0px;
+        }
+
+        .form-control-paging-date:focus {
+            background-color: transparent;
+            box-shadow: none;
+            color: white;
+            border-color: white;
+            outline: 0;
+
+        }
+
         .form-control-button {
             display: block;
             width: 100%;
@@ -216,6 +273,7 @@
 
         }
 
+        /*
         .datepicker {
             padding: 18px;
             -webkit-border-radius: 4px;
@@ -224,11 +282,12 @@
             direction: ltr;
             /*background-color: transparent;
             color: white; */
-            background-color: transparent;
+        /*background-color: transparent;
             color: white;
 
-        }
+        } */
 
+        /*
         .datepicker table tr td.day:hover,
         .datepicker table tr td.day.focused {
             background: #a5662f;
@@ -257,6 +316,7 @@
         .datepicker table tr td.active.disabled:hover[disabled] {
             background: #a5662f;
         }
+        */
 
         .table-detail {
             border-width: 1px;
@@ -303,6 +363,8 @@
             margin-top: -10px;
         }
 
+        /*
+
         .datepicker table tr td span.active,
         .datepicker table tr td span.active:hover,
         .datepicker table tr td span.active.disabled,
@@ -322,11 +384,23 @@
             color: #fff;
             text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
         }
+        */
 
         .button-active {
             background-color: #a5662f;
             color: white;
 
+        }
+        .btn-sobat-md {
+            background-color: transparent;
+            color: white;
+            text-decoration: none;
+        }
+
+        .btn-sobat-md:hover {
+            background-color: transparent;
+            color: #a5662f;
+            text-decoration: none;
         }
     </style>
 </head>

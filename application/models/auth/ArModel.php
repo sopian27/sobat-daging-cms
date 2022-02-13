@@ -13,7 +13,7 @@ class ArModel extends CI_Model
                    where po.id_barang= b.id and po.id_pelanggan=p.id and 
                    inv.no_surat_jalan=po.no_surat_jalan and 
                    trx.id_trx_payment_co=inv.id_trx_payment and
-                   substring(inv.create_date,1,6) = " . substr($data['date_choosen'], 0, 6);
+                   substring(inv.create_date,1,6) = '$date'";
 
         return $this->db->query($query)->result();
     }

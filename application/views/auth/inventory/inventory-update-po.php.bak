@@ -1,0 +1,571 @@
+<div class="container-fluid mt-3">
+    <div class="col-md-3 offset-md-1">
+        <h2><?= ucfirst($judul) ?></h2>
+    </div>
+    <div class="col-md-11">
+        <hr style="margin-left:160px;border-width: 2px;border-style: solid;border-color:white">
+    </div>
+    <div class="container-fluid" id="data-trigger">
+        <div class="row">
+            <div class="col-md-2 offset-md-1">
+                <div class="input-group">
+                    <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search">
+                    <span class="input-group-append">
+                        <button class="btn btn-outline-light" type="button" onclick="searchData()">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-7" style="margin-top: 20px;margin-left:7%">
+                <table class="table table-dark table-borderless" style="border: none;">
+                    <thead></thead>
+                    <tbody id="data-trigger-content">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid" style="display: none;" id="div-inventory-update-detail">
+        <div class="row">
+            <div class="col-md-3 offset-md-1"><?= $id_trx_po ?></div>
+            <div class="col-md-2 offset-md-5"><?= $date ?></div>
+            <p class="col-md-2 offset-md-10">
+                <button class="btn btn-outline-light" type="button" data-bs-toggle="collapse" data-bs-target="#data-barang-collapse" aria-expanded="false" aria-controls="data-barang-collapse">
+                    kode
+                </button>
+            </p>
+        </div>
+
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="row">
+                    <div class="col-md-7 offset-md-2">
+                        <form>
+                            <div class="form-group row">
+                                <label for="" class="col-sm-2 offset-md-4 col-form-label">Purchase From : </label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control-label" id="purchase_from" name="purchase_from">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 20px;">
+                    <div class="col-md-7 offset-md-2 justify-content-center">
+                        <form method="post" id="form-update-inventory">
+                            <div class="row mt-2 ">
+                                <table class="table table-dark table-bordered data">
+                                    <thead>
+                                        <tr>
+                                            <th> Kode </th>
+                                            <th> Nama Barang </th>
+                                            <th> Quantity </th>
+                                            <th> Harga Satuan (Rp) </th>
+                                            <th> Harga Total (Rp) </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id='tbody-table-data'></tbody>
+                                </table>
+                            </div>
+                            <div class="row d-flex justify-content-end" style="margin-top:30px">
+                                <div class="col-md-2">
+                                    <button class="form-control-button btn btn-outline-light button-action" onclick="clearAllData();"> Clear All </button>
+                                </div>
+                                <div class="col-md-2">
+                                    <button class="form-control-button btn btn-outline-light button-action" onclick="return confirmData();"> Confirm </button>
+                                </div>
+                            </div>
+                            <div class="row d-flex justify-content-start formSubmitData" id="formSubmitData">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-3 justify-content-center">
+                        <div style="min-height: 120px;">
+                            <div class="collapse collapse-horizontal" id="data-barang-collapse">
+                                <div class="card card-body bg-transparent " style="width: 300px; border: 2px solid white;">
+                                    <input type="hidden" name="halaman" id="halaman" value="1">
+                                    <input type="hidden" name="dataBarangCount" id="dataBarangCount" value="<?= $dataBarangCount ?>">
+                                    <div class="row"> </div>
+                                    <div class="data-barang-pagination"></div>
+                                    <div class="pagination-result" style="margin-left:160px;margin-top:10px"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+
+        loadData("");
+        dataPaginBarang();
+
+        $("#jml_hari_kerja").autoNumeric('init', {
+            aSep: ',',
+            aDec: '.',
+            mDec: '0'
+        });
+
+        $(".harga-satuan").autoNumeric('init', {
+            aSep: ',',
+            aDec: '.',
+            mDec: '0'
+        });
+
+        $(".harga-total").autoNumeric('init', {
+            aSep: ',',
+            aDec: '.',
+            mDec: '0'
+        });
+    });
+
+    function loadData(keyword) {
+        $.ajax({
+            url: '<?= site_url() ?>/inventory-updatepo/loadnewpo',
+            method: 'post',
+            dataType: 'json',
+            data:{'keyword':keyword},
+            success: function(response) {
+                var dataLoad = "";
+
+                for (let i = 0; i < response.length; i++) {
+
+                    var functionOnclick = 'getDetailData("' + response.data[i].id_trx_po + '")';
+
+                    dataLoad += "<tr>";
+                    dataLoad += "<td width='30%'><a class='btn-sobat-md' href='#' onclick='" + functionOnclick + "'>";
+                    dataLoad += "Purchase From Distributor " + response.data[i].nama.toUpperCase();
+                    dataLoad += "</a></td>";
+                    dataLoad += "<td>";
+                    dataLoad += dateForShow(response.data[i].create_date);
+                    dataLoad += "</td>";
+                    dataLoad += "</tr>";
+                }
+
+                $("#data-trigger-content").html(dataLoad);
+            },
+            error: function(response) {
+                console.log(response);
+            }
+
+        });
+    }
+
+    function getDetailData(id_trx_po) {
+
+        $.ajax({
+            url: '<?= site_url() ?>/inventory-updatepo/getdetailnewpo',
+            method: 'post',
+            data: {
+                "id_trx_po": id_trx_po
+            },
+            dataType: 'json',
+            success: function(response) {
+                var dataLoad = "";
+                var total = 0;
+                var id_trx_po_update = '<?= $id_trx_po ?>';
+
+                console.log(response);
+
+                if (response.length > 0) {
+                    for (let i = 0; i < response.length; i++) {
+
+                        dataLoad += "<tr>";
+                        dataLoad += "<td>";
+                        dataLoad += response.data[i].kode
+                        dataLoad += "</td>";
+                        dataLoad += "<td>";
+                        dataLoad += response.data[i].nama_barang
+                        dataLoad += "</td>";
+                        dataLoad += "<td>";
+                        dataLoad += response.data[i].quantity + " " + response.data[i].satuan
+                        dataLoad += "</td>";
+                        dataLoad += '<td width="20%"><input type="text" name="harga_satuan[]" value="" class="form-control-label harga-satuan"></td>'
+                        dataLoad += '<td width="20%">'
+                        dataLoad += '<input type="text" name="harga_total[]" value="" class="form-control-label harga-total">'
+                        dataLoad += '<input type="hidden" name="quantity[]" value="' + response.data[i].quantity + '" class="form-control-label">'
+                        dataLoad += '<input type="hidden" name="id[]" value="' + response.data[i].id + '" class="form-control-label">'
+                        dataLoad += '<input type="hidden" name="id_trx_po[]" value="' + id_trx_po_update + '" class="form-control-label">'
+                        dataLoad += '</td>'
+                        dataLoad += "</tr>";
+
+                    }
+                    dataLoad += "<tr>";
+                    dataLoad += "<td colspan='4' style='text-align:right'>";
+                    dataLoad += "Harga Total"
+                    dataLoad += "</td>";
+                    dataLoad += "<td>";
+                    dataLoad += '<input type="text" value="0" id="harga-total-sum" class="form-control ">';
+                    dataLoad += '<input type="hidden" value="0" id="harga-total-sum-hide" class="form-control ">';
+                    dataLoad += "</td>";
+                    dataLoad += "</tr>";
+
+                    $("#purchase_from").val(response.data[0].nama);
+                    $("#tbody-table-data").html(dataLoad);
+                    $("#data-trigger").hide();
+                    $("#div-inventory-update-detail").show();
+                }
+            },
+            error: function(response) {
+                console.log(response);
+            }
+
+        });
+    }
+
+    $(document).on('keyup', '.harga-satuan', function() {
+
+        var quantity = document.getElementsByName('quantity[]');
+        var harga_total = document.getElementsByName('harga_total[]');
+        var harga_satuan = document.getElementsByName('harga_satuan[]');
+        var result = 0;
+        //var resultTot = 0;
+        var harga_total_hide = $("#harga-total-sum-hide").val();
+        var k = "";
+        for (var i = 0; i < quantity.length; i++) {
+            var a = quantity[i];
+            k = k + "array[" + i + "].value= " +
+                a.value + " ";
+            var index = i;
+            var value = a.value;
+
+            console.log("array[" + index + "] => " + value + " => length:" + value.length);
+
+            if (harga_satuan[index].value > 0) {
+                result = parseInt(value) * parseInt(harga_satuan[index].value);
+                harga_total[index].value = numberWithCommas(result);
+            }
+
+            if (harga_satuan[index].value == "") {
+                harga_total[index].value = "";
+
+            }
+
+        }
+
+        //calculateSum();
+    });
+
+
+    function calculateSum() {
+        var harga_total = document.getElementsByName('harga_total[]');
+        var harga_total_sum = 0;
+        var k = "";
+        for (var i = 0; i < harga_total.length; i++) {
+            var a = harga_total[i];
+            k = k + "array[" + i + "].value= " +
+                a.value + " ";
+            var index = i;
+            var value = a.value;
+
+            console.log("array total[" + index + "] => " + value + " => length:" + value.length);
+
+            harga_total_sum = parseFloat(value.replaceAll(',', ''));
+
+            if (harga_total[index].value == "") {
+                // harga_total_sum -=  harga_total[index].value;
+            }
+        }
+
+        $("#harga-total-sum").val(harga_total_sum);
+
+    }
+
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    function confirmData() {
+
+        var harga_satuan = document.getElementsByName('harga_satuan[]');
+        var k = "";
+        var submit = true;
+        for (var i = 0; i < harga_satuan.length; i++) {
+            var a = harga_satuan[i];
+            k = k + "array[" + i + "].value= " + a.value + " ";
+            var index = i;
+            var value = a.value;
+
+            console.log("array[" + index + "] => " + value + " => length:" + value.length);
+
+            if (checkInvalid(value)) {
+                alert("harga satuan tidak boleh kosong");
+                submit = false;
+                break;
+            }
+
+        }
+
+        if (submit == true) {
+            console.log("submit " + submit);
+            $("#form-update-inventory").attr('action', '<?php echo site_url() ?>/inventory-updatepo/updateharga');
+            $("#form-update-inventory").submit();
+        } else {
+            return false;
+        }
+    }
+
+
+    function checkInvalid(val) {
+        if (val == null || val == "") {
+            return true;
+        }
+
+        return false;
+    }
+
+    /*
+    function confirmData() {
+        var arr = []
+        ar_loop = []
+
+        const dataTable = document.getElementById('tbody-table-data').querySelectorAll('tr')
+        const dataTableLength = dataTable.length
+        console.log(dataTableLength);
+        for (let i = 0; i < dataTableLength; i++) {
+            const element = dataTable[i];
+            const childElement = element.children;
+            var form_costume = document.createElement("form");
+            form_costume.setAttribute("id", "insert-inventory");
+            form_costume.setAttribute("method", "post");
+
+            var po_id = document.createElement('input')
+            po_id.setAttribute('type', 'hidden');
+            po_id.setAttribute('name', 'id_trx_update')
+            po_id.setAttribute('value', 'ss')
+            form_costume.append(po_id)
+
+            var purchase_from = document.createElement('input')
+            purchase_from.setAttribute('type', 'hidden');
+            purchase_from.setAttribute('name', 'nama_supplier')
+            purchase_from.setAttribute('value', $('#purchase_from').val())
+            form_costume.append(purchase_from)
+
+            for (let j = 0; j < childElement.length; j++) {
+                const element1 = childElement[j];
+                const element1Chlid = element1.children;
+                for (let k = 0; k < element1Chlid.length; k++) {
+                    const element2 = element1Chlid[k];
+                    element_select = element2.name
+                    content_select = element2.value
+                    if (content_select == "") {
+                        content_select = " - ";
+                    }
+
+                    var inp = document.createElement('input')
+                    inp.setAttribute('type', 'text');
+                    inp.setAttribute('name', element_select)
+                    inp.setAttribute('value', content_select)
+                    form_costume.append(inp)
+                    arr[element_select] = content_select
+                }
+            }
+            ar_loop.push(arr)
+            arr = [];
+
+            $('#formSubmitData').append(form_costume);
+            console.log($('#insert-inventory').serialize());
+            $.ajax({
+                url: '<?= site_url() ?>/inventory/update',
+                data: $('#insert-inventory').serialize(),
+                method: 'post',
+                success: function(data) {
+                    console.log(data);
+                },
+                error: function(data) {
+                    console.log(data);
+                }
+
+            });
+            $('#formSubmitData').empty();
+
+        }
+
+        console.log(ar_loop);
+        location.href = "<?= site_url() ?>/inventory/unsetpostdata/updatepo";
+
+    }*/
+
+    /*
+    $("#search").keyup(function(e) {
+
+        if (e.keyCode == 13) {
+            e.preventDefault();
+
+            var search = document.getElementById("search").value;
+            //console.log(search);
+            loadData(search);
+
+        }
+    });*/
+
+    function searchData(){
+        var search = document.getElementById("search").value;
+        loadData(search);
+    }
+
+    function clearAllData() {
+        $('#tbody-table-data').empty();
+    }
+
+    function dateForShow(create_date) {
+
+        var day = create_date.substring(6, 8);
+        var year = create_date.substring(0, 4);
+        var month = create_date.substring(4, 6)
+
+
+        if (month == "01") {
+            month = "Januari";
+        } else if (month == "02") {
+            month = "Februari";
+        } else if (month == "03") {
+            month = "Maret";
+        } else if (month == "04") {
+            month = "April";
+        } else if (month == "05") {
+            month = "Mei";
+        } else if (month == "06") {
+            month = "Juni";
+        } else if (month == "07") {
+            month = "Juli";
+        } else if (month == "08") {
+            month = "Agustus";
+        } else if (month == "09") {
+            month = "September";
+        } else if (month == "10") {
+            month = "Oktober";
+        } else if (month == "11") {
+            month = "November";
+        } else if (month == "12") {
+            month = "Desember";
+        }
+
+        return day + " " + month + " " + year;
+    }
+
+    function dataPaginBarang() {
+
+        batasTampilData = 10;
+        halaman = $('#halaman').val();
+        keyword = ''
+        halamanAwal = (halaman > 1) ? (halaman * batasTampilData) - batasTampilData : 0;
+        totalDataBarang = $('#dataBarangCount').val()
+        totalHalaman = Math.ceil(totalDataBarang / batasTampilData);
+        console.log(totalHalaman);
+        getDataBarangaPagination(halaman, keyword)
+        $('.pagination-result').html(paginationViewHTML(halaman, totalHalaman))
+
+
+    }
+
+    function getDataBarangaPagination(halaman, keyword) {
+
+        $.ajax({
+            url: '<?= site_url() ?>/barang/get-pagination-page',
+            method: 'post',
+            dataType: 'json',
+            data: {
+                halaman: halaman,
+                keyword: keyword
+            },
+            success: function(data) {
+                var data_load = ''
+
+                data_load += '<div class="row">'
+                data_load += '    <div class="col-md-6">'
+                data_load += '        <input type="text" name="keyword-paging" id="keyword-paging" class="form-control-label" placeholder="search"/>'
+                data_load += '    </div>'
+                data_load += '    <div class="col offset-md-2">'
+                data_load += '        <h4>Kode</h4>'
+                data_load += '    </div>'
+                data_load += '</div>'
+                data_load += ' <hr style="width: 260px;margin-left:0px;border-width: 2px;border-style: solid;border-color:white">'
+
+                for (let i = 0; i < data.length; i++) {
+                    const element = data[i];
+                    data_load += '<div class="row">'
+                    data_load += '    <div class="col">'
+                    data_load += '        ' + element.kode
+                    data_load += '    </div>'
+                    data_load += '    <div class="col">'
+                    data_load += '        ' + element.nama_barang
+                    data_load += '    </div>'
+                    data_load += '</div>'
+
+                }
+                $('.data-barang-pagination').html(data_load)
+            },
+            error: function(data) {
+                console.log("Gagal");
+                console.log(data);
+            }
+
+        });
+    }
+
+    function paginationViewHTML(halaman, totalHalaman) { //halaman 1 total 6
+
+        var data_load = '';
+        prev = parseInt(halaman) - 1;
+        next = parseInt(halaman) + 1;
+        minimal_page = parseInt(halaman) - 2;
+        max_page = parseInt(halaman) + 2;
+        var prev_v = "dataPaginBarangHREF('" + prev + "')";
+        var next_v = "dataPaginBarangHREF('" + next + "')";
+        var halaman1 = "dataPaginBarangHREF('1')";
+        var halaman2 = "dataPaginBarangHREF('2')";
+        var halaman3 = "dataPaginBarangHREF('3')";
+        var halaman4 = "dataPaginBarangHREF('4')";
+        data_load += '<ul class ="pagination">'
+        if (halaman > 1) {
+            data_load += '<li class="page-item"><a href ="#"  class = "page-link " onclick="' + prev_v + '">< </a></li>'
+            data_load += '<li class="page-item"><a href="#" class = "page-link " > < <a></li>'
+        } else {
+            //  data_load += '<li class="page-item"><a href="#" class = "page-link " > < <a></li>'
+        }
+
+        console.log("halaman" + halaman);
+        console.log("totalHalaman" + totalHalaman);
+
+        for (let i = minimal_page; i <= max_page; i++) {
+            var onclk = "dataPaginBarangHREF('" + i + "')";
+
+
+
+            if (i == halaman && totalHalaman != 0) {
+                data_load += '<li class="page-item active"><a class = "page-link" href="#" onclick="' + onclk + '">' + i + '</a> </li>'
+            } else if ((i == halaman - 1) && (i != 0)) {
+                data_load += '<li class="page-item "><a class = "page-link" href="#" onclick="' + onclk + '">' + i + '</a> </li>'
+            } else if (((i > halaman) && (i < max_page)) && (i <= totalHalaman)) {
+                data_load += '<li class="page-item "><a class = "page-link" href="#" onclick="' + onclk + '">' + i + '</a> </li>'
+            } else if ((halaman == 1) && (i > 0) && (totalHalaman > 3)) {
+                data_load += '<li class="page-item "><a class = "page-link" href="#" onclick="' + onclk + '">' + i + '</a> </li>'
+            }
+        }
+
+
+        if (halaman < totalHalaman) {
+            data_load += '<li class="page-item"><a href="#" class = "page-link " onclick="' + next_v + '"> > <a></li>'
+            data_load += '<li class="page-item"><a href="#" class = "page-link "> > <a></li>'
+        } else {
+            // data_load += '<li class="page-item"><a href="#" class = "page-link "> > <a></li>'
+        }
+
+        data_load += '</ul>'
+        console.log(data_load);
+        return data_load;
+    }
+
+    function dataPaginBarangHREF(halaman) {
+        $('#halaman').val(halaman)
+        dataPaginBarang()
+    }
+</script>

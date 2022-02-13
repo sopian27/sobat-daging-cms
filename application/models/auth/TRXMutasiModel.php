@@ -15,4 +15,9 @@ class TRXMutasiModel extends CI_Model
 
         return $this->db->query($query)->result();
     }
+
+    public function insertDataBatch($data)
+    {
+        $this->db->insert_batch('trx_mutasi', $data);
+    }
 }

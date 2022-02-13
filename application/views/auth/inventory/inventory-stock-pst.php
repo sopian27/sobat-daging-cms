@@ -3,356 +3,370 @@
         <h2><?= ucfirst($judul) ?></h2>
     </div>
     <hr style="width: 1570px;margin-left:160px;border-width: 2px;border-style: solid;border-color:white">
+    <div class="row">
+        <div class="col-md-2 offset-md-1">
+            <input type="text" id="search" name="search" placeholder="search..." class="form-search">
+        </div>
+        <div class="col-md-2 offset-md-6">
+            <input type="text" id="create_date" name="create_date" class="form-search" placeholder="sort...">
+            <p id="date-filter" style="margin-top:30px"><?= $date ?></p>
+        </div>
+    </div>
 
     <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="row">
-                <div class="col-md-8 offset-md-2">
-                    <div class="row">
-                        <div class="col-md-2 "><?= $id_trx_pst ?><input type="hidden" value="<?= $id_trx_pst ?>" id="trx_send"></div>
-                        <div class="col-md-3 offset-md-7 "><?= $date ?></div>
+        <div class="row justify-content-center" id="form-pusat">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2 offset-md-1">
+                        <p id="trx_pst_pusat"><?= $id_trx_pst ?></p>
+                        <div>
+                            <a class="form-control-button btn" style="background-color: #a5662f;border:none;padding:10px;width:50%"> Gudang Luar </a>
+                        </div>
+                        <div style="margin-top:30px">
+                            <a class="form-control-button btn btn-outline-light button-action" style="padding:10px;width:50%" onclick="showSobat();"> Sobat </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-7 offset-md-3" style="margin-top: 20px;">
+                        <form id="form-pst-pusat" method="POST">
+                            <table class="table table-dark table-bordered data">
+                                <thead>
+                                    <tr>
+                                        <th> Kode </th>
+                                        <th> Nama Barang</th>
+                                        <th> Jumlah Stock </th>
+                                        <th colspan="2" width="30%"> Update Stock Pusat </th>
+                                        <th> Note </th>
+                                        <th> Action </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="data-pusat"></tbody>
+                            </table>
+                            <input type="hidden" name="pusat_stock" id="pusat_stock" />
+                            <input type="hidden" name="pusat_stock_update" id="pusat_stock_update" />
+                            <input type="hidden" name="pusat_note" id="pusat_note" />
+                            <input type="hidden" name="pusat_satuan" id="pusat_satuan" />
+                            <input type="hidden" name="pusat_kode" id="pusat_kode" />
+                            <input type="hidden" name="trx_pst_pusat" id="trx_pst_pusat" value="<?= $id_trx_pst ?>" />
+                        </form>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="row">
-                <div class="col-md-1 offset-md-1 align-self-start" style="margin-right: 10px;">
-                    <div class="row mt-1">
-                        <button class="btn <?php if ($ketGudang == 'pusat') {
-                                                echo "button-active";
-                                            } else {
-                                                echo " btn-outline-light";
-                                            } ?> " type="button" onclick="pilih_gudang('pusat');">
-                            Gudang Luar
-                        </button>
-                    </div>
-                    <div class="row mt-3">
-                        <button class="btn <?php if ($ketGudang == 'sobat') {
-                                                echo "button-active";
-                                            } else {
-                                                echo " btn-outline-light";
-                                            } ?> " type="button" onclick="pilih_gudang('sobat');">
-                            Gudang Sobat
-                        </button>
+        <div class="row justify-content-center" style="display: none;" id="form-sobat">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2 offset-md-1">
+                        <p id="trx_pst_sobat" style="display: none;"><?= $id_trx_sobat ?></p>
+                        <div>
+                            <a class="form-control-button btn btn-outline-light button-action" onclick="showPusat();" style="width:50%"> Gudang Luar </a>
+                        </div>
+                        <div style="margin-top:30px">
+                            <a class="form-control-button btn" style="background-color: #a5662f;border:none;padding:10px;width:50%"> Sobat </a>
+                        </div>
                     </div>
                 </div>
-
-                <div class="col-md-7 justify-content-center">
-
-                    <pre>
-                        <!-- <?php
-                                print_r($data['allDataPo']);
-                                ?> -->
-                    </pre>
-                    <div class="row mt-2 ">
-                        <table class="table table-dark table-bordered data" id="tableInv">
+                <div class="row">
+                    <div class="col-sm-7 offset-md-3" style="margin-top: 20px;">
+                    <form id="form-pst-sobat" method="POST">
+                        <table class="table table-dark table-bordered data">
                             <thead>
                                 <tr>
                                     <th> Kode </th>
-                                    <th> Nama Barang </th>
-                                    <th> Jumlah Stock</th>
-                                    <th> Update Stock</th>
+                                    <th> Nama Barang</th>
+                                    <th> Jumlah Stock </th>
+                                    <th colspan="2" width="30%"> Update Stock Sobat </th>
                                     <th> Note </th>
-                                    <th> Aksi </th>
+                                    <th> Action </th>
                                 </tr>
                             </thead>
-                            <tbody id='tbody-table-data'>
-
-                            </tbody>
+                            <tbody id="data-sobat"></tbody>
                         </table>
-
-                        <input type="hidden" name="halaman" id="halaman" value="<?= $halaman ?>">
-                        <input type="hidden" name="dataBarangCount" id="dataBarangCount" value="<?= $dataBarangCount ?>">
-                        <div class="row">
-
-                        </div>
-                        <div class="data-barang-pagination">
-
-                        </div>
-                        <div class="row d-flex justify-content-end pagination-result" style="margin-left:160px;margin-top:10px">
-
-                        </div>
-                    </div>
-                    <div class="row d-flex justify-content-end">
-                        <div class="col-md-2">
-                        </div>
-                        <div class="col-md-2">
-                            <button class="form-control-button btn btn-outline-light" onclick="confirmData();"> Confirm </button>
-                            <!-- <button class="form-control btn btn-outline-light" onclick="inputToHtml();"> Confirm </button> -->
-                        </div>
-                    </div>
-                    <div class="row d-flex justify-content-start formSubmitData" id="formSubmitData">
+                        <input type="hidden" name="sobat_stock" id="sobat_stock" />
+                        <input type="hidden" name="sobat_stock_update" id="sobat_stock_update" />
+                        <input type="hidden" name="sobat_note" id="sobat_note" />
+                        <input type="hidden" name="sobat_satuan" id="sobat_satuan" />
+                        <input type="hidden" name="sobat_kode" id="sobat_kode" />
+                        <input type="hidden" name="trx_pst_sobat" id="trx_pst_sobat" value="<?= $id_trx_sobat ?>" />
+                    </form>
                     </div>
                 </div>
             </div>
-
-            <div class="row d-flex justify-content-start formSubmitData" id="formSubmitData">
-            </div>
-
         </div>
     </div>
+    <div style="margin-top:60px"></div>
 </div>
 
-<form action="updatestockpts" method="post" id="form-gudang">
-    <input type="hidden" name="gudang" id="gudang" value="<?= $ketGudang ?>">
-</form>
 <script>
-    var ar_loop = []
+    function showSobat() {
 
-    function pilih_gudang(param) {
-        $("#gudang").val(param);
-        $("#form-gudang").submit();
+        $("#form-pusat").hide();
+        $("#form-sobat").show();
+
+        $("#trx_pst_sobat").show();
+        $("#trx_pst_pusat").hide();
     }
 
-    function dataPaginBarang() {
+    function showPusat() {
+        $("#form-pusat").show();
+        $("#form-sobat").hide();
 
-        batasTampilData = 10;
-        halaman = $('#halaman').val()
-        keyword = ''
-        halamanAwal = (halaman > 1) ? (halaman * batasTampilData) - batasTampilData : 0;
-        totalDataBarang = $('#dataBarangCount').val()
-        totalHalaman = Math.ceil(totalDataBarang / batasTampilData);
-        console.log(totalHalaman);
-        getDataBarangaPagination(halaman, keyword)
-        $('.pagination-result').html(paginationViewHTML(halaman, totalHalaman))
+        $("#trx_pst_sobat").hide();
+        $("#trx_pst_pusat").show();
 
     }
 
-    function getDataBarangaPagination(halaman, keyword) {
+
+    $(document).ready(function() {
+        getData();
+    });
+
+    $(function() {
+        $("#create_date").datepicker({
+            todayHighlight: true,
+            format: "yyyymm",
+            startView: "months",
+            minViewMode: "months",
+            autoclose: true
+        })
+    });
+
+    $(document).on('change', '#create_date', function() {
+        var create_date = document.getElementById("create_date").value;
+
+        var today = new Date();
+        var year = today.getFullYear();
+        var month = today.getMonth();
+
+    });
+
+    function checkInvalid(val) {
+        if (val == null || val == "") {
+            return true;
+        }
+
+        return false;
+    }
+
+    function getMonthOnly(create_date) {
+
+        var year = create_date.substring(0, 4);
+        var month = create_date.substring(4, 6)
+
+
+        if (month == "01") {
+            month = "Januari";
+        } else if (month == "02") {
+            month = "Februari";
+        } else if (month == "03") {
+            month = "Maret";
+        } else if (month == "04") {
+            month = "April";
+        } else if (month == "05") {
+            month = "Mei";
+        } else if (month == "06") {
+            month = "Juni";
+        } else if (month == "07") {
+            month = "Juli";
+        } else if (month == "08") {
+            month = "Agustus";
+        } else if (month == "09") {
+            month = "September";
+        } else if (month == "10") {
+            month = "Oktober";
+        } else if (month == "11") {
+            month = "November";
+        } else if (month == "12") {
+            month = "Desember";
+        }
+
+        return month;
+    }
+
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+
+    function handlePusat(response) {
+
+        var dataLoad = "";
+        var total = 0;
+        console.log(response);
+
+        for (let i = 0; i < response.data_pusat.length; i++) {
+
+            dataLoad += "<tr>";
+            dataLoad += "<td >";
+            dataLoad += response.data_pusat[i].kode;
+            dataLoad += "</td>";
+            dataLoad += "<td>";
+            dataLoad += response.data_pusat[i].nama_barang;
+            dataLoad += "</td>";
+            dataLoad += "<td>";
+            dataLoad += response.data_pusat[i].quantity_pusat + " " + response.data_pusat[i].satuan;
+            dataLoad += "</td>";
+            dataLoad += "<td>";
+            dataLoad += '<input type="text" name="quantity_update_pusat[]" id="quantity_update_pusat' + i + '" class="form-control-label"/>';
+            dataLoad += "</td>";
+            dataLoad += '<td>'
+            dataLoad += '      <select name="satuan_pusat[]" id="satuan_pusat' + i + '" class="form-control">'
+            dataLoad += '          <option value="Kg">kg</option>'
+            dataLoad += '          <option value="Dus">Dus</option>'
+            dataLoad += '      </select>'
+            dataLoad += '</td> '
+            dataLoad += "<td>";
+            dataLoad += '<input type="text" name="note_pusat[]" id="note_pusat' + i + '" class="form-control-label" />';
+            dataLoad += '<input type="hidden" name="kode_pusat[]" id="kode_pusat' + i + '" value="' + response.data_pusat[i].kode + '"/>';
+            dataLoad += '<input type="hidden" name="quantity_pusat[]" id="quantity_pusat' + i + '" value="' + response.data_pusat[i].quantity_pusat + '"/>';
+            dataLoad += "</td>";
+            dataLoad += "<td>";
+
+            if (response.data_pusat[i].create_date != null) {
+                dataLoad += "<a class='form-control-button btn-success' style='background-color: #a5662f'><span class='fas fa-check'></span></a>";
+            } else {
+                dataLoad += "<a class='form-control-button btn btn-outline-light button-action' onclick='update_data_pusat(" + i + ")'><span class='fas fa-check'></span></a>";
+            }
+
+            dataLoad += "</td>";
+            dataLoad += "</tr>";
+
+        }
+
+        $("#data-pusat").html(dataLoad);
+    }
+
+
+    function update_data_pusat(it) {
+        var quantity_pusat = $("#quantity_pusat" + it).val();
+        var quantity_update = $("#quantity_update_pusat" + it).val();
+        var satuan = $("#satuan_pusat" + it).val();
+        var note = $("#note_pusat" + it).val();
+        var kode = $("#kode_pusat" + it).val();
+
+        if (checkInvalid(quantity_update)) {
+            alert("update pst tidak boleh kosong");
+            return;
+        }
+
+        if (checkInvalid(note)) {
+            alert("note tidak boleh kosong");
+            return;
+        }
+
+        $("#pusat_stock").val(quantity_pusat);
+        $("#pusat_satuan").val(satuan);
+        $("#pusat_note").val(note);
+        $("#pusat_kode").val(kode);
+        $("#pusat_stock_update").val(quantity_update);
+
+        $("#form-pst-pusat").attr('action', '<?php echo site_url() ?>/inventory-updatestockpst/pusatsave');
+        $("#form-pst-pusat").submit();
+
+
+    }
+
+    function update_data_sobat(it) {
+        var quantity_sobat = $("#quantity_sobat" + it).val();
+        var quantity_update = $("#quantity_update_sobat" + it).val();
+        var satuan = $("#satuan_sobat" + it).val();
+        var note = $("#note_sobat" + it).val();
+        var kode = $("#kode_sobat" + it).val();
+
+        if (checkInvalid(quantity_update)) {
+            alert("update pst tidak boleh kosong");
+            return;
+        }
+
+        if (checkInvalid(note)) {
+            alert("note tidak boleh kosong");
+            return;
+        }
+
+        $("#sobat_stock").val(quantity_sobat);
+        $("#sobat_satuan").val(satuan);
+        $("#sobat_note").val(note);
+        $("#sobat_kode").val(kode);
+        $("#sobat_stock_update").val(quantity_update);
+
+        $("#form-pst-sobat").attr('action', '<?php echo site_url() ?>/inventory-updatestockpst/sobatsave');
+        $("#form-pst-sobat").submit();
+
+
+    }
+
+    function handleSobat(response) {
+
+        var dataLoad = "";
+        var total = 0;
+        console.log(response);
+
+        for (let i = 0; i < response.data_sobat.length; i++) {
+
+            dataLoad += "<tr>";
+            dataLoad += "<td >";
+            dataLoad += response.data_sobat[i].kode;
+            dataLoad += "</td>";
+            dataLoad += "<td>";
+            dataLoad += response.data_sobat[i].nama_barang;
+            dataLoad += "</td>";
+            dataLoad += "<td>";
+            dataLoad += response.data_sobat[i].quantity_sobat + " " + response.data_sobat[i].satuan;
+            dataLoad += "</td>";
+            dataLoad += "<td>";
+            dataLoad += '<input type="text" name="quantity_update_sobat[]" id="quantity_update_sobat' + i + '" class="form-control-label"/>';
+            dataLoad += "</td>";
+            dataLoad += '<td>'
+            dataLoad += '      <select name="satuan_sobat[]" id="satuan_sobat' + i + '" class="form-control">'
+            dataLoad += '          <option value="Kg">kg</option>'
+            dataLoad += '          <option value="Dus">Dus</option>'
+            dataLoad += '      </select>'
+            dataLoad += '</td> '
+            dataLoad += "<td>";
+            dataLoad += '<input type="text" name="note_sobat[]" id="note_sobat' + i + '" class="form-control-label" />';
+            dataLoad += '<input type="hidden" name="kode_sobat[]" id="kode_sobat' + i + '" value="' + response.data_sobat[i].kode + '"/>';
+            dataLoad += '<input type="hidden" name="quantity_sobat[]" id="quantity_sobat' + i + '" value="' + response.data_sobat[i].quantity_sobat + '"/>';
+            dataLoad += "</td>";
+            dataLoad += "<td>";
+
+            if (response.data_sobat[i].create_date != null) {
+                dataLoad += "<a class='form-control-button btn-success' style='background-color: #a5662f'><span class='fas fa-check'></span></a>";
+            } else {
+                dataLoad += "<a class='form-control-button btn btn-outline-light button-action' onclick='update_data_sobat(" + i + ")'><span class='fas fa-check'></span></a>";
+            }
+
+            dataLoad += "</td>";
+            dataLoad += "</tr>";
+
+        }
+
+        $("#data-sobat").html(dataLoad);
+    }
+
+    function getData() {
+
         $.ajax({
-            url: '<?= site_url() ?>/barang/get-pagination-page',
+            url: '<?= site_url() ?>/inventory-updatestockpst/getdata',
             method: 'post',
             dataType: 'json',
-            data: {
-                halaman: halaman,
-                keyword: keyword
-            },
-            success: function(data) {
-                var data_load = ''
-                console.log(data);
+            success: function(response) {
 
-                for (let i = 0; i < data.length; i++) {
-                    var innerdata = "save_" + i
-                    var function_data_save = "saveDataElement('" + innerdata + "')";
-                    const element = data[i];
-                    data_load += '<tr>'
-                    data_load += '    <td class="data"><input type="hidden" value="' + element.id + '" name="id">' + element.kode + '</td>'
-                    data_load += '    <td class="data"><input type="hidden" value="' + element.kode + '" name="kode">' + element.nama_barang + '</td>'
-                    if ($("#gudang").val() == 'pusat') {
-                        data_load += '    <td class="data">' + element.quantity_pusat + '<input type="hidden" name="quantity" class="form-control " value="' + element.quantity_pusat + '"></td>'
-                    } else if ($("#gudang").val() == 'sobat') {
-                        data_load += '    <td class="data">' + element.quantity_sobat + '<input type="hidden" name="quantity" class="form-control " value="' + element.quantity_sobat + '"></td>'
-                    }
-                    data_load += '    <td class="data"><input type="number" name="quantity_update" class="form-control "></td>'
-                    data_load += '    <td class="data"><input type="text" name="note" class="form-control "></td>'
-                    data_load += '    <td class="data"><button class="save btn button-active" id="save_' + i + '" onclick="' + function_data_save + '">Save </button></td> '
-                    data_load += '</tr>'
+                handlePusat(response);
+                handleSobat(response);
 
-                }
-                $('#tbody-table-data').html(data_load)
             },
-            error: function(data) {
-                console.log("Gagal");
-                console.log(data);
+            error: function(xhr, status, error) {
+                console.log("Failed");
+                console.log(error);
             }
 
         });
     }
 
-    function paginationViewHTML(halaman, totalHalaman) { //halaman 1 total 6
-        var data_load = '';
-        prev = parseInt(halaman) - 1;
-        next = parseInt(halaman) + 1;
-        minimal_page = parseInt(halaman) - 2;
-        max_page = parseInt(halaman) + 2;
-        var prev_v = "dataPaginBarangHREF('" + prev + "')";
-        var next_v = "dataPaginBarangHREF('" + next + "')";
-        var halaman1 = "dataPaginBarangHREF('1')";
-        var halaman2 = "dataPaginBarangHREF('2')";
-        var halaman3 = "dataPaginBarangHREF('3')";
-        var halaman4 = "dataPaginBarangHREF('4')";
-        data_load += '<ul class ="pagination">'
-        if (halaman > 1) {
-            data_load += '<li class="page-item"><a href ="#"  class = "page-link " onclick="' + prev_v + '">< </a></li>'
-        } else {
-            data_load += '<li class="page-item"><a href="#" class = "page-link " > < <a></li>'
-        }
-
-        for (let i = minimal_page; i <= max_page; i++) {
-            var onclk = "dataPaginBarangHREF('" + i + "')";
-
-            if (i == halaman) {
-                data_load += '<li class="page-item active"><a class = "page-link" href="#" onclick="' + onclk + '">' + i + '</a></li>'
-            } else if ((i == halaman - 1) && (i != 0)) {
-                data_load += '<li class="page-item "><a class = "page-link" href="#" onclick="' + onclk + '">' + i + '</a></li>'
-            } else if (((i > halaman) && (i < max_page)) && (i <= totalHalaman)) {
-                data_load += '<li class="page-item "><a class = "page-link" href="#" onclick="' + onclk + '">' + i + '</a></li>'
-            } else if ((halaman == 1) && (i > 0) && (totalHalaman >= 3)) {
-                data_load += '<li class="page-item "><a class = "page-link" href="#" onclick="' + onclk + '">' + i + '</a></li>'
-            } else if ((halaman == 3) && (totalHalaman >= 3) && (i == 1)) {
-                data_load += '<li class="page-item "><a class = "page-link" href="#" onclick="' + onclk + '">' + i + '</a></li>'
-            }
-        }
+    /*paging start */
 
 
-        if (halaman < totalHalaman) {
-            data_load += '<li class="page-item"><a href="#" class = "page-link " onclick="' + next_v + '"> > <a></li>'
-        } else {
-            data_load += '<li class="page-item"><a href="#" class = "page-link "> > <a></li>'
-        }
-        data_load += '</ul>'
-        console.log(data_load);
-        return data_load;
-    }
-
-    function dataPaginBarangHREF(halaman) {
-        $('#halaman').val(halaman)
-        dataPaginBarang()
-    }
-
-    $(document).ready(function() {
-        dataPaginBarang()
-
-    })
-
-    /*
-    function confirmData() {
-        var arr = []
-        ar_loop = []
-
-        const dataTable = document.getElementById('tbody-table-data').querySelectorAll('tr')
-        const dataTableLength = dataTable.length
-        console.log(dataTableLength);
-        for (let i = 0; i < dataTableLength; i++) {
-            const element = dataTable[i];
-
-            const childElement = element.children;
-            var form_costume = document.createElement("form");
-            form_costume.setAttribute("id", "insert-mutasi");
-            form_costume.setAttribute("method", "post");
-
-            var po_id = document.createElement('input')
-            po_id.setAttribute('type', 'hidden');
-            po_id.setAttribute('name', 'id_trx_pst')
-            po_id.setAttribute('value', '<?= $data['id_trx_pst'] ?>')
-            form_costume.append(po_id)
-
-            var create_date = document.createElement('input')
-            create_date.setAttribute('type', 'hidden');
-            create_date.setAttribute('name', 'createDate')
-            create_date.setAttribute('value', '<?= $data['date'] ?>')
-            form_costume.append(create_date)
-
-            for (let j = 0; j < childElement.length; j++) {
-                const element1 = childElement[j];
-                const element1Chlid = element1.children;
-                for (let k = 0; k < element1Chlid.length; k++) {
-                    const element2 = element1Chlid[k];
-                    element_select = element2.name
-                    content_select = element2.value
-                    if (content_select == "") {
-                        content_select = " - ";
-                    }
-
-                    var inp = document.createElement('input')
-                    inp.setAttribute('type', 'text');
-                    inp.setAttribute('name', element_select)
-                    inp.setAttribute('value', content_select)
-                    form_costume.append(inp)
-                    arr[element_select] = content_select
-                }
-            }
-            ar_loop.push(arr)
-            arr = [];
-
-            $('#formSubmitData').append(form_costume);
-            console.log($('#insert-mutasi').serialize());
-            // $.ajax({
-            //     url: '<?= base_url() ?>/inventory/inventorySaveInvMenu',
-            //     data: $('#insert-inventory').serialize(),
-            //     method: 'post',
-            //     success: function(data) {
-            //         console.log(data);
-            //     },
-            //     error: function(data) {
-            //         console.log("Failed");
-            //         console.log(data);
-            //     }
-
-            // });
-            $('#formSubmitData').empty();
-
-        }
-
-        console.log(ar_loop);
-        //location.reload();
-    }
-    */
-
-    // $(document).on('click', '.save', function() {
-    //     $('input').each(function() {
-    //         var content = $(this).val();
-    //         $(this).html(content);
-    //         $(this).contents().unwrap();
-    //         console.log(content);
-    //     });
-    // });
-
-    function saveDataElement(id) {
-        var data = document.getElementById(id).parentElement.parentElement;
-        const dataLength = document.getElementById(id).parentElement.parentElement.firstChild;
-        const dataLength1 = document.getElementById(id).parentElement.parentElement.childNodes;
-
-        var form_costume = document.createElement("form");
-        form_costume.setAttribute("id", "insert-pst");
-        form_costume.setAttribute("method", "post");
-        form_costume.setAttribute("action", "<?= site_url() ?>/inventory/save-pst");
-
-
-        for (let i = 0; i < dataLength1.length; i++) {
-            const element = dataLength1[i];
-            if (element.children != undefined) {
-                if (element.children.length != 0) {
-
-                    for (let j = 0; j < element.children.length; j++) {
-                        const element01 = element.children[j];
-                        if (element01.tagName == "INPUT") {
-                            element01_name = element01.name;
-                            element01_value = element01.value;
-                            // console.log("element name :: => " + element01_name + "   ||| element_value :: => " + element01_value);
-
-                            var inp = document.createElement('input')
-                            inp.setAttribute('type', 'text');
-                            inp.setAttribute('name', element01_name)
-                            inp.setAttribute('value', element01_value)
-                            form_costume.append(inp)
-                        }
-                    }
-                }
-            }
-        }
-        // $data['ketGudang']
-
-        var inp = document.createElement('input')
-        inp.setAttribute('type', 'text');
-        inp.setAttribute('name', 'gudang')
-        inp.setAttribute('value', '<?= $data['ketGudang'] ?>')
-        form_costume.append(inp)
-
-        var inp = document.createElement('input')
-        inp.setAttribute('type', 'text');
-        inp.setAttribute('name', 'trx')
-        inp.setAttribute('value', $('#trx_send').val())
-        form_costume.append(inp)
-
-        var inp = document.createElement('input')
-        inp.setAttribute('type', 'text');
-        inp.setAttribute('name', 'halaman')
-        inp.setAttribute('value', $('#halaman').val())
-        form_costume.append(inp)
-
-        $('#formSubmitData').append(form_costume);
-        $('#insert-pst').submit();
-        // $('#halaman').val()
-    }
+    /*paging end */
 </script>

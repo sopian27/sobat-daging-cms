@@ -23,12 +23,13 @@ class LiveOrder extends CI_Controller{
 
         }
 
+        /*
         if(isset($_POST['data_search'])){
             $data['date_show_data'] = "Search By ".$_POST['data_search'];
             $data['flag'] = "2";
             $post_data=array("keyword"=> $_POST['data_search']);
             $data['detailData']=$this->lv_model->getDataByKeyword($post_data);
-        }
+        }*/
 
         $this->load->view('auth/templates/header', $data);
         $this->load->view('auth/templates/order-received/sidemenu', $data);

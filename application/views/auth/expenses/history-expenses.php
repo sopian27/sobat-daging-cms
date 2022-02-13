@@ -1,43 +1,3 @@
-<?php
-
-function dateForShow($create_date)
-{
-    $year = substr($create_date, 0, 4);
-    $month = substr($create_date, 4, 2);
-    $day = substr($create_date, 6, 2);
-
-    if ($month == "01") {
-        $month = "Januari";
-    } else if ($month == "02") {
-        $month = "Februari";
-    } else if ($month == "03") {
-        $month = "Maret";
-    } else if ($month == "04") {
-        $month = "April";
-    } else if ($month == "05") {
-        $month = "Mei";
-    } else if ($month == "06") {
-        $month = "Juni";
-    } else if ($month == "07") {
-        $month = "Juli";
-    } else if ($month == "08") {
-        $month = "Agustus";
-    } else if ($month == "09") {
-        $month = "September";
-    } else if ($month == "10") {
-        $month = "Oktober";
-    } else if ($month == "11") {
-        $month = "November";
-    } else if ($month == "12") {
-        $month = "Desember";
-    }
-
-    return $day . " " . $month . " " . $year;
-}
-
-?>
-
-
 <div class="container-fluid mt-3">
     <div class="col-md-3 offset-md-1">
         <h2><?= ucfirst($judul) ?></h2>
@@ -95,7 +55,7 @@ function dateForShow($create_date)
                                 </tr>
                             </thead>
                             <tbody id="data-op">
-                            <tbody>
+                            fi</tbody>
                         </table>
                         <div style="min-height: 120px;">
                             <div class="collapse collapse-horizontal" id="data-barang-collapse">

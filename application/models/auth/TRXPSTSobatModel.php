@@ -1,5 +1,5 @@
 <?php
-class TRXPSTSobat extends CI_Model
+class TRXPSTSobatModel extends CI_Model
 {
     
     public function getTrxId()
@@ -37,5 +37,19 @@ class TRXPSTSobat extends CI_Model
         
         $this->db->execute();
         return $this->db->rowCount();
+    }
+
+    public function getPstData()
+    {
+        $query = "SELECT b.id,b.kode,b.nama_barang,b.quantity_sobat,b.satuan,p.create_date 
+                FROM barang b left join trx_update_pst_sobat p on b.kode = p.kode ";
+
+        return $this->db->query($query)->result();
+    }
+
+    public function insertData($data)
+    {
+        $this->db->insert('trx_update_pst_sobat', $data);
+        return $this->db->insert_id();
     }
 }
