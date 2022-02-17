@@ -116,7 +116,14 @@
                         dataLoad += "<td width='5%'>";
                         dataLoad += data.data[i].satuan
                         dataLoad += "</td>";
-                        dataLoad += '<td width="15%"><input type="text" name="quantity_mutasi[]" id="quantity_mutasi' + i + '"  value="' + quantityMutasi + '" class="form-control-label quantity-check" onkeypress="validate(event)"></td>'
+                        
+                        if (data.data[i].status == '0') {
+                            dataLoad += '<td width="15%"><input type="text" name="quantity_mutasi[]" id="quantity_mutasi' + i + '"  value="' + quantityMutasi + '" class="form-control-label quantity-check" onkeypress="validate(event)"></td>'
+                        } else {
+                            dataLoad += '<td width="15%"><input type="text" name="quantity_mutasi[]" id="quantity_mutasi' + i + '"  class="form-control-label quantity-check" onkeypress="validate(event)"></td>'
+                        }
+
+                        
                         dataLoad += '<td class="data" data-dat="satuan" width="5%">'
                         dataLoad += data.data[i].satuan
                         dataLoad += '<input type="hidden" name="id[]" id="id' + i + '" value="' + data.data[i].id + '" class="form-control-label">'
@@ -125,7 +132,7 @@
                         dataLoad += '</td>'
                         dataLoad += "<td>";
 
-                        if (quantityMutasi != '0') {
+                        if (data.data[i].status == '0') {
                             dataLoad += "<a class='form-control-button btn-success' style='background-color: #a5662f'><span class='fas fa-check'></span></a>";
                         } else {
                             dataLoad += "<a class='form-control-button btn btn-outline-light button-action' onclick='" + functionOnclick + "'><span class='fas fa-check'></span></a>";

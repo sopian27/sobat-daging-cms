@@ -29,7 +29,7 @@ class TRXBarangPoModel extends CI_Model
     {
 
         $query = "SELECT 
-                    count(id_trx_po) as trx_id 
+                    max(id_trx_po) as trx_id 
                 FROM 
                     trx_barang_po 
                 WHERE 

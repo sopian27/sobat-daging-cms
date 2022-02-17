@@ -2,7 +2,9 @@
     <div class="col-md-3 offset-md-1">
         <h2><?= ucfirst($judul) ?></h2>
     </div>
-    <hr style="width: 1570px;margin-left:160px;border-width: 2px;border-style: solid;border-color:white">
+    <div class="col-md-11">
+        <hr style="margin-left:160px;border-width: 2px;border-style: solid;border-color:white">
+    </div>
     <div class="row">
         <div class="col-md-3 offset-md-1"><?= $kodePO ?></div>
         <div class="col-md-2 offset-md-5 "><?= $date ?></div>
@@ -29,24 +31,24 @@
                             <label for="" class="col-sm-3 col-form-label">Nomor Hp </label>
                             <div class="col-sm-1">:</div>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control-label" id="nomor_hp1" name="nomor_hp1">
+                                <input type="text" class="form-control-label" id="nomor_hp1" name="nomor_hp1" onkeypress="validate(event)">
                             </div>
                         </div>
                         <div class="form-group row" style="display: none;">
                             <label for="" class="col-sm-3 col-form-label"></label>
                             <div class="col-sm-1"></div>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control-label" id="nomor_hp2" name="nomor_hp2">
+                                <input type="text" class="form-control-label" id="nomor_hp2" name="nomor_hp2" onkeypress="validate(event)">
                             </div>
                         </div>
                         <div class="form-group row" style="margin-top: 10px;">
                             <label for="" class="col-sm-3 col-form-label">Alamat Pengiriman </label>
                             <div class="col-sm-1">:</div>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control-label" id="alamat1" name="alamat1">
+                                <textarea id="alamat1" name="alamat1" class="form-control-label"></textarea>
                             </div>
                         </div>
-                        <div class="form-group row">
+                        <div class="form-group row" style="display: none;">
                             <label for="" class="col-sm-3 col-form-label"></label>
                             <div class="col-sm-1"></div>
                             <div class="col-sm-4">
@@ -93,32 +95,46 @@
                         <div class="col-md-2">
                             <button class="form-control-button btn btn-outline-light button-action" onclick="clearAllData();"> Clear All </button>
                         </div>
-                        <div class="col-md-2">
-                            <button class="form-control-button btn btn-outline-light button-action" onclick="confirmData();"> Confirm </button>
+                        <div class="col-md-2" id="loader-confirmed">
+                            <button class="form-control-button btn btn-outline-light button-action" onclick="savePelangganData();">Confirmed</button>
+                        </div>
+                        <div class="col-md-2" id="loader" style="display: none;">
+                            <button class="form-control-button btn btn-outline-light button-action">Saving Data...</button>
                         </div>
                     </div>
                     <div class="row d-flex justify-content-start formSubmitData" id="formSubmitData">
                     </div>
                 </div>
                 <div class="col-md-3 justify-content-center">
-                <div style="min-height: 120px;">
+                    <div style="min-height: 120px;">
                         <div class="collapse collapse-horizontal" id="data-barang-collapse">
                             <div class="card card-body bg-transparent " style="width: 300px; border: 2px solid white;">
                                 <input type="hidden" name="halaman" id="halaman" value="1">
                                 <input type="hidden" name="dataBarangCount" id="dataBarangCount" value="<?= $dataBarangCount ?>">
+                                <div class="row"> </div>
                                 <div class="row">
-
+                                    <div class="col-md-7">
+                                        <div class="input-group">
+                                            <input class="form-control-paging" type="text" placeholder="search..." name="keyword-paging" id="keyword-paging">
+                                            <span class="input-group-append">
+                                                <button class="btn btn-outline-light" type="button" onclick="dataPagingBarang()">
+                                                    <i class="fa fa-search"></i>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" style="margin-left:6%;margin-top:10px">
+                                        <h4>Kode</h4>
+                                        <hr style="border-width: 2px;border-style: solid;border-color:white">
+                                    </div>
                                 </div>
-                                <div class="data-barang-pagination">
 
-                                </div>
-                                <div class="pagination-result" style="margin-left:160px;margin-top:10px">
-
-                                </div>
+                                <div class="data-barang-pagination"></div>
+                                <div class="pagination-result" style="margin-left:160px;margin-top:10px"></div>
                             </div>
                         </div>
                     </div>
-                </div> 
+                </div>
             </div>
         </div>
     </div>
@@ -138,29 +154,87 @@
         var dataload = "";
         dataload += '<tr> '
         dataload += '    <td class="data " data-dat="kode"><input type="text" name="kode[]" value="" class="form-control data-kode"></td> '
-        dataload += '    <td class="data" data-dat="nama_barang">'
+        dataload += '    <td class="data" data-dat="nama_barang" width="25%">'
         dataload += '       <input type="text" name="nama_barang[]" value="" class="form-control ">'
         dataload += '       <input type="hidden" name="id_barang[]" class="form-control ">'
         dataload += '    </td>'
-        dataload += '    <td class="data" data-dat="quantity" ><input type="text" name="quantity[]" value="" class="form-control data-quantity"></td> '
+        dataload += '    <td class="data" data-dat="quantity" ><input type="text" name="quantity[]" value="" class="form-control data-quantity" onkeypress="validate(event)"></td> '
         dataload += '    <td class="data" data-dat="satuan select-wrapper" style="width: 7%;"> '
         dataload += '      <select name="satuan[]" class="form-control" >'
         dataload += '          <option value="Kg">kg</option>'
         dataload += '          <option value="Dus">Dus</option>'
         dataload += '      </select>'
         dataload += '    </td> '
-        dataload += '    <td class="data" data-dat="harga_satuan"><input type="text" name="harga_satuan[]" value="" class="form-control "></td> '
+        dataload += '    <td class="data" data-dat="harga_satuan"><input type="text" name="harga_satuan[]" value="" class="form-control " onkeypress="validate(event)"></td> '
         dataload += '    <td class="data" data-dat="harga_total"><input type="text" name="harga_total[]" value="" class="form-control "></td> '
         dataload += '    <td class="data" data-dat="keterangan" style="width: 20%;"><input type="text" name="keterangan[]" value="" class="form-control "></td> '
         dataload += '</tr>'
 
         $('#tbody-table-data').append(dataload);
 
-    })
+    });
 
-    function confirmData() {
+    function checkInvalid(val) {
+        if (val == null || val == "") {
+            return true;
+        }
+
+        return false;
+    }
+
+    function savePelangganData() {
+
+        var nama_pelanggan = $("#nama_pelanggan").val();
+        var nomor_hp1 = $("#nomor_hp1").val();
+        var alamat1 = $("#alamat1").val();
+        var tgl_pengiriman = $("#tgl_pengiriman").val();
+
+        if (checkInvalid(nama_pelanggan)) {
+            alert("nama pelanggan tidak boleh kosong");
+            return false;
+        }
+
+        if (checkInvalid(nomor_hp1)) {
+            alert("nomor hp tidak boleh kosong");
+            return false;
+        }
+
+        if (checkInvalid(alamat1)) {
+            alert("alamat tidak boleh kosong");
+            return false;
+        }
+
+        if (checkInvalid(tgl_pengiriman)) {
+            alert("tanggal pengiriman tidak boleh kosong");
+            return false;
+        }
+
+        $.ajax({
+            url: '<?= site_url() ?>/order-received/save-additional',
+            data: {
+                'alamat1': alamat1,
+                'nama_pelanggan': nama_pelanggan,
+                'nomor_hp1': nomor_hp1
+            },
+            dataType: 'json',
+            method: 'post',
+            success: function(response) {
+
+                console.log(response.alamat_id + "-" + response.telephone_id + "-" + response.pelanggan_id);
+                confirmData(response.alamat_id, response.telephone_id, response.pelanggan_id);
+            },
+            error: function(xhr, status, error) {
+                //var err = eval("(" + xhr.responseText + ")");
+                console.log(error);
+            }
+
+        });
+    }
+
+    function confirmData(id_alamat, id_telephone, id_pelanggan) {
         var arr = []
         ar_loop = []
+        let result = false;
 
         const dataTable = document.getElementById('tbody-table-data').querySelectorAll('tr')
         const dataTableLength = dataTable.length
@@ -206,7 +280,7 @@
 
             var nama_pelanggan = document.createElement('input')
             nama_pelanggan.setAttribute('type', 'hidden');
-            nama_pelanggan.setAttribute('name', 'nama_pelanggan')
+            nama_pelanggan.setAttribute('name', 'id_pelanggan')
             nama_pelanggan.setAttribute('value', $('#nama_pelanggan').val())
             form_costume.append(nama_pelanggan)
 
@@ -234,10 +308,28 @@
             alamat2.setAttribute('value', $('#alamat2').val())
             form_costume.append(alamat2)
 
+            var id_pelanggan_form = document.createElement('input')
+            id_pelanggan_form.setAttribute('type', 'hidden');
+            id_pelanggan_form.setAttribute('name', 'id_pelanggan')
+            id_pelanggan_form.setAttribute('value', id_pelanggan)
+            form_costume.append(id_pelanggan_form)
+
+            var id_telephone_form = document.createElement('input')
+            id_telephone_form.setAttribute('type', 'hidden');
+            id_telephone_form.setAttribute('name', 'id_telephone')
+            id_telephone_form.setAttribute('value', id_telephone)
+            form_costume.append(id_telephone_form)
+
+            var id_alamat_form = document.createElement('input')
+            id_alamat_form.setAttribute('type', 'hidden');
+            id_alamat_form.setAttribute('name', 'id_alamat')
+            id_alamat_form.setAttribute('value', id_alamat)
+            form_costume.append(id_alamat_form)
+
             var tgl_pengiriman = document.createElement('input')
             tgl_pengiriman.setAttribute('type', 'hidden');
             tgl_pengiriman.setAttribute('name', 'tgl_pengiriman')
-            tgl_pengiriman.setAttribute('value', $('#tgl_pengiriman').val().replaceAll('/', ''))
+            tgl_pengiriman.setAttribute('value', $('#tgl_pengiriman').val().replaceAll('-', ''))
             form_costume.append(tgl_pengiriman)
 
             for (let j = 0; j < childElement.length; j++) {
@@ -268,11 +360,23 @@
                 url: '<?= site_url() ?>/order-received/save',
                 data: $('#form-create-order').serialize(),
                 method: 'post',
+                async: true,
+                beforeSend: function() {
+                    $("#loader-confirmed").hide();
+                    $("#loader").show();
+                },
                 success: function(data) {
-                    if (data == "success") {
-                        alert("success insert data");
-                        location.reload();
-                    }
+                  
+                    console.log("success");
+                    result = true;
+                },
+                complete: function(data) {
+                    $("#loader-confirmed").show();
+                    $("#loader").hide();
+                    //result = true;
+                    //alert("success insert data");
+                    //location.href = "<?= site_url() ?>/order-received";
+
                 },
                 error: function(xhr, status, error) {
                     console.log("Failed");
@@ -280,19 +384,34 @@
                 }
 
             });
+            
             $('#formSubmitData').empty();
-
+        
         }
+        console.log("result"+result);
+        //if(result==true){
+            alert("success insert data");
+            location.href = "<?= site_url() ?>/order-received";
+       // }
     }
 
-    
-    $(document).on('keyup', '.data-kode', function(e) {
 
-        if (e.keyCode == 13) {
+    $(document).on('keydown', '.data-kode', function(e) {
+
+        if (e.keyCode == 13 || e.keyCode == 9) {
             e.preventDefault();
             autoCompleteKode();
 
         }
+
+
+        if (e.keyCode == 8) {
+            //e.preventDefault();
+            //handle backspace 
+
+        }
+
+
         /*
         var input = document.getElementsByName('kode[]');
         var k = "";
@@ -311,8 +430,8 @@
 
         }*/
     });
-    
-    function autoCompleteKode(){
+
+    function autoCompleteKode() {
 
         var input = document.getElementsByName('kode[]');
 
@@ -327,7 +446,7 @@
             console.log("array[" + index + "] => " + value + " => length:" + value.length);
 
             //if (value.length >= 7) {
-                setDetailKode(index, value);
+            setDetailKode(index, value);
             //}
 
         }
@@ -384,6 +503,25 @@
         }
     });
 
+    function validate(evt) {
+        var theEvent = evt || window.event;
+
+        // Handle paste
+        if (theEvent.type === 'paste') {
+            key = event.clipboardData.getData('text/plain');
+        } else {
+            // Handle key press
+            var key = theEvent.keyCode || theEvent.which;
+            key = String.fromCharCode(key);
+        }
+        var regex = /[0-9]|\./;
+        if (!regex.test(key)) {
+            theEvent.returnValue = false;
+            if (theEvent.preventDefault) theEvent.preventDefault();
+        }
+    }
+
+
     /*
     $(document).on('keyup', '#nama_pelanggan', function() {
 
@@ -416,7 +554,7 @@
 
     $(function() {
         $("#tgl_pengiriman").datepicker({
-            format: "yyyymmdd",
+            format: "yyyy-mm-dd",
             todayHighlight: true,
             autoclose: true
         })
@@ -434,45 +572,34 @@
 
     }
 
-    function dataPaginBarang() {
+
+    function dataPagingBarang() {
 
         batasTampilData = 10;
-        halaman = $('#halaman').val()
-        keyword = ''
-        halamanAwal = (halaman > 1) ? (halaman * batasTampilData) - batasTampilData : 0;
-        totalDataBarang = $('#dataBarangCount').val()
-        totalHalaman = Math.ceil(totalDataBarang / batasTampilData);
-        console.log(totalHalaman);
-        getDataBarangaPagination(halaman, keyword)
-        $('.pagination-result').html(paginationViewHTML(halaman, totalHalaman))
-
+        halaman = $('#halaman').val();
+        keyword = $("#keyword-paging").val();
+        //console.log(keyword);
+        //halamanAwal = (halaman > 1) ? (halaman * batasTampilData) - batasTampilData : 0;
+        getDataBarangPagination(halaman, keyword, batasTampilData);
 
     }
 
-    function getDataBarangaPagination(halaman, keyword) {
+    function getDataBarangPagination(halaman, keyword, batasTampilData) {
 
         $.ajax({
             url: '<?= site_url() ?>/barang/get-pagination-page',
             method: 'post',
             dataType: 'json',
             data: {
-                halaman: halaman,
-                keyword: keyword
+                'halaman': halaman,
+                'keyword': keyword,
+                'batastampil': batasTampilData
             },
             success: function(data) {
                 var data_load = ''
 
-                data_load += '<div class="row">'
-                data_load += '    <div class="col">'
-                data_load += '        Kode'
-                data_load += '    </div>'
-                data_load += '    <div class="col">'
-                data_load += '        Barang'
-                data_load += '    </div>'
-                data_load += '</div>'
-                data_load += ' <hr style="width: 260px;margin-left:0px;border-width: 2px;border-style: solid;border-color:white">'
                 for (let i = 0; i < data.length; i++) {
-                    const element = data[i];
+                    const element = data.data[i];
                     data_load += '<div class="row">'
                     data_load += '    <div class="col">'
                     data_load += '        ' + element.kode
@@ -483,7 +610,11 @@
                     data_load += '</div>'
 
                 }
-                $('.data-barang-pagination').html(data_load)
+
+                $('.data-barang-pagination').html(data_load);
+                totalDataBarang = data.length_paging;
+                totalHalaman = Math.ceil(totalDataBarang / batasTampilData);
+                $('.pagination-result').html(paginationViewHTML(halaman, totalHalaman))
             },
             error: function(data) {
                 console.log("Gagal");
@@ -539,11 +670,21 @@
 
     function dataPaginBarangHREF(halaman) {
         $('#halaman').val(halaman)
-        dataPaginBarang()
+        dataPagingBarang()
     }
 
+    $("#keyword-paging").keyup(function(e) {
+
+        //if (e.keyCode == 13) {
+        //  e.preventDefault();
+        console.log("on jo");
+        dataPagingBarang();
+        //}
+    });
+
     $(document).ready(function() {
-        dataPaginBarang()
+        dataPagingBarang();
+        clearAllData();
 
     })
 </script>

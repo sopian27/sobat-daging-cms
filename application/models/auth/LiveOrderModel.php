@@ -2,6 +2,14 @@
 class LiveOrderModel extends CI_Model
 {
 
+    public function getTrxId()
+    {
+
+        $query = " select max(id_trx_live_order) as trx_id from trx_order_po where substring(create_date,1,8) =DATE_FORMAT(SYSDATE(), '%Y%m%d')";
+
+        return $this->db->query($query)->result();
+    }
+
     public function getDataByDate($data)
     {
 
@@ -10,6 +18,135 @@ class LiveOrderModel extends CI_Model
                   FROM trx_order_po t,pelanggan p 
                   WHERE t.id_pelanggan=p.id and status='0' and
                   substring(t.create_date,1,8) ='$date' group by id_trx_order";
+
+        return $this->db->query($query)->result();
+    }
+
+    public function getLiveOrderData($create_date, $keyword, $halaman, $batasTampilData)
+    {
+        $query = "";
+
+        if (isset($keyword) && $keyword != "") {
+
+                $query = " SELECT t.id_trx_order,p.nama_pelanggan,t.create_date,t.status,t.update_date,t.id_trx_live_order
+                    FROM 
+                        trx_order_po t,pelanggan p 
+                    WHERE 
+                        t.id_pelanggan=p.id 
+                        and p.nama_pelanggan ='$keyword'
+                    GROUP BY t.id_trx_order
+                    limit " . $halaman . "," . $batasTampilData;
+        } else {
+
+            $query = "  SELECT t.id_trx_order,p.nama_pelanggan,t.create_date,t.status,t.update_date,t.id_trx_live_order
+                        FROM 
+                            trx_order_po t,pelanggan p 
+                        WHERE 
+                            t.id_pelanggan=p.id
+                            and substring(t.create_date,1,8) ='$create_date'
+                        GROUP BY t.id_trx_order
+                        limit " . $halaman . "," . $batasTampilData;
+        }
+
+        return $this->db->query($query)->result();
+    }
+
+    public function getLiveOrderDataCount($create_date, $keyword)
+    {
+        $query = "";
+
+        if (isset($keyword) && $keyword != "") {
+
+            $query = " SELECT t.id_trx_order,p.nama_pelanggan,t.create_date,t.status,t.update_date,t.id_trx_live_order
+                    FROM 
+                        trx_order_po t,pelanggan p 
+                    WHERE 
+                        t.id_pelanggan=p.id and status='0'
+                        and p.nama_pelanggan ='$keyword'
+                    GROUP BY t.id_trx_order";
+        } else {
+
+            $query = "  SELECT t.id_trx_order,p.nama_pelanggan,t.create_date,t.status,t.update_date,t.id_trx_live_order
+                    FROM 
+                        trx_order_po t,pelanggan p 
+                    WHERE 
+                        t.id_pelanggan=p.id and status='0'
+                        and substring(t.create_date,1,8) ='$create_date'
+                    GROUP BY t.id_trx_order";
+        }
+
+        return $this->db->query($query)->result();
+    }
+
+    public function getLiveOrderDate($create_date, $keyword, $halaman, $batasTampilData)
+    {
+        $query = "";
+
+        if (isset($keyword) && $keyword != "") {
+
+        } else {
+
+            $query = "  SELECT id_trx_order,p.nama_pelanggan,b.nama_barang,t.quantity,t.satuan
+                        FROM trx_order_po t,pelanggan p, barang b 
+                        WHERE t.id_pelanggan=p.id and  
+                        b.id = t.id_barang 
+                        and substring(t.create_date,1,8) ='$create_date'
+                        limit " . $halaman . "," . $batasTampilData;
+
+                        
+        }
+
+        return $this->db->query($query)->result();
+    }
+
+    public function getLiveOrderDateCount($create_date, $keyword)
+    {
+        $query = "";
+
+        if (isset($keyword) && $keyword != "") {
+
+        } else {
+
+            $query = "  SELECT id_trx_order,p.nama_pelanggan,b.nama_barang,t.quantity,t.satuan
+                        FROM trx_order_po t,pelanggan p, barang b 
+                        WHERE t.id_pelanggan=p.id and  
+                        b.id = t.id_barang 
+                        and substring(t.create_date,1,8) ='$create_date'";
+        }
+
+        return $this->db->query($query)->result();
+    }
+
+    public function getDateByIdLiveOrder($create_date, $halaman, $batasTampilData)
+    {
+            $query = " SELECT t.id_trx_order,p.nama_pelanggan,t.create_date,t.status,t.update_date,t.id_trx_live_order,t.bungkusan,t.quantity,b.*,
+                        t.no_surat_jalan,al.alamat,tl.nomor,t.tgl_pengiriman,t.note,t.id
+                    FROM 
+                        trx_order_po t,pelanggan p,barang b,alamat al,telephone tl  
+                    WHERE 
+                        t.id_pelanggan=p.id
+                        and b.id = t.id_barang
+                        and t.id_alamat = al.id
+                        and t.id_telephone = tl.id
+                        and substring(t.create_date,1,8) ='$create_date'
+                        order by t.id_trx_order";
+                       /* limit " . $halaman . "," . $batasTampilData; */
+
+        return $this->db->query($query)->result();
+    }
+
+    public function getDateByIdLiveOrderCounter($create_date)
+    {
+        $query = " SELECT t.id_trx_order,p.nama_pelanggan,t.create_date,t.status,t.update_date,t.id_trx_live_order,t.bungkusan,t.quantity,b.*,
+                        t.no_surat_jalan,al.alamat,tl.nomor,t.tgl_pengiriman,t.note,t.id
+                    FROM 
+                        trx_order_po t,pelanggan p,barang b,alamat al,telephone tl  
+                    WHERE 
+                        t.id_pelanggan=p.id
+                        and b.id = t.id_barang
+                        and t.id_alamat = al.id
+                        and t.id_telephone = tl.id
+                        and substring(t.create_date,1,8) ='$create_date'";
 
         return $this->db->query($query)->result();
     }
@@ -54,8 +191,42 @@ class LiveOrderModel extends CI_Model
         $query = " SELECT t.*,p.*,b.nama_barang,b.kode,t.id as id_po
                     FROM trx_order_po t,pelanggan p, barang b 
                     WHERE t.id_pelanggan=p.id and  
-                    b.id = t.id_barang and status='0' and
+                    b.id = t.id_barang and
                     t.id_trx_order ='$trxId'";
+
+        return $this->db->query($query)->result();
+    }
+
+    public function getDataByIdLiveOrder($id_trx_order, $halaman, $batasTampilData)
+    {
+            $query = " SELECT t.id_trx_order,p.nama_pelanggan,t.create_date,t.status,t.update_date,t.id_trx_live_order,t.bungkusan,t.quantity,b.*,
+                        t.no_surat_jalan,al.alamat,tl.nomor,t.tgl_pengiriman,t.note,t.id
+                    FROM 
+                        trx_order_po t,pelanggan p,barang b,alamat al,telephone tl  
+                    WHERE 
+                        t.id_pelanggan=p.id
+                        and b.id = t.id_barang
+                        and t.id_alamat = al.id
+                        and t.id_telephone = tl.id
+                        and t.id_trx_order = '$id_trx_order'
+                        order by t.id
+                        limit " . $halaman . "," . $batasTampilData;
+
+        return $this->db->query($query)->result();
+    }
+
+    public function getDataByIdLiveOrderCounter($id_trx_order)
+    {
+        $query = " SELECT t.id_trx_order,p.nama_pelanggan,t.create_date,t.status,t.update_date,t.id_trx_live_order,t.bungkusan,t.quantity,b.*,
+                        t.no_surat_jalan,al.alamat,tl.nomor,t.tgl_pengiriman,t.note,t.id
+                    FROM 
+                        trx_order_po t,pelanggan p,barang b,alamat al,telephone tl  
+                    WHERE 
+                        t.id_pelanggan=p.id
+                        and b.id = t.id_barang
+                        and t.id_alamat = al.id
+                        and t.id_telephone = tl.id
+                        and t.id_trx_order = '$id_trx_order'";
 
         return $this->db->query($query)->result();
     }
@@ -87,10 +258,11 @@ class LiveOrderModel extends CI_Model
     }
     */
 
-    public function update($data,$where){
+    public function update($data, $where)
+    {
         $this->db->set($data);
         $this->db->where($where);
-        $this->db->update('trx_order_po'); 
+        $this->db->update('trx_order_po');
         return $this->db->affected_rows();
     }
 }

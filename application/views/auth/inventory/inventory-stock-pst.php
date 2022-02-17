@@ -283,7 +283,13 @@
             dataLoad += response.data[i].satuan;
             dataLoad += "</td>";
             dataLoad += "<td width='10%'>";
-            dataLoad += '<input type="text" name="quantity_update_pusat[]" id="quantity_update_pusat' + i + '" class="form-control-label" value="' + update_quantity + '" onkeypress="validate(event)"/>';
+
+            if (response.data[i].status == "0") {
+                dataLoad += '<input type="text" name="quantity_update_pusat[]" id="quantity_update_pusat' + i + '" class="form-control-label" value="' + update_quantity + '" onkeypress="validate(event)"/>';
+            } else {
+                dataLoad += '<input type="text" name="quantity_update_pusat[]" id="quantity_update_pusat' + i + '" class="form-control-label"  onkeypress="validate(event)"/>';
+            }
+
             dataLoad += "</td>";
             dataLoad += '<td width="7%">'
             dataLoad += '      <select name="satuan_pusat[]" id="satuan_pusat' + i + '" class="form-control">'
@@ -292,13 +298,19 @@
             dataLoad += '      </select>'
             dataLoad += '</td> '
             dataLoad += "<td width='20%'>";
-            dataLoad += '<input type="text" name="note_pusat[]" id="note_pusat' + i + '" class="form-control-label" value="' + note + '"/>';
+            
+            if (response.data[i].status == "0") {
+                dataLoad += '<input type="text" name="note_sobat[]" id="note_sobat' + i + '" class="form-control-label" value="' + note + '"/>';
+            } else {
+                dataLoad += '<input type="text" name="note_sobat[]" id="note_sobat' + i + '" class="form-control-label" />';
+            }
+
             dataLoad += '<input type="hidden" name="kode_pusat[]" id="kode_pusat' + i + '" value="' + response.data[i].kode + '"/>';
             dataLoad += '<input type="hidden" name="quantity_pusat[]" id="quantity_pusat' + i + '" value="' + response.data[i].quantity_pusat + '"/>';
             dataLoad += "</td>";
             dataLoad += "<td>";
 
-            if (response.data[i].note != null) {
+            if (response.data[i].status == "0") {
                 dataLoad += "<a class='form-control-button btn-success' style='background-color: #a5662f'><span class='fas fa-check'></span></a>";
             } else {
                 dataLoad += "<a class='form-control-button btn btn-outline-light button-action' onclick='update_data_pusat(" + i + ")'><span class='fas fa-check'></span></a>";
@@ -345,7 +357,13 @@
             dataLoad += response.data[i].satuan;
             dataLoad += "</td>";
             dataLoad += "<td width='10%'>";
-            dataLoad += '<input type="text" name="quantity_update_sobat[]" id="quantity_update_sobat' + i + '" class="form-control-label" value="' + update_quantity + '" onkeypress="validate(event)"/>';
+            
+            if (response.data[i].status == "0") {
+                dataLoad += '<input type="text" name="quantity_update_sobat[]" id="quantity_update_sobat' + i + '" class="form-control-label" value="' + update_quantity + '" onkeypress="validate(event)"/>';
+            } else {
+                dataLoad += '<input type="text" name="quantity_update_sobat[]" id="quantity_update_sobat' + i + '" class="form-control-label" onkeypress="validate(event)"/>';
+            }
+
             dataLoad += "</td>";
             dataLoad += '<td width="7%">'
             dataLoad += '      <select name="satuan_sobat[]" id="satuan_sobat' + i + '" class="form-control">'
@@ -354,13 +372,19 @@
             dataLoad += '      </select>'
             dataLoad += '</td> '
             dataLoad += "<td width='20%'>";
-            dataLoad += '<input type="text" name="note_sobat[]" id="note_sobat' + i + '" class="form-control-label" value="' + note + '"/>';
+
+            if (response.data[i].status == "0") {
+                dataLoad += '<input type="text" name="note_sobat[]" id="note_sobat' + i + '" class="form-control-label" value="' + note + '"/>';
+            } else {
+                dataLoad += '<input type="text" name="note_sobat[]" id="note_sobat' + i + '" class="form-control-label" />';
+            }
+           
             dataLoad += '<input type="hidden" name="kode_sobat[]" id="kode_sobat' + i + '" value="' + response.data[i].kode + '"/>';
             dataLoad += '<input type="hidden" name="quantity_sobat[]" id="quantity_sobat' + i + '" value="' + response.data[i].quantity_sobat + '"/>';
             dataLoad += "</td>";
             dataLoad += "<td>";
 
-            if (response.data[i].note != null) {
+            if (response.data[i].status == "0") {
                 dataLoad += "<a class='form-control-button btn-success' style='background-color: #a5662f'><span class='fas fa-check'></span></a>";
             } else {
                 dataLoad += "<a class='form-control-button btn btn-outline-light button-action' onclick='update_data_sobat(" + i + ")'><span class='fas fa-check'></span></a>";

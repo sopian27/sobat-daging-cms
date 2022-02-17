@@ -269,10 +269,10 @@
                     dataType: 'json',
                     async: true,
                     success: function(data) {
-                        if (data == "success") {
+                        //if (data == "success") {
                             console.log("success insert data");
-                            location.href = "<?= site_url()?>/inventory";
-                        }
+                          //  location.href = "<?= site_url()?>/inventory";
+                        //}
                     },
                     error: function(data) {
                         console.log("Failed");
@@ -285,6 +285,11 @@
             }
 
         }
+
+        //if (data == "success") {
+            console.log("success insert data");
+            location.href = "<?= site_url()?>/inventory";
+        //}
     }
 
     function clearAllData() {

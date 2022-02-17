@@ -56,6 +56,74 @@ class OrderReceived extends CI_Controller{
      *
      * 
      */ 
+
+    public function orderAdditional(){
+
+        $where =array(
+            "lower(trim(nama_pelanggan))"=> strtolower($_POST['nama_pelanggan'])
+        );
+
+        $data =array(
+            "nama_pelanggan"=> $_POST['nama_pelanggan'],
+            "nomor_hp1"=> $_POST['nomor_hp1'],
+            "alamat1"=> $_POST['alamat1'],
+            "create_date"=>date('YmdHis'),
+            "update_date"=>date('YmdHis')
+        );
+
+        $getPelangganId = $this->plg_model->getWhere($where);
+
+        if (empty($getPelangganId)) {
+                $getPelangganId = $this->plg_model->insertData($data); 
+        }else{
+            $getPelangganId = $getPelangganId[0]->id;
+        }              
+
+        $dataTelephone = array(
+            "nomor"=>$_POST['nomor_hp1'],
+            "id_pelanggan" => $getPelangganId
+        );
+
+        $whereTelephone = array(
+            "nomor"=>$_POST['nomor_hp1']
+        );
+
+        $getTelephoneId = $this->tlp_model->getWhere($whereTelephone);
+
+        if (empty($getTelephoneId)) {
+            $getTelephoneId = $this->tlp_model->insertData($dataTelephone); 
+        }else{
+            $getTelephoneId = $getTelephoneId[0]->id;
+        }
+
+        $dataAlamat = array(
+            "alamat"=>$_POST['alamat1'],
+            "id_pelanggan" => $getPelangganId
+        );
+
+        $whereAlamat = array(
+            "lower(trim(alamat))"=> strtolower($_POST['alamat1'])
+        );
+        
+        $alamatId = $this->alamat_model->getWhere($whereAlamat);
+
+        if (empty($alamatId)) {
+             $alamatId = $this->alamat_model->insertData($dataAlamat);
+        }else{
+             $alamatId = $alamatId[0]->id;
+        }
+
+        $output = array(
+            "pelanggan_id" => $getPelangganId,
+            "telephone_id" => $getTelephoneId,
+            "alamat_id"    => $alamatId
+        );
+
+        echo json_encode($output);
+
+    }
+
+
     public function orderSave(){
 
         /*step 1 & step 2*/
@@ -66,6 +134,7 @@ class OrderReceived extends CI_Controller{
 
         for($i=0; $i<count($_POST["id_barang"]); $i++){
             
+            /*
             if($i==0){
 
                 $where =array(
@@ -120,23 +189,24 @@ class OrderReceived extends CI_Controller{
                 }
 
             }
+            */
 
             /*step 3 */
             $j=0;
             $dataInsert[] =array(
-                "id_barang" => $_POST["id_barang"][$j],
-                "quantity"  => $_POST["quantity"][$j],
-                "harga_satuan" => $_POST["harga_satuan"][$j],
-                "harga_total" => $_POST["harga_total"][$j],
-                "satuan" => $_POST["satuan"][$j],
+                "id_barang"      => $_POST["id_barang"][$j],
+                "quantity"       => $_POST["quantity"][$j],
+                "harga_satuan"   => $_POST["harga_satuan"][$j],
+                "harga_total"    => $_POST["harga_total"][$j],
+                "satuan"         => $_POST["satuan"][$j],
                 "tgl_pengiriman" => $_POST["tgl_pengiriman"],
-                "id_trx_order" => $_POST["kode_po"],
-                "keterangan" => $_POST["keterangan"][$j],
-                "id_pelanggan" => $getPelangganId[0]->id,
-                "no_invoice" => $_POST["kode_inv"],
+                "id_trx_order"   => $_POST["kode_po"],
+                "keterangan"     => $_POST["keterangan"][$j],
+                "id_pelanggan"   => $_POST["id_pelanggan"],
+                "no_invoice"     => $_POST["kode_inv"],
                 "no_surat_jalan" => $_POST["kode_ssj"],
-                "id_alamat" => $alamatId[0]->id,
-                "id_telephone" => $getTelephoneId[0]->id,
+                "id_alamat"      => $_POST["id_alamat"],
+                "id_telephone"   => $_POST["id_telephone"],
                 "create_date"=>date('YmdHis'),
                 "update_date"=>date('YmdHis'),
                 "status"=>"0"
@@ -170,4 +240,3 @@ class OrderReceived extends CI_Controller{
         echo json_encode($dataPelanggan);
     }
 }
-?>

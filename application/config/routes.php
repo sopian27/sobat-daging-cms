@@ -156,6 +156,7 @@ $route['data-mutasi/get-data'] = 'auth/DataMutasi/getData';
 /* order-received */
 $route['order-received'] = 'auth/OrderReceived';
 $route['order-received/save'] = 'auth/OrderReceived/orderSave';
+$route['order-received/save-additional'] = 'auth/OrderReceived/orderAdditional';
 $route['order-received/getdatakode'] = 'auth/OrderReceived/getDataKode';
 $route['order-received/getdatapelanggan'] = 'auth/OrderReceived/getDataPelanggan';
 
@@ -164,10 +165,14 @@ $route['barang/get-pagination-page'] = 'auth/Barang/GetPaginationPage';
 
 /* live-order */
 $route['live-order'] = 'auth/LiveOrder';
-$route['live-order/getdatabydate'] = 'auth/LiveOrder/getDataByDate';
+$route['live-order/getdata'] = 'auth/LiveOrder/getData';
+$route['live-order/get-date'] = 'auth/LiveOrder/getDate';
 $route['live-order/confirmorder'] = 'auth/LiveOrder/confirmOrder';
 $route['live-order/live-order-detail'] = 'auth/LiveOrder/liveOrderDetail';
 $route['live-order/get-detail-trx'] = 'auth/LiveOrder/getDetailTrx';
+$route['live-order/update-bungkusan'] = 'auth/LiveOrder/updateBungkusan';
+$route['live-order/update-bungkusan-confirm'] = 'auth/LiveOrder/updateBungkusanConfirm';
+$route['live-order/clear-all'] = 'auth/LiveOrder/clearAll';
 $route['live-order/live-order-detailtrx/(:any)'] = 'auth/LiveOrder/liveOrderDetailTrx/$1';
 
 /* history-order */
