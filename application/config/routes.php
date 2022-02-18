@@ -177,6 +177,9 @@ $route['live-order/live-order-detailtrx/(:any)'] = 'auth/LiveOrder/liveOrderDeta
 
 /* history-order */
 $route['history-order'] = 'auth/HistoryOrder';
+$route['history-order/getdata'] = 'auth/HistoryOrder/getData';
+$route['history-order/gethistory'] = 'auth/HistoryOrder/getHistoryData';
+$route['history-order/print'] = 'auth/HistoryOrder/print';
 $route['history-order/detailorder/(:any)'] = 'auth/HistoryOrder/detailOrder/$1';
 $route['history-order/print-detail/(:any)'] = 'auth/HistoryOrder/printDetail/$1';
 $route['history-order/getdatabydate'] = 'auth/HistoryOrder/getDataByDate';
