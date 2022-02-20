@@ -47,7 +47,7 @@ class Payment extends CI_Controller{
             "id_trx_payment_in" =>  $data_post['id_trx_payment_in'],
             "no_invoice"=> $data_post['no_invoice'],
             "harga_total"=> $data_post['harga_total'],
-            "nominal_bayar"=> $data_post['nominal_bayar'],
+            "nominal_bayar"=>  str_replace(",", "",$data_post['nominal_bayar']),
             "id_trx_payment_co"=> $data_post['id_trx_payment_co'],
             "create_date"=>date('YmdHis'),
             "update_date"=>date('YmdHis')
@@ -55,8 +55,8 @@ class Payment extends CI_Controller{
 
         $this->trx_payment_in_model->insertData($data);
 
-        redirect('payment');
-
+        //redirect('payment');
+        echo json_encode("success");
     }
 
     public function loadHistoryPayment(){

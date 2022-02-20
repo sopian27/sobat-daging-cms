@@ -5,7 +5,7 @@ class TRXPSTPusatModel extends CI_Model
     {
 
         $query = "SELECT 
-                    count(trx_pst_pusat) as trx_id 
+                    max(trx_pst_pusat) as trx_id 
                 FROM 
                     trx_update_pst_pusat 
                 WHERE 

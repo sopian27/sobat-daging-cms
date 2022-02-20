@@ -152,6 +152,8 @@
                     $("#data-trigger").hide();
                     $("#div-inventory-update-detail").show();
 
+                }else{
+                    $('.pagination-result').html("");
                 }
             },
             error: function(xhr, status, error) {

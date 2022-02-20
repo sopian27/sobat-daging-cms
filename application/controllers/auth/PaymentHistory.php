@@ -5,12 +5,10 @@ class PaymentHistory extends CI_Controller{
     public function __construct() {  
         parent::__construct(); 
 
-        date_default_timezone_set('Asia/Jakarta');
-        $this->load->model('auth/TRXPaymentInModel','trx_payment_in_model');    
-        $this->load->model('auth/TRXPaymentOutModel','trx_payment_out_model');    
-        $this->load->model('auth/HistoryOrderModel','history_order_model');    
-        $this->load->model('auth/TRXPaymentInvoiceModel','trx_payment_inv_model');    
-        $this->load->model('auth/TRXBarangPoModel','trx_brg_po_model');    
+        date_default_timezone_set('Asia/Jakarta'); 
+        $this->load->model('auth/TRXPaymentInHistoryModel','trx_payment_in_history_model');  
+        $this->load->model('auth/TRXPaymentOutHistoryModel','trx_payment_out_history_model');  
+        $this->load->library('Fungsi');
 
     } 
 
@@ -96,30 +94,82 @@ class PaymentHistory extends CI_Controller{
 
     public function getHistoryPayment(){
         
-        $data['date_show_data'] = $_POST['create_date'];
-        $post_data=array("date_choosen"=>$_POST['create_date']);
-        
-        $payIn=$this->trx_payment_in_model->getTrxPaymentIn($post_data);
-        $payOut=$this->trx_payment_out_model->getTrxPaymentOut($post_data);
-        
-        $payOutTot=$this->trx_payment_out_model->getTotTrxPaymentOut($post_data);
-        $payInTot=$this->trx_payment_in_model->getTotTrxPaymentIn($post_data);
+        $data_post = $_POST;
+        $batasTampilData = $_POST['batastampil'];
+        $halaman = (isset($_POST['halaman'])) ? $halaman = $_POST['halaman'] : $halaman = 1;
+        $halamanAwal = ($halaman > 1) ? ($halaman * $batasTampilData) - $batasTampilData : 0;
 
-        $payCo=$this->trx_payment_in_model->getInvoiceCustomer($post_data);
-        $payPo=$this->trx_payment_in_model->getInvoicePayment($post_data);
+        $dataIn = $this->trx_payment_in_history_model->getTrxPaymentIn($data_post['create_date'], $_POST['keyword'], $halamanAwal, $batasTampilData);
+        $dataInCounter = $this->trx_payment_in_history_model->getTrxPaymentInCount($data_post['create_date'], $_POST['keyword']);
+
+        $dataInTot = $this->trx_payment_in_history_model->getTotTrxPaymentIn($data_post['create_date'], $_POST['keyword']);
+
+        $dataCus = $this->trx_payment_in_history_model->getInvoiceCustomer($data_post['create_date'], $_POST['keyword'], $halamanAwal, $batasTampilData);
+        $dataCusCounter = $this->trx_payment_in_history_model->getInvoiceCustomerCount($data_post['create_date'], $_POST['keyword']);
+
+        $dataOut = $this->trx_payment_out_history_model->getTrxPaymentOut($data_post['create_date'], $_POST['keyword'], $halamanAwal, $batasTampilData);
+        $dataOutCounter = $this->trx_payment_out_history_model->getTrxPaymentOutCount($data_post['create_date'], $_POST['keyword']);
+
+        $dataOutTot = $this->trx_payment_out_history_model->getTotTrxPaymentOut($data_post['create_date'], $_POST['keyword']);
+
+        $dataPo = $this->trx_payment_out_history_model->getInvoicePayment($data_post['create_date'], $_POST['keyword'], $halamanAwal, $batasTampilData);
+        $dataPoCounter = $this->trx_payment_out_history_model->getInvoicePaymentCount($data_post['create_date'], $_POST['keyword']);
+        
 
         $output = array(
-            "payin" => $payIn,
-            "payout" => $payOut,
-            "payouttot" => $payOutTot,
-            "payintot" => $payInTot,
-            "payco" => $payCo,
-            "paypo" => $payPo
+            "length_in" => count($dataIn),
+            "data_in" => $dataIn,
+            "length_in_paging" => count($dataInCounter),
+            "data_in_tot" => $dataInTot,
+            "length_cus" => count($dataCus),
+            "data_cus" => $dataCus,
+            "length_cus_paging" => count($dataCusCounter),
+            "length_out" => count($dataOut),
+            "data_out" => $dataOut,
+            "length_out_paging" => count($dataOutCounter),
+            "data_out_tot" => $dataOutTot,
+            "length_po" => count($dataPo),
+            "data_po" => $dataPo,
+            "length_po_paging" => count($dataPoCounter)
+            
         );
-
+    
         echo json_encode($output);
         
         
+    }
+    
+    public function loadHistoryPayment(){
+        $trxData = $this->trx_payment_in_history_model->loadHistoryPayment($_POST);
+        $flag=false;
+
+        if(empty($trxData)){
+            $flag=true;
+            $trxData = $this->trx_payment_in_history_model->getInvoiceData($_POST);
+        }
+
+        $output = array(
+            "flag"=> $flag,
+            "data"=>$trxData);
+
+        echo json_encode($output);
+    }
+
+
+    public function loadHistoryPaymentOut(){
+        $trxData = $this->trx_payment_out_history_model->loadHistoryPayment($_POST);
+        $flag=false;
+        
+        if(empty($trxData)){
+            $flag=true;
+            $trxData = $this->trx_payment_out_history_model->getInvoiceData($_POST);
+        }
+
+        $output = array(
+            "flag"=> $flag,
+            "data"=>$trxData);
+
+        echo json_encode($output);
     }
 
 
@@ -147,10 +197,64 @@ class PaymentHistory extends CI_Controller{
 
     }
 
-    public function loadHistoryPayment(){
-        $trxData = $this->trx_payment_in_model->loadHistoryPayment($_POST);
-        echo json_encode($trxData);
+    
+    public function getNoSuratJalanHistory()
+    {
+
+        $noSuratJalan = $_POST['no_surat_jalan'];
+        $batasTampilData = $_POST['batastampil'];
+        $halaman = (isset($_POST['halaman'])) ? $halaman = $_POST['halaman'] : $halaman = 1;
+        $halamanAwal = ($halaman > 1) ? ($halaman * $batasTampilData) - $batasTampilData : 0;
+
+        $data_surat_jln = $this->trx_payment_in_history_model->getNoSuratJalanData($noSuratJalan, $halamanAwal, $batasTampilData);
+        $data_surat_jln_counter = $this->trx_payment_in_history_model->getNoSuratJalanDataCount($noSuratJalan);
+        $sumTotal = $this->trx_payment_in_history_model->getSumTotal($noSuratJalan);
+
+        $output = array(
+            "data_surat_jln"  =>  $data_surat_jln,
+            "length         " => count($data_surat_jln),
+            "length_paging" => count($data_surat_jln_counter),
+            "sum_total"       => $sumTotal
+        );
+
+        echo json_encode($output);
     }
 
+    public function getKodePoHistory()
+    {
+
+        $kode_po = $_POST['kode_po'];
+        $batasTampilData = $_POST['batastampil'];
+        $halaman = (isset($_POST['halaman'])) ? $halaman = $_POST['halaman'] : $halaman = 1;
+        $halamanAwal = ($halaman > 1) ? ($halaman * $batasTampilData) - $batasTampilData : 0;
+
+        $data_kode_po = $this->trx_payment_out_history_model->getKodeData($kode_po, $halamanAwal, $batasTampilData);
+        $data_kode_po_counter = $this->trx_payment_out_history_model->getKodeDataCounter($kode_po);
+        $sumTotal = $this->trx_payment_out_history_model->getSumTotalPo($kode_po);
+
+        $output = array(
+            "data_kode_po"  =>  $data_kode_po,
+            "length         " => count($data_kode_po),
+            "length_paging" => count($data_kode_po_counter),
+            "sum_total"       => $sumTotal
+        );
+
+        echo json_encode($output);
+    }
+
+    public function print(){
+       
+        $html="";
+        $data_post=$_POST;
+
+        $t = time();
+        $data['date'] = date("d F Y", $t);
+        $data['data'] = $this->trx_payment_in_history_model->getNoSuratJalanDataCount($data_post['no_surat_jln']);
+        $data['sumTotal'] = $this->trx_payment_in_history_model->getSumTotal($data_post['no_surat_jln']);
+        
+        $html = $this->load->view('auth/payment/history-payment-customer-print',$data,true);
+
+        $this->fungsi->PdfGenerator($html,'History Payment Customer','A4','landscape');
+    }
 }
 ?>

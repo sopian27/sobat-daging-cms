@@ -39,6 +39,20 @@ class TRXBarangPoModel extends CI_Model
     }
 
     /* update po */
+    public function getTrxIdUpdate()
+    {
+
+        $query = "SELECT 
+                        max(id_trx_update) as trx_id 
+                    FROM 
+                        trx_barang_po 
+                    WHERE 
+                        substring(create_date,1,8) =DATE_FORMAT(SYSDATE(), '%Y%m%d')";
+
+        return $this->db->query($query)->result();
+    }
+
+    /* update po */
     public function getDataById($id_trx_po, $halamanAwal, $batasTampilData)
     {
         $query = " SELECT 
@@ -176,6 +190,35 @@ class TRXBarangPoModel extends CI_Model
     }
 
     /* live stock */
+    public function getTrxIdLiveStocks()
+    {
+
+        $query = "SELECT 
+                        max(id_trx_live_stocks) as trx_id 
+                    FROM 
+                        trx_barang_po 
+                    WHERE 
+                        substring(create_date,1,8) =DATE_FORMAT(SYSDATE(), '%Y%m%d')";
+
+        return $this->db->query($query)->result();
+    }
+
+    /* live stock no invoice */
+    public function getTrxIdNoInvoice()
+    {
+
+        $query = "SELECT 
+                            max(no_invoice) as trx_id 
+                        FROM 
+                            trx_barang_po 
+                        WHERE 
+                            substring(create_date,1,8) =DATE_FORMAT(SYSDATE(), '%Y%m%d')";
+
+        return $this->db->query($query)->result();
+    }
+
+
+    /* live stock */
     public function getLiveStockData($create_date, $keyword, $halaman, $batasTampilData)
     {
         $query = "";
@@ -188,7 +231,7 @@ class TRXBarangPoModel extends CI_Model
                 supplier s 
             WHERE 
                 tbo.id_supplier = s.id 
-                and tbo.status='3'
+                and tbo.status >='3'
                 and tbo.id_trx_update !=''
                 /*and tbo.id_trx_live_stocks ='' */
                 and s.nama ='$keyword'
@@ -202,7 +245,7 @@ class TRXBarangPoModel extends CI_Model
                         supplier s 
                     WHERE 
                         tbo.id_supplier = s.id 
-                        and tbo.status='3'
+                        and tbo.status >='3'
                         and tbo.id_trx_update !=''
                         /*and tbo.id_trx_live_stocks ='' */
                         and substring(tbo.update_date,1,8) ='$create_date'
@@ -226,7 +269,7 @@ class TRXBarangPoModel extends CI_Model
                 supplier s 
             WHERE 
                 tbo.id_supplier = s.id 
-                and tbo.status='3'
+                and tbo.status >='3'
                 and tbo.id_trx_update !=''
                 /*and tbo.id_trx_live_stocks ='' */
                 and s.nama ='$keyword'
@@ -239,7 +282,7 @@ class TRXBarangPoModel extends CI_Model
                         supplier s 
                     WHERE 
                         tbo.id_supplier = s.id 
-                        and tbo.status='3'
+                        and tbo.status >='3'
                         and tbo.id_trx_update !=''
                         /*and tbo.id_trx_live_stocks ='' */
                         and substring(tbo.update_date,1,8) ='$create_date'
@@ -363,7 +406,7 @@ class TRXBarangPoModel extends CI_Model
                 supplier s 
             WHERE 
                 tbo.id_supplier = s.id 
-                and tbo.status='3' 
+                and tbo.status >='3' 
                 and tbo.id_trx_live_stocks !='' 
                 and s.nama= '$keyword'
             GROUP BY tbo.id_trx_po,substring(tbo.create_date,5,2)
@@ -376,7 +419,7 @@ class TRXBarangPoModel extends CI_Model
                         supplier s 
                     WHERE 
                         tbo.id_supplier = s.id 
-                        and tbo.status='3' 
+                        and tbo.status >='3' 
                         and tbo.id_trx_live_stocks !='' 
                         and substring(tbo.create_date,1,6) ='$create_date'
                     GROUP BY tbo.id_trx_po,substring(tbo.create_date,5,2)
@@ -400,7 +443,7 @@ class TRXBarangPoModel extends CI_Model
                 supplier s 
             WHERE 
                 tbo.id_supplier = s.id 
-                and tbo.status='3' 
+                and tbo.status >='3' 
                 and tbo.id_trx_live_stocks !='' 
                 and s.nama= '$keyword'
             GROUP BY tbo.id_trx_po,substring(tbo.create_date,5,2)";
@@ -412,7 +455,7 @@ class TRXBarangPoModel extends CI_Model
                         supplier s 
                     WHERE 
                         tbo.id_supplier = s.id 
-                        and tbo.status='3' 
+                        and tbo.status >='3' 
                         and tbo.id_trx_live_stocks !='' 
                         and substring(tbo.create_date,1,6) ='$create_date'
                     GROUP BY tbo.id_trx_po,substring(tbo.create_date,5,2)";

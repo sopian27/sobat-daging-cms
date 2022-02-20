@@ -2,7 +2,153 @@
 class TRXPaymentInvoiceModel extends CI_Model
 {
 
-    /*
+    public function getTrxId(){
+
+        $query = " select max(id_trx_payment) as trx_id from trx_payment_co_invoice where substring(create_date,1,8) =DATE_FORMAT(SYSDATE(), '%Y%m%d')";
+
+        return $this->db->query($query)->result();
+    }
+
+    public function getTrxIdPo(){
+
+        $query = " select max(id_trx_payment) as trx_id from trx_payment_po_invoice where substring(create_date,1,8) =DATE_FORMAT(SYSDATE(), '%Y%m%d')";
+
+        return $this->db->query($query)->result();
+    }
+
+    public function getSumTotal($data){
+
+        $no_surat_jln = $data;
+        $query = " SELECT sum(harga_total) as total FROM `trx_order_po` WHERE no_surat_jalan='$no_surat_jln' and status='2'";
+
+        return $this->db->query($query)->result();
+    }
+
+    public function getSumTotalPo($data){
+
+        $id_trx_po = $data;
+        $query = " SELECT sum(harga_total) as total FROM `trx_barang_po` WHERE id_trx_po='$id_trx_po' and status='4'";
+
+        return $this->db->query($query)->result();
+    }
+
+    public function checkSuratJlnIsExist($data){
+
+        $no_surat_jln = $data['no_surat_jalan'];
+        $query = " SELECT count(*) as total FROM `trx_payment_co_invoice` WHERE no_surat_jalan='$no_surat_jln'";
+
+        return $this->db->query($query)->result();
+    }
+
+    public function checKodePoIsExist($data){
+
+        $kode_po = $data['kode_po'];
+        $query = " SELECT count(*) as total FROM `trx_payment_po_invoice` WHERE id_trx_po='$kode_po'";
+
+        return $this->db->query($query)->result();
+    }
+
+    public function getNoSuratJalanData($no_surat_jalan, $halaman, $batasTampilData){
+
+        $query = " SELECT t.*,p.*,b.nama_barang,b.kode,t.id as id_po,te.nomor,a.alamat
+                    FROM trx_order_po t,pelanggan p, barang b, alamat a, telephone te 
+                    WHERE t.id_pelanggan=p.id 
+                    and b.id = t.id_barang
+                    and t.status='2'
+                    /*and co.no_surat_jalan = t.no_surat_jalan*/
+                    and t.id_telephone = te.id
+                    and t.id_alamat = a.id
+                    and t.no_surat_jalan ='$no_surat_jalan' group by b.id 
+                    limit " . $halaman . "," . $batasTampilData;
+
+        return $this->db->query($query)->result();
+    }
+
+    public function getNoSuratJalanDataCount($no_surat_jalan){
+
+        $query = " SELECT t.*,p.*,b.nama_barang,b.kode,t.id as id_po,te.nomor,a.alamat
+                    FROM trx_order_po t,pelanggan p, barang b, alamat a, telephone te 
+                    WHERE t.id_pelanggan=p.id 
+                    and b.id = t.id_barang
+                    and t.status='2'
+                    /*and co.no_surat_jalan = t.no_surat_jalan*/
+                    and t.id_telephone = te.id
+                    and t.id_alamat = a.id
+                    and t.no_surat_jalan ='$no_surat_jalan' group by b.id";
+
+        return $this->db->query($query)->result();
+    }
+
+    public function getKodeData($id_trx_po, $halaman, $batasTampilData)
+    {
+        $query = " SELECT 
+                         tbo.kode, 
+                         tbo.nama_barang, 
+                         tbo.satuan, 
+                         tbo.harga_satuan,
+                         tbo.harga_total,
+                         tbo.id,
+                         tbo.quantity, 
+                         tbo.id_trx_po,
+                         tbo.quantity_check,
+                         s.nama,
+                         tbo.create_date,
+                         tbo.status,
+                         tbo.no_invoice
+                     FROM 
+                         trx_barang_po tbo,
+                         supplier s 
+                     WHERE 
+                         tbo.id_supplier = s.id 
+                         and tbo.id_trx_po = '$id_trx_po'
+                         and tbo.status ='4' 
+                         and tbo.no_invoice !='' 
+                         and tbo.id_trx_live_stocks !='' 
+                         limit " . $halaman . "," . $batasTampilData;
+
+        return $this->db->query($query)->result();
+    }
+
+    public function getKodeDataCounter($id_trx_po)
+    {
+        $query = " SELECT 
+                        tbo.kode, 
+                        tbo.nama_barang, 
+                        tbo.satuan, 
+                        tbo.harga_satuan,
+                        tbo.id,
+                        tbo.quantity, 
+                        tbo.id_trx_po,
+                        tbo.quantity_check,
+                        s.nama,
+                        tbo.create_date,
+                        tbo.no_invoice,
+                        tbo.status
+                    FROM 
+                        trx_barang_po tbo,
+                        supplier s 
+                    WHERE 
+                        tbo.id_supplier = s.id 
+                        and tbo.id_trx_po = '$id_trx_po'
+                        and tbo.status ='4' 
+                        and tbo.no_invoice !='' 
+                        and tbo.id_trx_live_stocks !=''"; 
+
+        return $this->db->query($query)->result();
+    }
+
+
+    public function insertDataCustomer($data){
+        $this->db->insert('trx_payment_co_invoice', $data);      
+        return $this->db->insert_id();  
+    }
+
+    public function insertDataPembelian($data){
+        $this->db->insert('trx_payment_po_invoice', $data);      
+        return $this->db->insert_id();  
+    }
+
+        /*
     public function insertData($data)
     {
 
@@ -35,45 +181,7 @@ class TRXPaymentInvoiceModel extends CI_Model
     }
     */
 
-    public function getTrxId(){
-
-        $query = " select max(id_trx_payment) as trx_id from trx_payment_co_invoice where substring(create_date,1,8) =DATE_FORMAT(SYSDATE(), '%Y%m%d')";
-
-        return $this->db->query($query)->result();
-    }
-
-    public function getTrxIdPo(){
-
-        $query = " select max(id_trx_payment) as trx_id from trx_payment_po_invoice where substring(create_date,1,8) =DATE_FORMAT(SYSDATE(), '%Y%m%d')";
-
-        return $this->db->query($query)->result();
-    }
-
-    public function getSumTotal($data){
-
-        $no_surat_jln = $data['no_surat_jalan'];
-        $query = " SELECT sum(harga_total) as total FROM `trx_order_po` WHERE no_surat_jalan='$no_surat_jln' and status='1'";
-
-        return $this->db->query($query)->result();
-    }
-
-    public function checkSuratJlnIsExist($data){
-
-        $no_surat_jln = $data['no_surat_jalan'];
-        $query = " SELECT count(*) as total FROM `trx_payment_co_invoice` WHERE no_surat_jalan='$no_surat_jln'";
-
-        return $this->db->query($query)->result();
-    }
-
-    public function checKodePoIsExist($data){
-
-        $kode_po = $data['kode_po'];
-        $query = " SELECT count(*) as total FROM `trx_payment_po_invoice` WHERE id_trx_po='$kode_po'";
-
-        return $this->db->query($query)->result();
-    }
-
-    /*
+        /*
     public function insertDataPo($data)
     {
 
@@ -97,32 +205,6 @@ class TRXPaymentInvoiceModel extends CI_Model
         return $this->db->rowCount();
     }
     */
-
-    public function getNoSuratJalanData($data){
-
-        $no_surat_jalan=$data['no_surat_jalan'];
-        $query = " SELECT t.*,p.*,b.nama_barang,b.kode,t.id as id_po,te.nomor,a.alamat
-                    FROM trx_order_po t,pelanggan p, barang b, alamat a, telephone te 
-                    WHERE t.id_pelanggan=p.id 
-                    and b.id = t.id_barang
-                    and t.status='1'
-                    /*and co.no_surat_jalan = t.no_surat_jalan*/
-                    and t.id_telephone = te.id
-                    and t.id_alamat = a.id
-                    and t.no_surat_jalan ='$no_surat_jalan' group by b.id ";
-
-        return $this->db->query($query)->result();
-    }
-
-    public function insertDataCustomer($data){
-        $this->db->insert('trx_payment_co_invoice', $data);      
-        return $this->db->insert_id();  
-    }
-
-    public function insertDataPembelian($data){
-        $this->db->insert('trx_payment_po_invoice', $data);      
-        return $this->db->insert_id();  
-    }
 
     
 }

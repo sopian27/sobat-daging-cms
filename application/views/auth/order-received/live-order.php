@@ -363,6 +363,8 @@
                     $("#data-trigger").hide();
                     $("#div-inventory-update-detail").show();
 
+                }else{
+                    $('.pagination-result_trx_detail').html("");
                 }
             },
             error: function(xhr, status, error) {
@@ -440,7 +442,7 @@
                         dataload += '</div>';
                         dataload += '<div class="col-md-1 offset-md-2"> ';
 
-                        if (data.data[i].status == "2") {
+                        if (data.data[i].status >= 2) {
                             dataload += '<input type="checkbox" checked name="' + data.data[i].id + '" class="" />';
                             dataload += '<a style="color:#a5662f;text-decoration:none;margin-left:10px" data-bs-toggle="collapse" ';
                             dataload += 'href="#collapseExample' + i + '"  ';
@@ -476,6 +478,7 @@
                 } else {
                     $("#div-create-date").html("");
                     $('.collapse-content').html("");
+                    $('.pagination-result_trx').html("");
                 }
 
             },
@@ -650,6 +653,7 @@
                 } else {
                     $("#div-create-date").html("");
                     //$('.collapse-content').html("");
+                    $('.pagination-result-live-order').html("");
                 }
 
             },

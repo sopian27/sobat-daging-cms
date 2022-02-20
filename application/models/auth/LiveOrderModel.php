@@ -61,7 +61,7 @@ class LiveOrderModel extends CI_Model
                     FROM 
                         trx_order_po t,pelanggan p 
                     WHERE 
-                        t.id_pelanggan=p.id and status='0'
+                        t.id_pelanggan=p.id
                         and p.nama_pelanggan ='$keyword'
                     GROUP BY t.id_trx_order";
         } else {
@@ -70,7 +70,7 @@ class LiveOrderModel extends CI_Model
                     FROM 
                         trx_order_po t,pelanggan p 
                     WHERE 
-                        t.id_pelanggan=p.id and status='0'
+                        t.id_pelanggan=p.id
                         and substring(t.create_date,1,8) ='$create_date'
                     GROUP BY t.id_trx_order";
         }

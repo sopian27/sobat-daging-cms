@@ -33,10 +33,16 @@ class TRXPaymentOutModel extends CI_Model
     public function getInvoiceData($data)
     {
         $no_invoice = $data['no_invoice'];
+        /*
         $query = "SELECT s.nama,inv.total_tagihan,inv.id_trx_payment 
                  from trx_payment_po_invoice inv,trx_barang_po po, supplier s 
                  where inv.id_trx_po = po.id_trx_po and s.id=po.id_supplier 
-                 and po.no_invoice='$no_invoice' group by s.nama, inv.total_tagihan ";
+                 and po.no_invoice='$no_invoice' group by s.nama, inv.total_tagihan "; */
+
+        $query = "SELECT s.nama,inv.total_tagihan,inv.id_trx_payment 
+                  from trx_payment_po_invoice inv,trx_barang_po po, supplier s
+                  where inv.no_invoice = po.no_invoice
+                  and s.id=po.id_supplier and po.no_invoice='$no_invoice' group by s.nama, inv.total_tagihan ";
 
         return $this->db->query($query)->result();
     }

@@ -402,5 +402,19 @@
             color: #a5662f;
             text-decoration: none;
         }
+
+        .btn-payment-md {
+            background-color: transparent;
+            color: white;
+            text-decoration: none;
+            border-color:white;
+        }
+
+        .btn-payment-md:hover {
+            background-color: #a5662f;
+            color: white;
+            text-decoration: none;
+            border-color:white;
+        }
     </style>
 </head>

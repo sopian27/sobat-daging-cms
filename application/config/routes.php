@@ -118,8 +118,12 @@ $route['payment-invoice-pembelian/save'] = 'auth/PaymentInvoice/trxKodePoSave';
 /* history-payment */
 $route['payment-history/gethistory'] = 'auth/PaymentHistory/getHistoryPayment';
 $route['payment-history'] = 'auth/PaymentHistory';
-$route['payment-history/gethistorysuratjalan'] = 'auth/PaymentInvoice/getNoSuratJalanHistory';
-$route['payment-history/gethistorykodepo'] = 'auth/PaymentInvoice/getKodePoHistory';
+$route['payment-history/loadhistory'] = 'auth/PaymentHistory/loadHistoryPayment';
+$route['payment-history/loadhistoryout'] = 'auth/PaymentHistory/loadHistoryPaymentOut';
+$route['payment-history/gethistorysuratjalan'] = 'auth/PaymentHistory/getNoSuratJalanHistory';
+$route['payment-history/gethistorykodepo'] = 'auth/PaymentHistory/getKodePoHistory';
+$route['payment-history/print'] = 'auth/PaymentHistory/print';
+
 
 /* return-cancel */
 $route['return-cancel'] = 'auth/ReturnCancel';

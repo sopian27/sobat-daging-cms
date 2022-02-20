@@ -47,7 +47,7 @@ class PaymentOut extends CI_Controller{
             "id_trx_payment_out" =>  $data_post['id_trx_payment_out'],
             "no_invoice"=> $data_post['no_invoice'],
             "harga_total"=> $data_post['harga_total'],
-            "nominal_bayar"=> $data_post['nominal_bayar'],
+            "nominal_bayar"=>  str_replace(",", "",$data_post['nominal_bayar']),
             "id_trx_payment_po"=> $data_post['id_trx_payment_po'],
             "create_date"=>date('YmdHis'),
             "update_date"=>date('YmdHis')
@@ -55,7 +55,7 @@ class PaymentOut extends CI_Controller{
 
         $this->trx_payment_out_model->insertData($data);
 
-        redirect('payment-out');
+        echo json_encode("success");
 
     }
 

@@ -19,7 +19,7 @@ class InventoryUpdate extends CI_Controller
 
         $data['judul']  = 'Update PO';
         $countDataBarang = $this->brg_model->countDataBarang();
-        $countData = $this->trx_brg_model->getTrxId();
+        $countData = $this->trx_brg_model->getTrxIdUpdate();
 
         $dataBarangCount =  $countDataBarang[0]->CountData;
         $num = $countData[0]->trx_id + 1;

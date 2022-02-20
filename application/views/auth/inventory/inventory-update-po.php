@@ -261,6 +261,8 @@
                     $("#tbody-table-data").html(dataLoad);
                     $("#data-trigger").hide();
                     $("#div-inventory-update-detail").show();
+                }else{
+                    $('.pagination-result_trx_detail').html("");
                 }
             },
             error: function(response) {

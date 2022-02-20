@@ -16,7 +16,7 @@ class InventoryLiveStock extends CI_Controller
 
     public function index()
     {
-        $countData = $this->trx_brg_model->getTrxId();
+        $countData = $this->trx_brg_model->getTrxIdLiveStocks();
         $countDataBarang = $this->brg_model->countDataBarang();
 
         $dataBarangCount =  $countDataBarang[0]->CountData;
@@ -36,16 +36,16 @@ class InventoryLiveStock extends CI_Controller
         $this->load->view('auth/templates/footer');
     }
 
-    public function getTrxId()
+    public function getTrxIdNoInvoice()
     {
 
-        $trxData = $this->trx_brg_model->getTrxId();
+        $trxData = $this->trx_brg_model->getTrxIdNoInvoice();
         $trxId = $trxData[0]->trx_id;
         $lastNoUrut = substr($trxId, 5, 4);
         $nextNoUrut = intval($lastNoUrut) + 1;
         $t = time();
         $currentDate = date("d/m/Y", $t);
-        $kodeInvoice = 'INV-PO' . sprintf('%04s', $nextNoUrut) . "/" . $currentDate;
+        $kodeInvoice = 'INV-PO-' . sprintf('%04s', $nextNoUrut) . "/" . $currentDate;
 
         return $kodeInvoice;
     }
@@ -90,7 +90,6 @@ class InventoryLiveStock extends CI_Controller
         $halaman = (isset($_POST['halaman'])) ? $halaman = $_POST['halaman'] : $halaman = 1;
         $halamanAwal = ($halaman > 1) ? ($halaman * $batasTampilData) - $batasTampilData : 0;
 
-        $data_post = $_POST;
         $allDataPo = $this->trx_brg_model->getDataByIdLiveStock($data_post['id_trx_po'], $halamanAwal, $batasTampilData);
         $allDataPoCounter = $this->trx_brg_model->getDataByIdLiveStockCounter($data_post['id_trx_po']);
 
@@ -143,7 +142,7 @@ class InventoryLiveStock extends CI_Controller
     {
 
         $data_post = $_POST;
-        $no_invoice = $this->getTrxId();
+        $no_invoice = $this->getTrxIdNoInvoice();
 
         $where = array(
             "id_trx_po" => $data_post['id_trx_po'],
@@ -188,7 +187,7 @@ class InventoryLiveStock extends CI_Controller
 
         $data_post = $_POST;
         $where_insert = array();
-        $no_invoice = $this->getTrxId();
+        $no_invoice = $this->getTrxIdNoInvoice();
 
         for ($i = 0; $i < count($data_post["id_trx_live_stocks"]); $i++) {
 

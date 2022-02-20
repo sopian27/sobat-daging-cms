@@ -195,7 +195,7 @@ class LiveOrder extends CI_Controller{
         echo json_encode("success");
     }
 
-
+    /*
     public function confirmOrder(){
         
         $data=array();
@@ -234,6 +234,6 @@ class LiveOrder extends CI_Controller{
         $this->load->view('auth/templates/footer');
 
     }
-    
+    */
 
 }

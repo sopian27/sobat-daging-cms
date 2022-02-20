@@ -2,7 +2,9 @@
     <div class="col-md-3 offset-md-1">
         <h2><?= ucfirst($judul) ?></h2>
     </div>
-    <hr style="width: 1570px;margin-left:160px;border-width: 2px;border-style: solid;border-color:white">
+    <div class="col-md-11">
+        <hr style="margin-left:160px;border-width: 2px;border-style: solid;border-color:white">
+    </div>
     <div class="row">
         <div class="col-md-3 offset-md-1"><?= $kode_po ?></div>
         <div class="col-md-2 offset-md-5 "><?= $date ?></div>
@@ -46,6 +48,7 @@
                             <div class="col-sm-5">
                                 <input type="text" class="form-control-label" id="nominal_pembayaran" name="nominal_pembayaran">
                                 <input type="hidden" class="form-control" id="total_tagihan_value" name="total_tagihan_value" placeholder="Rp. 0">
+                                <input type="hidden" name="id_trx_payment_co" id="id_trx_payment_co" />
                             </div>
                         </div>
                         <hr style="width: 600px;border-width: 2px;border-style: solid;border-color:white">
@@ -60,7 +63,7 @@
                 </div>
                 <div class="row d-flex offset-md-7" style="margin-top: 20px;">
                     <div class="col-md-2">
-                        <button class="form-control-button btn btn-outline-light button-action" onclick="clearAllDataCo();"> Clear All </button>
+                        <button class="form-control-button btn btn-outline-light button-action" onclick="clearAllData();"> Clear All </button>
                     </div>
                     <div class="col-md-2">
                         <button class="form-control-button btn btn-outline-light button-action" onclick="paymentData();"> Confirm </button>
@@ -69,16 +72,6 @@
             </div>
         </div>
     </div>
-    <form method="post" action="<?php echo site_url() ?>/paymentin-save" id="form-payment-in-save" name="form-payment-in-save">
-        <input type="hidden" name="id_trx_payment_in" id="id_trx_payment_in" value="<?php echo $kode_po ?>" />
-        <input type="hidden" name="no_invoice" id="no_invoice" />
-        <input type="hidden" name="harga_total" id="harga_total" />
-        <input type="hidden" name="nominal_bayar" id="nominal_bayar" />
-        <input type="hidden" name="id_trx_payment_co" id="id_trx_payment_co" />
-    </form>
-    <form method="post" id="form-payment-in-search" name="form-payment-in-search" action="<?php echo site_url() ?>/payment">
-        <input type="hidden" name="data_search" id="data_search">
-    </form>
 </div>
 
 <script>
@@ -145,20 +138,35 @@
 
     $(document).on('keyup', '#nominal_pembayaran', function() {
 
-        var nominal_pembayaran = document.getElementById("nominal_pembayaran").value;
+        var nominal_pembayaran = $("#nominal_pembayaran").autoNumeric('get'); //document.getElementById("nominal_pembayaran").value;
         var total_tagihan = document.getElementById("total_tagihan_value").value;
 
         if (total_tagihan == null || total_tagihan == "") total_tagihan = 0;
         if (nominal_pembayaran == null || nominal_pembayaran == "") nominal_pembayaran = 0;
 
         var result = parseFloat(total_tagihan) - parseFloat(nominal_pembayaran);
+
+        if(result < 0){
+            alert("nominal pembayaran melebihi total harga");
+            $("#nominal_pembayaran").val("0");
+        }
+
         $("#kekurangan_pembayaran").html("Rp. " + numberWithCommas(result));
-
-
     });
+
+    function clearAllData(){
+        $("#nominal_pembayaran").val("");
+        
+    }
 
 
     function paymentData() {
+
+        var no_invoice = $("#no_invoice_value").val();
+        if (no_invoice == "") {
+            alert("no invoice tidak boleh kosong");
+            return;
+        }        
 
         var total_tagihan = $("#total_tagihan_value").val();
         if (total_tagihan == "") {
@@ -172,13 +180,37 @@
             return;
         }
 
+        if(nominal_bayar.charAt(0)=="0"){
+            alert("nominal bayar tidak boleh 0");
+            return;
+        }
 
-        $("#no_invoice").val($("#no_invoice_value").val());
-        $("#harga_total").val($("#total_tagihan_value").val());
-        $("#nominal_bayar").val($("#nominal_pembayaran").val());
+        var no_invoice = $("#no_invoice_value").val();
+        var id_trx_payment_in = "<?php echo $kode_po ?>";
+        var id_trx_payment_co = $("#id_trx_payment_co").val();
 
+        $.ajax({
+            url: '<?= site_url() ?>/paymentin-save',
+            data: {
+                'id_trx_payment_in' : id_trx_payment_in,
+                'no_invoice': no_invoice,
+                'id_trx_payment_co' : id_trx_payment_co,
+                'nominal_bayar': nominal_bayar,
+                'harga_total': total_tagihan
+            },
+            dataType: 'json',
+            method: 'post',
+            success: function(response) {
 
-        $("#form-payment-in-save").submit();
+                alert("success insert data");
+                location.href = "<?= site_url() ?>/payment";
+            },
+            error: function(xhr, status, error) {
+                //var err = eval("(" + xhr.responseText + ")");
+                console.log(error);
+            }
+
+        });
     }
 
 
@@ -262,11 +294,6 @@
 
         if (e.keyCode == 13) {
             e.preventDefault();
-
-            //var search = document.getElementById("no_invoice_value").value;
-            //$("#data_search").val(search);
-
-            //$("#form-payment-in-search").submit();
             checkData();
 
         }

@@ -1,11 +1,4 @@
 <?php
-class PettyCashHistoryModel
+class PettyCashHistoryModel extends CI_Model
 {
-    private $db;
-
-    public function __construct()
-    {
-        $this->db = new Database;
-    }
-
 }

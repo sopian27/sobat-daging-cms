@@ -19,6 +19,7 @@ class OrderReceived extends CI_Controller{
         $data['judul'] = 'Create Order';
         $t = time();
         $current_date = date("d/m/Y", $t);
+        /*
         $trxData = $this->trx_order_recv_model->getTrxId();
         $trxId = $trxData[0]->trx_id;
         $lastNoUrut = substr($trxId, 5,4);
@@ -28,11 +29,12 @@ class OrderReceived extends CI_Controller{
         $kodeInvoice = 'INV-CO'. sprintf('%04s',$nextNoUrut)."/".$current_date;
         $kodeSuratJalan = 'SJ-'. sprintf('%04s',$nextNoUrut)."/".$current_date;
         $kodeHistory = 'PO-CO'. sprintf('%04s',$nextNoUrut)."/".$current_date;
+        */
         
-        $data['kodePO'] = $kodePo;
-        $data['kodeInv'] = $kodeInvoice;
-        $data['kodeSsj'] = $kodeSuratJalan;
-        $data['kodeHistory'] = $kodeHistory;
+        $data['kodePO']  = $this->getTrxId();
+        $data['kodeInv'] = $this->getTrxIdNoInvoice();
+        $data['kodeSsj'] = $this->getTrxNoSuratJalan();
+        $data['kodeHistory'] = $this->getTrxIdLiveOrder();
         $data['date'] = date("d F Y", $t);
         $data['subMenu'] = "ORDER RECEIVED";
         
@@ -45,6 +47,63 @@ class OrderReceived extends CI_Controller{
         $this->load->view('auth/order-received/create-order', $data);
         $this->load->view('auth/templates/footer');
 
+    }
+
+
+    public function getTrxId()
+    {
+
+        $trxData = $this->trx_order_recv_model->getTrxId();
+        $trxId = $trxData[0]->trx_id;
+        $lastNoUrut = substr($trxId, 5, 4);
+        $nextNoUrut = intval($lastNoUrut) + 1;
+        $t = time();
+        $currentDate = date("d/m/Y", $t);
+        $kodeInvoice = 'ORCO-' . sprintf('%04s', $nextNoUrut) . "/" . $currentDate;
+
+        return $kodeInvoice;
+    }
+
+    public function getTrxNoSuratJalan()
+    {
+
+        $trxData = $this->trx_order_recv_model->getTrxNoSuratJalan();
+        $trxId = $trxData[0]->trx_id;
+        $lastNoUrut = substr($trxId, 5, 4);
+        $nextNoUrut = intval($lastNoUrut) + 1;
+        $t = time();
+        $currentDate = date("d/m/Y", $t);
+        $kodeInvoice = 'SJ-' . sprintf('%04s', $nextNoUrut) . "/" . $currentDate;
+
+        return $kodeInvoice;
+    }
+
+    public function getTrxIdNoInvoice()
+    {
+
+        $trxData = $this->trx_order_recv_model->getTrxIdNoInvoice();
+        $trxId = $trxData[0]->trx_id;
+        $lastNoUrut = substr($trxId, 5, 4);
+        $nextNoUrut = intval($lastNoUrut) + 1;
+        $t = time();
+        $currentDate = date("d/m/Y", $t);
+        $kodeInvoice = 'INV-CO-' . sprintf('%04s', $nextNoUrut) . "/" . $currentDate;
+
+        return $kodeInvoice;
+    }
+
+    public function getTrxIdLiveOrder()
+    {
+
+        $trxData = $this->trx_order_recv_model->getTrxIdLiveOrder();
+        $trxId = $trxData[0]->trx_id;
+        $lastNoUrut = substr($trxId, 5, 4);
+        $nextNoUrut = intval($lastNoUrut) + 1;
+        $t = time();
+        $currentDate = date("d/m/Y", $t);
+        $kodeInvoice = 'PO-CO-' . sprintf('%04s', $nextNoUrut) . "/" . $currentDate;
+
+        return $kodeInvoice;
     }
 
     /**
