@@ -35,15 +35,44 @@ class ReturnHistory extends CI_Controller{
 
     public function getDataByDate(){
 
-        $getReturnData = $this->trx_ret_model->getDataByDate($_POST);
-        echo json_encode($getReturnData);
+        $data_post = $_POST;
+
+        $batasTampilData = $_POST['batastampil'];
+        $halaman = (isset($_POST['halaman'])) ? $halaman = $_POST['halaman'] : $halaman = 1;
+        $halamanAwal = ($halaman > 1) ? ($halaman * $batasTampilData) - $batasTampilData : 0;
+
+        $data = $this->trx_ret_model->getData($data_post['create_date'], $_POST['keyword'], $halamanAwal, $batasTampilData);
+        $dataCounter = $this->trx_ret_model->getDataCount($data_post['create_date'], $_POST['keyword']);
+
+        $output = array(
+            "length" => count($data),
+            "data" => $data,
+            "length_paging" => count($dataCounter)
+
+        );
+
+        echo json_encode($output);
     }
 
     
-    public function getDataByDateHistory(){
+    public function getDataHistory(){
 
-        $getReturnData = $this->trx_ret_model->getDataByDateHistory($_POST);
-        echo json_encode($getReturnData);
+
+        $data_post = $_POST;
+        $batasTampilData = $_POST['batastampil'];
+        $halaman = (isset($_POST['halaman'])) ? $halaman = $_POST['halaman'] : $halaman = 1;
+        $halamanAwal = ($halaman > 1) ? ($halaman * $batasTampilData) - $batasTampilData : 0;
+
+        $allDataPo = $this->trx_ret_model->getDataDetail($data_post['id_trx_return'], $halamanAwal, $batasTampilData);
+        $allDataPoCounter = $this->trx_ret_model->getDataDetailCount($data_post['id_trx_return']);
+
+        $output = array(
+            "length" => count($allDataPo),
+            "data" => $allDataPo,
+            "length_paging" => count($allDataPoCounter),
+        );
+
+        echo json_encode($output);
     }
 
     public function getDetailTrx(){

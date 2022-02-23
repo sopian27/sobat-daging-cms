@@ -129,11 +129,13 @@ $route['payment-history/print'] = 'auth/PaymentHistory/print';
 $route['return-cancel'] = 'auth/ReturnCancel';
 $route['return-cancel/getinvoice'] = 'auth/ReturnCancel/getInvoiceData';
 $route['return-cancel/save'] = 'auth/ReturnCancel/saveData';
+$route['return-cancel/insert_data'] = 'auth/ReturnCancel/insertData';
+$route['return-cancel/clear-all'] = 'auth/ReturnCancel/clearAll';
 
 /* return-history */
 $route['return-history'] = 'auth/ReturnHistory';
 $route['return-history/getdatabydate'] = 'auth/ReturnHistory/getDataByDate';
-$route['return-history/getdatabydatehistory'] = 'auth/ReturnHistory/getDataByDateHistory';
+$route['return-history/getdatahistory'] = 'auth/ReturnHistory/getDataHistory';
 
 /* ap */
 $route['ap'] = 'auth/Ap';
