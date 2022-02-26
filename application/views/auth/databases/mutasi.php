@@ -6,17 +6,31 @@
         <hr style="margin-left:160px;border-width: 2px;border-style: solid;border-color:white">
     </div>
     <div class="container-fluid">
-        <div class="row" id="content-filter"  style="margin-top: 40px;">
+        <div class="row">
             <div class="col-md-2 offset-md-1">
-                <input type="text" id="search" name="search" placeholder="search..." class="form-search">
+                <div class="input-group">
+                    <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search">
+                    <span class="input-group-append">
+                        <button class="btn btn-outline-light" type="button" onclick="searchData()">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                </div>
             </div>
             <div class="col-md-2 offset-md-6">
-                <input type="text" id="create_date" name="create_date" class="form-search" placeholder="sort...">
+                <div class="input-group">
+                    <span class="input-group-append">
+                        <button class="btn btn-outline-light" type="button">
+                            <span>sort</span>
+                        </button>
+                    </span>
+                    <input class="form-control-paging-date" type="text" id="create_date" name="create_date">
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="container-fluid" style="margin-top: 20px;">
+    <div class="container-fluid" style="margin-top: 40px;">
         <div class="row justify-content-center" id="mutasi-masuk">
             <div class="container">
                 <div class="row">
@@ -47,18 +61,8 @@
                             <tbody id="mutasi-masuk-data">
                             </tbody>
                         </table>
-                        <div style="min-height: 120px;">
-                            <div class="collapse collapse-horizontal" id="data-barang-collapse">
-                                <div class="card card-body bg-transparent " style="width: 300px; border: 2px solid white;">
-                                    <input type="hidden" name="page" id="page" value="1">
-                                    <input type="hidden" name="total_page" id="total_page">
-                                    <div class="row"></div>
-                                    <div class="data-pagination"></div>
-                                    <div class="pagination-result" style="margin-left:160px;margin-top:10px">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <input type="hidden" name="halaman_paging_mutasi_masuk" id="halaman_paging_mutasi_masuk" value="1">
+                        <div class="pagination-result-mutasi-masuk" style="margin-top:10px;margin-left:45%"></div>
                     </div>
                 </div>
             </div>
@@ -94,18 +98,8 @@
                             <tbody id="mutasi-keluar-data">
                             </tbody>
                         </table>
-                        <div style="min-height: 120px;">
-                            <div class="collapse collapse-horizontal" id="data-barang-collapse">
-                                <div class="card card-body bg-transparent " style="width: 300px; border: 2px solid white;">
-                                    <input type="hidden" name="page" id="page" value="1">
-                                    <input type="hidden" name="total_page" id="total_page">
-                                    <div class="row"></div>
-                                    <div class="data-pagination"></div>
-                                    <div class="pagination-result" style="margin-left:160px;margin-top:10px">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <input type="hidden" name="halaman_paging_mutasi_keluar" id="halaman_paging_mutasi_keluar" value="1">
+                        <div class="pagination-result-mutasi-keluar" style="margin-top:10px;margin-left:45%"></div>
                     </div>
                 </div>
             </div>
@@ -133,33 +127,55 @@
     $(function() {
         $("#create_date").datepicker({
             todayHighlight: true,
-            format: "yyyymm",
+            format: "yyyy-mm",
             startView: "months",
             minViewMode: "months",
             autoclose: true
         })
 
-        $("#create_date").val("sort by month....");
+        $("#create_date").val("Januari, Februari, Maret....");
     });
 
     $(document).on('change', '#create_date', function() {
         var create_date = document.getElementById("create_date").value;
 
-        var today = new Date();
-        var year = today.getFullYear();
-        var month = today.getMonth();
-
-        getDataMutasi(create_date);
+        var batasTampilData = 10;
+        var halaman = $('#halaman_paging_mutasi_masuk').val();
+        var keyword = "";
+        $("#search").val("");
+        initPaging();
+        getDataMutasi(create_date.replaceAll("-", ""), keyword, batasTampilData, halaman);
 
     });
 
-    function getDataMutasi(create_date){
+    function initPaging() {
+
+        $("#halaman_paging_mutasi_masuk").val("1");
+        $("#halaman_paging_mutasi_keluar").val("1");
+    }
+
+
+    function searchData() {
+
+        var batasTampilData = 10;
+        var halaman = $('#halaman_paging_mutasi_masuk').val();
+        var keyword = $("#search").val();
+        var create_date = "";
+        $("#create_date").val("");
+        getDataMutasi(create_date, keyword, batasTampilData, halaman);
+
+    }
+
+    function getDataMutasi(create_date, keyword, batasTampilData, halaman) {
         $.ajax({
             url: '<?= site_url() ?>/data-mutasi/get-data',
             method: 'post',
             dataType: 'json',
             data: {
-                date_value: create_date
+                'create_date': create_date,
+                'halaman': halaman,
+                'keyword': keyword,
+                'batastampil': batasTampilData
             },
             success: function(response) {
 
@@ -167,16 +183,25 @@
                 var total = 0;
                 console.log(response);
 
-                if (response.result != undefined) {
-
-                    setMutasiMasuk(response);
-                    setMutasiKeluar(response);
-
-                    $("#mutasi-masuk-title").html("Data Mutasi Masuk "+ getMonthOnly(create_date))
-                    $("#mutasi-keluar-title").html("Data Mutasi Keluar "+ getMonthOnly(create_date))
-
+                $("#mutasi-masuk-title").html("Data Mutasi Masuk " + getMonthOnly(create_date))
+                if (response.length_in > 0) {
+                   
+                    setMutasiMasuk(response, create_date, keyword, halaman, batasTampilData);
+                  
+                } else {
+                    $("#mutasi-masuk-data").html("");
+                    $('.pagination-result-mutasi-masuk').html("");
                 }
 
+                $("#mutasi-keluar-title").html("Data Mutasi Keluar " + getMonthOnly(create_date))
+                if (response.length_out > 0) {
+                   
+                    setMutasiKeluar(response, create_date, keyword, halaman, batasTampilData);
+                  
+                } else {
+                    $("#mutasi-keluar-data").html("");
+                    $('.pagination-result-mutasi-keluar').html("");
+                }
 
             },
             error: function(xhr, status, error) {
@@ -187,14 +212,14 @@
         });
     }
 
-    function setMutasiMasuk(response){
+    function setMutasiMasuk(response, create_date, keyword, halaman, batasTampilData) {
 
-        dataLoad="";
+        dataLoad = "";
 
-        for (let i = 0; i < response.mutasi_masuk.length; i++) {
+        for (let i = 0; i < response.length_in; i++) {
 
             var isFinished = "";
-            if (parseFloat(response.mutasi_masuk[i].nominal_bayar) > 0) {
+            if (parseFloat(response.data_in[i].total_tagihan) > 0) {
                 isFinished = "P";
             } else {
                 isFinished = "F";
@@ -202,36 +227,44 @@
 
             dataLoad += "<tr>";
             dataLoad += "<td >";
-            dataLoad += response.mutasi_masuk[i].nama.toUpperCase();
+            dataLoad += response.data_in[i].nama.toUpperCase();
             dataLoad += "</td>";
             dataLoad += "<td >";
-            dataLoad += response.mutasi_masuk[i].no_invoice;
+            dataLoad += response.data_in[i].no_invoice;
             dataLoad += "</td>";
             dataLoad += "<td >";
-            dataLoad += dateForShow(response.mutasi_masuk[i].jatuh_tempo);
+            dataLoad += dateForShow(response.data_in[i].jatuh_tempo);
             dataLoad += "</td>";
             dataLoad += "<td >";
-            dataLoad += numberWithCommas("Rp. "+response.mutasi_masuk[i].nominal_bayar); 
+            if (response.data_in[i].nominal_bayar == null || response.data_in[i].nominal_bayar == "") {
+                dataLoad += numberWithCommas("Rp. " + response.data_in[i].total_tagihan);
+            } else {
+                dataLoad += numberWithCommas("Rp. " + response.data_in[i].nominal_bayar);
+            }
             dataLoad += "</td>";
             dataLoad += "<td >";
-            dataLoad += isFinished; 
+            dataLoad += isFinished;
             dataLoad += "</td>";
             dataLoad += "</tr>";
 
         }
 
+        var totalDataBarang = response.length_in_paging;
+        var totalHalaman = Math.ceil(totalDataBarang / batasTampilData);
+
+        $('.pagination-result-mutasi-masuk').html(paginationViewHTMLMasuk(halaman, totalHalaman, create_date, keyword, batasTampilData));
         $("#mutasi-masuk-data").html(dataLoad);
 
     }
 
-    function setMutasiKeluar(response){
+    function setMutasiKeluar(response, create_date, keyword, halaman, batasTampilData) {
 
-        dataLoad="";
+        dataLoad = "";
 
-        for (let i = 0; i < response.mutasi_keluar.length; i++) {
+        for (let i = 0; i < response.length_out; i++) {
 
             var isFinished = "";
-            if (parseFloat(response.mutasi_keluar[i].nominal_bayar) > 0) {
+            if (parseFloat(response.data_out[i].total_tagihan) > 0) {
                 isFinished = "P";
             } else {
                 isFinished = "F";
@@ -239,24 +272,32 @@
 
             dataLoad += "<tr>";
             dataLoad += "<td >";
-            dataLoad += response.mutasi_keluar[i].nama.toUpperCase();
+            dataLoad += response.data_out[i].nama.toUpperCase();
             dataLoad += "</td>";
             dataLoad += "<td >";
-            dataLoad += response.mutasi_keluar[i].no_invoice;
+            dataLoad += response.data_out[i].no_invoice;
             dataLoad += "</td>";
             dataLoad += "<td >";
-            dataLoad += dateForShow(response.mutasi_keluar[i].jatuh_tempo);
+            dataLoad += dateForShow(response.data_out[i].jatuh_tempo);
             dataLoad += "</td>";
             dataLoad += "<td >";
-            dataLoad += numberWithCommas("Rp. "+response.mutasi_keluar[i].nominal_bayar); 
+            if (response.data_out[i].nominal_bayar == null || response.data_out[i].nominal_bayar == "") {
+                dataLoad += numberWithCommas("Rp. " + response.data_out[i].total_tagihan);
+            } else {
+                dataLoad += numberWithCommas("Rp. " + response.data_out[i].nominal_bayar);
+            }
             dataLoad += "</td>";
             dataLoad += "<td >";
-            dataLoad += isFinished; 
+            dataLoad += isFinished;
             dataLoad += "</td>";
             dataLoad += "</tr>";
 
         }
 
+        var totalDataBarang = response.length_out_paging;
+        var totalHalaman = Math.ceil(totalDataBarang / batasTampilData);
+
+        $('.pagination-result-mutasi-keluar').html(paginationViewHTMLKeluar(halaman, totalHalaman, create_date, keyword, batasTampilData));
         $("#mutasi-keluar-data").html(dataLoad);
 
     }
@@ -270,7 +311,6 @@
         var day = create_date.substring(6, 8);
         var year = create_date.substring(0, 4);
         var month = create_date.substring(4, 6)
-
 
         if (month == "01") {
             month = "Januari";
@@ -298,7 +338,7 @@
             month = "Desember";
         }
 
-        return day + " " + month +" "+year;
+        return day + " " + month + " " + year;
     }
 
     function getMonthOnly(create_date) {
@@ -333,8 +373,122 @@
             month = "Desember";
         }
 
+        console.log("month"+month);
+
         return month;
     }
 
+    function paginationViewHTMLMasuk(halaman, totalHalaman, create_date, keyword, batasTampilData) { //halaman 1 total 6
 
+        var data_load = '';
+        prev = parseInt(halaman) - 1;
+        next = parseInt(halaman) + 1;
+        minimal_page = parseInt(halaman) - 2;
+        max_page = parseInt(halaman) + 2;
+        var prev_v = "dataPagingBarangHREFTrxMasukMasuk('" + prev + "','" + create_date + "','" + keyword + "','" + batasTampilData + "')";
+        var next_v = "dataPagingBarangHREFTrxMasuk('" + next + "','" + create_date + "','" + keyword + "','" + batasTampilData + "')";
+        var halaman1 = "dataPagingBarangHREFTrxMasuk('1','" + create_date + "','" + keyword + "','" + batasTampilData + "')";
+        var halaman2 = "dataPagingBarangHREFTrxMasuk('2','" + create_date + "','" + keyword + "','" + batasTampilData + "')";
+        var halaman3 = "dataPagingBarangHREFTrxMasuk('3','" + create_date + "','" + keyword + "','" + batasTampilData + "')";
+        var halaman4 = "dataPagingBarangHREFTrxMasuk('4','" + create_date + "','" + keyword + "','" + batasTampilData + "')";
+        data_load += '<ul class ="pagination">'
+
+        if (halaman > 1) {
+            data_load += '<li class="page-item"><a href ="#"  class = "page-link " onclick="' + prev_v + '">< </a></li>'
+            //data_load += '<li class="page-item"><a href="#" class = "page-link " > < <a></li>'
+        } else {
+            //  data_load += '<li class="page-item"><a href="#" class = "page-link " > < <a></li>'
+        }
+
+        console.log("halaman" + halaman);
+        console.log("totalHalaman" + totalHalaman);
+
+        for (let i = minimal_page; i <= max_page; i++) {
+            var onclk = "dataPagingBarangHREFTrxMasuk('" + i + "','" + create_date + "','" + keyword + "','" + batasTampilData + "')";
+
+            if (i == halaman && totalHalaman != 0) {
+                data_load += '<li class="page-item active"><a class = "page-link" href="#" onclick="' + onclk + '">' + i + '</a> </li>'
+            } else if ((i == halaman - 1) && (i != 0)) {
+                data_load += '<li class="page-item "><a class = "page-link" href="#" onclick="' + onclk + '">' + i + '</a> </li>'
+            } else if (((i > halaman) && (i < max_page)) && (i <= totalHalaman)) {
+                data_load += '<li class="page-item "><a class = "page-link" href="#" onclick="' + onclk + '">' + i + '</a> </li>'
+            } else if ((halaman == 1) && (i > 0) && (totalHalaman > 3)) {
+                data_load += '<li class="page-item "><a class = "page-link" href="#" onclick="' + onclk + '">' + i + '</a> </li>'
+            }
+        }
+
+
+        if (halaman < totalHalaman) {
+            data_load += '<li class="page-item"><a href="#" class = "page-link " onclick="' + next_v + '"> > <a></li>'
+            //data_load += '<li class="page-item"><a href="#" class = "page-link "> > <a></li>'
+        } else {
+            // data_load += '<li class="page-item"><a href="#" class = "page-link "> > <a></li>'
+        }
+
+        data_load += '</ul>'
+        console.log(data_load);
+        return data_load;
+    }
+
+    function dataPagingBarangHREFTrxMasuk(halaman, create_date, keyword, batasTampilData) {
+        $('#halaman_paging_mutasi_masuk').val(halaman)
+        getDataMutasi(create_date, keyword, batasTampilData, halaman);
+    }
+
+    function paginationViewHTMLKeluar(halaman, totalHalaman, create_date, keyword, batasTampilData) { //halaman 1 total 6
+
+        var data_load = '';
+        prev = parseInt(halaman) - 1;
+        next = parseInt(halaman) + 1;
+        minimal_page = parseInt(halaman) - 2;
+        max_page = parseInt(halaman) + 2;
+        var prev_v = "dataPagingBarangHREFTrxKeluar('" + prev + "','" + create_date + "','" + keyword + "','" + batasTampilData + "')";
+        var next_v = "dataPagingBarangHREFTrxKeluar('" + next + "','" + create_date + "','" + keyword + "','" + batasTampilData + "')";
+        var halaman1 = "dataPagingBarangHREFTrxKeluar('1','" + create_date + "','" + keyword + "','" + batasTampilData + "')";
+        var halaman2 = "dataPagingBarangHREFTrxKeluar('2','" + create_date + "','" + keyword + "','" + batasTampilData + "')";
+        var halaman3 = "dataPagingBarangHREFTrxKeluar('3','" + create_date + "','" + keyword + "','" + batasTampilData + "')";
+        var halaman4 = "dataPagingBarangHREFTrxKeluar('4','" + create_date + "','" + keyword + "','" + batasTampilData + "')";
+        data_load += '<ul class ="pagination">'
+
+        if (halaman > 1) {
+            data_load += '<li class="page-item"><a href ="#"  class = "page-link " onclick="' + prev_v + '">< </a></li>'
+            //data_load += '<li class="page-item"><a href="#" class = "page-link " > < <a></li>'
+        } else {
+            //  data_load += '<li class="page-item"><a href="#" class = "page-link " > < <a></li>'
+        }
+
+        console.log("halaman" + halaman);
+        console.log("totalHalaman" + totalHalaman);
+
+        for (let i = minimal_page; i <= max_page; i++) {
+            var onclk = "dataPagingBarangHREFTrxKeluar('" + i + "','" + create_date + "','" + keyword + "','" + batasTampilData + "')";
+
+            if (i == halaman && totalHalaman != 0) {
+                data_load += '<li class="page-item active"><a class = "page-link" href="#" onclick="' + onclk + '">' + i + '</a> </li>'
+            } else if ((i == halaman - 1) && (i != 0)) {
+                data_load += '<li class="page-item "><a class = "page-link" href="#" onclick="' + onclk + '">' + i + '</a> </li>'
+            } else if (((i > halaman) && (i < max_page)) && (i <= totalHalaman)) {
+                data_load += '<li class="page-item "><a class = "page-link" href="#" onclick="' + onclk + '">' + i + '</a> </li>'
+            } else if ((halaman == 1) && (i > 0) && (totalHalaman > 3)) {
+                data_load += '<li class="page-item "><a class = "page-link" href="#" onclick="' + onclk + '">' + i + '</a> </li>'
+            }
+        }
+
+
+        if (halaman < totalHalaman) {
+            data_load += '<li class="page-item"><a href="#" class = "page-link " onclick="' + next_v + '"> > <a></li>'
+            //data_load += '<li class="page-item"><a href="#" class = "page-link "> > <a></li>'
+        } else {
+            // data_load += '<li class="page-item"><a href="#" class = "page-link "> > <a></li>'
+        }
+
+        data_load += '</ul>'
+        console.log(data_load);
+        return data_load;
+    }
+
+    function dataPagingBarangHREFTrxKeluar(halaman, create_date, keyword, batasTampilData) {
+        $('#halaman_paging_mutasi_keluar').val(halaman)
+        getDataMutasi(create_date, keyword, batasTampilData, halaman);
+    }
 </script>

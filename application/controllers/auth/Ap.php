@@ -2,14 +2,14 @@
 class Ap extends CI_Controller
 {
 
-    public function __construct() {  
-        parent::__construct(); 
+    public function __construct()
+    {
+        parent::__construct();
 
         date_default_timezone_set('Asia/Jakarta');
-        $this->load->model('auth/ApModel','ap_model');    
+        $this->load->model('auth/ApModel', 'ap_model');
+    }
 
-    } 
-    
     public function index()
     {
         $data['judul']   = 'AP';
@@ -32,22 +32,28 @@ class Ap extends CI_Controller
     }
 
 
-    public function getDataByDate(){
-    
-            $data['date_show_data'] = $_POST['date_show'];
-            $post_data=array("date_choosen"=>$_POST['date_show']);
-            
-            $rptObj=$this->ap_model->getData($post_data);
-            $rptTot=$this->ap_model->getTotalTagihan($post_data);
+    public function getData()
+    {
 
-            $output = array(
-                "rptobj"=>$rptObj,
-                "rptot"=>$rptTot,
-                "result"=>"ok"
-            );
+        $data_post = $_POST;
 
-            echo json_encode($output);
+        $batasTampilData = $_POST['batastampil'];
+        $halaman = (isset($_POST['halaman'])) ? $halaman = $_POST['halaman'] : $halaman = 1;
+        $halamanAwal = ($halaman > 1) ? ($halaman * $batasTampilData) - $batasTampilData : 0;
 
+        
+        
+        $rptObj = $this->ap_model->getData($data_post['create_date'], $_POST['keyword'], $halamanAwal, $batasTampilData);
+        $rptObjCounter = $this->ap_model->getDataCount($data_post['create_date'], $_POST['keyword']);
+        $rptTot = $this->ap_model->getTotalTagihan($data_post['create_date'], $_POST['keyword']);
+
+        $output = array(
+            "rptobj" => $rptObj,
+            "length_paging" => count($rptObjCounter),
+            "rptot" => $rptTot,
+            "length" => count($rptObj)
+        );
+
+        echo json_encode($output);
     }
-
 }

@@ -85,8 +85,6 @@ class BarangModel extends CI_Model
           $query = "  SELECT * from barang  limit " . $halamanAwal . ", " . $batasTampilData;
         }
 
-
-
         return $this->db->query($query)->result();
     }
 
@@ -109,6 +107,61 @@ class BarangModel extends CI_Model
         $this->db->set($data);
         $this->db->where($where);
         $this->db->update('barang');
+    }
+
+
+    public function getData($create_date, $keyword, $halaman, $batasTampilData)
+    {
+
+        $query = "";
+
+        if (isset($keyword) && $keyword != "") {
+
+            $query = "  SELECT 
+                            *
+                        from 
+                            barang b 
+                        where 
+                            b.nama_barang= '" . $keyword . "' 
+                        order by b.id
+                            limit " . $halaman . "," . $batasTampilData;
+        } else {
+
+            $query = "  SELECT 
+                            *
+                        from 
+                            barang b                         
+                        order by b.id
+                            limit " . $halaman . "," . $batasTampilData;
+        }
+
+        return $this->db->query($query)->result();
+    }
+
+    public function getDataCount($create_date, $keyword)
+    {
+
+        $query = "";
+
+        if (isset($keyword) && $keyword != "") {
+
+             $query = "     SELECT 
+                                *
+                            from 
+                                barang b 
+                            where 
+                                b.nama_barang= '" . $keyword . "' 
+                            order by b.id";
+        } else {
+
+            $query = "     SELECT 
+                                *
+                            from 
+                                barang b                         
+                            order by b.id";
+        }
+
+        return $this->db->query($query)->result();
     }
 
     function get_datatables()

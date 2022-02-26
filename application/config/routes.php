@@ -139,11 +139,11 @@ $route['return-history/getdatahistory'] = 'auth/ReturnHistory/getDataHistory';
 
 /* ap */
 $route['ap'] = 'auth/Ap';
-$route['ap/getdatabydate'] = 'auth/Ap/getDataByDate';
+$route['ap/getdata'] = 'auth/Ap/getData';
 
 /* ar */
 $route['ar'] = 'auth/Ar';
-$route['ar/getdatabydate'] = 'auth/Ar/getDataByDate';
+$route['ar/getdata'] = 'auth/Ar/getData';
 
 /* crm */
 $route['crm'] = 'auth/Crm';
