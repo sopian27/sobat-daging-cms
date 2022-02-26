@@ -385,7 +385,7 @@
         next = parseInt(halaman) + 1;
         minimal_page = parseInt(halaman) - 2;
         max_page = parseInt(halaman) + 2;
-        var prev_v = "dataPagingBarangHREFTrxMasukMasuk('" + prev + "','" + create_date + "','" + keyword + "','" + batasTampilData + "')";
+        var prev_v = "dataPagingBarangHREFTrxMasuk('" + prev + "','" + create_date + "','" + keyword + "','" + batasTampilData + "')";
         var next_v = "dataPagingBarangHREFTrxMasuk('" + next + "','" + create_date + "','" + keyword + "','" + batasTampilData + "')";
         var halaman1 = "dataPagingBarangHREFTrxMasuk('1','" + create_date + "','" + keyword + "','" + batasTampilData + "')";
         var halaman2 = "dataPagingBarangHREFTrxMasuk('2','" + create_date + "','" + keyword + "','" + batasTampilData + "')";

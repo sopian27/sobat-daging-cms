@@ -135,7 +135,7 @@ class HistoryPettyCash extends CI_Controller
 
     public function getDataHistory()
     {
-
+        /*
         $dataPettyIn  = $this->petty_in_model->getDataByDate($_POST);
         $dataPettyOut  = $this->petty_out_model->getDataByDate($_POST);
 
@@ -151,5 +151,33 @@ class HistoryPettyCash extends CI_Controller
         );
 
         echo json_encode($data);
+        */
+        $data_post = $_POST;
+
+        $batasTampilData = $_POST['batastampil'];
+        $halaman = (isset($_POST['halaman'])) ? $halaman = $_POST['halaman'] : $halaman = 1;
+        $halamanAwal = ($halaman > 1) ? ($halaman * $batasTampilData) - $batasTampilData : 0;
+        
+        $dataPettyIn = $this->petty_in_model->getData($data_post['create_date'], $_POST['keyword'], $halamanAwal, $batasTampilData);
+        $dataPettyInCount = $this->petty_in_model->getDataCount($data_post['create_date'], $_POST['keyword']);
+        $dataPettyInTot  = $this->petty_in_model->getSaldoByDate($_POST);
+
+        $dataPettyOut = $this->petty_out_model->getData($data_post['create_date'], $_POST['keyword'], $halamanAwal, $batasTampilData);
+        $dataPettyOutCount = $this->petty_out_model->getDataCount($data_post['create_date'], $_POST['keyword']);
+        $dataPettyOutTot = $this->petty_out_model->getSaldoByDate($_POST);
+
+        $output = array(
+            "length_in" => count($dataPettyIn),
+            "data_in" => $dataPettyIn,
+            "in_tot" => $dataPettyInTot,
+            "length_in_paging" => count($dataPettyInCount),
+            "length_out" => count($dataPettyOut),
+            "out_tot" => $dataPettyOutTot,
+            "data_out" => $dataPettyOut,
+            "length_out_paging" => count($dataPettyOutCount)
+        );
+
+
+        echo json_encode($output);
     }
 }

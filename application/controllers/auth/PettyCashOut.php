@@ -55,7 +55,7 @@ class PettyCashOut extends CI_Controller{
         );
         $this->trx_petty_out_model->insertData($data);
 
-        redirect('petty-cash-out');
+        echo json_encode("success");
 
     }
 

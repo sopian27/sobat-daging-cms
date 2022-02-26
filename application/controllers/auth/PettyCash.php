@@ -55,7 +55,7 @@ class PettyCash extends CI_Controller{
 
         $this->trx_petty_in_model->insertData($data);
 
-        redirect('petty-cash');
+        echo json_encode("success");
 
     }
 
