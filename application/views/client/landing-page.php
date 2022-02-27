@@ -96,7 +96,7 @@
                         <div class="col-md-6">
                             <h2 class="landing-sobat">Welcome To </h2>
                             <h1>SOBAT DAGING</h1>
-                            <h3 style="color:#a5662f">Menyediakan Daging Pilihan Keluarga Nusantara.</h3>
+                            <h3 style="color:#B89874">Menyediakan Daging Pilihan Keluarga Nusantara.</h3>
                             <br>
                             <div>
                                 <a href="#" class="btn btn-border btn-blue btn-sobat-lg" onclick="show();">Order Now</a>
@@ -107,7 +107,7 @@
                         <div class="col-md-6">
                             <div class="pull-right" id="popup-welcome-sobat" style="margin-right:-200px;margin-top:100px;display:none">
                                     <div class="col-md-3" style="width:500px;">
-                                        <div style="background: #a5662f;width:100%;height:90px;border-radius: 30px 0px 0px 0px">
+                                        <div style="background: #B89874;width:100%;height:90px;border-radius: 30px 0px 0px 0px">
                                             <p style="color: white;font-size:27px;padding:35px;text-align:center">Welcome to Sobat Daging <a href="#" onclick="hide()" style="margin-left:20px;font-size:30px"><span class="fa fa-bars"></span></a></p>
                                         </div>
                                         <article class="" style="background: rgba(0, 0, 0, 0.5);padding:36px;">
@@ -182,7 +182,7 @@
                                             lemaknya. Pengiriman cepet meskipun ada kendala di kurir tapi adminya fast response buat bantuin pengirimannya. Makasih 
                                             Sobat Daging"</p>
                                             <div class="content-testimoni-footer" style="margin-top:100px">
-                                                <h3 class="text-left" style="color:#a5662f">Mrs Subjik</h3>
+                                                <h3 class="text-left" style="color:#B89874">Mrs Subjik</h3>
                                                 <p class="text-left" style="color:white;font-size:11px">by WA Sobat Daging</p>
                                             </div>
                                         </div>
@@ -193,7 +193,7 @@
                                             <br>
                                             <p class="content-testimoni" style="margin-top:100px">"Dagingnya enak banget juicys<br>dan pas banget potonganya. Kualitas oke harga the best."</p>
                                             <div class="content-testimoni-footer">
-                                                <h3 class="text-left" style="color:#a5662f">Mrs Tiara</h3>
+                                                <h3 class="text-left" style="color:#B89874">Mrs Tiara</h3>
                                                 <p class="text-left" style="color:white;font-size:11px">by Tokopedia Sobat Daging</p>
                                             </div>
                                         </div>
@@ -207,7 +207,7 @@
                                             dan kurirnya sangat ramah dan baik, saya sangat puas, terimakasih tuk seller, tokped dan kurir, semoga
                                             qualitas produk dan pelayanan baiknya tetap dijaga dgn baik"</p>
                                             <div class="content-testimoni-footer" style="margin-top:60px">
-                                                <h3 class="text-left" style="color:#a5662f">Mrs Elya</h3>
+                                                <h3 class="text-left" style="color:#B89874">Mrs Elya</h3>
                                                 <p class="text-left" style="color:white;font-size:11px">by Tokopedia Sobat Daging</p>
                                             </div>
                                         </div>
@@ -220,7 +220,7 @@
                                             lemaknya. Pengiriman cepet meskipun ada kendala di kurir tapi adminya fast response buat bantuin pengirimannya. Makasih 
                                             Sobat Daging"</p>
                                             <div class="content-testimoni-footer" style="margin-top:100px">
-                                                <h3 class="text-left" style="color:#a5662f">Mrs Filaxsis</h3>
+                                                <h3 class="text-left" style="color:#B89874">Mrs Filaxsis</h3>
                                                 <p class="text-left" style="color:white;font-size:11px">by WA Sobat Daging</p>
                                             </div>
                                         </div>

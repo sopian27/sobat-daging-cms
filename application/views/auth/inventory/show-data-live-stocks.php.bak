@@ -4,7 +4,7 @@
         color: white;
     }
     a:hover{
-        color: #a5662f;
+        color: #B89874;
     }
 </style>
 <div class="container-fluid mt-3">

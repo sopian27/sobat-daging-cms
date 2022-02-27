@@ -36,7 +36,7 @@
                 <div class="row">
                     <div class="col-md-2 offset-md-1">
                         <div>
-                            <a class="form-control-button btn" style="background-color: #a5662f;border:none;padding:10px"> Operational Expenses </a>
+                            <a class="form-control-button btn" style="background-color: #B89874;border:none;padding:10px"> Operational Expenses </a>
                         </div>
                         <div style="margin-top:30px">
                             <a class="form-control-button btn btn-outline-light button-action" style="padding:10px" onclick="showSallary();"> Sallary </a>
@@ -90,7 +90,7 @@
                             <a class="form-control-button btn btn-outline-light button-action" onclick="showOperational();"> Operational Expenses </a>
                         </div>
                         <div style="margin-top:30px">
-                            <a class="form-control-button btn" style="background-color: #a5662f;border:none;padding:10px"> Sallary </a>
+                            <a class="form-control-button btn" style="background-color: #B89874;border:none;padding:10px"> Sallary </a>
                         </div>
                     </div>
                 </div>

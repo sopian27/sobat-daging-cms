@@ -337,7 +337,7 @@
                         dataLoad += "<td>";
 
                         if (data.data[i].status == '1') {
-                            dataLoad += "<a class='form-control-button btn-success' style='background-color: #a5662f'><span class='fas fa-check'></span></a>";
+                            dataLoad += "<a class='form-control-button btn-success' style='background-color: #B89874'><span class='fas fa-check'></span></a>";
                         } else {
                             dataLoad += "<a class='form-control-button btn btn-outline-light button-action' onclick='" + functionOnclick + "'><span class='fas fa-check'></span></a>";
                         }
@@ -436,7 +436,7 @@
                         var functionOnclickCheck = 'dataPagingDetailCheck("' + id_trx_order + '")';
 
                         dataload += '<div class="col-md-6" style="margin-top:10px"> ';
-                        dataload += '<a style="color:#a5662f;text-decoration:none" data-bs-toggle="collapse" ';
+                        dataload += '<a style="color:#B89874;text-decoration:none" data-bs-toggle="collapse" ';
                         dataload += 'href="#collapseExample' + i + '"  ';
                         dataload += "onclick=" + functionOnclick + ">" + "Purchase From Distributor " + data.data[i].nama_pelanggan.toUpperCase(); + '</a>';
                         dataload += '</div>';
@@ -444,12 +444,12 @@
 
                         if (data.data[i].status >= 2) {
                             dataload += '<input type="checkbox" checked name="' + data.data[i].id + '" class="" />';
-                            dataload += '<a style="color:#a5662f;text-decoration:none;margin-left:10px" data-bs-toggle="collapse" ';
+                            dataload += '<a style="color:#B89874;text-decoration:none;margin-left:10px" data-bs-toggle="collapse" ';
                             dataload += 'href="#collapseExample' + i + '"  ';
                             dataload += ">" + "<span class='fa fa-edit'></span>" + '</a>';
                         } else {
                             dataload += '<input type="checkbox" name="' + data.data[i].id + '" class="" />';
-                            dataload += '<a style="color:#a5662f;text-decoration:none;margin-left:10px" data-bs-toggle="collapse" ';
+                            dataload += '<a style="color:#B89874;text-decoration:none;margin-left:10px" data-bs-toggle="collapse" ';
                             dataload += 'href="#collapseExample' + i + '"  ';
                             dataload += "onclick=" + functionOnclickCheck + ">" + "<span class='fa fa-edit'></span>" + '</a>';
                         }
@@ -570,7 +570,7 @@
 
                         if (i % 2 == 0) {
                             dataload += '<div class="col-md-6"> ';
-                            dataload += '<p style="color:#a5662f;">' + data.data[i].nama_pelanggan.toUpperCase() + '</p>';
+                            dataload += '<p style="color:#B89874;">' + data.data[i].nama_pelanggan.toUpperCase() + '</p>';
 
                             for (j = 0; j < data.datapo.length; j++) {
                                 if (data.data[i].id_trx_order == data.datapo[j].id_trx_order) {
@@ -600,7 +600,7 @@
     
                         } else {
                             dataload += '<div class="col-md-6"> ';
-                            dataload += '<p style="color:#a5662f;">' + data.data[i].nama_pelanggan.toUpperCase() + '</p>';
+                            dataload += '<p style="color:#B89874;">' + data.data[i].nama_pelanggan.toUpperCase() + '</p>';
 
                             for (j = 0; j < data.datapo.length; j++) {
                                 if (data.data[i].id_trx_order == data.datapo[j].id_trx_order) {

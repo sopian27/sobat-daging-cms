@@ -44,11 +44,11 @@
 
     <style>
         .bg-sobat {
-            background-color: #a5662f;
+            background-color: #B89874;
         }
 
         #mainNav .navbar-nav li.nav-item a.nav-link:hover {
-            color: #a5662f;
+            color: #B89874;
         }
 
         .page-link {
@@ -66,7 +66,7 @@
 
         .page-item.active .page-link {
             z-index: 3;
-            color: #a5662f;
+            color: #B89874;
             background-color: transparent;
         }
 
@@ -290,7 +290,7 @@
         /*
         .datepicker table tr td.day:hover,
         .datepicker table tr td.day.focused {
-            background: #a5662f;
+            background: #B89874;
             cursor: pointer;
         }
 
@@ -314,7 +314,7 @@
         .datepicker table tr td.active:hover[disabled],
         .datepicker table tr td.active.disabled[disabled],
         .datepicker table tr td.active.disabled:hover[disabled] {
-            background: #a5662f;
+            background: #B89874;
         }
         */
 
@@ -369,7 +369,7 @@
         .datepicker table tr td span.active:hover,
         .datepicker table tr td span.active.disabled,
         .datepicker table tr td span.active.disabled:hover {
-            background-color: #a5662f;
+            background-color: #B89874;
             background-image: -moz-linear-gradient(to bottom, #08c, #0044cc);
             background-image: -ms-linear-gradient(to bottom, #08c, #0044cc);
             background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#08c), to(#0044cc));
@@ -387,7 +387,7 @@
         */
 
         .button-active {
-            background-color: #a5662f;
+            background-color: #B89874;
             color: white;
 
         }
@@ -399,7 +399,7 @@
 
         .btn-sobat-md:hover {
             background-color: transparent;
-            color: #a5662f;
+            color: #B89874;
             text-decoration: none;
         }
 
@@ -411,7 +411,7 @@
         }
 
         .btn-payment-md:hover {
-            background-color: #a5662f;
+            background-color: #B89874;
             color: white;
             text-decoration: none;
             border-color:white;

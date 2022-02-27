@@ -31,7 +31,7 @@
                                     $trx_order_id = $trxOrderData[$current]->id_trx_order;
                                 ?>
 
-                                    <div class="col-md-4" style="color:#a5662f">
+                                    <div class="col-md-4" style="color:#B89874">
                                     </div>
                                     <div class="col-md-3">
                                         <?php echo $trxOrderData[$i]->nama_barang ?>
@@ -44,7 +44,7 @@
                                         
                                         $url_encrypt = str_replace("/", "_",$trxOrderData[$i]->id_trx_order); 
                                         $url=site_url()."/live-order/live-order-detailtrx/".$url_encrypt;
-                                        echo "<a href='".$url."' style='color:#a5662f;text-decoration:none;'>".ucwords($trxOrderData[$i]->nama_pelanggan)."</a>";
+                                        echo "<a href='".$url."' style='color:#B89874;text-decoration:none;'>".ucwords($trxOrderData[$i]->nama_pelanggan)."</a>";
                                     ?>
                                         <hr style="width: 600px;border-width: 2px;border-style: solid;border-color:white;margin-top:30px">
 
@@ -52,7 +52,7 @@
                                         
                                          $url_encrypt = str_replace("/", "_",$trxOrderData[$i]->id_trx_order); 
                                          $url=site_url()."/live-order/live-order-detailtrx/".$url_encrypt;
-                                         echo "<a href='".$url."' style='color:#a5662f;text-decoration:none;'>".ucwords($trxOrderData[$i]->nama_pelanggan)."</a>";
+                                         echo "<a href='".$url."' style='color:#B89874;text-decoration:none;'>".ucwords($trxOrderData[$i]->nama_pelanggan)."</a>";
                                     ?>
                                         <hr style="width: 600px;border-width: 2px;border-style: solid;border-color:white;margin-top:30px">
 

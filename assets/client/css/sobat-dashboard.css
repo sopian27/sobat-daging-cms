@@ -1,7 +1,7 @@
 .img-dashboard{
     height:150px;
     width:100%;
-    background-color: #a5662f;
+    background-color: #B89874;
   }
   
   .dashboard-image{
@@ -16,7 +16,7 @@
       border-radius:50%;
       width: 120px;
       height:120px;
-      background:#a5662f;
+      background:#B89874;
       margin-left:40px;
   }
   
@@ -50,13 +50,13 @@
   
   .card-dashboard-title i:hover{
     transform: scale(1.25) rotate(100deg); 
-    background:#a5662f;
+    background:#B89874;
     
   }
   .card-dashboard:hover {
     transform: scale(1.05);
     box-shadow: 10px 10px 15px rgba(0,0,0,0.3);
-    background: #a5662f;
+    background: #B89874;
     margin-top:-40px;
   }
   

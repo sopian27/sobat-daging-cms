@@ -59,7 +59,7 @@ function dateForShow($create_date)
                                     <a class="form-control-button btn btn-outline-light button-action" style="padding:10px" onclick="showInvoiceCustomer();"> Invoice Costumer </a>
                                 </div>
                                 <div style="margin-top:30px">
-                                    <a class="form-control-button btn btn-outline-light button-action" style="background-color: #a5662f;border:none;padding:10px"> Invoice Pembelian </a>
+                                    <a class="form-control-button btn btn-outline-light button-action" style="background-color: #B89874;border:none;padding:10px"> Invoice Pembelian </a>
                                 </div>
                             </div>
                             <div class="col-md-5">
@@ -161,7 +161,7 @@ function dateForShow($create_date)
                         <div class="row">
                             <div class="col-md-2 offset-md-1">
                                 <div>
-                                    <a class="form-control-button btn" style="background-color: #a5662f;border:none;padding:10px"> Invoice Costumer </a>
+                                    <a class="form-control-button btn" style="background-color: #B89874;border:none;padding:10px"> Invoice Costumer </a>
                                 </div>
                                 <div style="margin-top:30px">
                                     <a class="form-control-button btn btn-outline-light button-action" style="padding:10px" onclick="showInvoicePembelian();"> Invoice Pembelian </a>
@@ -192,7 +192,7 @@ function dateForShow($create_date)
                     <div class="row">
                         <div class="col-md-2 offset-md-1">
                             <div>
-                                <a class="form-control-button btn" style="background-color: #a5662f;border:none;padding:10px"> Invoice Costumer </a>
+                                <a class="form-control-button btn" style="background-color: #B89874;border:none;padding:10px"> Invoice Costumer </a>
                             </div>
                             <div style="margin-top:30px">
                                 <a class="form-control-button btn btn-outline-light button-action" style="padding:10px" onclick="showInvoicePembelian();"> Invoice Pembelian </a>

@@ -263,7 +263,7 @@
                         dataload += '    </td> '
                         dataload += '    <td class="data" data-dat="keterangan" style="width: 20%;"><input type="text" name="note[]" id="note' + i + '" value="' + note + '" class="form-control "></td> '
                         if (data.data[i].status == "0") {
-                            dataload += "<td><a class='form-control-button btn-success' style='background-color: #a5662f'><span class='fas fa-check'></span></a></td>";
+                            dataload += "<td><a class='form-control-button btn-success' style='background-color: #B89874'><span class='fas fa-check'></span></a></td>";
                         } else {
                             dataload += " <td><a class='form-control-button btn btn-outline-light button-action' onclick='" + functionOnclick + "'><span class='fas fa-check'></span></a></td>";
                         }

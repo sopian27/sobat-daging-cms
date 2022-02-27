@@ -36,7 +36,7 @@
                     <div class="col-md-2 offset-md-1">
                         <p id="trx_pst_pusat"><?= $id_trx_pst ?></p>
                         <div>
-                            <a class="form-control-button btn" style="background-color: #a5662f;border:none;padding:10px;width:50%"> Gudang Luar </a>
+                            <a class="form-control-button btn" style="background-color: #B89874;border:none;padding:10px;width:50%"> Gudang Luar </a>
                         </div>
                         <div style="margin-top:30px">
                             <a class="form-control-button btn btn-outline-light button-action" style="padding:10px;width:50%" onclick="showSobat();"> Sobat </a>
@@ -86,7 +86,7 @@
                             <a class="form-control-button btn btn-outline-light button-action" onclick="showPusat();" style="width:50%"> Gudang Luar </a>
                         </div>
                         <div style="margin-top:30px">
-                            <a class="form-control-button btn" style="background-color: #a5662f;border:none;padding:10px;width:50%"> Sobat </a>
+                            <a class="form-control-button btn" style="background-color: #B89874;border:none;padding:10px;width:50%"> Sobat </a>
                         </div>
                     </div>
                 </div>
@@ -311,7 +311,7 @@
             dataLoad += "<td>";
 
             if (response.data[i].status == "0") {
-                dataLoad += "<a class='form-control-button btn-success' style='background-color: #a5662f'><span class='fas fa-check'></span></a>";
+                dataLoad += "<a class='form-control-button btn-success' style='background-color: #B89874'><span class='fas fa-check'></span></a>";
             } else {
                 dataLoad += "<a class='form-control-button btn btn-outline-light button-action' onclick='update_data_pusat(" + i + ")'><span class='fas fa-check'></span></a>";
             }
@@ -385,7 +385,7 @@
             dataLoad += "<td>";
 
             if (response.data[i].status == "0") {
-                dataLoad += "<a class='form-control-button btn-success' style='background-color: #a5662f'><span class='fas fa-check'></span></a>";
+                dataLoad += "<a class='form-control-button btn-success' style='background-color: #B89874'><span class='fas fa-check'></span></a>";
             } else {
                 dataLoad += "<a class='form-control-button btn btn-outline-light button-action' onclick='update_data_sobat(" + i + ")'><span class='fas fa-check'></span></a>";
             }
@@ -661,7 +661,7 @@
             dataLoad += "<td>";
 
             if (response.data_sobat[i].create_date != null) {
-                dataLoad += "<a class='form-control-button btn-success' style='background-color: #a5662f'><span class='fas fa-check'></span></a>";
+                dataLoad += "<a class='form-control-button btn-success' style='background-color: #B89874'><span class='fas fa-check'></span></a>";
             } else {
                 dataLoad += "<a class='form-control-button btn btn-outline-light button-action' onclick='update_data_sobat(" + i + ")'><span class='fas fa-check'></span></a>";
             }

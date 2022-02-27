@@ -359,7 +359,7 @@
                         if (current_month === key) {
 
                             dataLoad += "<tr>";
-                            dataLoad += "<td ><a style='color:#a5662f;' href='#' onclick='" + functionOnclick + "'>";
+                            dataLoad += "<td ><a style='color:#B89874;' href='#' onclick='" + functionOnclick + "'>";
                             dataLoad += getMonthName(current_year, key);
                             dataLoad += "</a></td>";
                             dataLoad += "<td>";
@@ -423,7 +423,7 @@
                         if (current_month === key) {
 
                             dataLoad += "<tr>";
-                            dataLoad += "<td ><a style='color:#a5662f;' href='#' onclick='" + functionOnclick + "'>";
+                            dataLoad += "<td ><a style='color:#B89874;' href='#' onclick='" + functionOnclick + "'>";
                             dataLoad += getMonthName(current_year, key);
                             dataLoad += "</a></td>";
                             dataLoad += "<td>";

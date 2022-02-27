@@ -82,7 +82,7 @@ function dateForShow($create_date) {
                                         foreach ($detailData as $data_loop) {
                                     ?>
                                             <div class="col-md-6" style="margin-top: 5px;">
-                                                <a style="color:#a5662f;text-decoration:none" data-bs-toggle="collapse" 
+                                                <a style="color:#B89874;text-decoration:none" data-bs-toggle="collapse" 
                                                 href="#collapseExample<?php echo $iterator?>" 
                                                 onclick="getDetailTrx('<?php echo $data_loop->id_trx_order?>','<?php echo $iterator?>')">
                                                 <?php 
@@ -178,7 +178,7 @@ function dateForShow($create_date) {
                         var functionOnclick = 'getDetailTrx("' + id_trx_order_data + '","' + i + '")';
 
                         dataload += '<div class="col-md-6"> ';
-                        dataload += '<a style="color:#a5662f;text-decoration:none" data-bs-toggle="collapse" ';
+                        dataload += '<a style="color:#B89874;text-decoration:none" data-bs-toggle="collapse" ';
                         dataload += 'href="#collapseExample' + i + '"  ';
                         dataload += "onclick=" + functionOnclick + ">" + data[i].nama_pelanggan + '</a>';
                         dataload += '</div>';

@@ -17,7 +17,7 @@
                     <div class="row">
                         <div class="col-md-2 offset-md-1">
                             <div>
-                                <a class="form-control-button btn" style="background-color: #a5662f;border:none;padding:10px"> Mingguan </a>
+                                <a class="form-control-button btn" style="background-color: #B89874;border:none;padding:10px"> Mingguan </a>
                             </div>
                             <div style="margin-top:30px">
                                 <a class="form-control-button btn btn-outline-light button-action" style="padding:10px" onclick="showSallaryBulanan();"> Bulanan </a>
@@ -88,7 +88,7 @@
                                 <a class="form-control-button btn btn-outline-light button-action" onclick="showSallaryMingguan();"> Mingguan </a>
                             </div>
                             <div style="margin-top:30px">
-                                <a class="form-control-button btn" style="background-color: #a5662f;border:none;padding:10px"> Bulanan </a>
+                                <a class="form-control-button btn" style="background-color: #B89874;border:none;padding:10px"> Bulanan </a>
                             </div>
                         </div>
                         <div class="col-md-5 offset-md-1">

@@ -35,7 +35,7 @@
                 <div class="row">
                     <div class="col-md-1 offset-md-1">
                         <div>
-                            <a class="form-control-button btn" style="background-color: #a5662f;border:none;padding:10px"> Payment </a>
+                            <a class="form-control-button btn" style="background-color: #B89874;border:none;padding:10px"> Payment </a>
                         </div>
                         <div style="margin-top:30px">
                             <a class="form-control-button btn btn-outline-light button-action" style="padding:10px" onclick="showInvoice();"> Invoice </a>
@@ -124,7 +124,7 @@
                             <a class="form-control-button btn btn-outline-light button-action" style="padding:10px" onclick="showPayment();"> Payment </a>
                         </div>
                         <div style="margin-top:30px">
-                            <a class="form-control-button btn" style="background-color: #a5662f;border:none;padding:10px"> Invoice </a>
+                            <a class="form-control-button btn" style="background-color: #B89874;border:none;padding:10px"> Invoice </a>
                         </div>
                     </div>
                     <div class="col-md-5 offset-md-1">
@@ -191,7 +191,7 @@
                 <div class="row">
                     <div class="col-md-1 offset-md-1">
                         <div>
-                            <a class="form-control-button btn" style="background-color: #a5662f;border:none;padding:10px"> Payment </a>
+                            <a class="form-control-button btn" style="background-color: #B89874;border:none;padding:10px"> Payment </a>
                         </div>
                         <div style="margin-top:30px">
                             <a class="form-control-button btn btn-outline-light button-action" style="padding:10px" onclick="showInvoice();"> Invoice </a>
@@ -224,7 +224,7 @@
                             <a class="form-control-button btn btn-outline-light button-action" style="padding:10px" onclick="showPayment();"> Payment </a>
                         </div>
                         <div style="margin-top:30px">
-                            <a class="form-control-button btn" style="background-color: #a5662f;border:none;padding:10px"> Invoice </a>
+                            <a class="form-control-button btn" style="background-color: #B89874;border:none;padding:10px"> Invoice </a>
                         </div>
                     </div>
                     <div class="col-md-5 offset-md-1">
@@ -377,7 +377,7 @@
                         <a class="form-control-button btn btn-outline-light button-action" style="padding:10px" onclick="showPayment();"> Payment </a>
                     </div>
                     <div style="margin-top:30px">
-                        <a class="form-control-button btn" style="background-color: #a5662f;border:none;padding:10px"> Invoice </a>
+                        <a class="form-control-button btn" style="background-color: #B89874;border:none;padding:10px"> Invoice </a>
                     </div>
                 </div>
                 <div class="col-md-5 offset-md-1">
