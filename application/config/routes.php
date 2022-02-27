@@ -92,6 +92,7 @@ $route['other/save'] = 'auth/OtherIncome/otherSave';
 /* history-other-income */
 $route['history-other'] = 'auth/HistoryOtherIncome';
 $route['history-other/getdata'] = 'auth/HistoryOtherIncome/getData';
+$route['history-other/download'] = 'auth/HistoryOtherIncome/downloadFile';
 
 /* payment */
 $route['payment'] = 'auth/Payment';

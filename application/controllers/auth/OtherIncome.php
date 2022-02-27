@@ -6,7 +6,8 @@ class OtherIncome extends CI_Controller
         parent::__construct(); 
 
         date_default_timezone_set('Asia/Jakarta');
-        $this->load->model('auth/TRXOtherIncomeModel','trx_other_inc_model');    
+        $this->load->model('auth/TRXOtherIncomeModel','trx_other_inc_model');  
+        $this->load->library('upload');  
 
     } 
     
@@ -32,7 +33,7 @@ class OtherIncome extends CI_Controller
     }
 
 
-    public function otherSave(){
+    public function otherSave2(){
 
         $data_post = $_POST;
 
@@ -49,5 +50,46 @@ class OtherIncome extends CI_Controller
         redirect('other');
 
     }
+
+    public function otherSave()
+    {
+
+        $data_post = $_POST;
+        $file = $_FILES;
+        $path = "uploads";
+        $file_name = $file["upload_bukti"]["name"];
+
+        $config['file_name']            = $file_name;
+        $config['upload_path']          = './' . $path;
+        $config['allowed_types']        = "jpg|png|jpeg";
+        $config['overwrite']            = TRUE;
+        //$config['max_size']             = $this->upload_size;
+
+        $this->upload->initialize($config);
+
+        if (!$this->upload->do_upload('upload_bukti')) {
+            $this->session->set_flashdata('upload_failed', $this->upload->display_errors());
+        } else {
+
+            $data=array(
+                "penggunaan_dana" => str_replace(",", "", $data_post['penggunaan_dana']),
+                "keterangan" =>  $data_post['keterangan'],
+                "id_trx_ot"=> $data_post['id_trx_ot'],
+                "upload_bukti" => $file_name,
+                "create_date"=>date('YmdHis'),
+                "update_date"=>date('YmdHis')
+            );
+    
+            $this->trx_other_inc_model->insertData($data);
+
+        }
+
+        echo ( "<script LANGUAGE='JavaScript'>
+                window.alert('Succesfully insert');
+                window.location.href='".site_url()."/other';
+                </script>");
+        //redirect('expenses');
+    }
+
 
 }

@@ -198,9 +198,9 @@
 
     function initPaging() {
 
-        $("#pagination-result-operational").val("1");
-        $("#pagination-result-minggu").val("1");
-        $("#pagination-result-bulan").val("1");
+        $("#halaman_paging_operational").val("1");
+        $("#halaman_paging_bulan").val("1");
+        $("#halaman_paging_minggu").val("1");
     }
 
     $(document).on('change', '#create_date', function() {

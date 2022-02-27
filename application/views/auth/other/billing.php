@@ -2,7 +2,9 @@
     <div class="col-md-3 offset-md-1">
         <h2><?= ucfirst($judul) ?></h2>
     </div>
-    <hr style="width: 1570px;margin-left:160px;border-width: 2px;border-style: solid;border-color:white">
+    <div class="col-md-11">
+        <hr style="margin-left:160px;border-width: 2px;border-style: solid;border-color:white">
+    </div>
     <div class="row">
         <div class="col-md-3 offset-md-1"><?= $kode_po ?></div>
         <div class="col-md-2 offset-md-5 "><?= $date ?></div>
@@ -11,7 +13,7 @@
     <div class="container-fluid" style="margin-top: 40px;">
         <div class="row justify-content-center offset-md-1">
             <div class="container">
-                <form method="post" action="#" id="form-other-income-save" name="form-other-income-save">
+                <form method="post" action="#" id="form-other-income-save" name="form-other-income-save" enctype="multipart/form-data">
                     <div class="row">
                         <div class="col-md-5 offset-md-1">
                             <div class="form-group row">
@@ -43,7 +45,7 @@
                             <button class="form-control-button btn btn-outline-light button-action" onclick="clearAllData();"> Clear All </button>
                         </div>
                         <div class="col-md-2">
-                            <button class="form-control-button btn btn-outline-light button-action" onclick="confirm();"> Confirm </button>
+                            <button class="form-control-button btn btn-outline-light button-action" onclick="return confirm();"> Confirm </button>
                         </div>
                     </div>
                 </form>
@@ -67,7 +69,7 @@
     $("#penggunaan_dana").keyup(function(e) {
 
         var penggunaan_dana = $("#penggunaan_dana").val();
-        var saldo_result = pemasukkan_dana;
+        var saldo_result = penggunaan_dana;
         console.log(saldo_result);
         $("#penggunaan_dana").autoNumeric('set', saldo_result);
 
@@ -89,10 +91,33 @@
             return;
         }
 
+        var upload_bukti = document.getElementById("upload_bukti");
+
+        if (upload_bukti.files.length == 0) {
+            alert("upload bukti tidak boleh kosong");
+            return;
+        }
+
+        var upload_bukti_file = upload_bukti.files[0];
+
+        var formData = new FormData();
+
+        formData.append("Filedata", upload_bukti_file);
+        var t = upload_bukti_file.type.split('/').pop().toLowerCase();
+        if (t != "jpeg" && t != "jpg" && t != "png") {
+            alert("upload bukti hanya boleh (jpg,jpeg,png)");
+            document.getElementById("upload_bukti").value = '';
+            return;
+        }
+        /*
+        if (upload_bukti_file.size > (1024000*10)) {
+            alert("Maksimum ukuran file hanya 10MB");
+            document.getElementById("upload_bukti").value = '';
+            return;
+        }*/
+
         $("#form-other-income-save").attr('action', '<?php echo site_url()?>/other/save');
         $("#form-other-income-save").submit();
-
-
     }
 
     function checkInvalid(val) {
@@ -101,5 +126,9 @@
         }
 
         return false;
+    }
+
+    function clearAllData(){
+        location.href = "<?= site_url() ?>/other";
     }
 </script>
