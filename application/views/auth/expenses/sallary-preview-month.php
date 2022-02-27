@@ -37,7 +37,6 @@ function dateForShow($create_date)
 
 ?>
 
-
 <div class="container mt-3">
     <form method="POST" action="<?php echo site_url()?>/sallary-print"  target="_blank">
         <div class="container col-md-8">

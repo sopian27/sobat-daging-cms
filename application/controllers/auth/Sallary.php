@@ -17,6 +17,14 @@ class Sallary extends CI_Controller
         $data['subMenu'] = "EXPENSES";
         $t = time();
         $data['date'] = date("d F Y", $t);
+        $current_date = date("d/m/Y", $t);
+        $trxData = $this->trx_exp_model->getTrxIdSallary();
+        $trxId = $trxData[0]->trx_id;
+
+        $lastNoUrut = substr($trxId, 5, 4);
+        $nextNoUrut = intval($lastNoUrut) + 1;
+        $kodePo = 'ESM-' . sprintf('%04s', $nextNoUrut) . "/" . $current_date;
+        $data['kode_po'] = $kodePo;
 
         $this->load->view('auth/templates/header', $data);
         $this->load->view('auth/templates/expenses/sidemenu', $data);
@@ -34,6 +42,7 @@ class Sallary extends CI_Controller
             $data= array(
                 "nama"=> $data_post['nama'],
                 "type"=> $data_post['type'],
+                "id_trx"=> $data_post['id_trx'],
                 "jml_hari_kerja"=> str_replace(",", "", $data_post['jml_hari_kerja']),
                 "upah_harian"=> str_replace(",", "", $data_post['upah_harian']),
                 "upah_lembur"=> str_replace(",", "", $data_post['upah_lembur']),
@@ -48,7 +57,8 @@ class Sallary extends CI_Controller
             
             $data= array(
                 "nama"=> $data_post['nama'],
-                "type"=> $data_post['type'],
+                "type"=>  $data_post['type'],
+                "id_trx"=>  $data_post['id_trx'],
                 "upah_bulanan"=> str_replace(",", "", $data_post['upah_bulanan']),
                 "bulan"=>  $data_post['bulan'],
                 "bonus"=> str_replace(",", "", $data_post['bonus']),
@@ -65,7 +75,6 @@ class Sallary extends CI_Controller
     }
 
     public function printPreview($data){
-
 
         $data['judul']   = 'Sallary';
         $data['subMenu'] = "EXPENSES";

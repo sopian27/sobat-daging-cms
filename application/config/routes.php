@@ -83,6 +83,7 @@ $route['sallary-print'] = 'auth/Sallary/printData';
 /* history-expenses */
 $route['history-expenses'] = 'auth/HistoryExpenses';
 $route['history-expenses/getdata'] = 'auth/HistoryExpenses/getData';
+$route['history-expenses/download'] = 'auth/HistoryExpenses/downloadFile';
 
 /* other-income */
 $route['other'] = 'auth/OtherIncome';

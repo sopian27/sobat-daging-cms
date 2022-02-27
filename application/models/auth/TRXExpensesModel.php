@@ -22,6 +22,14 @@ class TRXExpensesModel extends CI_Model
         return $this->db->query($query)->result();
     }
 
+    public function getTrxIdSallary()
+    {
+
+        $query = " select max(id_trx) as trx_id from ex_sallary where substring(create_date,1,8) =DATE_FORMAT(SYSDATE(), '%Y%m%d')";
+
+        return $this->db->query($query)->result();
+    }
+
     public function getDataExpensesByDate($data)
     {
         $date = $data['date_value'];
@@ -33,10 +41,130 @@ class TRXExpensesModel extends CI_Model
 
     public function getDataSumExpensesByDate($data)
     {
-        $date = $data['date_value'];
+        $date = $data['create_date'];
         $query = " SELECT sum(penggunaan_dana) as total
                    FROM ex_opt 
                    WHERE substring(create_date,1,6) ='$date' group by substring(create_date,1,6) ";
+
+        return $this->db->query($query)->result();
+    }
+
+    public function getData($create_date, $keyword, $halaman, $batasTampilData)
+    {
+
+        $query = "";
+
+        if (isset($keyword) && $keyword != "") {
+
+            $query = "  SELECT 
+                            *
+                        from 
+                            ex_opt b
+                        where 
+                            b.id_trx_ex_opt= '" . $keyword . "' 
+                        order by b.id
+                            limit " . $halaman . "," . $batasTampilData;
+        } else {
+
+            $query = "  SELECT 
+                            *
+                        from 
+                            ex_opt b
+                        where 
+                            substring(b.create_date,1,6)= '" . $create_date . "'                          
+                        order by b.id
+                            limit " . $halaman . "," . $batasTampilData;
+        }
+
+        return $this->db->query($query)->result();
+    }
+
+    public function getDataCount($create_date, $keyword)
+    {
+
+        $query = "";
+
+        if (isset($keyword) && $keyword != "") {
+
+            $query = "  SELECT 
+                            *
+                        from 
+                            ex_opt b
+                        where 
+                            b.id_trx_ex_opt= '" . $keyword . "' 
+                        order by b.id";
+        } else {
+
+            $query = "  SELECT 
+                            *
+                        from 
+                            ex_opt b
+                        where 
+                            substring(b.create_date,1,6)= '" . $create_date . "'                          
+                        order by b.id";
+        }
+
+        return $this->db->query($query)->result();
+    }
+
+    public function getDataSallary($create_date, $keyword,$type, $halaman, $batasTampilData)
+    {
+
+        $query = "";
+
+        if (isset($keyword) && $keyword != "") {
+
+            $query = "  SELECT 
+                            *
+                        from 
+                            ex_sallary b
+                        where 
+                            b.nama= '" . $keyword . "' 
+                            and type='".$type."'
+                        order by b.id
+                            limit " . $halaman . "," . $batasTampilData;
+        } else {
+
+            $query = "  SELECT 
+                            *
+                        from 
+                            ex_sallary b
+                        where 
+                            substring(b.create_date,1,6)= '" . $create_date . "'  
+                            and type='".$type."'                      
+                        order by b.id
+                            limit " . $halaman . "," . $batasTampilData;
+        }
+
+        return $this->db->query($query)->result();
+    }
+
+    public function getDataSallaryCount($create_date, $keyword,$type)
+    {
+
+        $query = "";
+
+        if (isset($keyword) && $keyword != "") {
+
+            $query = "   SELECT 
+                            *
+                        from 
+                            ex_sallary b
+                        where 
+                            b.nama= '" . $keyword . "' 
+                            and type='".$type."'
+                        order by b.id";
+        } else {
+
+            $query = "  SELECT 
+                        *
+                        from 
+                            ex_sallary b
+                        where 
+                            substring(b.create_date,1,6)= '" . $create_date . "'  
+                            and type='".$type."'                      
+                        order by b.id";
+        }
 
         return $this->db->query($query)->result();
     }

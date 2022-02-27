@@ -1,49 +1,12 @@
-<?php
-
-function dateForShow($create_date)
-{
-    $year = substr($create_date, 0, 4);
-    $month = substr($create_date, 4, 2);
-    $day = substr($create_date, 6, 2);
-
-    if ($month == "01") {
-        $month = "Januari";
-    } else if ($month == "02") {
-        $month = "Februari";
-    } else if ($month == "03") {
-        $month = "Maret";
-    } else if ($month == "04") {
-        $month = "April";
-    } else if ($month == "05") {
-        $month = "Mei";
-    } else if ($month == "06") {
-        $month = "Juni";
-    } else if ($month == "07") {
-        $month = "Juli";
-    } else if ($month == "08") {
-        $month = "Agustus";
-    } else if ($month == "09") {
-        $month = "September";
-    } else if ($month == "10") {
-        $month = "Oktober";
-    } else if ($month == "11") {
-        $month = "November";
-    } else if ($month == "12") {
-        $month = "Desember";
-    }
-
-    return $day . " " . $month . " " . $year;
-}
-
-?>
-
-
 <div class="container-fluid mt-3">
     <div class="col-md-3 offset-md-1">
         <h2><?= ucfirst($judul) ?></h2>
     </div>
-    <hr style="width: 1570px;margin-left:160px;border-width: 2px;border-style: solid;border-color:white">
+    <div class="col-md-11">
+        <hr style="margin-left:160px;border-width: 2px;border-style: solid;border-color:white">
+    </div>
     <div class="row">
+        <div class="col-md-3 offset-md-1"><?= $kode_po ?></div>
         <div class="col-md-3 offset-md-9 "><?= $date ?></div>
     </div>
 
@@ -60,7 +23,7 @@ function dateForShow($create_date)
                                 <a class="form-control-button btn btn-outline-light button-action" style="padding:10px" onclick="showSallaryBulanan();"> Bulanan </a>
                             </div>
                         </div>
-                        <div class="col-md-5">
+                        <div class="col-md-5 offset-md-1">
                             <div class="form-group row">
                                 <label for="" class="col-sm-4 col-form-label"> </label>
                             </div>
@@ -70,6 +33,7 @@ function dateForShow($create_date)
                                 <div class="col-sm-4">
                                     <input type="text" class="form-control-label" id="nama_minggu" name="nama">
                                     <input type="hidden" class="form-control-label" id="type" name="type" value="1">
+                                    <input type="hidden" class="form-control-label" id="id_trx" name="id_trx" value="<?= $kode_po ?>">
                                 </div>
                             </div>
                             <div class="form-group row" >
@@ -80,14 +44,14 @@ function dateForShow($create_date)
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="" class="col-sm-3 col-form-label">Upah Harian </label>
+                                <label for="" class="col-sm-3 col-form-label">Upah Harian (Rp) </label>
                                 <div class="col-sm-1">:</div>
                                 <div class="col-sm-4">
                                     <input type="text" class="form-control-label" id="upah_harian" name="upah_harian">
                                 </div>
                             </div>
                             <div class="form-group row" >
-                                <label for="" class="col-sm-3 col-form-label">Upah Lembur </label>
+                                <label for="" class="col-sm-3 col-form-label">Upah Lembur (Rp)</label>
                                 <div class="col-sm-1">:</div>
                                 <div class="col-sm-4">
                                     <input type="text" class="form-control-label" id="upah_lembur" name="upah_lembur">
@@ -95,7 +59,7 @@ function dateForShow($create_date)
                             </div>
                             <hr style="width: 500px;border-width: 2px;border-style: solid;border-color:white">
                             <div class="form-group row" >
-                                <label for="" class="col-sm-3 col-form-label">Total Upah </label>
+                                <label for="" class="col-sm-3 col-form-label">Total Upah (Rp) </label>
                                 <div class="col-sm-1">:</div>
                                 <div class="col-sm-4">
                                     <input type="text" class="form-control-label" id="total_upah_minggu" name="total_upah">
@@ -103,12 +67,12 @@ function dateForShow($create_date)
                             </div>
                         </div>
                     </div>
-                    <div class="row d-flex offset-md-7" style="margin-top: 20px;">
+                    <div class="row d-flex offset-md-7" style="margin-top: 40px;">
                         <div class="col-md-2">
                             <button class="form-control-button btn btn-outline-light button-action" onclick="clearAllData();"> Clear All </button>
                         </div>
                         <div class="col-md-2">
-                            <button class="form-control-button btn btn-outline-light button-action" onclick="confirmMinggu();"> Confirm </button>
+                            <button class="form-control-button btn btn-outline-light button-action" onclick="return confirmMinggu();"> Confirm </button>
                         </div>
                     </div>
                 </form>
@@ -127,7 +91,7 @@ function dateForShow($create_date)
                                 <a class="form-control-button btn" style="background-color: #a5662f;border:none;padding:10px"> Bulanan </a>
                             </div>
                         </div>
-                        <div class="col-md-5">
+                        <div class="col-md-5 offset-md-1">
                             <div class="form-group row">
                                 <label for="" class="col-sm-4 col-form-label"> </label>
                             </div>
@@ -137,6 +101,7 @@ function dateForShow($create_date)
                                 <div class="col-sm-4">
                                     <input type="text" class="form-control-label" id="nama_bulan" name="nama">
                                     <input type="hidden" class="form-control-label" id="type" name="type" value="2">
+                                    <input type="hidden" class="form-control-label" id="id_trx" name="id_trx" value="<?= $kode_po ?>">
                                 </div>
                             </div>
                             <div class="form-group row" >
@@ -170,7 +135,7 @@ function dateForShow($create_date)
                             </div>
                         </div>
                     </div>
-                    <div class="row d-flex offset-md-7" style="margin-top: 20px;">
+                    <div class="row d-flex offset-md-7" style="margin-top: 40px;">
                         <div class="col-md-2">
                             <button class="form-control-button btn btn-outline-light button-action" onclick="clearAllData();"> Clear All </button>
                         </div>
@@ -245,6 +210,17 @@ function dateForShow($create_date)
     function confirm() {
         $("#form-sallary-data").attr('action', '<?php echo site_url() ?>/sallary/save');
         $("#form-sallary-data").submit();
+    }
+
+    function clearAllData(){
+        $("#nama_minggu").val("");
+        $("#jml_hari_kerja").val("");
+        $("#upah_harian").val("");
+        $("#upah_lembur").val("");
+        $("#nama_bulan").val("");
+        $("#upah_bulanan").val("");
+        $("#bulan").val("");
+        $("#bonus").val("");
     }
 
 
@@ -352,7 +328,7 @@ function dateForShow($create_date)
     $(function() {
         $("#bulan").datepicker({
             todayHighlight: true,
-            format: "yyyymm",
+            format: "yyyy-mm",
             startView: "months",
             minViewMode: "months",
             autoclose: true
@@ -394,8 +370,7 @@ function dateForShow($create_date)
             alert("upah lembur tidak boleh kosong");
             return;
         }
-
-
+        
         confirm();
 
     }
@@ -426,6 +401,9 @@ function dateForShow($create_date)
             alert("bonus tidak boleh kosong");
             return;
         }
+
+        var data_bulan = bulan.replaceAll("-","");
+        $("#bulan").val(data_bulan);
         
         $("#form-sallary-data-month").attr('action', '<?php echo site_url() ?>/sallary/save');
         $("#form-sallary-data-month").submit();
