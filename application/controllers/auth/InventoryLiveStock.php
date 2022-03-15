@@ -16,17 +16,26 @@ class InventoryLiveStock extends CI_Controller
 
     public function index()
     {
-        $countData = $this->trx_brg_model->getTrxIdLiveStocks();
+        //$countData = $this->trx_brg_model->getTrxIdLiveStocks();
         $countDataBarang = $this->brg_model->countDataBarang();
 
         $dataBarangCount =  $countDataBarang[0]->CountData;
-        $num = $countData[0]->trx_id + 1;
-        $num_padded = sprintf("%04d", $num);
+        //$num = $countData[0]->trx_id + 1;
+        //$num_padded = sprintf("%04d", $num);
 
+        $trxData = $this->trx_brg_model->getTrxIdLiveStocks();
+        $trxId = $trxData[0]->trx_id;
+        $lastNoUrut = substr($trxId, 5, 4);
+        $nextNoUrut = intval($lastNoUrut) + 1;
         $t = time();
         $currentDate = date("d/m/Y", $t);
+        $kodeInvoice = 'ILS-' . sprintf('%04s', $nextNoUrut) . "/" . $currentDate;
+
+        //$t = time();
+        //$currentDate = date("d/m/Y", $t);
         $data['judul'] = 'Live Stock';
-        $data['id_trx_po'] = "ILS-" . $num_padded . "/" . $currentDate;
+        //$data['id_trx_po'] = "ILS-" . $num_padded . "/" . $currentDate;
+        $data['id_trx_po'] = $kodeInvoice;
         $data['date'] = date("d F Y", $t);
         $data['dataBarangCount'] = $dataBarangCount;
 

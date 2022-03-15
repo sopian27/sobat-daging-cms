@@ -17,19 +17,29 @@ class Inventory extends CI_Controller
     // Create PO
     public function index()
     {
-        $countData = $this->trx_brg_model->getTrxId();
+        //$countData = $this->trx_brg_model->getTrxId();
         $countDataBarang = $this->brg_model->countDataBarang();
 
+        $trxData = $this->trx_brg_model->getTrxId();
+        $trxId = $trxData[0]->trx_id;
+        $lastNoUrut = substr($trxId, 5, 4);
+        $nextNoUrut = intval($lastNoUrut) + 1;
+        $t = time();
+        $currentDate = date("d/m/Y", $t);
+        $kodeInvoice = 'IPO-' . sprintf('%04s', $nextNoUrut) . "/" . $currentDate;
+
         $dataBarangCount =  $countDataBarang[0]->CountData;
+        /*
         $num = $countData[0]->trx_id;
         $lastNoUrut = substr($num, -4);
         $nextNoUrut = intval($lastNoUrut)+1;
         $num_padded = sprintf("%04d", $nextNoUrut);
+        */
 
-        $t = time();
-        $currentDate = date("d/m/Y", $t);
+        //$t = time();
+        //$currentDate = date("d/m/Y", $t);
         $data['judul'] = 'Create PO';
-        $data['id_trx_po'] = "IPO-" . $num_padded . "/" . $currentDate;
+        $data['id_trx_po'] = $kodeInvoice;
         $data['date'] = date("d F Y", $t);
         $data['dataBarangCount'] = $dataBarangCount;
 
@@ -75,6 +85,8 @@ class Inventory extends CI_Controller
     {
 
         $data_post = $_POST;
+
+       
         $data_brg_po = array(
             "kode" => $data_post['kode'],
             "nama_barang"=> $data_post['nama_barang'],
@@ -86,6 +98,7 @@ class Inventory extends CI_Controller
             "create_date" => date('YmdHis'),
             "update_date" => date('YmdHis')
         );
+
         /*
         if ($this->trx_brg_model->insertData($data_brg_po) > 0) {
             echo json_encode("success");

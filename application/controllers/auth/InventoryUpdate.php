@@ -19,15 +19,32 @@ class InventoryUpdate extends CI_Controller
 
         $data['judul']  = 'Update PO';
         $countDataBarang = $this->brg_model->countDataBarang();
-        $countData = $this->trx_brg_model->getTrxIdUpdate();
+        //$countData = $this->trx_brg_model->getTrxIdUpdate();
 
-        $dataBarangCount =  $countDataBarang[0]->CountData;
-        $num = $countData[0]->trx_id + 1;
-        $num_padded = sprintf("%04d", $num);
-
+        $trxData = $this->trx_brg_model->getTrxIdUpdate();
+        $trxId = $trxData[0]->trx_id;
+        $lastNoUrut = substr($trxId, 5, 4);
+        $nextNoUrut = intval($lastNoUrut) + 1;
         $t = time();
         $currentDate = date("d/m/Y", $t);
-        $data['id_trx_po'] = "IUPO-" . $num_padded . "/" . $currentDate;
+        $kodeInvoice = 'IUPO-' . sprintf('%04s', $nextNoUrut) . "/" . $currentDate;
+
+        //$countData = $this->trx_brg_model->getTrxId();
+        //$num = $countData[0]->trx_id;
+        //$lastNoUrut = substr($num, -4);
+        //$nextNoUrut = intval($lastNoUrut)+1;
+        //$num_padded = sprintf("%04d", $nextNoUrut);
+        //print_r($countData);
+        //exit();
+
+        $dataBarangCount =  $countDataBarang[0]->CountData;
+       // $num = $countData[0]->trx_id + 1;
+       // $num_padded = sprintf("%04d", $num);
+
+        //$t = time();
+        //$currentDate = date("d/m/Y", $t);
+        //$data['id_trx_po'] = "IUPO-" . $num_padded . "/" . $currentDate;
+        $data['id_trx_po'] =$kodeInvoice;
         $data['date'] = date("d F Y", $t);
         $data['dataBarangCount'] = $dataBarangCount;
 

@@ -221,6 +221,7 @@
             success: function(response) {
 
                 console.log(response.alamat_id + "-" + response.telephone_id + "-" + response.pelanggan_id);
+                alert("berhasil menambahkan data order");
                 confirmData(response.alamat_id, response.telephone_id, response.pelanggan_id);
             },
             error: function(xhr, status, error) {
@@ -368,7 +369,8 @@
                 success: function(data) {
                   
                     console.log("success");
-                    result = true;
+                    //result = true;
+                    location.href = "<?= site_url()?>/inventory";
                 },
                 complete: function(data) {
                     $("#loader-confirmed").show();
@@ -390,8 +392,8 @@
         }
         console.log("result"+result);
         //if(result==true){
-            alert("success insert data");
-            location.href = "<?= site_url() ?>/order-received";
+           // alert("success insert data");
+          //  location.href = "<?= site_url() ?>/order-received";
        // }
     }
 

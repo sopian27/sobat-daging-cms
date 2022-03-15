@@ -271,7 +271,7 @@
                     success: function(data) {
                         //if (data == "success") {
                             console.log("success insert data");
-                          //  location.href = "<?= site_url()?>/inventory";
+                            location.href = "<?= site_url()?>/inventory";
                         //}
                     },
                     error: function(data) {
@@ -285,11 +285,12 @@
             }
 
         }
-
-        //if (data == "success") {
+        /*
+        if (data == "success") {
             console.log("success insert data");
             location.href = "<?= site_url()?>/inventory";
-        //}
+        }
+        */
     }
 
     function clearAllData() {
