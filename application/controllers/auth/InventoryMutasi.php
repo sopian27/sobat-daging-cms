@@ -17,11 +17,20 @@ class InventoryMutasi extends CI_Controller
         $data['judul']   = 'Mutasi Barang';
         $t = time();
         $data['tanggal'] = date("d/m/Y", $t);
-        $countData = $this->trx_mutasi_model->getTrxId();
-        $num = $countData[0]->trx_id + 1;
-        $num_padded = sprintf("%04d", $num);
-        $data['id_trx_mutasi'] = "IMB-" . $num_padded . "/" . $data['tanggal'];
+        //$countData = $this->trx_mutasi_model->getTrxId();
+       // $num = $countData[0]->trx_id + 1;
+        //$num_padded = sprintf("%04d", $num);
+       
         $data['date'] = date("d F Y", $t);
+
+        $trxData = $this->trx_mutasi_model->getTrxId();
+        $trxId = $trxData[0]->trx_id;
+        $lastNoUrut = substr($trxId, 5, 4);
+        $nextNoUrut = intval($lastNoUrut) + 1;
+        $t = time();
+        $currentDate = date("d/m/Y", $t);
+        $kodeInvoice = 'IMB-' . sprintf('%04s', $nextNoUrut) . "/" . $currentDate;
+        $data['id_trx_mutasi'] = $kodeInvoice;
 
         $this->load->view('auth/templates/header', $data);
         $this->load->view('auth/templates/inventory/sidemenu', $data);

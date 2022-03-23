@@ -21,16 +21,32 @@ class InventoryPst extends CI_Controller
 
         $t = time();
         $data['tanggal'] = date("d/m/Y", $t);
-        $trx_pst_pusat = $this->pst_pusat_model->getTrxId();
-        $trx_pst_sobat = $this->pst_sobat_model->getTrxId();
-       
-        $num = $trx_pst_pusat[0]->trx_id + 1;
-        $num_padded = sprintf("%04d", $num);
-        $data['id_trx_pst'] = "IUS-" . $num_padded . "/" . $data['tanggal'];
+        //$trx_pst_pusat = $this->pst_pusat_model->getTrxId();
+        //$trx_pst_sobat = $this->pst_sobat_model->getTrxId();
 
-        $num = $trx_pst_sobat[0]->trx_id + 1;
-        $num_padded = sprintf("%04d", $num);
-        $data['id_trx_sobat'] = "IPST-" . $num_padded . "/" . $data['tanggal'];
+        $trxData = $this->pst_pusat_model->getTrxId();
+        $trxId = $trxData[0]->trx_id;
+        $lastNoUrut = substr($trxId, 5, 4);
+        $nextNoUrut = intval($lastNoUrut) + 1;
+        $t = time();
+        $currentDate = date("d/m/Y", $t);
+        $trx_pst_pusat = 'IUS-' . sprintf('%04s', $nextNoUrut) . "/" . $currentDate;
+
+        $trxDataSobat = $this->pst_sobat_model->getTrxId();
+        $trxIdSobat = $trxDataSobat[0]->trx_id;
+        $lastNoUrutSobat = substr($trxIdSobat, 5, 4);
+        $nextNoUrutSobat = intval($lastNoUrutSobat) + 1;
+        $trx_pst_sobat = 'IPST-' . sprintf('%04s', $nextNoUrutSobat) . "/" . $currentDate;
+       
+        //$num = $trx_pst_pusat[0]->trx_id + 1;
+        //$num_padded = sprintf("%04d", $num);
+        //$data['id_trx_pst'] = "IUS-" . $num_padded . "/" . $data['tanggal'];
+         $data['id_trx_pst'] = $trx_pst_pusat;
+
+        //$num = $trx_pst_sobat[0]->trx_id + 1;
+        //$num_padded = sprintf("%04d", $num);
+        //$data['id_trx_sobat'] = "IPST-" . $num_padded . "/" . $data['tanggal'];
+        $data['id_trx_sobat'] = $trx_pst_sobat;
 
         $data['date'] = date("d F Y", $t);
 

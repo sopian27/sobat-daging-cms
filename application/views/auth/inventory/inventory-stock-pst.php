@@ -300,9 +300,9 @@
             dataLoad += "<td width='20%'>";
             
             if (response.data[i].status == "0") {
-                dataLoad += '<input type="text" name="note_sobat[]" id="note_sobat' + i + '" class="form-control-label" value="' + note + '"/>';
+                dataLoad += '<input type="text" name="note_pusat[]" id="note_pusat' + i + '" class="form-control-label" value="' + note + '"/>';
             } else {
-                dataLoad += '<input type="text" name="note_sobat[]" id="note_sobat' + i + '" class="form-control-label" />';
+                dataLoad += '<input type="text" name="note_pusat[]" id="note_pusat' + i + '" class="form-control-label" />';
             }
 
             dataLoad += '<input type="hidden" name="kode_pusat[]" id="kode_pusat' + i + '" value="' + response.data[i].kode + '"/>';

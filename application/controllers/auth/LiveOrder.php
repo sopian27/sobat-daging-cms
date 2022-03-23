@@ -12,15 +12,24 @@ class LiveOrder extends CI_Controller{
 
     public function index(){
 
-        $countData = $this->lv_model->getTrxId();
-        $num = $countData[0]->trx_id + 1;
-        $num_padded = sprintf("%04d", $num);
+       // $countData = $this->lv_model->getTrxId();
+       // $num = $countData[0]->trx_id + 1;
+       // $num_padded = sprintf("%04d", $num);
+
+
+        $trxData = $this->lv_model->getTrxId();
+        $trxId = $trxData[0]->trx_id;
+        $lastNoUrut = substr($trxId, 5, 4);
+        $nextNoUrut = intval($lastNoUrut) + 1;
+        $t = time();
+        $currentDate = date("d/m/Y", $t);
+        $kode = 'ORLO-' . sprintf('%04s', $nextNoUrut) . "/" . $currentDate;
 
         $t = time();
         $currentDate = date("d/m/Y", $t);
         $data['judul'] = 'Live Order';
         $data['subMenu'] = "ORDER RECEIVED";
-        $data['id_trx_order'] = "ORLO-" . $num_padded . "/" . $currentDate;
+        $data['id_trx_order'] = $kode;
         $data['date'] = date("d F Y", $t);
 
         $this->load->view('auth/templates/header', $data);
