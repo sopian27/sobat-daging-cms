@@ -28,7 +28,7 @@
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-top: 60px;display:none" id="content-header">
+        <div class="row" style="margin-top: 90px;display:none" id="content-header">
             <div class="col-md-3 offset-md-1">
                 <div class="form-group row">
                     <label for="" class="col-sm-6 col-form-label" style="margin-top: -7px;" id="trx-ar"> </label>
@@ -69,6 +69,7 @@
                             </tr>
                             <tr>
                                 <th> Nama Pelanggan </th>
+                                <th> Nama Bahan </th>
                                 <th> Nama Barang </th>
                                 <th> Kode </th>
                                 <th> Quantity </th>
@@ -77,10 +78,10 @@
                                 <th> Nomor Invoice </th>
                                 <th> Tanggal Masuk </th>
                                 <th> Tanggal Invoice </th>
-                                <th> Jatuh Tempo </th>
+                                <th style="color:red"> Jatuh Tempo </th>
                                 <th> Tanggal Payment </th>
                                 <th> Nominal Pembayaran </th>
-                                <th> Sisa Pembayaran </th>
+                                <th style="color:red"> Sisa Pembayaran </th>
                                 <th> S </th>
                             </tr>
                         </thead>
@@ -120,24 +121,24 @@
     $(document).on('change', '#create_date', function() {
         var create_date = document.getElementById("create_date").value;
 
-        var batasTampilData = 10;
+        var batasTampilData = 25;
         $("#halaman_paging").val("1");
         var halaman = $('#halaman_paging').val();
-        var keyword = "";
-        $("#search").val("");
+        var keyword = $("#search").val();
+        //$("#search").val("");
         getData(create_date.replaceAll("-", ""), keyword, batasTampilData, halaman);
 
     });
 
     function searchData() {
 
-        var batasTampilData = 10;
+        var batasTampilData = 25;
         $("#halaman_paging").val("1");
         var halaman = $('#halaman_paging').val();
         var keyword = $("#search").val();
-        var create_date = "";
-        $("#create_date").val("");
-        getData(create_date, keyword, batasTampilData, halaman);
+        var create_date = document.getElementById("create_date").value;
+        //$("#create_date").val("");
+        getData(create_date.replaceAll("-", ""), keyword, batasTampilData, halaman);
 
     }
 
@@ -272,6 +273,9 @@
                         dataLoad += response.rptobj[i].nama_barang;
                         dataLoad += "</td>";
                         dataLoad += "<td >";
+                        dataLoad += response.rptobj[i].note_nama_barang;
+                        dataLoad += "</td>";
+                        dataLoad += "<td >";
                         dataLoad += response.rptobj[i].kode;
                         dataLoad += "</td>";
                         dataLoad += "<td >";
@@ -292,21 +296,21 @@
                         dataLoad += "<td >";
                         dataLoad += dateForShow(response.rptobj[i].tgl_invoice);
                         dataLoad += "</td>";
-                        dataLoad += "<td >";
+                        dataLoad += "<td style='color:red'>";
                         dataLoad += dateForShow(response.rptobj[i].jatuh_tempo);
                         dataLoad += "</td>";
                         dataLoad += "<td >";
                         dataLoad += tgl_payment;
                         dataLoad += "</td>";
                         dataLoad += "<td >";
-                        if (response.rptobj[i].nominal_bayar == null || response.rptobj[i].nominal_bayar == "") {
-                            dataLoad += numberWithCommas("Rp. " + response.rptobj[i].total_tagihan);
-                        } else {
-                            dataLoad += numberWithCommas("Rp. " + response.rptobj[i].nominal_bayar);
-                        }
+                        //if (response.rptobj[i].sisa_pembayaran == response.rptobj[i].nominal_bayar) {
+                        dataLoad += numberWithCommas("Rp. " + response.rptobj[i].nominal_bayar);
+                        // } else {
+                        //     dataLoad += numberWithCommas("Rp. " + response.rptobj[i].sisa_pembayaran);
+                        //  }
                         dataLoad += "</td>";
-                        dataLoad += "<td >";
-                        dataLoad += numberWithCommas("Rp. " + response.rptobj[i].total_tagihan);
+                        dataLoad += "<td style='color:red'>";
+                        dataLoad += numberWithCommas("Rp. " + response.rptobj[i].sisa_pembayaran);
                         dataLoad += "</td>";
                         dataLoad += "<td >";
                         dataLoad += isFinished;
@@ -319,10 +323,20 @@
                     var totalHalaman = Math.ceil(totalDataBarang / batasTampilData);
 
                     $('.pagination-result').html(paginationViewHTML(halaman, totalHalaman, create_date, keyword, batasTampilData));
+                    
 
-                    $("#trx-ar").html("PCPI-0001/" + getMonthTrx(create_date));
-                    $("#trx-ar-month").html("Data AR " + getMonthYear(create_date));
-                    $("#table-title").html("Data AR " + getMonthYear(create_date));
+                    if (create_date != 'Januari, Februari, Maret....') {
+                        
+                        $("#trx-ar").html("PCPI-0001/" + getMonthTrx(create_date));
+                        $("#trx-ar-month").html("Data AR " + getMonthYear(create_date));
+                        $("#table-title").html("Data AR " + getMonthYear(create_date));
+
+                    }else{
+                        $("#trx-ar").html("PCPI-0001");
+                        $("#trx-ar-month").html("Data AR");
+                        $("#table-title").html("Data AR");
+                    }
+
 
                     $("#nominal-ar").html(numberWithCommas("Rp. " + response.rptot[0].total_tagihan));
                     $("#nominal-pembayaran").html(numberWithCommas("Rp. " + response.rptot[0].nominal));
@@ -338,6 +352,10 @@
                 } else {
 
                     $('.pagination-result').html("");
+                    $("#data-ar").html("");
+                    $("#nominal-ar").html("");
+                    $("#nominal-pembayaran").html("");
+                    $("#sisa-pembayaran").html("");
                 }
 
 
@@ -452,7 +470,7 @@
     }
 
     function numberWithCommas(x) {
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
 
     function paginationViewHTML(halaman, totalHalaman, create_date, keyword, batasTampilData) { //halaman 1 total 6

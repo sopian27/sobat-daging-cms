@@ -13,40 +13,49 @@
     <div class="container-fluid" style="margin-top: 40px;">
         <div class="row justify-content-center offset-md-1">
             <div class="container">
-                <div class="row">
-                    <div class="col-md-5 offset-md-1">
-                        <div class="form-group row">
-                            <label for="" class="col-sm-4 col-form-label">Saldo Awal (Rp) </label>
-                            <div class="col-sm-1">:</div>
-                            <div class="col-sm-5">
-                                <input type="text" class="form-control-label" id="saldo_awal" name="saldo_awal" placeholder="Rp. 0" value="<?= $saldo ?> ">
-                                <input type="hidden" class="form-control-label" id="id_trx_petty_cash" name="id_trx_petty_cash" value="<?= $kode_po ?> ">
+                <form id="data" method="post" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-md-5 offset-md-1">
+                            <div class="form-group row">
+                                <label for="" class="col-sm-4 col-form-label">Saldo Awal </label>
+                                <div class="col-sm-1" style="width:10%">: &nbsp;(Rp)</div>
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control-label" id="saldo_awal" style="text-align:right;" name="saldo_awal" placeholder="Rp. 0">
+                                    <input type="hidden" class="form-control-label" id="id_trx_petty_cash" name="id_trx_petty_cash" value="<?= $kode_po ?> ">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group row" style="margin-top: 10px;">
-                            <label for="" class="col-sm-4 col-form-label">Penggunaan Saldo (Rp) </label>
-                            <div class="col-sm-1">:</div>
-                            <div class="col-sm-5">
-                                <input type="text" class="form-control-label" id="tambahan_saldo" name="tambahan_saldo" placeholder="Rp. 0">
+                            <div class="form-group row" style="margin-top: 10px;">
+                                <label for="" class="col-sm-4 col-form-label">Penggunaan Saldo</label>
+                                <div class="col-sm-1" style="width:10%">: &nbsp;(Rp)</div>
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control-label" id="tambahan_saldo" style="text-align:right;" name="tambahan_saldo" placeholder="Rp. 0">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group row" style="margin-top: 10px;">
-                            <label for="" class="col-sm-4 col-form-label">Keterangan </label>
-                            <div class="col-sm-1">:</div>
-                            <div class="col-sm-5">
-                                <textarea id="keterangan" name="keterangan" class="form-control-label"></textarea>
+                            <div class="form-group row" style="margin-top: 10px;">
+                                <label for="" class="col-sm-4 col-form-label">Keterangan </label>
+                                <div class="col-sm-1" style="width:10%">: &nbsp;</div>
+                                <div class="col-sm-5">
+                                    <textarea id="keterangan" name="keterangan" class="form-control-label"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group row" style="margin-top: 10px;">
+                                <label for="" class="col-sm-4 col-form-label">Upload Bukti </label>
+                                <div class="col-sm-1" style="width:10%">: &nbsp;</div>
+                                <div class="col-sm-5">
+                                    <input type="file" id="upload_bukti" name="upload_bukti" class="form-control-label">
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row d-flex offset-md-7" style="margin-top: 20px;">
-                    <div class="col-md-2">
-                        <button class="form-control-button btn btn-outline-light button-action" onclick="clearAllData();"> Clear All </button>
+                    <div class="row d-flex offset-md-7" style="margin-top: 20px;">
+                        <div class="col-md-2">
+                            <button class="form-control-button btn btn-outline-light button-action" onclick="clearAllData();"> Clear All </button>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="form-control-button btn btn-outline-light button-action" type="submit"> Confirm </button>
+                        </div>
                     </div>
-                    <div class="col-md-2">
-                        <button class="form-control-button btn btn-outline-light button-action" onclick="confirm();"> Confirm </button>
-                    </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
@@ -54,21 +63,23 @@
 
 <script>
     $(document).ready(function() {
-
+        /*
         $("#saldo_awal").autoNumeric('init', {
             aSep: ',',
             aDec: '.',
             mDec: '0'
-        });
+        });*/
 
         $("#tambahan_saldo").autoNumeric('init', {
             aSep: ',',
             aDec: '.',
             mDec: '0'
         });
+
+        getData();
     });
 
-
+    /*
     $("#saldo_awal").keyup(function(e) {
 
         var saldo_awal = $("#saldo_awal").val();
@@ -76,7 +87,7 @@
         console.log(saldo_result);
         $("#saldo_awal").autoNumeric('set', saldo_result);
 
-    });
+    });*/
 
     $("#tambahan_saldo").keyup(function(e) {
 
@@ -85,6 +96,89 @@
         console.log(saldo_result);
         $("#tambahan_saldo").autoNumeric('set', saldo_result);
 
+    });
+
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
+
+    function getData() {
+
+        $.ajax({
+            url: '<?= site_url() ?>/petty-cash/getdata',
+            method: 'post',
+            dataType: 'json',
+            success: function(response) {
+                console.log(response);
+                var saldo = response.saldo;
+                $("#saldo_awal").val(numberWithCommas(saldo));
+
+            },
+            error: function(response) {
+                console.log(response);
+            }
+
+        });
+    }
+
+
+    $("form#data").submit(function(e) {
+
+        e.preventDefault();
+        var formData = new FormData(this);
+
+        var saldo_awal = $("#saldo_awal").val();
+        var tambahan_saldo = $("#tambahan_saldo").val();
+        var keterangan = $("#keterangan").val();
+        var id_trx_petty_cash = "<?= $kode_po ?>";
+
+        if (checkInvalid(saldo_awal)) {
+            alert("saldo awal tidak boleh kosong");
+            return;
+        }
+
+        if (checkInvalid(tambahan_saldo)) {
+            alert("tambahan_saldo tidak boleh kosong");
+            return;
+        }
+
+        if (checkInvalid(keterangan)) {
+            alert("keterangan tidak boleh kosong");
+            return;
+        }
+
+        var upload_bukti = document.getElementById("upload_bukti");
+
+        if (upload_bukti.files.length != 0) {
+            var upload_bukti_file = upload_bukti.files[0];
+
+            formData.append("Filedata", upload_bukti_file);
+            var t = upload_bukti_file.type.split('/').pop().toLowerCase();
+            if (t != "jpeg" && t != "jpg" && t != "png") {
+                alert("upload bukti hanya boleh (jpg,jpeg,png)");
+                document.getElementById("upload_bukti").value = '';
+                return;
+            }
+        }
+
+        $.ajax({
+            url: '<?= site_url() ?>/petty-out-save',
+            method: 'post',
+            dataType: 'json',
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                alert("success insert petty out");
+                location.href = "<?= site_url() ?>/petty-cash-out";
+            },
+            error: function(response) {
+                console.log(response);
+            }
+
+        });
     });
 
 
@@ -107,6 +201,25 @@
 
         if (checkInvalid(keterangan)) {
             alert("keterangan tidak boleh kosong");
+            return;
+        }
+
+        var upload_bukti = document.getElementById("upload_bukti");
+
+        if (upload_bukti.files.length == 0) {
+            //alert("upload bukti tidak boleh kosong");
+            //return;
+        }
+
+        var upload_bukti_file = upload_bukti.files[0];
+
+        var formData = new FormData();
+
+        formData.append("Filedata", upload_bukti_file);
+        var t = upload_bukti_file.type.split('/').pop().toLowerCase();
+        if (t != "jpeg" && t != "jpg" && t != "png") {
+            alert("upload bukti hanya boleh (jpg,jpeg,png)");
+            document.getElementById("upload_bukti").value = '';
             return;
         }
 

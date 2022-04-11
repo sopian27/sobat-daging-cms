@@ -9,9 +9,9 @@
         <div class="row">
             <div class="col-md-2 offset-md-1">
                 <div class="input-group">
-                    <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search">
+                    <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search" onkeyup="searchData()">
                     <span class="input-group-append">
-                        <button class="btn btn-outline-light" type="button" onclick="searchData()">
+                        <button class="btn btn-outline-light" type="button" >
                             <i class="fa fa-search"></i>
                         </button>
                     </span>

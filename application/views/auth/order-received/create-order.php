@@ -69,7 +69,7 @@
             </div>
 
             <div class="row" style="margin-top: 50px;">
-                <div class="col-md-7 offset-md-2 justify-content-center">
+                <div class="col-md-8 offset-md-1 justify-content-center">
                     <div class="row">
                         <div class="col-md-1">
                             <button class="form-control-button add btn btn-outline-light button-action"> Add </button>
@@ -80,6 +80,7 @@
                             <thead>
                                 <tr>
                                     <th> Kode </th>
+                                    <th> Nama Bahan </th>
                                     <th> Nama Barang </th>
                                     <th colspan="2"> Quantity </th>
                                     <th> Harga Satuan </th>
@@ -115,9 +116,9 @@
                                 <div class="row">
                                     <div class="col-md-7">
                                         <div class="input-group">
-                                            <input class="form-control-paging" type="text" placeholder="search..." name="keyword-paging" id="keyword-paging">
+                                            <input class="form-control-paging" type="text" placeholder="search..." name="keyword-paging" id="keyword-paging" onkeyup="dataPagingBarang()">
                                             <span class="input-group-append">
-                                                <button class="btn btn-outline-light" type="button" onclick="dataPagingBarang()">
+                                                <button class="btn btn-outline-light" type="button">
                                                     <i class="fa fa-search"></i>
                                                 </button>
                                             </span>
@@ -153,21 +154,22 @@
     $(document).on('click', '.add', function() {
         var dataload = "";
         dataload += '<tr> '
-        dataload += '    <td class="data " data-dat="kode"><input type="text" name="kode[]" value="" class="form-control data-kode"></td> '
-        dataload += '    <td class="data" data-dat="nama_barang" width="25%">'
+        dataload += '    <td class="data " data-dat="kode" width="11%"><input type="text" name="kode[]" value="" class="form-control data-kode"></td> '
+        dataload += '    <td class="data" data-dat="nama_barang" width="20%">'
         dataload += '       <input type="text" name="nama_barang[]" value="" class="form-control ">'
         dataload += '       <input type="hidden" name="id_barang[]" class="form-control ">'
         dataload += '    </td>'
-        dataload += '    <td class="data" data-dat="quantity" ><input type="text" name="quantity[]" value="" class="form-control data-quantity" onkeypress="validate(event)"></td> '
+        dataload += '    <td class="data" data-dat="keterangan_barang" style="width: 20%;"><input type="text" name="keterangan_barang[]" value="" class="form-control "></td> '
+        dataload += '    <td class="data" data-dat="quantity" style="width: 9%;"><input type="number" step="0.01" value="1" name="quantity[]" value="" class="form-control data-quantity" onkeypress="validate(event)"></td> '
         dataload += '    <td class="data" data-dat="satuan select-wrapper" style="width: 7%;"> '
         dataload += '      <select name="satuan[]" class="form-control" >'
         dataload += '          <option value="Kg">kg</option>'
         dataload += '          <option value="Dus">Dus</option>'
         dataload += '      </select>'
         dataload += '    </td> '
-        dataload += '    <td class="data" data-dat="harga_satuan"><input type="text" name="harga_satuan[]" value="" class="form-control " onkeypress="validate(event)"></td> '
-        dataload += '    <td class="data" data-dat="harga_total"><input type="text" name="harga_total[]" value="" class="form-control "></td> '
-        dataload += '    <td class="data" data-dat="keterangan" style="width: 20%;"><input type="text" name="keterangan[]" value="" class="form-control "></td> '
+        dataload += '    <td class="data" data-dat="harga_satuan" style="width: 12%;"><input type="text" name="harga_satuan[]" value="" class="form-control data-harga-satuan" onkeypress="validate(event)"></td> '
+        dataload += '    <td class="data" data-dat="harga_total" style="width: 12%;"><input type="text" name="harga_total[]" value="" class="form-control "></td> '
+        dataload += '    <td class="data" data-dat="keterangan" style="width: 25%;"><input type="text" name="keterangan[]" value="" class="form-control "></td> '
         dataload += '</tr>'
 
         $('#tbody-table-data').append(dataload);
@@ -209,27 +211,62 @@
             return false;
         }
 
-        $.ajax({
-            url: '<?= site_url() ?>/order-received/save-additional',
-            data: {
-                'alamat1': alamat1,
-                'nama_pelanggan': nama_pelanggan,
-                'nomor_hp1': nomor_hp1
-            },
-            dataType: 'json',
-            method: 'post',
-            success: function(response) {
+        const dataTable = document.getElementById('tbody-table-data').querySelectorAll('tr')
+        const dataTableLength = dataTable.length;
+        let submit = true;
+        var element_select = "";
 
-                console.log(response.alamat_id + "-" + response.telephone_id + "-" + response.pelanggan_id);
-                alert("berhasil menambahkan data order");
-                confirmData(response.alamat_id, response.telephone_id, response.pelanggan_id);
-            },
-            error: function(xhr, status, error) {
-                //var err = eval("(" + xhr.responseText + ")");
-                console.log(error);
+        for (let i = 0; i < dataTableLength; i++) {
+            const element = dataTable[i];
+            const childElement = element.children;
+
+            for (let j = 0; j < childElement.length; j++) {
+                const element1 = childElement[j];
+                const element1Chlid = element1.children;
+
+                for (let k = 0; k < element1Chlid.length; k++) {
+                    const element2 = element1Chlid[k];
+                    element_select = element2.name
+                    content_select = element2.value
+                }
+
+                if (content_select == null || content_select == "") {
+                    alert("data barang " + content_select + " tidak boleh kosong");
+                    submit = false;
+                    break;
+
+                }
             }
+        }
 
-        });
+        if (submit === true) {
+
+            $.ajax({
+                url: '<?= site_url() ?>/order-received/save-additional',
+                data: {
+                    'alamat1': alamat1,
+                    'nama_pelanggan': nama_pelanggan,
+                    'nomor_hp1': nomor_hp1
+                },
+                dataType: 'json',
+                method: 'post',
+                success: function(response) {
+
+                    console.log(response.alamat_id + "-" + response.telephone_id + "-" + response.pelanggan_id);
+                    alert("berhasil menambahkan data order");
+                    confirmData(response.alamat_id, response.telephone_id, response.pelanggan_id);
+
+                },
+                error: function(xhr, status, error) {
+                    //var err = eval("(" + xhr.responseText + ")");
+                    console.log(error);
+                }
+
+            });
+        }
+
+
+
     }
 
     function confirmData(id_alamat, id_telephone, id_pelanggan) {
@@ -341,9 +378,7 @@
                     const element2 = element1Chlid[k];
                     element_select = element2.name
                     content_select = element2.value
-                    if (content_select == "") {
-                        content_select = " - ";
-                    }
+
                     var inp = document.createElement('input')
                     inp.setAttribute('type', 'hidden');
                     inp.setAttribute('name', element_select)
@@ -367,10 +402,10 @@
                     $("#loader").show();
                 },
                 success: function(data) {
-                  
+
                     console.log("success");
                     //result = true;
-                    location.href = "<?= site_url()?>/inventory";
+                    location.href = "<?= site_url() ?>/order-received";
                 },
                 complete: function(data) {
                     $("#loader-confirmed").show();
@@ -386,21 +421,21 @@
                 }
 
             });
-            
+
             $('#formSubmitData').empty();
-        
+
         }
-        console.log("result"+result);
+        console.log("result" + result);
         //if(result==true){
-           // alert("success insert data");
-          //  location.href = "<?= site_url() ?>/order-received";
-       // }
+        // alert("success insert data");
+        //  location.href = "<?= site_url() ?>/order-received";
+        // }
     }
 
 
     $(document).on('keydown', '.data-kode', function(e) {
 
-        if (e.keyCode == 13 || e.keyCode == 9) {
+        if (e.keyCode == 13) {
             e.preventDefault();
             autoCompleteKode();
 
@@ -470,7 +505,7 @@
             success: function(data) {
                 if (data["nama_barang"] != "undefined") {
                     nama_barang[index].value = data[0]["nama_barang"];
-                    harga_satuan[index].value = data[0]["harga_satuan"];
+                    //harga_satuan[index].value = data[0]["harga_satuan"];
                     id_barang[index].value = data[0]["id"];
                 }
             },
@@ -481,6 +516,29 @@
 
         });
     }
+
+
+    $(document).on('keyup mouseup', '.data-quantity', function() {
+        var quantity = document.getElementsByName('quantity[]');
+        var harga_total = document.getElementsByName('harga_total[]');
+        var harga_satuan = document.getElementsByName('harga_satuan[]');
+
+        var k = "";
+        for (var i = 0; i < quantity.length; i++) {
+            var a = quantity[i];
+            k = k + "array[" + i + "].value= " +
+                a.value + " ";
+            var index = i;
+            var value = a.value;
+
+            console.log("array[" + index + "] => " + value + " => length:" + value.length);
+
+            //validasi number
+            harga_total[index].value = parseFloat(value) * parseInt(harga_satuan[index].value);
+
+
+        }
+    });
 
     $(document).on('keyup', '.data-quantity', function() {
 
@@ -499,7 +557,30 @@
             console.log("array[" + index + "] => " + value + " => length:" + value.length);
 
             //validasi number
-            harga_total[index].value = parseInt(value) * parseInt(harga_satuan[index].value);
+            harga_total[index].value = parseFloat(value) * parseInt(harga_satuan[index].value);
+
+
+        }
+    });
+
+    $(document).on('keyup', '.data-harga-satuan', function() {
+
+        var quantity = document.getElementsByName('quantity[]');
+        var harga_total = document.getElementsByName('harga_total[]');
+        var harga_satuan = document.getElementsByName('harga_satuan[]');
+
+        var k = "";
+        for (var i = 0; i < quantity.length; i++) {
+            var a = quantity[i];
+            k = k + "array[" + i + "].value= " +
+                a.value + " ";
+            var index = i;
+            var value = a.value;
+
+            console.log("array[" + index + "] => " + value + " => length:" + value.length);
+
+            //validasi number
+            harga_total[index].value = parseFloat(value) * parseInt(harga_satuan[index].value);
 
 
         }

@@ -28,7 +28,7 @@
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-top: 60px;display:none" id="content-header">
+        <div class="row" style="margin-top: 90px;display:none" id="content-header">
             <div class="col-md-3 offset-md-1">
                 <div class="form-group row">
                     <label for="" class="col-sm-6 col-form-label" style="margin-top: -7px;" id="trx-ap"> </label>
@@ -77,10 +77,10 @@
                                 <th> Nomor Invoice </th>
                                 <th> Tanggal Masuk </th>
                                 <th> Tanggal Invoice </th>
-                                <th> Jatuh Tempo </th>
+                                <th style="color:red"> Jatuh Tempo </th>
                                 <th> Tanggal Payment </th>
                                 <th> Nominal Pembayaran </th>
-                                <th> Sisa Pembayaran </th>
+                                <th style="color:red"> Sisa Pembayaran </th>
                                 <th> S </th>
                             </tr>
                         </thead>
@@ -135,24 +135,22 @@
     $(document).on('change', '#create_date', function() {
         var create_date = document.getElementById("create_date").value;
 
-        var batasTampilData = 10;
+        var batasTampilData = 25;
         $("#halaman_paging").val("1");
         var halaman = $('#halaman_paging').val();
-        var keyword = "";
-        $("#search").val("");
+        var keyword = $("#search").val();
         getData(create_date.replaceAll("-", ""), keyword, batasTampilData, halaman);
 
     });
 
     function searchData() {
 
-        var batasTampilData = 10;
+        var batasTampilData = 25;
         $("#halaman_paging").val("1");
         var halaman = $('#halaman_paging').val();
         var keyword = $("#search").val();
-        var create_date = "";
-        $("#create_date").val("");
-        getData(create_date, keyword, batasTampilData, halaman);
+        var create_date = document.getElementById("create_date").value;
+        getData(create_date.replaceAll("-", ""), keyword, batasTampilData, halaman);
 
     }
 
@@ -219,21 +217,21 @@
                         dataLoad += "<td >";
                         dataLoad += dateForShow(response.rptobj[i].tgl_invoice);
                         dataLoad += "</td>";
-                        dataLoad += "<td >";
+                        dataLoad += "<td style='color:red'>";
                         dataLoad += dateForShow(response.rptobj[i].jatuh_tempo);
                         dataLoad += "</td>";
                         dataLoad += "<td >";
                         dataLoad += tgl_payment;
                         dataLoad += "</td>";
-                        dataLoad += "<td >";
-                        if(response.rptobj[i].nominal_bayar==null || response.rptobj[i].nominal_bayar==""){
-                            dataLoad += numberWithCommas("Rp. " + response.rptobj[i].total_tagihan);
-                        }else{
+                        dataLoad += "<td>";
+                        //if(response.rptobj[i].nominal_bayar==null || response.rptobj[i].nominal_bayar==""){
                             dataLoad += numberWithCommas("Rp. " + response.rptobj[i].nominal_bayar);
-                        }
+                        //}else{
+                          //  dataLoad += numberWithCommas("Rp. " + response.rptobj[i].nominal_bayar);
+                        //}
                         dataLoad += "</td>";
-                        dataLoad += "<td >";
-                        dataLoad += numberWithCommas("Rp. " + response.rptobj[i].total_tagihan);
+                        dataLoad += "<td  style='color:red'>";
+                        dataLoad += numberWithCommas("Rp. " + response.rptobj[i].sisa_pembayaran);
                         dataLoad += "</td>";
                         dataLoad += "<td >";
                         dataLoad += isFinished;
@@ -247,9 +245,17 @@
 
                     $('.pagination-result').html(paginationViewHTML(halaman, totalHalaman, create_date, keyword, batasTampilData));
 
-                    $("#trx-ap").html("PCPI-0001/" + getMonthTrx(create_date));
-                    $("#trx-ap-month").html("Data AP " + getMonthYear(create_date));
-                    $("#table-title").html("Data AP " + getMonthYear(create_date));
+                    if (create_date != 'Januari, Februari, Maret....') {
+                        
+                        $("#trx-ap").html("PCPI-0001/" + getMonthTrx(create_date));
+                        $("#trx-ap-month").html("Data AP " + getMonthYear(create_date));
+                        $("#table-title").html("Data AP " + getMonthYear(create_date));
+
+                    }else{
+                        $("#trx-ap").html("PCPI-0001");
+                        $("#trx-ap-month").html("Data AR");
+                        $("#table-title").html("Data AR");
+                    }
 
                     $("#nominal-ap").html(numberWithCommas("Rp. " + response.rptot[0].total_tagihan));
                     $("#nominal-pembayaran").html(numberWithCommas("Rp. " + response.rptot[0].nominal));
@@ -265,6 +271,11 @@
                 } else {
 
                     $('.pagination-result').html("");
+                    $("#data-ap").html("");
+                    $("#nominal-ap").html("");
+                    $("#nominal-pembayaran").html("");
+                    $("#sisa-pembayaran").html("");
+
                 }
 
 
@@ -380,7 +391,7 @@
     });
 
     function numberWithCommas(x) {
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
 
     function paginationViewHTML(halaman, totalHalaman, create_date, keyword, batasTampilData) { //halaman 1 total 6

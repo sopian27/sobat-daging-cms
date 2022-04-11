@@ -85,7 +85,7 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="" class="col-sm-3 col-form-label">Bonus </label>
+                                <label for="" class="col-sm-3 col-form-label">diskon </label>
                                 <div class="col-sm-1">:</div>
                                 <div class="col-sm-4">
                                     <input type="text" name="bonus" id="bonus" class="form-control-label">
@@ -136,6 +136,7 @@
                                         <tr class="align-middle">
                                             <th rowspan="2"> Kode </th>
                                             <th rowspan="2"> Nama Barang </th>
+                                            <th rowspan="2"> Nama Bahan </th>
                                             <th rowspan="1" colspan="2"> Quantity</th>
                                             <th rowspan="2"> Harga Satuan </th>
                                             <th rowspan="2"> Harga Total </th>
@@ -318,7 +319,7 @@
     
 
     function numberWithCommas(x) {
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
 
     function hideDataSuratJln() {
@@ -549,6 +550,9 @@
                         dataLoad += "</td>";
                         dataLoad += "<td >";
                         dataLoad += data.data_surat_jln[i].nama_barang;
+                        dataLoad += "</td>";
+                        dataLoad += "<td >";
+                        dataLoad += data.data_surat_jln[i].note_nama_barang;
                         dataLoad += "</td>";
                         dataLoad += "<td >";
                         dataLoad += data.data_surat_jln[i].quantity + " " + data.data_surat_jln[i].satuan;

@@ -79,12 +79,13 @@ class BarangModel extends CI_Model
         $query="";
         if(isset($keyword) && $keyword !=""){
             
-          $query = "  SELECT * from barang where UPPER(nama_barang)=UPPER('$keyword') or UPPER(kode)= UPPER('$keyword')  limit " . $halamanAwal . ", " . $batasTampilData;
+         // $query = "  SELECT * from barang where UPPER(nama_barang)=UPPER('$keyword') or UPPER(kode)= UPPER('$keyword')  limit " . $halamanAwal . ", " . $batasTampilData;
+          $query = "  SELECT * from barang where nama_barang like '%$keyword%'  limit " . $halamanAwal . ", " . $batasTampilData;
         }else{
             
           $query = "  SELECT * from barang  limit " . $halamanAwal . ", " . $batasTampilData;
         }
-
+   
         return $this->db->query($query)->result();
     }
 
@@ -93,7 +94,7 @@ class BarangModel extends CI_Model
         $query="";
         if(isset($keyword) && $keyword !=""){
             
-          $query = "  SELECT * from barang where UPPER(nama_barang)=UPPER('$keyword') or UPPER(kode)= UPPER('$keyword') ";
+            $query = "  SELECT * from barang where nama_barang like '%$keyword%'";
         }else{
             
           $query = "  SELECT * from barang ";
@@ -122,7 +123,7 @@ class BarangModel extends CI_Model
                         from 
                             barang b 
                         where 
-                            b.nama_barang= '" . $keyword . "' 
+                            b.nama_barang like '%$keyword%' 
                         order by b.id
                             limit " . $halaman . "," . $batasTampilData;
         } else {
@@ -134,6 +135,19 @@ class BarangModel extends CI_Model
                         order by b.id
                             limit " . $halaman . "," . $batasTampilData;
         }
+
+        return $this->db->query($query)->result();
+    }
+
+    public function getDataSum()
+    {
+
+        $query = "  SELECT 
+                        *
+                    from 
+                        barang b                         
+                    order by b.id";
+        
 
         return $this->db->query($query)->result();
     }
@@ -150,7 +164,7 @@ class BarangModel extends CI_Model
                             from 
                                 barang b 
                             where 
-                                b.nama_barang= '" . $keyword . "' 
+                                b.nama_barang like '%$keyword%' 
                             order by b.id";
         } else {
 

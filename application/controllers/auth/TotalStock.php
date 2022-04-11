@@ -44,10 +44,20 @@ class TotalStock extends CI_Controller
         
         $data = $this->brg_model->getData($data_post['create_date'], $_POST['keyword'], $halamanAwal, $batasTampilData);
         $dataCounter = $this->brg_model->getDataCount($data_post['create_date'], $_POST['keyword']);
+        $dataSum = $this->brg_model->getDataSum();
+        $quantityTotal=0;
+        foreach ($dataSum as $datax){
+            if(floatval($datax->quantity_sobat) > 0){
+                $quantityTotal += floatval($datax->harga_satuan) * (floatval($datax->quantity_sobat) + floatval($datax->quantity_pusat));
+            }else{
+                $quantityTotal += floatval($datax->harga_satuan) * (floatval($datax->quantity_pusat));
+            }
+        }
 
         $output = array(
             "length" => count($data),
             "datastock" => $data,
+            "quantity_total" => $quantityTotal,
             "length_paging" => count($dataCounter)
         );
 

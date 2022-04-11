@@ -25,7 +25,7 @@ class ArModel extends CI_Model
 
         $query = "";
 
-        if (isset($keyword) && $keyword != "") {
+        if ($keyword != ""  && $create_date == "Januari, Februari, Maret....") {
 
             $query = "  select 
                             b.nama_barang, 
@@ -38,20 +38,56 @@ class ArModel extends CI_Model
                             po.create_date as tgl_masuk, 
                             inv.create_date as tgl_invoice, 
                             inv.jatuh_tempo, 
-                            trx.create_date as tgl_payment, 
-                            trx.nominal_bayar,inv.total_tagihan,
-                            b.satuan 
+                            inv.update_date as tgl_payment, 
+                            b.satuan,
+                            po.note_nama_barang,
+                            inv.total_tagihan_history as nominal_bayar,
+                            inv.bonus,
+                            inv.total_tagihan as sisa_pembayaran
                         from 
                             pelanggan p, 
                             barang b, 
                             trx_order_po po, 
                             trx_payment_co_invoice inv 
-                            left join trx_payment_in trx on inv.id_trx_payment = trx.id_trx_payment_co 
+                            /*left join trx_payment_in trx on inv.id_trx_payment = trx.id_trx_payment_co */
                         where 
                             po.no_surat_jalan = inv.no_surat_jalan 
                             and b.id = po.id_barang 
                             and po.id_pelanggan = p.id
                             and po.no_invoice= '" . $keyword . "'
+                            limit " . $halaman . "," . $batasTampilData;
+                            
+        } else if ($keyword != "" && $create_date != "Januari, Februari, Maret....") {
+
+            $query = "  select 
+                            b.nama_barang, 
+                            p.nama_pelanggan as nama, 
+                            b.kode, 
+                            po.quantity, 
+                            po.harga_satuan, 
+                            po.harga_total, 
+                            po.no_invoice, 
+                            po.create_date as tgl_masuk, 
+                            inv.create_date as tgl_invoice, 
+                            inv.jatuh_tempo, 
+                            inv.update_date as tgl_payment, 
+                            b.satuan,
+                            po.note_nama_barang,
+                            inv.total_tagihan_history as nominal_bayar,
+                            inv.bonus,
+                            inv.total_tagihan as sisa_pembayaran
+                        from 
+                            pelanggan p, 
+                            barang b, 
+                            trx_order_po po, 
+                            trx_payment_co_invoice inv 
+                            /*left join trx_payment_in trx on inv.id_trx_payment = trx.id_trx_payment_co */
+                        where 
+                            po.no_surat_jalan = inv.no_surat_jalan 
+                            and b.id = po.id_barang 
+                            and po.id_pelanggan = p.id
+                            and po.no_invoice= '" . $keyword . "'
+                            and substring(inv.create_date, 1, 6) = '" . $create_date . "'
                             limit " . $halaman . "," . $batasTampilData;
         } else {
 
@@ -66,15 +102,18 @@ class ArModel extends CI_Model
                             po.create_date as tgl_masuk, 
                             inv.create_date as tgl_invoice, 
                             inv.jatuh_tempo, 
-                            trx.create_date as tgl_payment, 
-                            trx.nominal_bayar,inv.total_tagihan,
-                            b.satuan 
+                            po.note_nama_barang,
+                            inv.update_date as tgl_payment, 
+                            b.satuan,
+                            inv.total_tagihan_history as nominal_bayar,
+                            inv.bonus,
+                            inv.total_tagihan as sisa_pembayaran
                         from 
                             pelanggan p, 
                             barang b, 
                             trx_order_po po, 
                             trx_payment_co_invoice inv 
-                            left join trx_payment_in trx on inv.id_trx_payment = trx.id_trx_payment_co 
+                            /*left join trx_payment_in trx on inv.id_trx_payment = trx.id_trx_payment_co */
                         where 
                             po.no_surat_jalan = inv.no_surat_jalan 
                             and b.id = po.id_barang 
@@ -91,7 +130,38 @@ class ArModel extends CI_Model
 
         $query = "";
 
-        if (isset($keyword) && $keyword != "") {
+        if ($keyword != ""  && $create_date == "Januari, Februari, Maret....") {
+
+            $query = "  select 
+                            b.nama_barang, 
+                            p.nama_pelanggan as nama, 
+                            b.kode, 
+                            po.quantity, 
+                            po.harga_satuan, 
+                            po.harga_total, 
+                            po.no_invoice, 
+                            po.note_nama_barang,
+                            po.create_date as tgl_masuk, 
+                            inv.create_date as tgl_invoice, 
+                            inv.jatuh_tempo, 
+                            inv.update_date as tgl_payment, 
+                            b.satuan,
+                            po.note_nama_barang,
+                            inv.total_tagihan_history as nominal_bayar,
+                            inv.bonus,
+                            inv.total_tagihan as sisa_pembayaran
+                        from 
+                            pelanggan p, 
+                            barang b, 
+                            trx_order_po po, 
+                            trx_payment_co_invoice inv 
+                            /*left join trx_payment_in trx on inv.id_trx_payment = trx.id_trx_payment_co */
+                        where 
+                            po.no_surat_jalan = inv.no_surat_jalan 
+                            and b.id = po.id_barang 
+                            and po.id_pelanggan = p.id
+                            and po.no_invoice= '" . $keyword . "'";
+        } else if ($keyword != "" && $create_date != "Januari, Februari, Maret....") {
 
             $query = "  select 
                             b.nama_barang, 
@@ -104,20 +174,24 @@ class ArModel extends CI_Model
                             po.create_date as tgl_masuk, 
                             inv.create_date as tgl_invoice, 
                             inv.jatuh_tempo, 
-                            trx.create_date as tgl_payment, 
-                            trx.nominal_bayar,inv.total_tagihan,
-                            b.satuan 
+                            inv.update_date as tgl_payment, 
+                            b.satuan,
+                            po.note_nama_barang,
+                            inv.total_tagihan_history as nominal_bayar,
+                            inv.bonus,
+                            inv.total_tagihan as sisa_pembayaran
                         from 
                             pelanggan p, 
                             barang b, 
                             trx_order_po po, 
                             trx_payment_co_invoice inv 
-                            left join trx_payment_in trx on inv.id_trx_payment = trx.id_trx_payment_co 
+                            /*left join trx_payment_in trx on inv.id_trx_payment = trx.id_trx_payment_co */
                         where 
                             po.no_surat_jalan = inv.no_surat_jalan 
                             and b.id = po.id_barang 
                             and po.id_pelanggan = p.id
-                            and po.no_invoice= '" . $keyword . "'";
+                            and po.no_invoice= '" . $keyword . "'
+                            and substring(inv.create_date, 1, 6) = '" . $create_date . "'";
         } else {
 
             $query = "  select 
@@ -131,15 +205,18 @@ class ArModel extends CI_Model
                             po.create_date as tgl_masuk, 
                             inv.create_date as tgl_invoice, 
                             inv.jatuh_tempo, 
-                            trx.create_date as tgl_payment, 
-                            trx.nominal_bayar,inv.total_tagihan,
-                            b.satuan 
+                            inv.update_date as tgl_payment, 
+                            b.satuan,
+                            po.note_nama_barang,
+                            inv.total_tagihan_history as nominal_bayar,
+                            inv.bonus,
+                            inv.total_tagihan as sisa_pembayaran
                         from 
                             pelanggan p, 
                             barang b, 
                             trx_order_po po, 
                             trx_payment_co_invoice inv 
-                            left join trx_payment_in trx on inv.id_trx_payment = trx.id_trx_payment_co 
+                            /*left join trx_payment_in trx on inv.id_trx_payment = trx.id_trx_payment_co */
                         where 
                             po.no_surat_jalan = inv.no_surat_jalan 
                             and b.id = po.id_barang 
@@ -158,15 +235,14 @@ class ArModel extends CI_Model
         if (isset($keyword) && $keyword != "") {
 
             $query = " SELECT sum(total_tagihan_history) - sum(total_tagihan) as nominal,
-                    sum(total_tagihan_history)as total_tagihan FROM `trx_payment_co_invoice` co, trx_order_po po
+                    sum(total_tagihan_history) as total_tagihan FROM `trx_payment_co_invoice` co
                     where 
-                    po.no_surat_jalan=co.no_surat_jalan
-                    and po.no_invoice ='$keyword' /*GROUP by id_trx_payment*/";
+                    co.no_surat_jalan in(select no_surat_jalan from trx_order_po where no_invoice ='$keyword')";
         } else {
 
             $query = " SELECT sum(total_tagihan_history) - sum(total_tagihan) as nominal,
                     sum(total_tagihan_history)as total_tagihan FROM `trx_payment_co_invoice`
-                    where substring(create_date,1,6) ='$create_date' /*GROUP by id_trx_payment*/";
+                    where substring(update_date,1,6) ='$create_date' /*GROUP by id_trx_payment*/";
         }
 
         return $this->db->query($query)->result();

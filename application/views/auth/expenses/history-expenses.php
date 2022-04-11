@@ -9,9 +9,9 @@
         <div class="row">
             <div class="col-md-2 offset-md-1">
                 <div class="input-group">
-                    <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search">
+                    <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search" onkeyup="searchData()">
                     <span class="input-group-append">
-                        <button class="btn btn-outline-light" type="button" onclick="searchData()">
+                        <button class="btn btn-outline-light" type="button">
                             <i class="fa fa-search"></i>
                         </button>
                     </span>
@@ -91,6 +91,27 @@
                         </div>
                         <div style="margin-top:30px">
                             <a class="form-control-button btn" style="background-color: #B89874;border:none;padding:10px"> Sallary </a>
+                        </div>
+                    </div>
+                    <div class="col-md-8 offset-md-6" style="margin-top: 10px;display: none;" id="pengeluaran-gaji-minggu-div">
+                        <div class="form-group row">
+                            <label for="" class="col-sm-3 col-form-label" style="margin-top: -7px;">
+                                <p>Pengeluaran Gaji Karyawan Minggu </p>
+                            </label>
+                            <div class="col-sm-5">
+                                <p>:&nbsp;Rp. <span id="data-content-pengeluaran-minggu"></span></p>
+                            </div>
+                            <hr class="col-md-5" >
+                        </div>
+                    </div>
+                    <div class="col-md-8 offset-md-6" style="margin-top: 10px;display: none;" id="pengeluaran-gaji-bulan-div">
+                        <div class="form-group row">
+                            <label for="" class="col-sm-3 col-form-label" style="margin-top: -7px;">
+                                <p>Pengeluaran Gaji Karyawan Bulan</p>
+                            </label>
+                            <div class="col-sm-5">
+                                <p>:&nbsp;Rp. <span id="data-content-pengeluaran-bulan"></span></p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -209,11 +230,11 @@
 
         var batasTampilData = 10;
         var halaman = $('#halaman_paging_operational').val();
+        var keyword = $("#search").val();
 
         initPaging();
 
-        $("#search").val("");
-        getDetail(create_date, "", batasTampilData, halaman);
+        getDetail(create_date, keyword, batasTampilData, halaman);
 
     });
 
@@ -222,8 +243,8 @@
         var batasTampilData = 10;
         var halaman = $('#halaman_paging_operational').val();
         var keyword = $("#search").val();
-        var create_date = "";
-        $("#create_date").val("");
+        var create_date = document.getElementById("create_date").value;
+        create_date = create_date.replaceAll("-", "");
 
         initPaging();
 
@@ -267,7 +288,7 @@
     }
 
     function numberWithCommas(x) {
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
 
     function getDetail(date, keyword, batasTampilData, halaman) {
@@ -314,6 +335,8 @@
                 $("#data-content-title2").html("Operational Expenses " + getMonthOnly(date));
                 $("#data-content-title").html("Operational Expenses " + getMonthOnly(date));
                 $("#penggunaan-dana-div").show();
+                $("#pengeluaran-gaji-minggu-div").show();
+                $("#pengeluaran-gaji-bulan-div").show();
                 $("#data-content-div").show();
 
 
@@ -374,6 +397,7 @@
     function setMinggu(response, create_date, keyword, halaman, batasTampilData) {
 
         dataLoad = "";
+        var total = 0
 
         for (let i = 0; i < response.data_minggu.length; i++) {
 
@@ -400,11 +424,16 @@
 
         }
 
+        for (let i = 0; i < response.data_minggu_sum.length; i++) {
+            total += (parseFloat(response.data_minggu_sum[i].upah_harian) +  parseFloat(response.data_minggu_sum[i].upah_lembur))* parseInt(response.data_minggu_sum[i].jml_hari_kerja);
+        }
+
         var totalDataBarang = response.length_minggu_paging;
         var totalHalaman = Math.ceil(totalDataBarang / batasTampilData);
 
         $('.pagination-result-minggu').html(paginationViewHTMLMinggu(halaman, totalHalaman, create_date, keyword, batasTampilData));
         $("#data-minggu").html(dataLoad);
+        $("#data-content-pengeluaran-minggu").html(numberWithCommas(total));
 
 
     }
@@ -412,6 +441,7 @@
     function setBulan(response, create_date, keyword, halaman, batasTampilData) {
 
         dataLoad = "";
+        var total = 0
 
         for (let i = 0; i < response.data_bulan.length; i++) {
 
@@ -436,6 +466,12 @@
             dataLoad += "</td>";
             dataLoad += "</tr>";
 
+           
+
+        }
+
+        for (let i = 0; i < response.data_bulan_sum.length; i++) {
+            total += (parseFloat(response.data_bulan_sum[i].upah_bulanan) +  parseFloat(response.data_bulan_sum[i].bonus));
         }
 
         var totalDataBarang = response.length_bulan_paging;
@@ -443,6 +479,7 @@
 
         $('.pagination-result-bulan').html(paginationViewHTMLBulan(halaman, totalHalaman, create_date, keyword, batasTampilData));
         $("#data-bulan").html(dataLoad);
+        $("#data-content-pengeluaran-bulan").html(numberWithCommas(total));
     }
 
     function getDetailDataOperational(id_trx_opt) {

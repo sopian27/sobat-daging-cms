@@ -54,16 +54,29 @@ class TRXExpensesModel extends CI_Model
 
         $query = "";
 
-        if (isset($keyword) && $keyword != "") {
+        if ($keyword != ""  && $create_date == "Januari, Februari, Maret....") {
 
             $query = "  SELECT 
                             *
                         from 
                             ex_opt b
                         where 
-                            b.id_trx_ex_opt= '" . $keyword . "' 
+                            b.id_trx_ex_opt like  '%$keyword%' 
                         order by b.id
                             limit " . $halaman . "," . $batasTampilData;
+
+        } else if ($keyword != "" && $create_date != "Januari, Februari, Maret....") {
+
+            $query = "  SELECT 
+                            *
+                        from 
+                            ex_opt b
+                        where 
+                            b.id_trx_ex_opt like  '%$keyword%' 
+                            and substring(b.create_date,1,6)= '" . $create_date . "'
+                        order by b.id
+                            limit " . $halaman . "," . $batasTampilData;
+
         } else {
 
             $query = "  SELECT 
@@ -84,15 +97,27 @@ class TRXExpensesModel extends CI_Model
 
         $query = "";
 
-        if (isset($keyword) && $keyword != "") {
+        if ($keyword != ""  && $create_date == "Januari, Februari, Maret....") {
 
             $query = "  SELECT 
                             *
                         from 
                             ex_opt b
                         where 
-                            b.id_trx_ex_opt= '" . $keyword . "' 
+                            b.id_trx_ex_opt like  '%$keyword%' 
                         order by b.id";
+
+        } else if ($keyword != "" && $create_date != "Januari, Februari, Maret....") {
+
+            $query = "  SELECT 
+                            *
+                        from 
+                            ex_opt b
+                        where 
+                            b.id_trx_ex_opt like  '%$keyword%' 
+                            and substring(b.create_date,1,6)= '" . $create_date . "'
+                        order by b.id";
+
         } else {
 
             $query = "  SELECT 
@@ -112,17 +137,31 @@ class TRXExpensesModel extends CI_Model
 
         $query = "";
 
-        if (isset($keyword) && $keyword != "") {
+        if ($keyword != ""  && $create_date == "Januari, Februari, Maret....") {
 
             $query = "  SELECT 
                             *
                         from 
                             ex_sallary b
                         where 
-                            b.nama= '" . $keyword . "' 
+                            b.id_trx like '%$keyword%' 
                             and type='".$type."'
                         order by b.id
                             limit " . $halaman . "," . $batasTampilData;
+
+        } else if ($keyword != "" && $create_date != "Januari, Februari, Maret....") {
+
+            $query = "  SELECT 
+                            *
+                        from 
+                            ex_sallary b
+                        where 
+                            b.id_trx like '%$keyword%' 
+                            and type='".$type."'
+                            and substring(b.create_date,1,6)= '" . $create_date . "'  
+                        order by b.id
+                            limit " . $halaman . "," . $batasTampilData;
+
         } else {
 
             $query = "  SELECT 
@@ -144,20 +183,33 @@ class TRXExpensesModel extends CI_Model
 
         $query = "";
 
-        if (isset($keyword) && $keyword != "") {
+        if ($keyword != ""  && $create_date == "Januari, Februari, Maret....") {
 
-            $query = "   SELECT 
+            $query = "  SELECT 
                             *
                         from 
                             ex_sallary b
                         where 
-                            b.nama= '" . $keyword . "' 
+                            b.id_trx like '%$keyword%' 
                             and type='".$type."'
                         order by b.id";
+
+        } else if ($keyword != "" && $create_date != "Januari, Februari, Maret....") {
+
+            $query = "  SELECT 
+                            *
+                        from 
+                            ex_sallary b
+                        where 
+                            b.id_trx like '%$keyword%' 
+                            and type='".$type."'
+                            and substring(b.create_date,1,6)= '" . $create_date . "'  
+                        order by b.id";
+
         } else {
 
             $query = "  SELECT 
-                        *
+                            *
                         from 
                             ex_sallary b
                         where 

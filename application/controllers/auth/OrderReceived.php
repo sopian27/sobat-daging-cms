@@ -260,7 +260,8 @@ class OrderReceived extends CI_Controller{
                 "satuan"         => $_POST["satuan"][$j],
                 "tgl_pengiriman" => $_POST["tgl_pengiriman"],
                 "id_trx_order"   => $_POST["kode_po"],
-                "keterangan"     => $_POST["keterangan"][$j],
+                "keterangan"     => $_POST["keterangan"][$j], //note
+                "note_nama_barang"     => $_POST["keterangan_barang"][$j], //note_nama_barang
                 "id_pelanggan"   => $_POST["id_pelanggan"],
                 "no_invoice"     => $_POST["kode_inv"],
                 "no_surat_jalan" => $_POST["kode_ssj"],

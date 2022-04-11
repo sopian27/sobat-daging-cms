@@ -159,6 +159,19 @@ class HistoryOrder extends CI_Controller{
         $this->fungsi->PdfGenerator($html,'History Order','A4','landscape');
     }
 
+    public function printDirectly($url){
+
+        $html="";
+        $trxIdClean = str_replace("_","/",$url);
+
+        $t = time();
+        $data['date'] = date("d F Y", $t);
+        $data['data'] = $this->hst_order_model->getDataByIdTrxOrder($trxIdClean);
+        $html = $this->load->view('auth/order-received/history-order-print',$data,true);
+
+        $this->fungsi->PdfGenerator($html,'History Order','A4','landscape');
+    }
+
 
 }
 ?>

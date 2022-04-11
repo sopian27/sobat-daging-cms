@@ -59,6 +59,57 @@ class HistoryOrderModel extends CI_Model
 
         $query = "";
 
+        if ($keyword != ""  && $create_date == "Januari, Februari, Maret....") {
+
+            $query = "  SELECT t.id_trx_order,p.nama_pelanggan,t.create_date,t.status,t.update_date,t.id_trx_live_order,t.bungkusan,t.quantity,b.*,
+                                t.no_surat_jalan,al.alamat,tl.nomor,t.tgl_pengiriman,t.note,t.id
+                            FROM 
+                                trx_order_po t,pelanggan p,barang b,alamat al,telephone tl  
+                            WHERE 
+                                t.id_pelanggan=p.id
+                                and b.id = t.id_barang
+                                and t.id_alamat = al.id
+                                and t.id_telephone = tl.id
+                                and p.nama_pelanggan like '%$keyword%'
+                                group by t.id_trx_order
+                                order by t.id_trx_order 
+                                limit " . $halaman . "," . $batasTampilData;
+
+        } else if ($keyword != "" && $create_date != "Januari, Februari, Maret....") {
+
+            $query = "  SELECT t.id_trx_order,p.nama_pelanggan,t.create_date,t.status,t.update_date,t.id_trx_live_order,t.bungkusan,t.quantity,b.*,
+                            t.no_surat_jalan,al.alamat,tl.nomor,t.tgl_pengiriman,t.note,t.id
+                        FROM 
+                            trx_order_po t,pelanggan p,barang b,alamat al,telephone tl  
+                        WHERE 
+                            t.id_pelanggan=p.id
+                            and b.id = t.id_barang
+                            and t.id_alamat = al.id
+                            and t.id_telephone = tl.id
+                            and p.nama_pelanggan like '%$keyword%'
+                            and substring(t.create_date,1,6) ='$create_date'
+                            group by t.id_trx_order
+                            order by t.id_trx_order 
+                            limit " . $halaman . "," . $batasTampilData;
+        } else {
+
+            $query = " SELECT t.id_trx_order,p.nama_pelanggan,t.create_date,t.status,t.update_date,t.id_trx_live_order,t.bungkusan,t.quantity,b.*,
+                                    t.no_surat_jalan,al.alamat,tl.nomor,t.tgl_pengiriman,t.note,t.id
+                                    FROM 
+                                    trx_order_po t,pelanggan p,barang b,alamat al,telephone tl  
+                                    WHERE 
+                                    t.id_pelanggan=p.id
+                                    and b.id = t.id_barang
+                                    and t.id_alamat = al.id
+                                    and t.id_telephone = tl.id
+                                    and substring(t.create_date,1,6) ='$create_date'
+                                    group by t.id_trx_order
+                                    order by t.id_trx_order
+                                    limit " . $halaman . "," . $batasTampilData;
+        }
+
+
+        /*
         if (isset($keyword) && $keyword != "") {
 
             $query = "  SELECT t.id_trx_order,p.nama_pelanggan,t.create_date,t.status,t.update_date,t.id_trx_live_order,t.bungkusan,t.quantity,b.*,
@@ -90,6 +141,7 @@ class HistoryOrderModel extends CI_Model
                                     order by t.id_trx_order
                                     limit " . $halaman . "," . $batasTampilData;
         }
+        */
 
         return $this->db->query($query)->result();
     }
@@ -99,24 +151,25 @@ class HistoryOrderModel extends CI_Model
 
         $query = "";
 
-        if (isset($keyword) && $keyword != "") {
+        if ($keyword != ""  && $create_date == "Januari, Februari, Maret....") {
 
-            $query = "  SELECT t.id_trx_order,p.nama_pelanggan,t.create_date,t.status,t.update_date,t.id_trx_live_order,t.bungkusan,t.quantity,b.*,
-                        t.no_surat_jalan,al.alamat,tl.nomor,t.tgl_pengiriman,t.note,t.id
-                        FROM 
-                        trx_order_po t,pelanggan p,barang b,alamat al,telephone tl  
-                        WHERE 
-                        t.id_pelanggan=p.id
-                        and b.id = t.id_barang
-                        and t.id_alamat = al.id
-                        and t.id_telephone = tl.id
-                        and p.nama_pelanggan ='$keyword'
-                        group by t.id_trx_order
-                        order by t.id_trx_order";
-        } else {
+            $query = "  SELECT t.id_trx_order,p.nama_pelanggan,t.create_date,t.status,t.update_date,t.id_trx_live_order,t.bungkusan,t.quantity,b.satuan,
+                                t.no_surat_jalan,al.alamat,tl.nomor,t.tgl_pengiriman,t.note,t.id,b.nama_barang,b.kode,t.note_nama_barang
+                            FROM 
+                                trx_order_po t,pelanggan p,barang b,alamat al,telephone tl  
+                            WHERE 
+                                t.id_pelanggan=p.id
+                                and b.id = t.id_barang
+                                and t.id_alamat = al.id
+                                and t.id_telephone = tl.id
+                                and p.nama_pelanggan like '%$keyword%'
+                                group by t.id_trx_order
+                                order by t.id_trx_order";
 
-            $query = " SELECT t.id_trx_order,p.nama_pelanggan,t.create_date,t.status,t.update_date,t.id_trx_live_order,t.bungkusan,t.quantity,b.*,
-                            t.no_surat_jalan,al.alamat,tl.nomor,t.tgl_pengiriman,t.note,t.id
+        } else if ($keyword != "" && $create_date != "Januari, Februari, Maret....") {
+
+            $query = "  SELECT t.id_trx_order,p.nama_pelanggan,t.create_date,t.status,t.update_date,t.id_trx_live_order,t.bungkusan,t.quantity,b.satuan,
+                            t.no_surat_jalan,al.alamat,tl.nomor,t.tgl_pengiriman,t.note,t.id,b.nama_barang,b.kode,t.note_nama_barang
                         FROM 
                             trx_order_po t,pelanggan p,barang b,alamat al,telephone tl  
                         WHERE 
@@ -124,9 +177,24 @@ class HistoryOrderModel extends CI_Model
                             and b.id = t.id_barang
                             and t.id_alamat = al.id
                             and t.id_telephone = tl.id
+                            and p.nama_pelanggan like '%$keyword%'
                             and substring(t.create_date,1,6) ='$create_date'
                             group by t.id_trx_order
                             order by t.id_trx_order";
+        } else {
+
+            $query = " SELECT t.id_trx_order,p.nama_pelanggan,t.create_date,t.status,t.update_date,t.id_trx_live_order,t.bungkusan,t.quantity,b.satuan,
+                                    t.no_surat_jalan,al.alamat,tl.nomor,t.tgl_pengiriman,t.note,t.id,b.nama_barang,b.kode,t.note_nama_barang
+                                    FROM 
+                                    trx_order_po t,pelanggan p,barang b,alamat al,telephone tl  
+                                    WHERE 
+                                    t.id_pelanggan=p.id
+                                    and b.id = t.id_barang
+                                    and t.id_alamat = al.id
+                                    and t.id_telephone = tl.id
+                                    and substring(t.create_date,1,6) ='$create_date'
+                                    group by t.id_trx_order
+                                    order by t.id_trx_order";
         }
 
         return $this->db->query($query)->result();
@@ -135,8 +203,8 @@ class HistoryOrderModel extends CI_Model
     public function getDataByIdHistory($id_trx_order, $halaman, $batasTampilData)
     {
 
-            $query = "  SELECT t.id_trx_order,p.nama_pelanggan,t.create_date,t.status,t.update_date,t.id_trx_live_order,t.bungkusan,t.quantity,b.*,
-                                t.no_surat_jalan,al.alamat,tl.nomor,t.tgl_pengiriman,t.note,t.id
+        $query = "  SELECT t.id_trx_order,p.nama_pelanggan,t.create_date,t.status,t.update_date,t.id_trx_live_order,t.bungkusan,t.quantity,b.satuan,
+                                t.no_surat_jalan,al.alamat,tl.nomor,t.tgl_pengiriman,t.note,t.id,t.keterangan,b.nama_barang,b.kode,t.note_nama_barang
                             FROM 
                                 trx_order_po t,pelanggan p,barang b,alamat al,telephone tl  
                             WHERE 
@@ -147,15 +215,15 @@ class HistoryOrderModel extends CI_Model
                                 and t.id_trx_order ='$id_trx_order'
                                 order by t.id_trx_order 
                                 limit " . $halaman . "," . $batasTampilData;
-       
+
         return $this->db->query($query)->result();
     }
 
     public function getDataByIdTrxOrder($id_trx_order)
     {
 
-            $query = "  SELECT t.id_trx_order,p.nama_pelanggan,t.create_date,t.status,t.update_date,t.id_trx_live_order,t.bungkusan,t.quantity,b.*,
-                                t.no_surat_jalan,al.alamat,tl.nomor,t.tgl_pengiriman,t.note,t.id
+        $query = "  SELECT t.id_trx_order,p.nama_pelanggan,t.create_date,t.status,t.update_date,t.id_trx_live_order,t.bungkusan,t.quantity,b.satuan,
+                                t.no_surat_jalan,al.alamat,tl.nomor,t.tgl_pengiriman,t.note,t.id,t.no_surat_jalan,b.nama_barang,b.kode,t.note_nama_barang
                             FROM 
                                 trx_order_po t,pelanggan p,barang b,alamat al,telephone tl  
                             WHERE 
@@ -165,17 +233,17 @@ class HistoryOrderModel extends CI_Model
                                 and t.id_telephone = tl.id
                                 and t.id_trx_order ='$id_trx_order'
                                 order by t.id_trx_order ";
-       
+
         return $this->db->query($query)->result();
     }
 
-    
+
 
     public function getDataByIdHistoryCounter($id_trx_order)
     {
 
-            $query = "  SELECT t.id_trx_order,p.nama_pelanggan,t.create_date,t.status,t.update_date,t.id_trx_live_order,t.bungkusan,t.quantity,b.*,
-                        t.no_surat_jalan,al.alamat,tl.nomor,t.tgl_pengiriman,t.note,t.id
+        $query = "  SELECT t.id_trx_order,p.nama_pelanggan,t.create_date,t.status,t.update_date,t.id_trx_live_order,t.bungkusan,t.quantity,b.satuan,
+                        t.no_surat_jalan,al.alamat,tl.nomor,t.tgl_pengiriman,t.note,t.id,t.no_surat_jalan,b.nama_barang,b.kode,t.note_nama_barang
                         FROM 
                         trx_order_po t,pelanggan p,barang b,alamat al,telephone tl  
                         WHERE 

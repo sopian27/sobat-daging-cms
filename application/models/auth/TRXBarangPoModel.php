@@ -130,7 +130,7 @@ class TRXBarangPoModel extends CI_Model
                 supplier s 
             WHERE 
                 tbo.id_supplier = s.id 
-                and s.nama='$keyword'
+                and s.nama like '%$keyword%'
                 and tbo.status in('0','2')
                 and tbo.id_trx_update =''
             group by tbo.id_trx_po
@@ -167,7 +167,7 @@ class TRXBarangPoModel extends CI_Model
                     supplier s 
                 WHERE 
                     tbo.id_supplier = s.id 
-                    and s.nama='$keyword'
+                    and s.nama like '%$keyword%'
                     and tbo.status in('0','2')
                     and tbo.id_trx_update =''
                 group by tbo.id_trx_po
@@ -223,7 +223,7 @@ class TRXBarangPoModel extends CI_Model
     {
         $query = "";
 
-        if (isset($keyword) && $keyword != "") {
+        if ($keyword != ""  && $create_date =="...") {
 
             $query = " SELECT tbo.id_trx_po, s.nama, tbo.create_date,tbo.status,tbo.update_date,tbo.id_trx_live_stocks
             FROM 
@@ -234,9 +234,25 @@ class TRXBarangPoModel extends CI_Model
                 and tbo.status >='3'
                 and tbo.id_trx_update !=''
                 /*and tbo.id_trx_live_stocks ='' */
-                and s.nama ='$keyword'
+                and s.nama like '%$keyword%'
             GROUP BY tbo.id_trx_po
             limit " . $halaman . "," . $batasTampilData;
+        }else if ($keyword!="" && $create_date !="...") {
+
+            $query = " SELECT tbo.id_trx_po, s.nama, tbo.create_date,tbo.status,tbo.update_date,tbo.id_trx_live_stocks
+            FROM 
+                trx_barang_po tbo, 
+                supplier s 
+            WHERE 
+                tbo.id_supplier = s.id 
+                and tbo.status >='3'
+                and tbo.id_trx_update !=''
+                /*and tbo.id_trx_live_stocks ='' */
+                and s.nama like '%$keyword%'
+                and substring(tbo.update_date,1,8) ='$create_date'
+            GROUP BY tbo.id_trx_po
+            limit " . $halaman . "," . $batasTampilData;
+
         } else {
 
             $query = " SELECT tbo.id_trx_po, s.nama, tbo.create_date,tbo.status,tbo.update_date,tbo.id_trx_live_stocks
@@ -252,7 +268,6 @@ class TRXBarangPoModel extends CI_Model
                     GROUP BY tbo.id_trx_po
                     limit " . $halaman . "," . $batasTampilData;
         }
-
         return $this->db->query($query)->result();
     }
 
@@ -261,9 +276,9 @@ class TRXBarangPoModel extends CI_Model
     {
         $query = "";
 
-        if (isset($keyword) && $keyword != "") {
+        if ($keyword != ""  && $create_date =="...") {
 
-            $query = " SELECT tbo.id_trx_po, s.nama, tbo.create_date,tbo.status
+            $query = " SELECT tbo.id_trx_po, s.nama, tbo.create_date,tbo.status,tbo.update_date,tbo.id_trx_live_stocks
             FROM 
                 trx_barang_po tbo, 
                 supplier s 
@@ -272,11 +287,27 @@ class TRXBarangPoModel extends CI_Model
                 and tbo.status >='3'
                 and tbo.id_trx_update !=''
                 /*and tbo.id_trx_live_stocks ='' */
-                and s.nama ='$keyword'
+                and s.nama like '%$keyword%'
             GROUP BY tbo.id_trx_po";
+
+        }else if ($keyword!="" && $create_date !="...") {
+
+            $query = " SELECT tbo.id_trx_po, s.nama, tbo.create_date,tbo.status,tbo.update_date,tbo.id_trx_live_stocks
+            FROM 
+                trx_barang_po tbo, 
+                supplier s 
+            WHERE 
+                tbo.id_supplier = s.id 
+                and tbo.status >='3'
+                and tbo.id_trx_update !=''
+                /*and tbo.id_trx_live_stocks ='' */
+                and s.nama like '%$keyword%'
+                and substring(tbo.update_date,1,8) ='$create_date'
+            GROUP BY tbo.id_trx_po";
+
         } else {
 
-            $query = " SELECT tbo.id_trx_po, s.nama, tbo.create_date,tbo.status
+            $query = " SELECT tbo.id_trx_po, s.nama, tbo.create_date,tbo.status,tbo.update_date,tbo.id_trx_live_stocks
                     FROM 
                         trx_barang_po tbo, 
                         supplier s 
@@ -288,7 +319,6 @@ class TRXBarangPoModel extends CI_Model
                         and substring(tbo.update_date,1,8) ='$create_date'
                     GROUP BY tbo.id_trx_po";
         }
-
         return $this->db->query($query)->result();
     }
 
@@ -397,7 +427,7 @@ class TRXBarangPoModel extends CI_Model
     {
 
         $query = "";
-
+        /*
         if (isset($keyword) && $keyword != "") {
 
             $query = " SELECT tbo.id_trx_po, s.nama, tbo.create_date,tbo.status
@@ -425,6 +455,51 @@ class TRXBarangPoModel extends CI_Model
                     GROUP BY tbo.id_trx_po,substring(tbo.create_date,5,2)
                     limit " . $halaman . "," . $batasTampilData;
         }
+        */
+
+        if ($keyword != ""  && $create_date =="Januari, Februari, Maret....") {
+
+            $query = " SELECT tbo.id_trx_po, s.nama, tbo.create_date,tbo.status
+            FROM 
+                trx_barang_po tbo, 
+                supplier s 
+            WHERE 
+                tbo.id_supplier = s.id 
+                /*and tbo.status >='3' 
+                and tbo.id_trx_live_stocks !='' */
+                and s.nama like '%$keyword%'
+            GROUP BY tbo.id_trx_po,substring(tbo.create_date,5,2)
+            limit " . $halaman . "," . $batasTampilData;
+
+        }else if ($keyword!="" && $create_date !="Januari, Februari, Maret....") {
+
+            $query = " SELECT tbo.id_trx_po, s.nama, tbo.create_date,tbo.status
+            FROM 
+                trx_barang_po tbo, 
+                supplier s 
+            WHERE 
+                tbo.id_supplier = s.id 
+                /*and tbo.status >='3' 
+                and tbo.id_trx_live_stocks !='' */
+                and s.nama like '%$keyword%'
+                and substring(tbo.create_date,1,6) ='$create_date'
+            GROUP BY tbo.id_trx_po,substring(tbo.create_date,5,2)
+            limit " . $halaman . "," . $batasTampilData;
+
+        } else {
+
+            $query = " SELECT tbo.id_trx_po, s.nama, tbo.create_date,tbo.status
+            FROM 
+                trx_barang_po tbo, 
+                supplier s 
+            WHERE 
+                tbo.id_supplier = s.id 
+                /*and tbo.status >='3' 
+                and tbo.id_trx_live_stocks !='' */
+                and substring(tbo.create_date,1,6) ='$create_date'
+            GROUP BY tbo.id_trx_po,substring(tbo.create_date,5,2)
+            limit " . $halaman . "," . $batasTampilData;
+        }
 
 
         return $this->db->query($query)->result();
@@ -434,7 +509,7 @@ class TRXBarangPoModel extends CI_Model
     public function getHistoryPoDataCount($create_date, $keyword)
     {
         $query = "";
-
+        /*
         if (isset($keyword) && $keyword != "") {
 
             $query = " SELECT tbo.id_trx_po, s.nama, tbo.create_date,tbo.status
@@ -459,6 +534,48 @@ class TRXBarangPoModel extends CI_Model
                         and tbo.id_trx_live_stocks !='' 
                         and substring(tbo.create_date,1,6) ='$create_date'
                     GROUP BY tbo.id_trx_po,substring(tbo.create_date,5,2)";
+        }*/
+
+        if ($keyword != ""  && $create_date =="Januari, Februari, Maret....") {
+
+            $query = " SELECT tbo.id_trx_po, s.nama, tbo.create_date,tbo.status
+            FROM 
+                trx_barang_po tbo, 
+                supplier s 
+            WHERE 
+                tbo.id_supplier = s.id 
+                 /*and tbo.status >='3' 
+                and tbo.id_trx_live_stocks !='' */
+                and s.nama like '%$keyword%'
+            GROUP BY tbo.id_trx_po,substring(tbo.create_date,5,2)";
+
+        }else if ($keyword!="" && $create_date !="Januari, Februari, Maret....") {
+
+            $query = " SELECT tbo.id_trx_po, s.nama, tbo.create_date,tbo.status
+            FROM 
+                trx_barang_po tbo, 
+                supplier s 
+            WHERE 
+                tbo.id_supplier = s.id 
+                 /*and tbo.status >='3' 
+                and tbo.id_trx_live_stocks !='' */
+                and s.nama like '%$keyword%'
+                and substring(tbo.create_date,1,6) ='$create_date'
+            GROUP BY tbo.id_trx_po,substring(tbo.create_date,5,2)";
+
+        } else {
+
+            $query = " SELECT tbo.id_trx_po, s.nama, tbo.create_date,tbo.status
+            FROM 
+                trx_barang_po tbo, 
+                supplier s 
+            WHERE 
+                tbo.id_supplier = s.id 
+                /*and tbo.status >='3' 
+                and tbo.id_trx_live_stocks !='' */
+                and substring(tbo.create_date,1,6) ='$create_date'
+            GROUP BY tbo.id_trx_po,substring(tbo.create_date,5,2)";
+            
         }
 
         return $this->db->query($query)->result();
@@ -467,6 +584,7 @@ class TRXBarangPoModel extends CI_Model
     /* history po */
     public function getDataByIdHistory($id_trx_po, $halaman, $batasTampilData)
     {
+        /*
         $query = " SELECT 
                         tbo.kode, 
                         tbo.nama_barang, 
@@ -486,6 +604,26 @@ class TRXBarangPoModel extends CI_Model
                     WHERE 
                         tbo.id_supplier = s.id 
                         and tbo.kode = b.kode
+                        and tbo.id_trx_po = '$id_trx_po'
+                        limit " . $halaman . "," . $batasTampilData;
+            */
+            $query = " SELECT 
+                        tbo.kode, 
+                        tbo.nama_barang, 
+                        tbo.satuan, 
+                        tbo.harga_satuan,
+                        tbo.id,
+                        tbo.quantity, 
+                        tbo.id_trx_po,
+                        tbo.quantity_check,
+                        s.nama,
+                        tbo.create_date,
+                        b.create_date as create_date_penerimaan
+                    FROM 
+                        trx_barang_po tbo left join barang b on tbo.kode = b.kode,
+                        supplier s
+                    WHERE 
+                        tbo.id_supplier = s.id 
                         and tbo.id_trx_po = '$id_trx_po'
                         limit " . $halaman . "," . $batasTampilData;
 
@@ -508,12 +646,10 @@ class TRXBarangPoModel extends CI_Model
                         tbo.create_date,
                         b.create_date as create_date_penerimaan
                     FROM 
-                        trx_barang_po tbo,
-                        supplier s,
-                        barang b
+                        trx_barang_po tbo left join barang b on tbo.kode = b.kode,
+                        supplier s
                     WHERE 
                         tbo.id_supplier = s.id 
-                        and tbo.kode = b.kode
                         and tbo.id_trx_po = '$id_trx_po'";
 
         return $this->db->query($query)->result();
@@ -524,12 +660,10 @@ class TRXBarangPoModel extends CI_Model
     {
         $query = "  SELECT sum(tbo.harga_total) as total
                     FROM 
-                        trx_barang_po tbo,
-                        supplier s,
-                        barang b
+                        trx_barang_po tbo left join barang b on tbo.kode = b.kode,
+                        supplier s
                     WHERE 
                         tbo.id_supplier = s.id 
-                        and tbo.kode = b.kode
                         and tbo.id_trx_po = '$id_trx_po'";
 
         return $this->db->query($query)->result();

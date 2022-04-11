@@ -9,9 +9,9 @@
         <div class="row">
             <div class="col-md-2 offset-md-1">
                 <div class="input-group">
-                    <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search">
+                    <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search" onkeyup="searchData()">
                     <span class="input-group-append">
-                        <button class="btn btn-outline-light" type="button" onclick="searchData()">
+                        <button class="btn btn-outline-light" type="button">
                             <i class="fa fa-search"></i>
                         </button>
                     </span>
@@ -90,6 +90,7 @@
                                 <thead>
                                     <tr class="align-middle">
                                         <th rowspan="2"> Kode </th>
+                                        <th rowspan="2"> Nama Bahan </th>
                                         <th rowspan="2"> Nama Barang </th>
                                         <th rowspan="1" colspan="2"> Quantity</th>
                                         <th rowspan="2"> Note </th>
@@ -163,7 +164,7 @@
         var batasTampilData = 10;
         $("#halaman_paging_trx").val("1");
         var halaman = $('#halaman_paging_trx').val();
-        var keyword = "";
+        var keyword = $("#search").val();
 
         getData(create_date.replaceAll("-", ""), keyword, batasTampilData, halaman);
     });
@@ -175,8 +176,8 @@
         $("#halaman_paging_trx").val("1");
         var halaman = $('#halaman_paging_trx').val();
         var keyword = $("#search").val();
-        var create_date = "";
-        getData(create_date, keyword, batasTampilData, halaman);
+        var create_date = document.getElementById("create_date").value;
+        getData(create_date.replaceAll("-", ""), keyword, batasTampilData, halaman);
 
     }
 
@@ -263,7 +264,8 @@
                 },
                 success: function(response) {
                     alert("success insert");
-                    location.href = "<?= site_url() ?>/live-order";
+                    var id_trx_encrypt = id_trx_order.replace(/\//g, "_");
+                    location.href = "<?= site_url() ?>/history-order/print-directly/"+id_trx_encrypt;
                 },
                 error: function(response) {
                     console.log(response);
@@ -325,11 +327,14 @@
                         dataLoad += data.data[i].nama_barang
                         dataLoad += "</td>";
                         dataLoad += "<td>";
+                        dataLoad += data.data[i].note_nama_barang
+                        dataLoad += "</td>";
+                        dataLoad += "<td>";
                         dataLoad += data.data[i].quantity + " " + data.data[i].satuan
                         dataLoad += "</td>";
                         dataLoad += '<td width="15%"><input type="text" name="bungkusan[]" id="bungkusan' + i + '"  value="' + data.data[i].bungkusan + '" class="form-control-label quantity-check" onkeypress="validate(event)"></td>'
                         dataLoad += '<td class="data" data-dat="satuan" width="20%">'
-                        dataLoad += '<input type="text" name="note[]" id="note' + i + '" class="form-control-label " value="' + data.data[i].note + '">'
+                        dataLoad += '<input type="text" name="note[]" id="note' + i + '" class="form-control-label " value="' + data.data[i].keterangan + '">'
                         dataLoad += '<input type="hidden" name="id[]" id="id' + i + '" value="' + data.data[i].id + '" class="form-control-label">'
                         dataLoad += '<input type="hidden" name="id_trx_order[]" id="id_trx_order" value="' + id_trx_order + '" class="form-control-label">'
                         dataLoad += '<input type="hidden" name="id_trx_live_order[]" id="id_trx_live_order' + i + '"  value="' + id_trx_live_order + '" class="form-control-label">'
@@ -421,15 +426,19 @@
                     dataload += '<div class="container"> ';
                     dataload += '<div class="row"> ';
 
+                    dataload += '<h4 style="text-decoration: underline;margin-top:10px">' + dateForShow(data.data[0].create_date) + '</h4>'
+
                     for (i = 0; i < data.length; i++) {
 
                         var functionOnclickDate = 'liveOrderPaging("' + create_date + '")';
 
+                        /*
                         if (create_date != "") {
                             dataload += '<a href="#" style="color:white;text-decoration:none"  onclick=' + functionOnclickDate + '><h4 style="text-decoration: underline;margin-top:10px">' + dateForShow(create_date) + '</h4></a>'
                         } else {
                             dataload += '<a href="#" style="color:white;text-decoration:none"  onclick=' + functionOnclickDate + '><h4 style="text-decoration: underline;margin-top:10px">' + dateForShow(data.data[i].update_date) + '</h4></a>'
                         }
+                        */
 
                         var id_trx_order = data.data[i].id_trx_order;
                         var functionOnclick = 'getDetailLiveOrder("' + id_trx_order + '","' + i + '")';

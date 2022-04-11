@@ -9,9 +9,9 @@
         <div class="row">
             <div class="col-md-2 offset-md-1">
                 <div class="input-group">
-                    <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search">
+                    <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search" onkeyup="searchData()">
                     <span class="input-group-append">
-                        <button class="btn btn-outline-light" type="button" onclick="searchData()">
+                        <button class="btn btn-outline-light" type="button">
                             <i class="fa fa-search"></i>
                         </button>
                     </span>
@@ -340,6 +340,7 @@
                                     <thead>
                                         <tr class="align-middle">
                                             <th rowspan="2"> Kode </th>
+                                            <th rowspan="2"> Nama Bahan </th>
                                             <th rowspan="2"> Nama Barang </th>
                                             <th rowspan="1" colspan="2"> Quantity</th>
                                             <th rowspan="2"> Harga Satuan </th>
@@ -507,7 +508,7 @@
 
     $(document).on('change', '#create_date', function() {
         var create_date = document.getElementById("create_date").value;
-        create_date = create_date.replaceAll("/", "");
+        create_date = create_date.replaceAll("-", "");
         console.log(create_date);
 
         var batasTampilData = 10;
@@ -515,7 +516,7 @@
         var keyword = "";
         initPaging();
 
-        getHistory(create_date.replaceAll("-", ""), keyword, batasTampilData, halaman);
+        getHistory(create_date, keyword, batasTampilData, halaman);
 
     });
 
@@ -552,7 +553,7 @@
     $(function() {
         $("#create_date").datepicker({
             todayHighlight: true,
-            format: "yyyymm",
+            format: "yyyy-mm",
             startView: "months",
             minViewMode: "months",
             autoclose: true
@@ -726,7 +727,7 @@
 
             dataLoad += "<tr>";
             dataLoad += "<td>";
-            dataLoad += data.data_po[i].kode;
+            dataLoad += data.data_po[i].id_trx_po;
             dataLoad += "</td>";
             dataLoad += "<td>";
             dataLoad += data.data_po[i].nama.toUpperCase();
@@ -987,6 +988,9 @@
                         dataLoad += "</td>";
                         dataLoad += "<td >";
                         dataLoad += data.data_surat_jln[i].nama_barang;
+                        dataLoad += "</td>";
+                        dataLoad += "<td >";
+                        dataLoad += data.data_surat_jln[i].note_nama_barang;
                         dataLoad += "</td>";
                         dataLoad += "<td >";
                         dataLoad += data.data_surat_jln[i].quantity + " " + data.data_surat_jln[i].satuan;
@@ -1406,7 +1410,7 @@
     }
 
     function numberWithCommas(x) {
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
 
     function paginationViewHTMLIn(halaman, totalHalaman, create_date, keyword, batasTampilData) { //halaman 1 total 6

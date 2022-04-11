@@ -26,16 +26,29 @@ class LiveOrderModel extends CI_Model
     {
         $query = "";
 
-        if (isset($keyword) && $keyword != "") {
+        if ($keyword != ""  && $create_date =="...") {
 
                 $query = " SELECT t.id_trx_order,p.nama_pelanggan,t.create_date,t.status,t.update_date,t.id_trx_live_order
                     FROM 
                         trx_order_po t,pelanggan p 
                     WHERE 
                         t.id_pelanggan=p.id 
-                        and p.nama_pelanggan ='$keyword'
+                        and p.nama_pelanggan like '%$keyword%'
                     GROUP BY t.id_trx_order
                     limit " . $halaman . "," . $batasTampilData;
+
+        }else if ($keyword!="" && $create_date !="...") {
+
+            $query = "  SELECT t.id_trx_order,p.nama_pelanggan,t.create_date,t.status,t.update_date,t.id_trx_live_order
+                    FROM 
+                        trx_order_po t,pelanggan p 
+                    WHERE 
+                        t.id_pelanggan=p.id
+                        and p.nama_pelanggan like '%$keyword%'
+                        and substring(t.create_date,1,8) ='$create_date'
+                    GROUP BY t.id_trx_order
+                    limit " . $halaman . "," . $batasTampilData;
+
         } else {
 
             $query = "  SELECT t.id_trx_order,p.nama_pelanggan,t.create_date,t.status,t.update_date,t.id_trx_live_order
@@ -55,15 +68,27 @@ class LiveOrderModel extends CI_Model
     {
         $query = "";
 
-        if (isset($keyword) && $keyword != "") {
+        if ($keyword != ""  && $create_date =="...") {
 
             $query = " SELECT t.id_trx_order,p.nama_pelanggan,t.create_date,t.status,t.update_date,t.id_trx_live_order
                     FROM 
                         trx_order_po t,pelanggan p 
                     WHERE 
                         t.id_pelanggan=p.id
-                        and p.nama_pelanggan ='$keyword'
+                        and p.nama_pelanggan like '%$keyword%'
                     GROUP BY t.id_trx_order";
+
+        }else if ($keyword!="" && $create_date !="...") {
+            
+            $query = "  SELECT t.id_trx_order,p.nama_pelanggan,t.create_date,t.status,t.update_date,t.id_trx_live_order
+                    FROM 
+                        trx_order_po t,pelanggan p 
+                    WHERE 
+                        t.id_pelanggan=p.id
+                        and p.nama_pelanggan like '%$keyword%'
+                        and substring(t.create_date,1,8) ='$create_date'
+                    GROUP BY t.id_trx_order";
+        
         } else {
 
             $query = "  SELECT t.id_trx_order,p.nama_pelanggan,t.create_date,t.status,t.update_date,t.id_trx_live_order
@@ -200,7 +225,7 @@ class LiveOrderModel extends CI_Model
     public function getDataByIdLiveOrder($id_trx_order, $halaman, $batasTampilData)
     {
             $query = " SELECT t.id_trx_order,p.nama_pelanggan,t.create_date,t.status,t.update_date,t.id_trx_live_order,t.bungkusan,t.quantity,b.*,
-                        t.no_surat_jalan,al.alamat,tl.nomor,t.tgl_pengiriman,t.note,t.id
+                        t.no_surat_jalan,al.alamat,tl.nomor,t.tgl_pengiriman,t.note,t.id,t.keterangan,t.note_nama_barang
                     FROM 
                         trx_order_po t,pelanggan p,barang b,alamat al,telephone tl  
                     WHERE 
@@ -218,7 +243,7 @@ class LiveOrderModel extends CI_Model
     public function getDataByIdLiveOrderCounter($id_trx_order)
     {
         $query = " SELECT t.id_trx_order,p.nama_pelanggan,t.create_date,t.status,t.update_date,t.id_trx_live_order,t.bungkusan,t.quantity,b.*,
-                        t.no_surat_jalan,al.alamat,tl.nomor,t.tgl_pengiriman,t.note,t.id
+                        t.no_surat_jalan,al.alamat,tl.nomor,t.tgl_pengiriman,t.note,t.id,t.keterangan,t.note_nama_barang
                     FROM 
                         trx_order_po t,pelanggan p,barang b,alamat al,telephone tl  
                     WHERE 

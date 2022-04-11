@@ -121,7 +121,7 @@ class InventoryUpdate extends CI_Controller
         $where = array("id" => $data_post['id']);
         $dataUpdate = array(
             "harga_satuan"   => $data_post['harga_satuan'],
-            "harga_total"    => str_replace(",", "",$data_post['harga_total']),
+            "harga_total"    => str_replace(".", "",$data_post['harga_total']),
             //"id_trx_update"  => $data_post['id_trx_po'],
             "status"         =>  "2"
         );

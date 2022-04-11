@@ -18,7 +18,7 @@
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="row">
-                <div class="col-md-7 offset-md-2">
+                <div class="col-md-7">
                     <form>
                         <div class="form-group row">
                             <label for="" class="col-sm-2 offset-md-4 col-form-label">Purchase From : </label>
@@ -26,10 +26,22 @@
                                 <input type="text" class="form-control-label" id="purchase_from" name="purchase_from">
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label for="" class="col-sm-2 offset-md-4 col-form-label">Pic : </label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control-label" id="pic" name="pic">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-sm-2 offset-md-4 col-form-label">Nomor Handphone : </label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control-label" id="no_hp" name="no_hp">
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
-            <div class="row" style="margin-top: 20px;">
+            <div class="row" style="margin-top: 40px;">
                 <div class="col-md-7 offset-md-2 justify-content-center">
                     <div class="row">
                         <div class="col-md-1">
@@ -73,9 +85,9 @@
                                 <div class="row">
                                     <div class="col-md-7">
                                         <div class="input-group">
-                                            <input class="form-control-paging" type="text" placeholder="search..." name="keyword-paging" id="keyword-paging">
+                                            <input class="form-control-paging" type="text" placeholder="search..." name="keyword-paging" id="keyword-paging" onkeyup="dataPagingBarang()">
                                             <span class="input-group-append">
-                                                <button class="btn btn-outline-light" type="button" onclick="dataPagingBarang()">
+                                                <button class="btn btn-outline-light" type="button">
                                                     <i class="fa fa-search"></i>
                                                 </button>
                                             </span>
@@ -110,9 +122,14 @@
     $(document).on('click', '.add', function() {
         var dataload = "";
         dataload += '<tr> '
-        dataload += '    <td class="data" data-dat="kode"><input type="text" name="kode" value="" class="form-control "></td> '
-        dataload += '    <td class="data" data-dat="nama_barang"><input type="text" name="nama_barang" value="" class="form-control "></td> '
-        dataload += '    <td class="data quantity" data-dat="quantity"><input type="number" name="quantity" value="" class="form-control " onkeypress="validate(event)"></td> '
+        //dataload += '    <td class="data" data-dat="kode"><input type="text" name="kode" value="" class="form-control "></td> '
+        dataload += '    <td class="data " data-dat="kode"><input type="text" name="kode[]" value="" class="form-control data-kode"></td> '
+        //dataload += '    <td class="data" data-dat="nama_barang"><input type="text" name="nama_barang" value="" class="form-control "></td> '
+        dataload += '    <td class="data" data-dat="nama_barang" width="25%">'
+        dataload += '       <input type="text" name="nama_barang[]" value="" class="form-control ">'
+        dataload += '       <input type="hidden" name="id_barang[]" class="form-control ">'
+        dataload += '    </td>'
+        dataload += '    <td class="data quantity" data-dat="quantity"><input type="number" step="0.01" name="quantity" value="" class="form-control " onkeypress="validate(event)"></td> '
         dataload += '    <td class="data" data-dat="satuan">'
         dataload += '      <select name="satuan" id="" class="form-control">'
         dataload += '          <option value="Kg">kg</option>'
@@ -155,16 +172,30 @@
     function saveSupplier() {
 
         var supplier_name = $("#purchase_from").val();
+        var pic = $("#pic").val();
+        var no_hp = $("#no_hp").val();
 
         if (checkInvalid(supplier_name)) {
             alert("nama supplier tidak boleh kosong");
             return false;
         }
 
+        if (checkInvalid(pic)) {
+            alert("pic supplier tidak boleh kosong");
+            return false;
+        }
+
+        if (checkInvalid(no_hp)) {
+            alert("nomor handphone supplier tidak boleh kosong");
+            return false;
+        }
+
         $.ajax({
             url: '<?= site_url() ?>/inventory/save-supplier',
             data: {
-                'nama_supplier': supplier_name
+                'nama_supplier': supplier_name,
+                'pic': pic,
+                'no_hp': no_hp
             },
             dataType: 'json',
             method: 'post',
@@ -270,8 +301,8 @@
                     async: true,
                     success: function(data) {
                         //if (data == "success") {
-                            console.log("success insert data");
-                            location.href = "<?= site_url()?>/inventory";
+                        console.log("success insert data");
+                        location.href = "<?= site_url() ?>/inventory";
                         //}
                     },
                     error: function(data) {
@@ -288,7 +319,7 @@
         /*
         if (data == "success") {
             console.log("success insert data");
-            location.href = "<?= site_url()?>/inventory";
+            location.href = "<?= site_url() ?>/inventory";
         }
         */
     }
@@ -459,5 +490,60 @@
         dataPagingBarang();
         clearAllData();
 
-    })
+    });
+
+    $(document).on('keydown', '.data-kode', function(e) {
+
+        if (e.keyCode == 13) {
+            e.preventDefault();
+            autoCompleteKode();
+
+        }
+    });
+
+    function autoCompleteKode() {
+
+        var input = document.getElementsByName('kode[]');
+
+        var k = "";
+        for (var i = 0; i < input.length; i++) {
+            var a = input[i];
+            k = k + "array[" + i + "].value= " +
+                a.value + " ";
+            var index = i;
+            var value = a.value;
+
+            console.log("array[" + index + "] => " + value + " => length:" + value.length);
+
+            setDetailKode(index, value);
+
+        }
+    }
+
+    function setDetailKode(index, value) {
+
+        var nama_barang = document.getElementsByName('nama_barang[]');
+        var harga_satuan = document.getElementsByName('harga_satuan[]');
+        var id_barang = document.getElementsByName('id_barang[]');
+
+        $.ajax({
+            url: '<?= site_url() ?>/order-received/getdatakode',
+            method: 'post',
+            dataType: 'json',
+            data: {
+                kode: value
+            },
+            success: function(data) {
+                 
+                if (data.length > 0) {
+                    nama_barang[index].value = data[0]["nama_barang"];
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log("Failed");
+                console.log(error);
+            }
+
+        });
+    }
 </script>

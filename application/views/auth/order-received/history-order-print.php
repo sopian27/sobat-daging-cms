@@ -8,6 +8,8 @@
             border-collapse: collapse;
             padding: 10px;
             width: 80%;
+            text-align: center;
+            vertical-align: middle;
         }
 
         div.center {
@@ -107,6 +109,14 @@
                     No Telepon. 081212121212 <br>
                     No Fax. 021 2223283
                 </p>
+                <div class="row offset-top">
+                    <div class="col-50">
+                        <label for="fname">No Surat Jalan</label>
+                    </div>
+                    <div class="col-75">
+                        <label for="fname">&nbsp;&nbsp;:&nbsp;&nbsp; <?= $data[0]->no_surat_jalan ?></label>
+                    </div>
+                </div>
             </div>
             <div class="Column"></div>
             <div class="Column">
@@ -151,7 +161,6 @@
         <table class="center">
             <thead>
                 <tr>
-                    <th rowspan="2"> Kode </th>
                     <th rowspan="2"> Nama Barang </th>
                     <th rowspan="1" colspan="2"> Quantity</th>
                     <th rowspan="2"> Note </th>
@@ -164,10 +173,9 @@
             <tbody>
                 <?php foreach ($data as $d) { ?>
                     <tr>
-                        <td><?= $d->kode; ?></td>
-                        <td><?= $d->nama_barang; ?></td>
-                        <td><?= $d->quantity . " " . $d->satuan; ?></td>
-                        <td><?= $d->bungkusan . " " . $d->satuan; ?></td>
+                        <td><?= $d->note_nama_barang; ?></td>
+                        <td><?= $d->quantity; ?></td>
+                        <td><?= $d->bungkusan; ?></td>
                         <td><?= $d->note; ?></td>
                     </tr>
                 <?php } ?>

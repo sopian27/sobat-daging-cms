@@ -9,9 +9,9 @@
         <div class="row">
             <div class="col-md-2 offset-md-1">
                 <div class="input-group">
-                    <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search">
+                    <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search" onkeyup="searchData()">
                     <span class="input-group-append">
-                        <button class="btn btn-outline-light" type="button" onclick="searchData()">
+                        <button class="btn btn-outline-light" type="button">
                             <i class="fa fa-search"></i>
                         </button>
                     </span>
@@ -105,8 +105,8 @@
         var batasTampilData = 10;
         var halaman = $('#halaman_paging_oi').val();
         initPaging();
-        $("#search").val("");
-        getDetail(create_date, "", batasTampilData, halaman);
+        var keyword = $("#search").val();
+        getDetail(create_date, keyword, batasTampilData, halaman);
 
     });
 
@@ -115,8 +115,8 @@
         var batasTampilData = 10;
         var halaman = $('#halaman_paging_oi').val();
         var keyword = $("#search").val();
-        var create_date = "";
-        $("#create_date").val("");
+        var create_date = document.getElementById("create_date").value;
+        create_date = create_date.replaceAll("-", "");
 
         initPaging();
 

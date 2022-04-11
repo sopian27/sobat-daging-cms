@@ -23,16 +23,23 @@ class TRXPettyOutModel extends CI_Model
         $keyword = $data['keyword'];
         $query = "";
 
-        if (isset($keyword) && $keyword != "") {
+        if ($keyword != ""  && $date == "...") {
 
             $query = "  SELECT sum(tambahan_saldo) as total,substring(create_date,5,2) as date
                         FROM trx_petty_out 
-                        WHERE id_trx_petty_cash = '$keyword' group by substring(create_date,5,2)";
+                        WHERE id_trx_petty_cash like '%$keyword%' group by substring(create_date,5,2)";
+
+        } else if ($keyword != "" && $date != "...") {
+
+            $query = "  SELECT sum(tambahan_saldo) as total,substring(create_date,5,2) as date
+                        FROM trx_petty_out 
+                        WHERE id_trx_petty_cash like '%$keyword%' and substring(create_date,1,6) = '$date' group by substring(create_date,5,2)";
+
         } else {
 
-                $query = "  SELECT sum(tambahan_saldo) as total,substring(create_date,5,2) as date
-                            FROM trx_petty_out 
-                            WHERE substring(create_date,1,6) = '$date' group by substring(create_date,5,2)";
+            $query = "  SELECT sum(tambahan_saldo) as total,substring(create_date,5,2) as date
+                        FROM trx_petty_out 
+                        WHERE substring(create_date,1,6) = '$date' group by substring(create_date,5,2)";
         }
 
         return $this->db->query($query)->result();

@@ -9,9 +9,9 @@
         <div class="row">
             <div class="col-md-2 offset-md-1">
                 <div class="input-group">
-                    <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search">
+                    <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search" onkeyup="searchData()">
                     <span class="input-group-append">
-                        <button class="btn btn-outline-light" type="button" onclick="searchData()">
+                        <button class="btn btn-outline-light" type="button">
                             <i class="fa fa-search"></i>
                         </button>
                     </span>
@@ -109,7 +109,7 @@
         var batasTampilData = 10;
         $("#halaman_paging_trx").val("1");
         var halaman = $('#halaman_paging_trx').val();
-        var keyword = "";
+        var keyword = $("#search").val();
 
         getData(create_date.replaceAll("-", ""), keyword, batasTampilData, halaman);
     });
@@ -120,8 +120,8 @@
         $("#halaman_paging_trx").val("1");
         var halaman = $('#halaman_paging_trx').val();
         var keyword = $("#search").val();
-        var create_date = "";
-        getData(create_date, keyword, batasTampilData, halaman);
+        var create_date = document.getElementById("create_date").value;
+        getData(create_date.replaceAll("-", ""), keyword, batasTampilData, halaman);
 
     }
 
@@ -146,13 +146,16 @@
                     dataload += '<div class="container"> ';
                     dataload += '<div class="row"> ';
 
-                    for (i = 0; i < data.length; i++) {
+                    dataload += '<h4 style="text-decoration: underline;margin-top:10px">' + dateForShow(data.data[0].create_date) + '</h4>'
 
+                    for (i = 0; i < data.length; i++) {
+                        /*
                         if (create_date != "") {
                             dataload += '<h4 style="text-decoration: underline;margin-top:10px">' + dateForShow(create_date) + '</h4>'
                         } else {
                             dataload += '<h4 style="text-decoration: underline;margin-top:10px">' + dateForShow(data.data[i].update_date) + '</h4>'
                         }
+                        */
 
                         var id_trx_po = data.data[i].id_trx_po;
                         var functionOnclick = 'getDetailLiveStock("' + id_trx_po + '","' + i + '")';
@@ -161,7 +164,8 @@
                         dataload += '<div class="col-md-6" style="margin-top:10px"> ';
                         dataload += '<a style="color:#B89874;text-decoration:none" data-bs-toggle="collapse" ';
                         dataload += 'href="#collapseExample' + i + '"  ';
-                        dataload += "onclick=" + functionOnclick + ">" + "Purchase From Distributor " + data.data[i].nama.toUpperCase(); + '</a>';
+                        //dataload += "onclick=" + functionOnclick + ">" + "Purchase From Distributor " + data.data[i].nama.toUpperCase(); + '</a>';
+                        dataload += "onclick=" + functionOnclick + ">" + data.data[i].nama.toUpperCase(); + '</a>';
                         dataload += '</div>';
                         dataload += '<div class="col-md-1 offset-md-2"> ';
 
@@ -297,7 +301,7 @@
                         dataLoad += "<td>";
                         dataLoad += data.data[i].quantity + " " + data.data[i].satuan
                         dataLoad += "</td>";
-                        dataLoad += '<td width="20%"><input type="text" name="quantity_check[]" id="quantity_check' + i + '"  value="' + data.data[i].quantity_check + '" class="form-control-label quantity-check" onkeypress="validate(event)"></td>'
+                        dataLoad += '<td width="20%"><input type="number" step="0.01" name="quantity_check[]" id="quantity_check' + i + '"  value="' + data.data[i].quantity_check + '" class="form-control-label quantity-check" onkeypress="validate(event)"></td>'
                         dataLoad += '<td class="data" data-dat="satuan" width="7%">'
                         dataLoad += '<select name="satuan[]" id="satuan' + i + '" class="form-control">'
                         if (data.data[i].satuan == "Dus") {
@@ -581,7 +585,8 @@
             month = "Desember";
         }
 
-        return day + " " + month + " " + year;
+        //return day + " " + month + " " + year;
+        return month + " " + year;
     }
 
     function paginationViewHTML(halaman, totalHalaman, create_date, keyword, batasTampilData) { //halaman 1 total 6

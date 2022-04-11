@@ -17,7 +17,7 @@
                     <div class="col-md-5 offset-md-1">
                         <div class="form-group row">
                             <label for="" class="col-sm-4 col-form-label">Nomor Invoice </label>
-                            <div class="col-sm-1">:</div>
+                            <div class="col-sm-1" style="width:10%">: &nbsp;</div>
                             <div class="col-sm-5">
                                 <input type="text" class="form-control-label" id="no_invoice_value" name="no_invoice_value">
                             </div>
@@ -30,23 +30,23 @@
                         </div>
                         <div class="form-group row" style="margin-top: 10px;">
                             <label for="" class="col-sm-4 col-form-label">Pembelian dari </label>
-                            <div class="col-sm-1">:</div>
+                            <div class="col-sm-1" style="width:10%">: &nbsp;</div>
                             <div class="col-sm-4">
                                 <label for="" id="pembelian_dari"></label>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="" class="col-sm-4 col-form-label">Total Tagihan </label>
-                            <div class="col-sm-1">:</div>
+                            <div class="col-sm-1" style="width:10%">: &nbsp;(Rp)</div>
                             <div class="col-sm-4">
-                                <label for="" id="total_tagihan">Rp. 0</label>
+                                <label for="" id="total_tagihan" style="text-align:right;"></label>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="" class="col-sm-4 col-form-label">Nominal Pembayaran </label>
-                            <div class="col-sm-1">:</div>
+                            <div class="col-sm-1" style="width:10%">: &nbsp;(Rp)</div>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control-label" id="nominal_pembayaran" name="nominal_pembayaran">
+                                <input type="text" class="form-control-label" id="nominal_pembayaran" name="nominal_pembayaran" style="text-align:right;">
                                 <input type="hidden" class="form-control" id="total_tagihan_value" name="total_tagihan_value" placeholder="Rp. 0">
                                 <input type="hidden" name="id_trx_payment_po" id="id_trx_payment_po" />
                             </div>
@@ -54,9 +54,9 @@
                         <hr style="width: 600px;border-width: 2px;border-style: solid;border-color:white">
                         <div class="form-group row">
                             <label for="" class="col-sm-4 col-form-label">Kekurangan Pembayaran </label>
-                            <div class="col-sm-1">:</div>
+                            <div class="col-sm-1" style="width:10%">: &nbsp;(Rp)</div>
                             <div class="col-sm-5">
-                                <label for="" id="kekurangan_pembayaran">Rp. 0</label>
+                                <label for="" id="kekurangan_pembayaran" style="text-align:right;"></label>
                             </div>
                         </div>
                     </div>
@@ -96,12 +96,17 @@
     });
 
     function numberWithCommas(x) {
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
 
     function clearAllData(){
         $("#nominal_pembayaran").val("");
-        
+        $("#pembelian_dari").val("");
+        $("#no_invoice_value").val("");
+        $("#total_tagihan_value").val("");
+        $("#id_trx_payment_po").val("");
+        $("#total_tagihan").html("");
+        $("#kekurangan_pembayaran").html("");        
     }
 
     function checkData() {

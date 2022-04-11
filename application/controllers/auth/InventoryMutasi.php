@@ -31,6 +31,9 @@ class InventoryMutasi extends CI_Controller
         $currentDate = date("d/m/Y", $t);
         $kodeInvoice = 'IMB-' . sprintf('%04s', $nextNoUrut) . "/" . $currentDate;
         $data['id_trx_mutasi'] = $kodeInvoice;
+        $countDataBarang = $this->brg_model->countDataBarang();
+        $dataBarangCount =  $countDataBarang[0]->CountData;
+        $data['dataBarangCount'] = $dataBarangCount;
 
         $this->load->view('auth/templates/header', $data);
         $this->load->view('auth/templates/inventory/sidemenu', $data);
@@ -45,9 +48,11 @@ class InventoryMutasi extends CI_Controller
         $id_trx_mutasi = $_POST['id_trx_mutasi'];
         $halaman = (isset($_POST['halaman'])) ? $halaman = $_POST['halaman'] : $halaman = 1;
         $halamanAwal = ($halaman > 1) ? ($halaman * $batasTampilData) - $batasTampilData : 0;
+        $t = time();
+        $createdate = date("Ymd", $t);
 
-        $allDataPo = $this->trx_mutasi_model->getTrxMutasi($id_trx_mutasi, $halamanAwal, $batasTampilData);
-        $allDataPoCounter = $this->trx_mutasi_model->getTrxMutasiCount($id_trx_mutasi);
+        $allDataPo = $this->trx_mutasi_model->getTrxMutasi($_POST['keyword'],$createdate, $halamanAwal, $batasTampilData);
+        $allDataPoCounter = $this->trx_mutasi_model->getTrxMutasiCount($_POST['keyword'],$createdate);
         $output = array(
             "length" => count($allDataPo),
             "data" => $allDataPo,

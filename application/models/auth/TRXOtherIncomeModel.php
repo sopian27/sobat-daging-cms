@@ -32,11 +32,17 @@ class TRXOtherIncomeModel extends CI_Model
 
         $query = "";
 
-        if (isset($keyword) && $keyword != "") {
+        if ($keyword != ""  && $date == "Januari, Februari, Maret....") {
 
             $query = "  SELECT sum(penggunaan_dana) as total
                         FROM ot_income 
-                        WHERE id_trx_ot ='$keyword' group by substring(create_date,1,6) ";
+                        WHERE id_trx_ot like '%$keyword%' group by substring(create_date,1,6) ";
+
+        } else if ($keyword != "" && $date != "Januari, Februari, Maret....") {
+
+            $query = "  SELECT sum(penggunaan_dana) as total
+                        FROM ot_income 
+                        WHERE id_trx_ot like '%$keyword%' and substring(create_date,1,6) ='$date' group by substring(create_date,1,6) ";
 
         } else {
 
@@ -54,16 +60,29 @@ class TRXOtherIncomeModel extends CI_Model
 
         $query = "";
 
-        if (isset($keyword) && $keyword != "") {
+        if ($keyword != ""  && $create_date == "Januari, Februari, Maret....") {
 
             $query = "  SELECT 
                             *
                         from 
                             ot_income b
                         where 
-                            b.id_trx_ot= '" . $keyword . "' 
+                            b.id_trx_ot like '%$keyword%' 
                         order by b.id
                             limit " . $halaman . "," . $batasTampilData;
+
+        } else if ($keyword != "" && $create_date != "Januari, Februari, Maret....") {
+
+            $query = "  SELECT 
+                            *
+                        from 
+                            ot_income b
+                        where 
+                            b.id_trx_ot like '%$keyword%' 
+                            and substring(b.create_date,1,6)= '" . $create_date . "' 
+                        order by b.id
+                            limit " . $halaman . "," . $batasTampilData;
+
         } else {
 
             $query = "  SELECT 
@@ -84,15 +103,27 @@ class TRXOtherIncomeModel extends CI_Model
 
         $query = "";
 
-        if (isset($keyword) && $keyword != "") {
+        if ($keyword != ""  && $create_date == "Januari, Februari, Maret....") {
 
             $query = "  SELECT 
                             *
                         from 
                             ot_income b
                         where 
-                            b.id_trx_ot= '" . $keyword . "' 
+                            b.id_trx_ot like '%$keyword%' 
                         order by b.id";
+
+        } else if ($keyword != "" && $create_date != "Januari, Februari, Maret....") {
+
+            $query = "  SELECT 
+                            *
+                        from 
+                            ot_income b
+                        where 
+                            b.id_trx_ot like '%$keyword%' 
+                            and substring(b.create_date,1,6)= '" . $create_date . "' 
+                        order by b.id";
+
         } else {
 
             $query = "  SELECT 

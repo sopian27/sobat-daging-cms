@@ -59,6 +59,7 @@ $route['translate_uri_dashes'] = FALSE;
 
 /* petty-cash-in */
 $route['petty-cash'] = 'auth/PettyCash';
+$route['petty-cash/getdata'] = 'auth/PettyCash/getData';
 $route['petty-in-save'] = 'auth/PettyCash/pettyInSave';
 
 /* petty-cash-out */
@@ -190,6 +191,7 @@ $route['history-order/gethistory'] = 'auth/HistoryOrder/getHistoryData';
 $route['history-order/print'] = 'auth/HistoryOrder/print';
 $route['history-order/detailorder/(:any)'] = 'auth/HistoryOrder/detailOrder/$1';
 $route['history-order/print-detail/(:any)'] = 'auth/HistoryOrder/printDetail/$1';
+$route['history-order/print-directly/(:any)'] = 'auth/HistoryOrder/printDirectly/$1';
 $route['history-order/getdatabydate'] = 'auth/HistoryOrder/getDataByDate';
 
 /* inventory */

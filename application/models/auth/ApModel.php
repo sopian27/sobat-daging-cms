@@ -7,7 +7,7 @@ class ApModel extends CI_Model
 
         $query = "";
 
-        if (isset($keyword) && $keyword != "") {
+        if ($keyword != ""  && $create_date == "Januari, Februari, Maret....") {
 
             $query = "  select 
                             b.nama_barang, 
@@ -20,21 +20,55 @@ class ApModel extends CI_Model
                             po.create_date as tgl_masuk, 
                             inv.create_date as tgl_invoice, 
                             inv.jatuh_tempo, 
-                            ot.create_date as tgl_payment, 
-                            ot.nominal_bayar,inv.total_tagihan,
-                            b.satuan 
+                            b.satuan ,
+                            inv.update_date as tgl_payment, 
+                            inv.total_tagihan_history as nominal_bayar,
+                            inv.total_tagihan as sisa_pembayaran
                         from 
                             trx_barang_po po, 
                             barang b, 
                             supplier s, 
                             trx_payment_po_invoice inv 
-                            left join trx_payment_out ot on ot.no_invoice = inv.no_invoice 
+                            /*left join trx_payment_out ot on ot.no_invoice = inv.no_invoice */
                         where 
                             po.no_invoice = inv.no_invoice 
                             and b.kode = po.kode 
                             and s.id = po.id_supplier 
                             and inv.no_invoice = '".$keyword."'
                             limit " . $halaman . "," . $batasTampilData;
+
+        } else if ($keyword != "" && $create_date != "Januari, Februari, Maret....") {
+
+            $query = "  select 
+                            b.nama_barang, 
+                            s.nama, 
+                            b.kode, 
+                            po.quantity_check as quantity, 
+                            po.harga_satuan, 
+                            po.harga_total, 
+                            po.no_invoice, 
+                            po.create_date as tgl_masuk, 
+                            inv.create_date as tgl_invoice, 
+                            inv.jatuh_tempo, 
+                            inv.update_date as tgl_payment, 
+                            b.satuan ,
+                            inv.total_tagihan_history as nominal_bayar,
+                            inv.total_tagihan as sisa_pembayaran
+                        from 
+                            trx_barang_po po, 
+                            barang b, 
+                            supplier s, 
+                            trx_payment_po_invoice inv 
+                            /*left join trx_payment_out ot on ot.no_invoice = inv.no_invoice */
+                        where 
+                            po.no_invoice = inv.no_invoice 
+                            and b.kode = po.kode 
+                            and s.id = po.id_supplier 
+                            and inv.no_invoice = '".$keyword."'
+                            and substring(inv.create_date, 1, 6) = '".$create_date."'
+                            limit " . $halaman . "," . $batasTampilData;
+
+
         } else {
 
                 $query = "  select 
@@ -48,15 +82,16 @@ class ApModel extends CI_Model
                             po.create_date as tgl_masuk, 
                             inv.create_date as tgl_invoice, 
                             inv.jatuh_tempo, 
-                            ot.create_date as tgl_payment, 
-                            ot.nominal_bayar,inv.total_tagihan,
-                            b.satuan 
+                            inv.update_date as tgl_payment, 
+                            b.satuan ,
+                            inv.total_tagihan_history as nominal_bayar,
+                            inv.total_tagihan as sisa_pembayaran
                         from 
                             trx_barang_po po, 
                             barang b, 
                             supplier s, 
                             trx_payment_po_invoice inv 
-                            left join trx_payment_out ot on ot.no_invoice = inv.no_invoice 
+                            /*left join trx_payment_out ot on ot.no_invoice = inv.no_invoice */
                         where 
                             po.no_invoice = inv.no_invoice 
                             and b.kode = po.kode 
@@ -75,7 +110,7 @@ class ApModel extends CI_Model
 
         $query = "";
 
-        if (isset($keyword) && $keyword != "") {
+        if ($keyword != ""  && $create_date == "Januari, Februari, Maret....") {
 
             $query = "  select 
                             b.nama_barang, 
@@ -88,21 +123,23 @@ class ApModel extends CI_Model
                             po.create_date as tgl_masuk, 
                             inv.create_date as tgl_invoice, 
                             inv.jatuh_tempo, 
-                            ot.create_date as tgl_payment, 
-                            ot.nominal_bayar,inv.total_tagihan,
-                            b.satuan 
+                            b.satuan ,
+                            inv.update_date as tgl_payment, 
+                            inv.total_tagihan_history as nominal_bayar,
+                            inv.total_tagihan as sisa_pembayaran
                         from 
                             trx_barang_po po, 
                             barang b, 
                             supplier s, 
                             trx_payment_po_invoice inv 
-                            left join trx_payment_out ot on ot.no_invoice = inv.no_invoice 
+                            /*left join trx_payment_out ot on ot.no_invoice = inv.no_invoice */
                         where 
                             po.no_invoice = inv.no_invoice 
                             and b.kode = po.kode 
                             and s.id = po.id_supplier 
                             and inv.no_invoice = '".$keyword."'";
-        } else {
+
+        } else if ($keyword != "" && $create_date != "Januari, Februari, Maret....") {
 
             $query = "  select 
                             b.nama_barang, 
@@ -115,20 +152,53 @@ class ApModel extends CI_Model
                             po.create_date as tgl_masuk, 
                             inv.create_date as tgl_invoice, 
                             inv.jatuh_tempo, 
-                            ot.create_date as tgl_payment, 
-                            ot.nominal_bayar,inv.total_tagihan,
-                            b.satuan 
+                            inv.update_date as tgl_payment, 
+                            b.satuan ,
+                            inv.total_tagihan_history as nominal_bayar,
+                            inv.total_tagihan as sisa_pembayaran
                         from 
                             trx_barang_po po, 
                             barang b, 
                             supplier s, 
                             trx_payment_po_invoice inv 
-                            left join trx_payment_out ot on ot.no_invoice = inv.no_invoice 
+                            /*left join trx_payment_out ot on ot.no_invoice = inv.no_invoice */
+                        where 
+                            po.no_invoice = inv.no_invoice 
+                            and b.kode = po.kode 
+                            and s.id = po.id_supplier 
+                            and inv.no_invoice = '".$keyword."'
+                            and substring(inv.create_date, 1, 6) = '".$create_date."'";
+
+
+        } else {
+
+                $query = "  select 
+                            b.nama_barang, 
+                            s.nama, 
+                            b.kode, 
+                            po.quantity_check as quantity, 
+                            po.harga_satuan, 
+                            po.harga_total, 
+                            po.no_invoice, 
+                            po.create_date as tgl_masuk, 
+                            inv.create_date as tgl_invoice, 
+                            inv.jatuh_tempo, 
+                            b.satuan ,
+                            inv.update_date as tgl_payment, 
+                            inv.total_tagihan_history as nominal_bayar,
+                            inv.total_tagihan as sisa_pembayaran
+                        from 
+                            trx_barang_po po, 
+                            barang b, 
+                            supplier s, 
+                            trx_payment_po_invoice inv 
+                            /*left join trx_payment_out ot on ot.no_invoice = inv.no_invoice */
                         where 
                             po.no_invoice = inv.no_invoice 
                             and b.kode = po.kode 
                             and s.id = po.id_supplier 
                             and substring(inv.create_date, 1, 6) = '".$create_date."'";
+
         }
 
         return $this->db->query($query)->result();
@@ -144,6 +214,7 @@ class ApModel extends CI_Model
             $query = " SELECT sum(total_tagihan_history) - sum(total_tagihan) as nominal,
                     sum(total_tagihan_history)as total_tagihan FROM `trx_payment_po_invoice`
                     where no_invoice ='$keyword' /*GROUP by id_trx_payment*/";
+
         } else {
 
             $query = " SELECT sum(total_tagihan_history) - sum(total_tagihan) as nominal,

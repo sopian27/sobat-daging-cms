@@ -37,7 +37,7 @@ class PelangganModel extends CI_Model
                         where 
                             p.id = a.id_pelanggan 
                             and p.id = t.id_pelanggan
-                            and p.nama_pelanggan= '" . $keyword . "' 
+                            and p.nama_pelanggan like '%$keyword%' 
                         order by p.id
                             limit " . $halaman . "," . $batasTampilData;
         } else {
@@ -80,7 +80,7 @@ class PelangganModel extends CI_Model
                         where 
                             p.id = a.id_pelanggan 
                             and p.id = t.id_pelanggan
-                            and p.nama_pelanggan= '" . $keyword . "' 
+                            and p.nama_pelanggan like '%$keyword%' 
                         order by p.id";
         } else {
 

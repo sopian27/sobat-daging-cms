@@ -9,9 +9,9 @@
         <div class="row">
             <div class="col-md-2 offset-md-1">
                 <div class="input-group">
-                    <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search">
+                    <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search" onkeyup="searchData()">
                     <span class="input-group-append">
-                        <button class="btn btn-outline-light" type="button" onclick="searchData()">
+                        <button class="btn btn-outline-light" type="button">
                             <i class="fa fa-search"></i>
                         </button>
                     </span>
@@ -39,9 +39,9 @@
                         <hr>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-sm-4 offset-md-3" style="margin-top: 20px;">
-                        <table class="table table-dark table-borderless" style="border: none;">
+                <div class="row justify-content-center">
+                    <div class="col-sm-4 offset-md-2" style="margin-top: 20px;">
+                        <table class="table table-dark table-borderless" style="border: none;width:50%; ">
                             <thead>
                             </thead>
                             <tbody id="data-trigger-content">
@@ -63,6 +63,15 @@
                         </div>
                     </div>
                     <div class="col-md-3 offset-md-4" style="margin-top: 30px;">
+                        <div class="form-group row">
+                            <label for="" class="col-sm-5 col-form-label" style="margin-top: -7px;">
+                                <h5 style="color:red">Saldo Petty </h5>
+                            </label>
+                            <div class="col-sm-5">
+                                <h5 style="color:red">:&nbsp;Rp. <span id="saldo-petty"></span></h5>
+                            </div>
+                        </div>
+                        <hr>
                         <div class="form-group row">
                             <label for="" class="col-sm-5 col-form-label" style="margin-top: -7px;">
                                 <h5>Petty In </h5>
@@ -161,14 +170,17 @@
 
     $(function() {
         $("#create_date").datepicker({
-            todayHighlight: true,
-            format: "yyyy-mm",
-            startView: "months",
-            minViewMode: "months",
+            format: "yyyy",
+            weekStart: 1,
+            orientation: "bottom",
+            language: "{{ app.request.locale }}",
+            keyboardNavigation: false,
+            viewMode: "years",
+            minViewMode: "years",
             autoclose: true
         })
 
-        $("#create_date").val("Januari, Februari, Maret....");
+        $("#create_date").val("...");
     });
 
     function show_petty_in() {
@@ -184,19 +196,21 @@
     $(document).on('change', '#create_date', function() {
         var create_date = document.getElementById("create_date").value;
         create_date = create_date.replaceAll("-", "");
+        //$("#data-trigger-title").html("Tahun " + dateForShow(create_date));
         $("#data-trigger-title").html("Tahun " + dateForShow(create_date));
 
         console.log(create_date);
         var today = new Date();
         var year = today.getFullYear();
         var month = today.getMonth();
-        
+        var keyword = $("#search").val();
+
         initPaging();
 
         $("#data-content").hide();
         $("#data-trigger").show();
         $("#search").val("");
-        getData(year, prefixMonth(month + 1), create_date, "");
+        getData(year, prefixMonth(month + 1), create_date, keyword);
 
     });
 
@@ -211,8 +225,8 @@
         var batasTampilData = 10;
         var halaman = $('#halaman_paging_mutasi_masuk').val();
         var keyword = $("#search").val();
-        var create_date = "";
-        $("#create_date").val("");
+        var create_date = document.getElementById("create_date").value;
+        create_date = create_date.replaceAll("-", "");
 
         initPaging();
 
@@ -229,7 +243,7 @@
     }
 
     function numberWithCommas(x) {
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
 
     function dateForShow(create_date) {
@@ -263,7 +277,8 @@
             month = "Desember";
         }
 
-        return year + " Bulan " + month;
+        //return year + " Bulan " + month;
+        return year;
     }
 
     function getMonthName(year, month) {
@@ -294,7 +309,8 @@
             month = "Desember";
         }
 
-        return month + ", " + year;
+        //return month + ", " + year;
+        return month;
     }
 
     function getMonthOnly(create_date) {
@@ -358,10 +374,11 @@
 
                         if (current_month === key) {
 
-                            dataLoad += "<tr>";
+                            //  dataLoad += "<tr>";
                             dataLoad += "<td ><a style='color:#B89874;' href='#' onclick='" + functionOnclick + "'>";
                             dataLoad += getMonthName(current_year, key);
                             dataLoad += "</a></td>";
+                            /*
                             dataLoad += "<td>";
                             if (parseInt(value) > 0) {
                                 dataLoad += "Rp. " + value;
@@ -369,13 +386,15 @@
                                 dataLoad += "Rp. <span style='color:red'>" + value + "</span>";
                             }
                             dataLoad += "</td>";
-                            dataLoad += "</tr>";
+                            */
+                            //dataLoad += "</tr>";
 
                         } else {
-                            dataLoad += "<tr>";
+                            // dataLoad += "<tr>";
                             dataLoad += "<td ><a style='color:white;' href='#' onclick='" + functionOnclick + "'>";
                             dataLoad += getMonthName(current_year, key);
                             dataLoad += "</a></td>";
+                            /*
                             dataLoad += "<td>";
                             if (parseInt(value) > 0) {
                                 dataLoad += "Rp. " + value;
@@ -383,7 +402,8 @@
                                 dataLoad += "Rp. <span style='color:red'>" + value + "</span>";
                             }
                             dataLoad += "</td>";
-                            dataLoad += "</tr>";
+                            */
+                            //dataLoad += "</tr>";
                         }
 
                     }
@@ -422,10 +442,11 @@
 
                         if (current_month === key) {
 
-                            dataLoad += "<tr>";
+                            // dataLoad += "<tr>";
                             dataLoad += "<td ><a style='color:#B89874;' href='#' onclick='" + functionOnclick + "'>";
                             dataLoad += getMonthName(current_year, key);
                             dataLoad += "</a></td>";
+                            /*
                             dataLoad += "<td>";
 
                             if (parseInt(value) > 0) {
@@ -435,13 +456,15 @@
                             }
 
                             dataLoad += "</td>";
-                            dataLoad += "</tr>";
+                            */
+                            // dataLoad += "</tr>";
 
                         } else {
-                            dataLoad += "<tr>";
+                            //  dataLoad += "<tr>";
                             dataLoad += "<td ><a style='color:white;' href='#' onclick='" + functionOnclick + "'>";
                             dataLoad += getMonthName(current_year, key);
                             dataLoad += "</a></td>";
+                            /*
                             dataLoad += "<td>";
 
                             if (parseInt(value) > 0) {
@@ -450,10 +473,13 @@
                                 dataLoad += "Rp. <span style='color:red'>" + value + "</span>";
                             }
                             dataLoad += "</td>";
-                            dataLoad += "</tr>";
+                            */
+                            // dataLoad += "</tr>";
                         }
 
                     }
+
+
                 }
 
                 $("#data-trigger-content").html(dataLoad);
@@ -534,6 +560,7 @@
                 $("#data-content-title3").html("History Petty Cash " + getMonthOnly(date));
                 $("#data-content-pettyin").html(numberWithCommas(in_tot));
                 $("#data-content-pettyout").html(numberWithCommas(out_tot));
+                $("#saldo-petty").html(numberWithCommas(response.saldo));
                 $("#data-content-sum").html(numberWithCommas(result));
                 $("#data-trigger-title").html("Tahun " + dateForShow(date));
                 $("#data-content").show();
@@ -595,12 +622,12 @@
         for (let i = 0; i < response.data_out.length; i++) {
 
 
-            var ket = response.data_in[i].keterangan;
+            var ket = response.data_out[i].keterangan;
             if (ket == null || ket == "") {
                 ket = "-";
             } else {
 
-                ket = response.data_in[i].keterangan;
+                ket = response.data_out[i].keterangan;
             }
 
 

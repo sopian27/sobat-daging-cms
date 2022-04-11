@@ -54,11 +54,15 @@ class Inventory extends CI_Controller
         $data_post = $_POST;
 
         $where_sup = array(
-            "nama" => trim($data_post['nama_supplier'])
+            "nama" => trim($data_post['nama_supplier']),
+            "pic" => trim($data_post['pic']),
+            "no_hp" => trim($data_post['no_hp'])
         );
 
         $data_sup = array(
             "nama" => $data_post['nama_supplier'],
+            "pic" => trim($data_post['pic']),
+            "no_hp" => trim($data_post['no_hp']),
             "create_date" => date('YmdHis'),
             "update_date" => date('YmdHis')
         );

@@ -72,9 +72,11 @@ class HistoryExpenses extends CI_Controller
             "dataTot" => $dataExpensesTot,
             "length_minggu" => count($dataMingguan),
             "data_minggu" => $dataMingguan,
+            "data_minggu_sum" => $dataMingguanCount,
             "length_minggu_paging" => count($dataMingguanCount),
             "length_bulan" => count($dataBulanan),
             "data_bulan" => $dataBulanan,
+            "data_bulan_sum" => $dataBulananCount,
             "length_bulan_paging" => count($dataBulananCount)
         );
 

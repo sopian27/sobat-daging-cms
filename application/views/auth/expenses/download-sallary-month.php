@@ -70,7 +70,7 @@ th {
                             <tr>
                                 <th>Upah Bulanan</th>
                                 <th>:</th>
-                                <th><?= $upah_bulanan?></th>
+                                <th><?= str_replace(",",".",$upah_bulanan);?></th>
                             </tr>
                             <tr>
                                 <th>Bulan</th>
@@ -80,7 +80,7 @@ th {
                             <tr>
                                 <th>Bonus</th>
                                 <th>:</th>
-                                <th><?= $bonus?></th>
+                                <th><?= str_replace(",",".",$bonus);?></th>
                             </tr>
                         </table>
                         <hr style="width:50%;margin-left:0px"> 
@@ -89,7 +89,7 @@ th {
                                 <th>Total Upah</th>
                                 <th>:</th>
                                 <th></th>
-                                <th><?= $total_upah?></th>
+                                <th><?= str_replace(",",".",$total_upah);?></th>
                             </tr>
                         </table>                        
                     </div>

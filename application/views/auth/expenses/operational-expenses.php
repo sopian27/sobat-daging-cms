@@ -18,22 +18,22 @@
                         <div class="col-md-5 offset-md-1">
                             <div class="form-group row">
                                 <label for="" class="col-sm-4 col-form-label">Penggunaan Dana </label>
-                                <div class="col-sm-1">:</div>
+                                <div class="col-sm-1" style="width:10%">: &nbsp;(Rp)</div>
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control-label" id="penggunaan_dana" name="penggunaan_dana" placeholder="Rp. 0">
+                                    <input type="text" class="form-control-label" id="penggunaan_dana" style="text-align:right;" name="penggunaan_dana" placeholder="0">
                                     <input type="hidden" class="form-control-label" id="id_trx_ex_opt" name="id_trx_ex_opt" value="<?= $kode_po ?>">
                                 </div>
                             </div>
                             <div class="form-group row" style="margin-top: 10px;">
                                 <label for="" class="col-sm-4 col-form-label">Keterangan </label>
-                                <div class="col-sm-1">:</div>
+                                <div class="col-sm-1" style="width:10%">: &nbsp;</div>
                                 <div class="col-sm-5">
                                     <input type="text" class="form-control-label" id="keterangan" name="keterangan" placeholder="keterangan...">
                                 </div>
                             </div>
                             <div class="form-group row" style="margin-top: 10px;">
                                 <label for="" class="col-sm-4 col-form-label">Upload Bukti </label>
-                                <div class="col-sm-1">:</div>
+                                <div class="col-sm-1" style="width:10%">: &nbsp;</div>
                                 <div class="col-sm-5">
                                     <input type="file" id="upload_bukti" name="upload_bukti" class="form-control-label">
                                     <label><small>Jpeg/Png only (max 10MB)</small></label>

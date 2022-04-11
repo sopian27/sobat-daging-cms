@@ -8,7 +8,8 @@ class HistoryPettyCash extends CI_Controller
 
         date_default_timezone_set('Asia/Jakarta');
         $this->load->model('auth/TRXPettyInModel','petty_in_model');    
-        $this->load->model('auth/TRXPettyOutModel','petty_out_model');    
+        $this->load->model('auth/TRXPettyOutModel','petty_out_model');
+            
 
     } 
 
@@ -166,6 +167,15 @@ class HistoryPettyCash extends CI_Controller
         $dataPettyOutCount = $this->petty_out_model->getDataCount($data_post['create_date'], $_POST['keyword']);
         $dataPettyOutTot = $this->petty_out_model->getSaldoByDate($_POST);
 
+        $saldo = $this->petty_in_model->getSaldo();
+        $saldo_current="";
+
+        if (empty($saldo)) {
+            $saldo_current = "0";
+        } else {
+            $saldo_current = $saldo[0]->saldo;
+        }
+
         $output = array(
             "length_in" => count($dataPettyIn),
             "data_in" => $dataPettyIn,
@@ -174,7 +184,8 @@ class HistoryPettyCash extends CI_Controller
             "length_out" => count($dataPettyOut),
             "out_tot" => $dataPettyOutTot,
             "data_out" => $dataPettyOut,
-            "length_out_paging" => count($dataPettyOutCount)
+            "length_out_paging" => count($dataPettyOutCount),
+            "saldo"=> $saldo_current
         );
 
 

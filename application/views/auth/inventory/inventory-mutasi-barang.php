@@ -9,11 +9,28 @@
         <div class="row">
             <div class="col-md-3 offset-md-1"><?= $id_trx_mutasi ?></div>
             <div class="col-md-2 offset-md-5"><?= $date ?></div>
+            <p class="col-md-2 offset-md-10">
+                <button class="btn btn-outline-light" type="button" data-bs-toggle="collapse" data-bs-target="#data-barang-collapse" aria-expanded="false" aria-controls="data-barang-collapse">
+                    kode
+                </button>
+            </p>
+        </div>
+        <div class="row">
+            <div class="col-md-2 offset-md-1">
+                <div class="input-group">
+                    <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search">
+                    <span class="input-group-append">
+                        <button class="btn btn-outline-light" type="button" onclick="searchData()">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
         </div>
         <div class="container-fluid" style="margin-top: 60px;">
             <div class="row justify-content-center">
                 <div class="row" style="margin-top: 20px;">
-                    <div class="col-md-8 offset-md-2 justify-content-center">
+                    <div class="col-md-7 offset-md-1 justify-content-center">
                         <div class="row mt-2 ">
                             <table class="table table-dark table-bordered data">
                                 <thead>
@@ -39,6 +56,36 @@
                             </div>
                         </div>
                         <div class="row d-flex justify-content-start formSubmitData" id="formSubmitData">
+                        </div>
+                    </div>
+                    <div class="col-md-3 offset-md-1 justify-content-center">
+                        <div style="min-height: 120px;">
+                            <div class="collapse collapse-horizontal" id="data-barang-collapse">
+                                <div class="card card-body bg-transparent " style="width: 300px; border: 2px solid white;">
+                                    <input type="hidden" name="halamanKodePaging" id="halamanKodePaging" value="1">
+                                    <input type="hidden" name="dataBarangCount" id="dataBarangCount" value="<?= $dataBarangCount ?>">
+                                    <div class="row"> </div>
+                                    <div class="row">
+                                        <div class="col-md-7">
+                                            <div class="input-group">
+                                                <input class="form-control-paging" type="text" placeholder="search..." name="keyword-paging" id="keyword-paging" onkeyup="dataPagingBarang()">
+                                                <span class="input-group-append">
+                                                    <button class="btn btn-outline-light" type="button">
+                                                        <i class="fa fa-search"></i>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4" style="margin-left:6%;margin-top:10px">
+                                            <h4>Kode</h4>
+                                            <hr style="border-width: 2px;border-style: solid;border-color:white">
+                                        </div>
+                                    </div>
+
+                                    <div class="data-barang-pagination"></div>
+                                    <div class="pagination-result-kode" style="margin-left:160px;margin-top:10px"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -76,11 +123,23 @@
 
         var batasTampilData = 10;
         var halaman = $('#halaman').val();
-        loadData(halaman, batasTampilData);
+        loadData("",halaman, batasTampilData);
+    }
+
+    function searchData() {
+
+        var batasTampilData = 10;
+        $("#halaman").val("1");
+        var halaman = $('#halaman').val();
+        var keyword = $("#search").val();
+        loadData(keyword, halaman,batasTampilData);
+
     }
 
 
-    function loadData(halaman, batasTampilData) {
+    function loadData(keyword,halaman, batasTampilData) {
+
+        console.log("halaman:"+halaman);
 
         $.ajax({
             url: '<?= site_url() ?>/inventory-mutasibarang/loadpo',
@@ -89,7 +148,8 @@
             data: {
                 "halaman": halaman,
                 "batastampil": batasTampilData,
-                "id_trx_mutasi": "<?= $id_trx_mutasi ?>"
+                "id_trx_mutasi": "<?= $id_trx_mutasi ?>",
+                "keyword": keyword
             },
             success: function(data) {
                 console.log(data);
@@ -116,14 +176,14 @@
                         dataLoad += "<td width='5%'>";
                         dataLoad += data.data[i].satuan
                         dataLoad += "</td>";
-                        
+
                         if (data.data[i].status == '0') {
                             dataLoad += '<td width="15%"><input type="text" name="quantity_mutasi[]" id="quantity_mutasi' + i + '"  value="' + quantityMutasi + '" class="form-control-label quantity-check" onkeypress="validate(event)"></td>'
                         } else {
                             dataLoad += '<td width="15%"><input type="text" name="quantity_mutasi[]" id="quantity_mutasi' + i + '"  class="form-control-label quantity-check" onkeypress="validate(event)"></td>'
                         }
 
-                        
+
                         dataLoad += '<td class="data" data-dat="satuan" width="5%">'
                         dataLoad += data.data[i].satuan
                         dataLoad += '<input type="hidden" name="id[]" id="id' + i + '" value="' + data.data[i].id + '" class="form-control-label">'
@@ -147,12 +207,12 @@
                     var totalDataBarang = data.length_paging;
                     var totalHalaman = Math.ceil(totalDataBarang / batasTampilData);
 
-                    $('.pagination-result').html(paginationViewHTML(halaman, totalHalaman))
+                    $('.pagination-result').html(paginationViewHTML(keyword,halaman, totalHalaman,batasTampilData))
                     $("#tbody-table-data").html(dataLoad);
                     $("#data-trigger").hide();
                     $("#div-inventory-update-detail").show();
 
-                }else{
+                } else {
                     $('.pagination-result').html("");
                 }
             },
@@ -235,7 +295,7 @@
             },
             success: function(response) {
                 alert("success mutasi barang");
-                location.href = "<?= site_url()?>/inventory-mutasibarang";
+                location.href = "<?= site_url() ?>/inventory-mutasibarang";
 
             },
             error: function(response) {
@@ -358,19 +418,19 @@
         return false;
     }
 
-    function paginationViewHTML(halaman, totalHalaman) { //halaman 1 total 6
+    function paginationViewHTML(keyword,halaman, totalHalaman,batasTampilData) { //halaman 1 total 6
 
         var data_load = '';
         prev = parseInt(halaman) - 1;
         next = parseInt(halaman) + 1;
         minimal_page = parseInt(halaman) - 2;
         max_page = parseInt(halaman) + 2;
-        var prev_v = "dataPagingBarangHREFTrx('" + prev + "')";
-        var next_v = "dataPagingBarangHREFTrx('" + next + "')";
-        var halaman1 = "dataPagingBarangHREFTrx('1')";
-        var halaman2 = "dataPagingBarangHREFTrx('2')";
-        var halaman3 = "dataPagingBarangHREFTrx('3')";
-        var halaman4 = "dataPagingBarangHREFTrx('4')";
+        var prev_v = "dataPagingBarangHREFTrx('" + keyword + "','" + prev + "','" + batasTampilData + "')";
+        var next_v = "dataPagingBarangHREFTrx('" + keyword + "','" + next + "','" + batasTampilData + "')";
+        var halaman1 = "dataPagingBarangHREFTrx('" + keyword + "','1','" + batasTampilData + "')";
+        var halaman2 = "dataPagingBarangHREFTrx('" + keyword + "','2','" + batasTampilData + "')";
+        var halaman3 = "dataPagingBarangHREFTrx('" + keyword + "','3','" + batasTampilData + "')";
+        var halaman4 = "dataPagingBarangHREFTrx('" + keyword + "','4','" + batasTampilData + "')";
         data_load += '<ul class ="pagination">'
 
         if (halaman > 1) {
@@ -384,7 +444,7 @@
         console.log("totalHalaman" + totalHalaman);
 
         for (let i = minimal_page; i <= max_page; i++) {
-            var onclk = "dataPagingBarangHREFTrx('" + i + "')";
+            var onclk = "dataPagingBarangHREFTrx('" + keyword + "','" + i + "','" + batasTampilData + "')";
 
             if (i == halaman && totalHalaman != 0) {
                 data_load += '<li class="page-item active"><a class = "page-link" href="#" onclick="' + onclk + '">' + i + '</a> </li>'
@@ -410,8 +470,132 @@
         return data_load;
     }
 
-    function dataPagingBarangHREFTrx(halaman) {
+    function dataPagingBarangHREFTrx(keyword,halaman,batasTampilData) {
         $('#halaman').val(halaman)
-        dataPaging();
+        loadData(keyword,halaman, batasTampilData);
+    }
+
+    function getDataBarangPagination(halaman, keyword, batasTampilData) {
+
+        $.ajax({
+            url: '<?= site_url() ?>/barang/get-pagination-page',
+            method: 'post',
+            dataType: 'json',
+            data: {
+                'halaman': halaman,
+                'keyword': keyword,
+                'batastampil': batasTampilData
+            },
+            success: function(data) {
+                var data_load = ''
+
+                for (let i = 0; i < data.length; i++) {
+                    const element = data.data[i];
+                    data_load += '<div class="row">'
+                    data_load += '    <div class="col">'
+                    data_load += '        ' + element.kode
+                    data_load += '    </div>'
+                    data_load += '    <div class="col">'
+                    data_load += '        ' + element.nama_barang
+                    data_load += '    </div>'
+                    data_load += '</div>'
+
+                }
+
+                $('.data-barang-pagination').html(data_load);
+                totalDataBarang = data.length_paging;
+                totalHalaman = Math.ceil(totalDataBarang / batasTampilData);
+                $('.pagination-result-kode').html(paginationViewHTMLKode(halaman, totalHalaman))
+            },
+            error: function(data) {
+                console.log("Gagal");
+                console.log(data);
+            }
+
+        });
+    }
+
+    function paginationViewHTMLKode(halaman, totalHalaman) { //halaman 1 total 6
+
+        var data_load = '';
+        prev = parseInt(halaman) - 1;
+        next = parseInt(halaman) + 1;
+        minimal_page = parseInt(halaman) - 2;
+        max_page = parseInt(halaman) + 2;
+        var prev_v = "dataPagingBarangHREF('" + prev + "')";
+        var next_v = "dataPagingBarangHREF('" + next + "')";
+        var halaman1 = "dataPagingBarangHREF('1')";
+        var halaman2 = "dataPagingBarangHREF('2')";
+        var halaman3 = "dataPagingBarangHREF('3')";
+        var halaman4 = "dataPagingBarangHREF('4')";
+        data_load += '<ul class ="pagination">'
+        if (halaman > 1) {
+            data_load += '<li class="page-item"><a href ="#"  class = "page-link " onclick="' + prev_v + '">< </a></li>'
+            //data_load += '<li class="page-item"><a href="#" class = "page-link " > < <a></li>'
+        } else {
+            //  data_load += '<li class="page-item"><a href="#" class = "page-link " > < <a></li>'
+        }
+
+        console.log("halaman" + halaman);
+        console.log("totalHalaman" + totalHalaman);
+
+        for (let i = minimal_page; i <= max_page; i++) {
+            var onclk = "dataPagingBarangHREF('" + i + "')";
+
+
+
+            if (i == halaman && totalHalaman != 0) {
+                data_load += '<li class="page-item active"><a class = "page-link" href="#" onclick="' + onclk + '">' + i + '</a> </li>'
+            } else if ((i == halaman - 1) && (i != 0)) {
+                data_load += '<li class="page-item "><a class = "page-link" href="#" onclick="' + onclk + '">' + i + '</a> </li>'
+            } else if (((i > halaman) && (i < max_page)) && (i <= totalHalaman)) {
+                data_load += '<li class="page-item "><a class = "page-link" href="#" onclick="' + onclk + '">' + i + '</a> </li>'
+            } else if ((halaman == 1) && (i > 0) && (totalHalaman > 3)) {
+                data_load += '<li class="page-item "><a class = "page-link" href="#" onclick="' + onclk + '">' + i + '</a> </li>'
+            }
+        }
+
+
+        if (halaman < totalHalaman) {
+            data_load += '<li class="page-item"><a href="#" class = "page-link " onclick="' + next_v + '"> > <a></li>'
+            //data_load += '<li class="page-item"><a href="#" class = "page-link "> > <a></li>'
+        } else {
+            // data_load += '<li class="page-item"><a href="#" class = "page-link "> > <a></li>'
+        }
+
+        data_load += '</ul>'
+        console.log(data_load);
+        return data_load;
+    }
+
+    function dataPagingBarangHREF(halaman) {
+        $('#halamanKodePaging').val(halaman)
+        dataPagingBarang()
+    }
+
+
+    $("#keyword-paging").keyup(function(e) {
+
+        //if (e.keyCode == 13) {
+        //  e.preventDefault();
+        console.log("on jo");
+        dataPagingBarang();
+        //}
+    });
+
+    $(document).ready(function() {
+        dataPagingBarang();
+
+    })
+
+    function dataPagingBarang() {
+
+        batasTampilData = 10;
+        halaman = $('#halamanKodePaging').val();
+        keyword = $("#keyword-paging").val();
+        //console.log(keyword);
+        //halamanAwal = (halaman > 1) ? (halaman * batasTampilData) - batasTampilData : 0;
+        getDataBarangPagination(halaman, keyword, batasTampilData);
+
     }
 </script>

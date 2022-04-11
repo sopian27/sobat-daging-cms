@@ -9,9 +9,9 @@
         <div class="row">
             <div class="col-md-2 offset-md-1">
                 <div class="input-group">
-                    <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search">
+                    <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search" onkeyup="searchData()">
                     <span class="input-group-append">
-                        <button class="btn btn-outline-light" type="button" onclick="searchData()">
+                        <button class="btn btn-outline-light" type="button">
                             <i class="fa fa-search"></i>
                         </button>
                     </span>
@@ -29,7 +29,7 @@
             </div>
         </div>
         <div class="row" style="margin-top: 60px;" id="data-trigger">
-            <div class="col-md-7" style="margin-left:7%;margin-top:10px">
+            <div class="col-md-7" style="margin-left:9%;margin-top:10px">
                 <div id="data-trigger-content"></div>
                 <input type="hidden" name="halaman_paging_trx" id="halaman_paging_trx" value="1">
                 <div class="pagination-result_trx" style="margin-left:160px;margin-top:10px;margin-left:30%"></div>
@@ -96,14 +96,14 @@
         var batasTampilData = 10;
         $("#halaman_paging_trx").val("1");
         var halaman = $('#halaman_paging_trx').val();
-        var keyword = "";
+        var keyword = $("#search").val();
 
         getData(create_date.replaceAll("-", ""), keyword, batasTampilData, halaman);
 
     });
 
     function numberWithCommas(x) {
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
 
     function searchData() {
@@ -112,8 +112,8 @@
         $("#halaman_paging_trx").val("1");
         var halaman = $('#halaman_paging_trx').val();
         var keyword = $("#search").val();
-        var create_date = "";
-        getData(create_date, keyword, batasTampilData, halaman);
+        var create_date = document.getElementById("create_date").value;
+        getData(create_date.replaceAll("-", ""), keyword, batasTampilData, halaman);
 
     }
 
@@ -138,13 +138,17 @@
                     $("#data-trigger-content").html("");
                     $(".pagination-result_trx").html("");
 
+                    dataLoad += '<h4 style="text-decoration: underline;margin-top:2%">' + dateForMonth(response.data[0].create_date) + '</h4>'
+
                     for (let i = 0; i < response.length; i++) {
 
+                        /*
                         if (create_date != "") {
                             dataLoad += '<h4 style="text-decoration: underline;margin-top:2%">' + dateForMonth(create_date) + '</h4>'
                         } else {
                             dataLoad += '<h4 style="text-decoration: underline;margin-top:2%">' + dateForShow(response.data[i].create_date) + '</h4>'
                         }
+                        */
 
                         dataLoad += '<table class="table table-dark table-borderless" style="border: none;">';
                         dataLoad += '<thead></thead>';
@@ -157,7 +161,8 @@
                         dataLoad += response.data[i].id_trx_po;
                         dataLoad += "</td>";
                         dataLoad += "<td><a class='btn-sobat-md' href='#' onclick='" + functionOnclick + "'>";
-                        dataLoad += "Purchase From Distributor " + response.data[i].nama.toUpperCase();
+                        //dataLoad += "Purchase From Distributor " + response.data[i].nama.toUpperCase();
+                        dataLoad += response.data[i].nama.toUpperCase();
                         dataLoad += "</a></td>";
                         dataLoad += "</tr>";
 
@@ -259,7 +264,12 @@
                     $("#date-filter").hide();
                     $("#supplier_name").html("Purchase From : " + response.data[0].nama);
                     $("#tgl_po").html("Tanggal Po : " + dateForShow(response.data[0].create_date));
-                    $("#tgl_penerimaan").html("Tanggal Penerimaan : " + dateForShow(response.data[0].create_date_penerimaan));
+                    if(response.data[0].create_date_penerimaan != null){
+                        $("#tgl_penerimaan").html("Tanggal Penerimaan : " + dateForShow(response.data[0].create_date_penerimaan));
+                    }else{
+                        $("#tgl_penerimaan").html("Tanggal Penerimaan : -");
+                    }
+                    
                     $("#id_trx_po").html(id_trx_po);
                     $("#tbody-table-data").html(dataLoad);
                     $("#data-trigger").hide();

@@ -9,13 +9,22 @@
         <div class="row">
             <div class="col-md-2 offset-md-1">
                 <div class="input-group">
-                    <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search">
+                    <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search" onkeyup="searchData()">
                     <span class="input-group-append">
-                        <button class="btn btn-outline-light" type="button" onclick="searchData()">
+                        <button class="btn btn-outline-light" type="button">
                             <i class="fa fa-search"></i>
                         </button>
                     </span>
                 </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 60px;" id="content-header">
+            <div class="col-md-3 offset-md-8">
+                <div class="form-group row">
+                    <label for="" class="col-sm-5 col-form-label" style="margin-top: -7px;">Total Harga All : </label>
+                    <div class="col-sm-5" id="total-harga-all"></div>
+                </div>
+                <hr style="border-width: 2px;border-style: solid;border-color:white">
             </div>
         </div>
     </div>
@@ -23,7 +32,7 @@
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="container">
-                <div class="col-md-6 offset-md-3" style="margin-top: 40px;">
+                <div class="col-md-8 offset-md-2" style="margin-top: 40px;">
                     <table class="table table-dark table-bordered data">
                         <thead>
                             <tr class="align-middle">
@@ -91,8 +100,13 @@
                 if (response.length > 0) {
                     for (let i = 0; i < response.datastock.length; i++) {
 
-                        var tot = (parseFloat(response.datastock[i].harga_satuan) * (parseFloat(response.datastock[i].quantity_sobat)));
-                        total += tot;
+                        if(parseFloat(response.datastock[i].quantity_sobat) > 0){
+                            var tot = (parseFloat(response.datastock[i].harga_satuan)) * (parseFloat(response.datastock[i].quantity_sobat)+(parseFloat(response.datastock[i].quantity_pusat)));
+                            total += tot;
+                        }else{
+                            var tot = (parseFloat(response.datastock[i].harga_satuan) * (parseFloat(response.datastock[i].quantity_pusat)));
+                            total += tot;
+                        }
 
                         dataLoad += "<tr>";
                         dataLoad += "<td >";
@@ -102,16 +116,16 @@
                         dataLoad += response.datastock[i].nama_barang.toUpperCase();
                         dataLoad += "</td>";
                         dataLoad += "<td >";
-                        dataLoad += response.datastock[i].quantity_pusat + " " + response.datastock[i].satuan;
+                        dataLoad += parseFloat(response.datastock[i].quantity_pusat).toFixed(2) + " " + response.datastock[i].satuan;
                         dataLoad += "</td>";
                         dataLoad += "<td >";
-                        dataLoad += response.datastock[i].quantity_sobat + " " + response.datastock[i].satuan;;
+                        dataLoad += parseFloat(response.datastock[i].quantity_sobat).toFixed(2) + " " + response.datastock[i].satuan;;
                         dataLoad += "</td>";
                         dataLoad += "<td >";
                         dataLoad += numberWithCommas("Rp. " + response.datastock[i].harga_satuan);
                         dataLoad += "</td>";
                         dataLoad += "<td >";
-                        dataLoad += numberWithCommas("Rp. " + tot);
+                        dataLoad += numberWithCommas("Rp. " + tot.toFixed(2));
                         dataLoad += "</td>";
                         dataLoad += "</tr>";
 
@@ -122,6 +136,7 @@
 
                     $('.pagination-result').html(paginationViewHTML(halaman, totalHalaman, "", keyword, batasTampilData));
                     $("#tot-stock").html(numberWithCommas("Total Nominal Aset Stock : Rp. " + total));
+                    $("#total-harga-all").html(numberWithCommas("Rp. " + response.quantity_total));
                     $("#data-stock").html(dataLoad);
 
                 }
@@ -136,7 +151,7 @@
     }
 
     function numberWithCommas(x) {
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
 
     function paginationViewHTML(halaman, totalHalaman, create_date, keyword, batasTampilData) { //halaman 1 total 6

@@ -86,7 +86,6 @@ class LiveOrder extends CI_Controller{
     } 
 
     public function getDetailTrx(){
-
         $getDetailTrx = $this->lv_model->getliveOrderDetailTrx($_POST['id_trx_order']);
         echo json_encode($getDetailTrx);
     }

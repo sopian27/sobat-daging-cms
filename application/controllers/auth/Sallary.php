@@ -13,7 +13,7 @@ class Sallary extends CI_Controller
     
     public function index()
     {
-        $data['judul']   = 'Sallary';
+        $data['judul']   = 'Salary';
         $data['subMenu'] = "EXPENSES";
         $t = time();
         $data['date'] = date("d F Y", $t);

@@ -9,6 +9,8 @@
             border-collapse: collapse;
             padding: 10px;
             width: 80%;
+            text-align: center;
+            vertical-align: middle;
         }
 
         div.center {
@@ -72,6 +74,16 @@
             width: 40%;
         }
 
+        .col-60 {
+            float: left;
+            width: 50%;
+        }
+
+        .col-65 {
+            float: left;
+            width: 55%;
+        }
+
         .col-75 {
             float: left;
             width: 75%;
@@ -98,8 +110,9 @@
         .bank {
             color: black;
             border-style: dashed;
-            padding: 5px;
+            padding: 2px;
             width: 76%;
+            height: 9%;
         }
     </style>
 </head>
@@ -199,57 +212,93 @@
                 </div>
             </div>
         </div>
-        <table class="center">
-            <thead>
-                <tr>
-                    <th rowspan="2"> Kode </th>
-                    <th rowspan="2"> Nama Barang </th>
-                    <th rowspan="1" colspan="2"> Quantity</th>
-                    <th rowspan="2"> Harga Satuan </th>
-                    <th rowspan="2"> Harga Total </th>
-                </tr>
-                <tr>
-                    <th> Quantity / Kg </th>
-                    <th> Pcs / Bungkus </th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($data as $d) { ?>
-                    <tr>
-                        <td><?= $d->kode; ?></td>
-                        <td><?= $d->nama_barang; ?></td>
-                        <td><?= $d->quantity . " " . $d->satuan; ?></td>
-                        <td><?= $d->bungkusan . " " . $d->satuan; ?></td>
-                        <td><?= "Rp. ".number_format($d->harga_satuan,0); ?></td>
-                        <td><?= "Rp. ".number_format($d->harga_total,0);?></td>
-                    </tr>
-                <?php } ?>
-            </tbody>
-        </table>
+        <div class="Row offset-top">
+            <div class="Column">
+                <table class="center">
+                    <thead>
+                        <tr>
+                            <th rowspan="2"> Kode </th>
+                            <th rowspan="2"> Nama Barang </th>
+                            <th rowspan="1" colspan="2"> Quantity</th>
+                            <th rowspan="2"> Harga Satuan </th>
+                            <th rowspan="2"> Harga Total </th>
+                        </tr>
+                        <tr>
+                            <th> Quantity / Kg </th>
+                            <th> Pcs / Bungkus </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php 
+                            $quantity_total=0;
+                            $bungkusan_total=0;
+                            foreach ($data as $d) { ?>
+                            <tr>
+                                <td><?= $d->kode; ?></td>
+                                <td><?= $d->nama_barang; ?></td>
+                                <td><?= $d->quantity  ?></td>
+                                <td><?= $d->bungkusan ?></td>
+                                <td><?= "Rp. " . str_replace(",", ".", number_format($d->harga_satuan, 0)); ?></td>
+                                <td><?= "Rp. " . str_replace(",", ".", number_format($d->harga_total, 0)); ?></td>
+                            </tr>
+                        <?php 
+
+                            $quantity_total  += (float) $d->quantity;
+                            $bungkusan_total += (float) $d->bungkusan;
+                        } 
+                        
+                        ?>
+                    </tbody>
+                </table>
+                <table class="center" style="border:none;margin-top:-2%">
+                    <tbody>
+                        <tr>
+                            <td style="border:none"></td>
+                            <td style="border:none"></td>
+                            <td style="border-top: none !important;"><?= $quantity_total ?></td>
+                            <td style="border-top: none !important;"><?= $bungkusan_total ?></td>
+                            <td style="border:none"></td>
+                            <td style="border:none"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-    <div class="center">
-        <div class="Row">
-            <div class="Column" style="font-size: 13px">
-                <div class="row">
-                    <div class="col-50">
-                    </div>
-                    <div class="col-75">
-                        <label for="fname">Grand Total &nbsp; :</label> Rp. <?php echo number_format($sumTotal[0]->total,0) ?>
-                    </div>
+    <div class="Row offset-top">
+        <div class="Column offset">
+        </div>
+        <div class="Column" style="font-size: 13px;font-weight: bold">
+            <div class="row">
+            </div>
+            <div class="row">
+                <div class="col-50">
+                    <label for="fname">Grand Total</label>
                 </div>
-                <div class="row">
-                    <div class="col-50">
-                    </div>
-                    <div class="col-75">
-                        <label for="fname">Discount &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :</label> Rp. <?= " " .number_format($data[0]->bonus,0); ?>
-                    </div>
+                <div class="col-75">
+                    <label for="fname">&nbsp;&nbsp;:&nbsp;&nbsp; Rp. <?php echo str_replace(",", ".", number_format($sumTotal[0]->total, 0)) ?></label>
                 </div>
-                <div class="row">
-                    <div class="col-50">
-                    </div>
-                    <div class="col-75">
-                        <label for="fname">Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :</label> Rp. <?= " " .number_format(floatval($sumTotal[0]->total) - floatval($data[0]->bonus),0) ?>
-                    </div>
+            </div>
+            <div class="row">
+                <div class="col-50">
+                    <label for="fname">Discount</label>
+                </div>
+                <div class="col-75">
+                    <label for="fname">&nbsp;&nbsp;:&nbsp;&nbsp; Rp. <?= " " . str_replace(",", ".", number_format(floatval($sumTotal[0]->total) - floatval($data[0]->bonus), 0)) ?></label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-65">
+                    <hr />
+                    <br />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-50">
+                    <label for="fname">Total</label>
+                </div>
+                <div class="col-75">
+                    <label for="fname">&nbsp;&nbsp;:&nbsp;&nbsp; Rp. <?= " " . str_replace(",", ".", number_format(floatval($sumTotal[0]->total) - floatval($data[0]->bonus), 0)) ?></label>
                 </div>
             </div>
         </div>

@@ -9,9 +9,9 @@
         <div class="row" id="date-filter">
             <div class="col-md-2 offset-md-1">
                 <div class="input-group">
-                    <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search">
+                    <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search" onkeyup="searchData()">
                     <span class="input-group-append">
-                        <button class="btn btn-outline-light" type="button" onclick="searchData()">
+                        <button class="btn btn-outline-light" type="button">
                             <i class="fa fa-search"></i>
                         </button>
                     </span>
@@ -44,6 +44,13 @@
                     <div class="col-sm-1">:</div>
                     <div class="col-sm-6">
                         <input type="text" class="form-control" id="kode_co" name="kode_co">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-sm-5 col-form-label">No Surat Jalan </label>
+                    <div class="col-sm-1">:</div>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="surat_jalan" name="surat_jalan">
                     </div>
                 </div>
                 <div class="form-group row">
@@ -94,6 +101,7 @@
                                 <thead>
                                     <tr class="align-middle">
                                         <th rowspan="2"> Kode </th>
+                                        <th rowspan="2"> Nama Bahan </th>
                                         <th rowspan="2"> Nama Barang </th>
                                         <th rowspan="1" colspan="2"> Quantity</th>
                                         <th rowspan="2"> Note </th>
@@ -146,14 +154,14 @@
         var batasTampilData = 10;
         $("#halaman_paging_trx").val("1");
         var halaman = $('#halaman_paging_trx').val();
-        var keyword = "";
+        var keyword = $("#search").val();
 
         getData(create_date.replaceAll("-", ""), keyword, batasTampilData, halaman);
 
     });
 
     function numberWithCommas(x) {
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
 
     function searchData() {
@@ -162,8 +170,9 @@
         $("#halaman_paging_trx").val("1");
         var halaman = $('#halaman_paging_trx').val();
         var keyword = $("#search").val();
-        var create_date = "";
-        getData(create_date, keyword, batasTampilData, halaman);
+        var create_date = document.getElementById("create_date").value;
+
+        getData(create_date.replaceAll("-", ""), keyword, batasTampilData, halaman);
 
     }
 
@@ -194,13 +203,15 @@
                     $("#data-trigger-content").html("");
                     $(".pagination-result_trx").html("");
 
-                    for (let i = 0; i < response.length; i++) {
+                    dataLoad += '<h4 style="text-decoration: underline;margin-top:2%">' + dateForMonth(response.data[0].update_date) + '</h4>'
 
+                    for (let i = 0; i < response.length; i++) {
+                        /*
                         if (create_date != "") {
                             dataLoad += '<h4 style="text-decoration: underline;margin-top:2%">' + dateForMonth(create_date) + '</h4>'
                         } else {
                             dataLoad += '<h4 style="text-decoration: underline;margin-top:2%">' + dateForShow(response.data[i].create_date) + '</h4>'
-                        }
+                        }*/
 
                         dataLoad += '<table class="table table-dark table-borderless" style="border: none;">';
                         dataLoad += '<thead></thead>';
@@ -284,6 +295,9 @@
                         dataLoad += response.data[i].nama_barang
                         dataLoad += "</td>";
                         dataLoad += "<td>";
+                        dataLoad += response.data[i].note_nama_barang
+                        dataLoad += "</td>";
+                        dataLoad += "<td>";
                         dataLoad += response.data[i].quantity + " " + response.data[i].satuan
                         dataLoad += "</td>";
                         dataLoad += "<td>";
@@ -308,6 +322,7 @@
                     $("#alamat").val(response.data[0].alamat);
                     $("#tgl_co").val(dateForShow(response.data[0].create_date));
                     $("#tgl_pengiriman").val(dateForShow(response.data[0].tgl_pengiriman));
+                    $("#surat_jalan").val((response.data[0].no_surat_jalan));
                     //$("#id_trx_order").val(id_trx_order);
                     $("#tbody-table-data").html(dataLoad);
                     $("#data-trigger").hide();

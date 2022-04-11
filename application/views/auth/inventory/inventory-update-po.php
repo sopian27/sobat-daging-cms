@@ -9,9 +9,9 @@
         <div class="row">
             <div class="col-md-2 offset-md-1">
                 <div class="input-group">
-                    <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search">
+                    <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search" onkeyup="searchData()">
                     <span class="input-group-append">
-                        <button class="btn btn-outline-light" type="button" onclick="searchData()">
+                        <button class="btn btn-outline-light" type="button" >
                             <i class="fa fa-search"></i>
                         </button>
                     </span>
@@ -160,7 +160,8 @@
 
                     dataLoad += "<tr>";
                     dataLoad += "<td width='30%' style='text-align:left'><a class='btn-sobat-md' href='#' onclick='" + functionOnclick + "'>";
-                    dataLoad += "Purchase From Distributor " + response.data[i].nama.toUpperCase();
+                    //dataLoad += "Purchase From Distributor " + response.data[i].nama.toUpperCase();
+                    dataLoad += response.data[i].nama.toUpperCase();
                     dataLoad += "</a></td>";
                     dataLoad += "<td>";
                     dataLoad += dateForShow(response.data[i].create_date);
@@ -286,6 +287,11 @@
             return;
         }
 
+        if (checkInvalid(harga_total) || harga_total == '0') {
+            alert("harga total tidak boleh kosong");
+            return;
+        }
+
         $.ajax({
             url: '<?= site_url() ?>/inventory-updatepo/updateharga',
             method: 'post',
@@ -368,7 +374,7 @@
     }
 
     function numberWithCommas(x) {
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
 
     function confirmData() {
