@@ -65,7 +65,7 @@
                     <div class="col-md-3 offset-md-4" style="margin-top: 30px;">
                         <div class="form-group row">
                             <label for="" class="col-sm-5 col-form-label" style="margin-top: -7px;">
-                                <h5 style="color:red">Saldo Petty </h5>
+                                <h5 style="color:red">Current Petty </h5>
                             </label>
                             <div class="col-sm-5">
                                 <h5 style="color:red">:&nbsp;Rp. <span id="saldo-petty"></span></h5>

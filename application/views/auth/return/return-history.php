@@ -142,7 +142,7 @@
         var batasTampilData = 10;
         $("#halaman_paging_trx").val("1");
         var halaman = $('#halaman_paging_trx').val();
-        var keyword = "";
+        var keyword = $("#search").val();
 
         getData(create_date.replaceAll("-", ""), keyword, batasTampilData, halaman);
     });
@@ -156,8 +156,9 @@
         $("#halaman_paging_trx").val("1");
         var halaman = $('#halaman_paging_trx').val();
         var keyword = $("#search").val();
-        var create_date = "";
-        getData(create_date, keyword, batasTampilData, halaman);
+         var create_date = document.getElementById("create_date").value;
+
+        getData(create_date.replaceAll("-", ""), keyword, batasTampilData, halaman);
 
     }
 

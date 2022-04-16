@@ -98,7 +98,7 @@
             <div class="col-md-2 col-sm-4" style="width: 20%;">
                 <div class="card-dashboard card-dashboard-block">
                     <div class="dashboard-div">
-                        <a href="<?=site_url()?>/expenses"><img src="<?php echo base_url() ?>assets/client/images/img/summary.png" class="dashboard-image img-dashboard"></a>
+                        <a href="<?=site_url()?>/expenses"><img src="<?php echo base_url() ?>assets/client/images/img/expense.png" class="dashboard-image img-dashboard"></a>
                     </div>
                     <div style="margin-top: 60px;">
                         <h5 class="card-dashboard-title mt-2 mb-2">Expenses</h5>

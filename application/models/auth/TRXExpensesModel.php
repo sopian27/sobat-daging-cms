@@ -144,7 +144,7 @@ class TRXExpensesModel extends CI_Model
                         from 
                             ex_sallary b
                         where 
-                            b.id_trx like '%$keyword%' 
+                            b.nama like '%$keyword%' 
                             and type='".$type."'
                         order by b.id
                             limit " . $halaman . "," . $batasTampilData;
@@ -156,7 +156,7 @@ class TRXExpensesModel extends CI_Model
                         from 
                             ex_sallary b
                         where 
-                            b.id_trx like '%$keyword%' 
+                            b.nama like '%$keyword%' 
                             and type='".$type."'
                             and substring(b.create_date,1,6)= '" . $create_date . "'  
                         order by b.id
@@ -190,7 +190,7 @@ class TRXExpensesModel extends CI_Model
                         from 
                             ex_sallary b
                         where 
-                            b.id_trx like '%$keyword%' 
+                            b.nama like '%$keyword%' 
                             and type='".$type."'
                         order by b.id";
 
@@ -201,7 +201,7 @@ class TRXExpensesModel extends CI_Model
                         from 
                             ex_sallary b
                         where 
-                            b.id_trx like '%$keyword%' 
+                            b.nama like '%$keyword%' 
                             and type='".$type."'
                             and substring(b.create_date,1,6)= '" . $create_date . "'  
                         order by b.id";

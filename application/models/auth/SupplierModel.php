@@ -41,5 +41,59 @@ class SupplierModel extends CI_Model
         return $allData;
     }
     */
+
+    public function getData($create_date, $keyword, $halaman, $batasTampilData)
+    {
+
+        $query = "";
+
+        if (isset($keyword) && $keyword != "") {
+
+            $query = "  SELECT 
+                           *
+                        from 
+                            supplier p  
+                        where 
+                            p.nama like '%$keyword%' 
+                        order by p.id
+                            limit " . $halaman . "," . $batasTampilData;
+        } else {
+
+            $query = "  SELECT 
+                            *
+                        from 
+                            supplier p 
+                        order by p.id
+                            limit " . $halaman . "," . $batasTampilData;
+        }
+
+        return $this->db->query($query)->result();
+    }
+
+    public function getDataCount($create_date, $keyword)
+    {
+
+        $query = "";
+
+        if (isset($keyword) && $keyword != "") {
+
+            $query = "  SELECT 
+                            *
+                        from 
+                            supplier p  
+                        where 
+                            p.nama like '%$keyword%' 
+                        order by p.id";
+        } else {
+
+            $query = "  SELECT 
+                            *
+                        from 
+                            supplier p 
+                        order by p.id";
+        }
+
+        return $this->db->query($query)->result();
+    }
 }
 ?>

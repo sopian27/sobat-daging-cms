@@ -58,7 +58,7 @@ class TRXReturnModel extends CI_Model
     {
         $query = "";
 
-        if (isset($keyword) && $keyword != "") {
+        if ($keyword != ""  && $create_date == "Januari, Februari, Maret....") {
 
                 $query = "  SELECT tr.id_trx_return,p.nama_pelanggan,tr.tgl_return,substring(tr.tgl_return,7,2) as day,tr.no_invoice,tr.create_date
                             FROM trx_return tr, trx_order_po po, pelanggan p 
@@ -66,6 +66,17 @@ class TRXReturnModel extends CI_Model
                             and tr.no_invoice ='$keyword'
                             GROUP BY day
                             limit " . $halaman . "," . $batasTampilData;
+
+        } else if ($keyword != "" && $create_date != "Januari, Februari, Maret....") {
+
+            $query = "  SELECT tr.id_trx_return,p.nama_pelanggan,tr.tgl_return,substring(tr.tgl_return,7,2) as day,tr.no_invoice,tr.create_date
+                        FROM trx_return tr, trx_order_po po, pelanggan p 
+                        where tr.id_trx_po=po.id and po.id_pelanggan=p.id 
+                        and tr.no_invoice ='$keyword'
+                        and substring(tr.create_date,1,6) ='$create_date'
+                        GROUP BY day
+                        limit " . $halaman . "," . $batasTampilData;
+
         } else {
 
             $query = "  SELECT tr.id_trx_return,p.nama_pelanggan,tr.tgl_return,substring(tr.tgl_return,7,2) as day,tr.no_invoice,tr.create_date 
@@ -83,21 +94,32 @@ class TRXReturnModel extends CI_Model
     {
         $query = "";
 
-        if (isset($keyword) && $keyword != "") {
+        if ($keyword != ""  && $create_date == "Januari, Februari, Maret....") {
 
-            $query = "  SELECT tr.id_trx_return,p.nama_pelanggan,tr.tgl_return,substring(tr.tgl_return,7,2) as day,tr.no_invoice 
+            $query = "  SELECT tr.id_trx_return,p.nama_pelanggan,tr.tgl_return,substring(tr.tgl_return,7,2) as day,tr.no_invoice,tr.create_date
                         FROM trx_return tr, trx_order_po po, pelanggan p 
                         where tr.id_trx_po=po.id and po.id_pelanggan=p.id 
                         and tr.no_invoice ='$keyword'
                         GROUP BY day";
-        } else {
 
-            $query = "  SELECT tr.id_trx_return,p.nama_pelanggan,tr.tgl_return,substring(tr.tgl_return,7,2) as day,tr.no_invoice 
-                        FROM trx_return tr, trx_order_po po, pelanggan p 
-                        where tr.id_trx_po=po.id and po.id_pelanggan=p.id 
-                        and substring(tr.create_date,1,6) ='$create_date'
-                        GROUP BY day";
-        }
+    } else if ($keyword != "" && $create_date != "Januari, Februari, Maret....") {
+
+        $query = "  SELECT tr.id_trx_return,p.nama_pelanggan,tr.tgl_return,substring(tr.tgl_return,7,2) as day,tr.no_invoice,tr.create_date
+                    FROM trx_return tr, trx_order_po po, pelanggan p 
+                    where tr.id_trx_po=po.id and po.id_pelanggan=p.id 
+                    and tr.no_invoice ='$keyword'
+                    and substring(tr.create_date,1,6) ='$create_date'
+                    GROUP BY day";
+
+    } else {
+
+        $query = "  SELECT tr.id_trx_return,p.nama_pelanggan,tr.tgl_return,substring(tr.tgl_return,7,2) as day,tr.no_invoice,tr.create_date 
+                    FROM trx_return tr, trx_order_po po, pelanggan p 
+                    where tr.id_trx_po=po.id and po.id_pelanggan=p.id 
+                    and  substring(tr.create_date,1,6) ='$create_date'
+                    GROUP BY day";
+    }
+
 
         return $this->db->query($query)->result();
     }

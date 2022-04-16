@@ -143,16 +143,16 @@
                             <p style="color:white;font-size:30px">Our Product Recommendation</p>
                             <div class="row">
                                 <div class="col-md-6 text-right">
-                                    <img class="img-thumbnail" src="<?php echo base_url()?>/assets/client/images/img/ribeye-slice.png" alt="ribeye slice" width="360px" height="360px" style="background-color: black;background-size: cover">
+                                    <img class="img-thumbnail" src="<?php echo base_url()?>/assets/client/images/img/rec_image1.png" alt="ribeye slice" width="360px" height="360px" style="background-color: transparent;background-size: cover;border:0;border-radius: 20px;">
                                 </div>
                                 <div class="col-md-6 text-left">
                                     <div class="col-md-12">
-                                        <img class="img-thumbnail" src="<?php echo base_url()?>/assets/client/images/img/ribeye-slice.png" alt="ribeye slice" width="150px" height="150px" style="background-color: black;background-size: cover">
-                                        <img class="img-thumbnail" src="<?php echo base_url()?>/assets/client/images/img/ribeye-slice.png" alt="ribeye slice" width="150px" height="150px" style="background-color: black;margin-left:30px;background-size: cover">
+                                        <img class="img-thumbnail " src="<?php echo base_url()?>/assets/client/images/img/rec_image2.png" alt="ribeye slice" width="200px" height="200px" style="background-color: transparent;background-size: cover;border:0;border-radius: 20px;">
+                                        <img class="img-thumbnail" src="<?php echo base_url()?>/assets/client/images/img/rec_image3.png" alt="ribeye slice" width="200px" height="200px" style="background-color: transparent;background-size: cover;border:0;border-radius: 20px;">
                                     </div>
-                                    <div class="col-md-12" style="margin-top:40px;">
-                                        <img class="img-thumbnail" src="<?php echo base_url()?>/assets/client/images/img/ribeye-slice.png" alt="ribeye slice" width="150px" height="150px" style="background-color: black;background-size: cover">
-                                        <img class="img-thumbnail" src="<?php echo base_url()?>/assets/client/images/img/ribeye-slice.png" alt="ribeye slice" width="150px" height="150px" style="background-color: black;margin-left:30px;background-size: cover">
+                                    <div class="col-md-12" style="margin-top:20px;">
+                                        <img class="img-thumbnail" src="<?php echo base_url()?>/assets/client/images/img/rec_image4.png" alt="ribeye slice" width="200px" height="200px" style="background-color: transparent;background-size: cover;border:0;border-radius: 20px;">
+                                        <img class="img-thumbnail" src="<?php echo base_url()?>/assets/client/images/img/rec_image5.png" alt="ribeye slice" width="200px" height="200px" style="background-color: transparent;background-size: cover;border:0;border-radius: 20px;">
                                     </div>
                                 </div>
                             </div>

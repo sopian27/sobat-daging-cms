@@ -167,8 +167,8 @@
         dataload += '          <option value="Dus">Dus</option>'
         dataload += '      </select>'
         dataload += '    </td> '
-        dataload += '    <td class="data" data-dat="harga_satuan" style="width: 12%;"><input type="text" name="harga_satuan[]" value="" class="form-control data-harga-satuan" onkeypress="validate(event)"></td> '
-        dataload += '    <td class="data" data-dat="harga_total" style="width: 12%;"><input type="text" name="harga_total[]" value="" class="form-control "></td> '
+        dataload += '    <td class="data" data-dat="harga_satuan" style="width: 12%;"><input type="text" name="harga_satuan[]" style="text-align:right;" value="" class="form-control data-harga-satuan" onkeypress="validate(event)"></td> '
+        dataload += '    <td class="data" data-dat="harga_total" style="width: 12%;"><input type="text" name="harga_total[]" style="text-align:right;" value="" class="form-control "></td> '
         dataload += '    <td class="data" data-dat="keterangan" style="width: 25%;"><input type="text" name="keterangan[]" value="" class="form-control "></td> '
         dataload += '</tr>'
 

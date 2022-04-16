@@ -99,7 +99,8 @@
 
                 if (response.length > 0) {
                     for (let i = 0; i < response.datastock.length; i++) {
-
+                        
+                        /*
                         if(parseFloat(response.datastock[i].quantity_sobat) > 0){
                             var tot = (parseFloat(response.datastock[i].harga_satuan)) * (parseFloat(response.datastock[i].quantity_sobat)+(parseFloat(response.datastock[i].quantity_pusat)));
                             total += tot;
@@ -107,6 +108,9 @@
                             var tot = (parseFloat(response.datastock[i].harga_satuan) * (parseFloat(response.datastock[i].quantity_pusat)));
                             total += tot;
                         }
+                        */
+
+                        
 
                         dataLoad += "<tr>";
                         dataLoad += "<td >";

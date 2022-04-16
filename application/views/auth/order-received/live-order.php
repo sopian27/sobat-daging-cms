@@ -447,7 +447,8 @@
                         dataload += '<div class="col-md-6" style="margin-top:10px"> ';
                         dataload += '<a style="color:#B89874;text-decoration:none" data-bs-toggle="collapse" ';
                         dataload += 'href="#collapseExample' + i + '"  ';
-                        dataload += "onclick=" + functionOnclick + ">" + "Purchase From Distributor " + data.data[i].nama_pelanggan.toUpperCase(); + '</a>';
+                        //dataload += "onclick=" + functionOnclick + ">" + "Purchase From Distributor " + data.data[i].nama_pelanggan.toUpperCase(); + '</a>';
+                        dataload += "onclick=" + functionOnclick + ">" + data.data[i].nama_pelanggan.toUpperCase(); + '</a>';
                         dataload += '</div>';
                         dataload += '<div class="col-md-1 offset-md-2"> ';
 

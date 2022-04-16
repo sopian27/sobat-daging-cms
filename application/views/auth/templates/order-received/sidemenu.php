@@ -47,7 +47,7 @@
         </div>
         <div class="row">
             <div class="col mt-3">
-                 <a href="<?php echo site_url();?>/home" style="color:white"><span class="fa fa-arrow-left"> Back</span><a>
+                 <a href="<?php echo site_url();?>/home" style="color:white"><img src="<?php echo base_url();?>/assets/client/images/img/Back.png"/><a>
             </div>
             <h1 class="text-center"><?php echo $subMenu;?></h1>
         </div>

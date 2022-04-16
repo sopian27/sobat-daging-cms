@@ -224,7 +224,8 @@
                         dataLoad += response.data[i].id_trx_order;
                         dataLoad += "</td>";
                         dataLoad += "<td><a class='btn-sobat-md' href='#' onclick='" + functionOnclick + "'>";
-                        dataLoad += "Purchase From Distributor " + response.data[i].nama_pelanggan.toUpperCase();
+                        //dataLoad += "Purchase From Distributor " + response.data[i].nama_pelanggan.toUpperCase();
+                        dataLoad += response.data[i].nama_pelanggan.toUpperCase();
                         dataLoad += "</a></td>";
                         dataLoad += "</tr>";
 

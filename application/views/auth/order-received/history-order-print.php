@@ -102,7 +102,7 @@
     <div>
         <div class="Row">
             <div class="Column">
-                <img width="170" src="<?= base_url()?>/assets/client/images/img/Logo.png"/>
+                <img width="170" src="<?= base_url()?>/assets/client/images/img/Logo_Black.png"/>
                 <p>
                     Ruko Green Sedayu City, Blok J No 78 <br>
                     Cakung Timur, Jakarta Timur 17221 <br>

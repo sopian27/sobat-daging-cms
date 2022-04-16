@@ -56,4 +56,25 @@ class TRXPSTPusatModel extends CI_Model
     }
 
 
+    public function getTrxIdPst()
+    {
+
+        $query = "SELECT 
+                    max(trx_id) as trx_id 
+                FROM 
+                    barang_pst 
+                WHERE 
+                    substring(create_date,1,8) =DATE_FORMAT(SYSDATE(), '%Y%m%d')";
+
+        return $this->db->query($query)->result();
+    }
+
+    public function insertDataPst($data)
+    {
+        $this->db->insert('barang_pst', $data);
+        return $this->db->insert_id();
+    }
+
+
+
 }

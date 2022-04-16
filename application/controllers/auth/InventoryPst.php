@@ -190,5 +190,85 @@ class InventoryPst extends CI_Controller
         $this->pst_sobat_model->update($dataUpdate, $where);
         echo json_encode("success");
     }
+
+    public function saveInventoryPst(){
+        
+        $post = $_POST;
+        $type = $post['type'];
+
+        $trxData = $this->pst_pusat_model->getTrxIdPst();
+        $trxId = $trxData[0]->trx_id;
+        $lastNoUrut = substr($trxId, 5, 4);
+        $nextNoUrut = intval($lastNoUrut) + 1;
+        $t = time();
+        $currentDate = date("d/m/Y", $t);
+        $kodeInvoice = 'IPO-' . sprintf('%04s', $nextNoUrut) . "/" . $currentDate;
+
+        $id_supplier = $this->inventorySaveSupplier($post);
+
+        if($type==1){
+            
+            $data=array(
+                "kode"            => $post['kode'],
+                "create_date"     => date('YmdHis'),
+                "update_date"     => date('YmdHis'),
+                "quantity_pusat"  => $post['quantity'],
+                "nama_barang"     => $post['nama_barang'],
+                "quantity_sobat"  => 0,
+                "note"            => $post['note'],
+                "satuan"          => $post['satuan'],
+                "harga_satuan"    => $post['harga_satuan'],
+                "id_supplier"     => $id_supplier,
+                "trx_id"          => $kodeInvoice
+            );
+        }else{
+                
+            $data=array(
+                "kode"            => $post['kode'],
+                "create_date"     => date('YmdHis'),
+                "update_date"     => date('YmdHis'),
+                "quantity_sobat"  => $post['quantity'],
+                "quantity_pusat"  => 0,
+                "nama_barang"     => $post['nama_barang'],
+                "note"            => $post['note'],
+                "satuan"          => $post['satuan'],
+                "harga_satuan"    => $post['harga_satuan'],
+                "id_supplier"     => $id_supplier,
+                "trx_id"          => $kodeInvoice
+            );
+
+        }
+        $this->pst_pusat_model->insertDataPst($data);
+
+        echo json_encode("success");
+    }
+
+    public function inventorySaveSupplier($data_post){
+
+        $where_sup = array(
+            "nama" => trim($data_post['nama']),
+            "pic" => trim($data_post['pic']),
+            "no_hp" => trim($data_post['no_hp'])
+        );
+
+        $data_sup = array(
+            "nama" => $data_post['nama'],
+            "pic" => trim($data_post['pic']),
+            "no_hp" => trim($data_post['no_hp']),
+            "create_date" => date('YmdHis'),
+            "update_date" => date('YmdHis')
+        );
+
+        $getSupplierId = $this->sup_model->getWhere($where_sup);
+
+        if (empty($getSupplierId)) {
+            $getSupplierId = $this->sup_model->insertData($data_sup);
+        } else {
+            $getSupplierId = $getSupplierId[0]->id;
+        }
+
+        return $getSupplierId;
+
+    }
     
 }

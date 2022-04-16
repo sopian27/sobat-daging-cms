@@ -43,6 +43,65 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-7">
+                        <form>
+                            <div class="form-group row">
+                                <label for="" class="col-sm-2 offset-md-4 col-form-label">Purchase From : </label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control-label" id="purchase_from-pusat" name="purchase_from">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="" class="col-sm-2 offset-md-4 col-form-label">Pic : </label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control-label" id="pic-pusat" name="pic">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="" class="col-sm-2 offset-md-4 col-form-label">Nomor Handphone : </label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control-label" id="no_hp-pusat" name="no_hp">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: 40px;">
+                    <div class="col-md-7 offset-md-2 justify-content-center">
+                        <div class="row">
+                            <div class="col-md-1">
+                                <button class="add-pusat form-control-button btn btn-outline-light button-action"> Add </button>
+                            </div>
+                        </div>
+                        <div class="row mt-2 ">
+                            <table class="table table-dark table-bordered data">
+                                <thead>
+                                    <tr>
+                                        <th> Kode </th>
+                                        <th> Nama Barang </th>
+                                        <th colspan="2"> Quantity </th>
+                                        <th> Harga Satuan </th>
+                                        <th> Note </th>
+                                    </tr>
+                                </thead>
+                                <tbody id='tbody-table-data-pusat'></tbody>
+                            </table>
+                        </div>
+                        <div class="row d-flex justify-content-end">
+                            <div class="col-md-2">
+                                <button class="form-control-button btn btn-outline-light button-action" onclick="clearAllDataPst();"> Clear All </button>
+                            </div>
+                            <div class="col-md-2" id="before-loading">
+                                <button class="form-control-button btn btn-outline-light button-action" onclick="saveDataPst(1);"> Confirm </button>
+                            </div>
+                        </div>
+                        <div class="row d-flex justify-content-start formSubmitData" id="formSubmitData-pusat">
+                        </div>
+                    </div>
+                </div>
+
                 <div class="row" style="margin-top: 20px;">
                     <div class="col-md-8 offset-md-2 justify-content-center">
                         <div class="row mt-2 ">
@@ -70,8 +129,6 @@
                                 <button class="form-control-button btn btn-outline-light button-action" onclick="return confirmData();"> Confirm </button>
                             </div>
                         </div>
-                        <div class="row d-flex justify-content-start formSubmitData" id="formSubmitData">
-                        </div>
                     </div>
                 </div>
             </div>
@@ -90,6 +147,66 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-md-7">
+                        <form>
+                            <div class="form-group row">
+                                <label for="" class="col-sm-2 offset-md-4 col-form-label">Purchase From : </label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control-label" id="purchase_from-sobat" name="purchase_from">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="" class="col-sm-2 offset-md-4 col-form-label">Pic : </label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control-label" id="pic-sobat" name="pic">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="" class="col-sm-2 offset-md-4 col-form-label">Nomor Handphone : </label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control-label" id="no_hp-sobat" name="no_hp">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: 40px;">
+                    <div class="col-md-7 offset-md-2 justify-content-center">
+                        <div class="row">
+                            <div class="col-md-1">
+                                <button class="add-sobat form-control-button btn btn-outline-light button-action"> Add </button>
+                            </div>
+                        </div>
+                        <div class="row mt-2 ">
+                            <table class="table table-dark table-bordered data">
+                                <thead>
+                                    <tr>
+                                        <th> Kode </th>
+                                        <th> Nama Barang </th>
+                                        <th colspan="2"> Quantity </th>
+                                        <th> Harga Satuan </th>
+                                        <th> Note </th>
+                                    </tr>
+                                </thead>
+                                <tbody id='tbody-table-data-sobat'></tbody>
+                            </table>
+                        </div>
+                        <div class="row d-flex justify-content-end">
+                            <div class="col-md-2">
+                                <button class="form-control-button btn btn-outline-light button-action" onclick="clearAllDataPst();"> Clear All </button>
+                            </div>
+                            <div class="col-md-2" id="before-loading">
+                                <button class="form-control-button btn btn-outline-light button-action" onclick="saveDataPst(2);"> Confirm </button>
+                            </div>
+                        </div>
+                        <div class="row d-flex justify-content-start formSubmitData" id="formSubmitData-sobat">
+                        </div>
+                    </div>
+                </div>
+
                 <div class="row" style="margin-top: 20px;">
                     <div class="col-md-8 offset-md-2 justify-content-center">
                         <div class="row mt-2 ">
@@ -117,8 +234,6 @@
                                 <button class="form-control-button btn btn-outline-light button-action" onclick="return confirmDataSobat();"> Confirm </button>
                             </div>
                         </div>
-                        <div class="row d-flex justify-content-start formSubmitData" id="formSubmitData">
-                        </div>
                     </div>
                 </div>
             </div>
@@ -145,6 +260,59 @@
         $("#trx_pst_pusat").show();
 
     }
+
+    function searchData() {
+
+        var batasTampilData = 10;
+        $("#halaman").val("1");
+        var halaman = $('#halaman').val();
+        var keyword = $("#search").val();
+        loadData(keyword, halaman, batasTampilData);
+
+    }
+
+    $(document).on('click', '.add-pusat', function() {
+        var dataload = "";
+        dataload += '<tr> '
+        dataload += '    <td class="data " data-dat="kode"><input type="text" name="kode" value="" class="form-control data-kode"></td> '
+        dataload += '    <td class="data" data-dat="nama_barang" width="25%">'
+        dataload += '       <input type="text" name="nama_barang" value="" class="form-control ">'
+        dataload += '    </td>'
+        dataload += '    <td class="data quantity" data-dat="quantity"><input type="number" step="0.01" name="quantity" value="" class="form-control " onkeypress="validate(event)"></td> '
+        dataload += '    <td class="data" data-dat="satuan">'
+        dataload += '      <select name="satuan" class="form-control">'
+        dataload += '          <option value="Kg">kg</option>'
+        dataload += '          <option value="Dus">Dus</option>'
+        dataload += '      </select>'
+        dataload += '    </td> '
+        dataload += '   <td width="20%"><input type="text" id="harga_satuan" name="harga_satuan"  class="form-control-label harga-satuan" onkeypress="validate(event)"></td>'
+        dataload += '    <td class="data " data-dat="kode"><input type="text" name="note" value="" class="form-control data-kode"></td> '
+        dataload += '</tr>'
+
+        $('#tbody-table-data-pusat').append(dataload);
+    });
+
+    $(document).on('click', '.add-sobat', function() {
+        var dataload = "";
+        dataload += '<tr> '
+        dataload += '    <td class="data " data-dat="kode"><input type="text" name="kode" value="" class="form-control data-kode"></td> '
+        dataload += '    <td class="data" data-dat="nama_barang" width="25%">'
+        dataload += '       <input type="text" name="nama_barang" value="" class="form-control ">'
+        dataload += '    </td>'
+        dataload += '    <td class="data quantity" data-dat="quantity"><input type="number" step="0.01" name="quantity" value="" class="form-control " onkeypress="validate(event)"></td> '
+        dataload += '    <td class="data" data-dat="satuan">'
+        dataload += '      <select name="satuan" class="form-control">'
+        dataload += '          <option value="Kg">kg</option>'
+        dataload += '          <option value="Dus">Dus</option>'
+        dataload += '      </select>'
+        dataload += '    </td> '
+        dataload += '    <td width="20%"><input type="text" name="harga_satuan"  class="form-control-label harga-satuan" onkeypress="validate(event)"></td>'
+        dataload += '    <td class="data " data-dat="kode"><input type="text" name="note" value="" class="form-control data-kode"></td> '
+        dataload += '</tr>'
+
+        $('#tbody-table-data-sobat').append(dataload);
+    });
+
 
 
     $(document).ready(function() {
@@ -298,7 +466,7 @@
             dataLoad += '      </select>'
             dataLoad += '</td> '
             dataLoad += "<td width='20%'>";
-            
+
             if (response.data[i].status == "0") {
                 dataLoad += '<input type="text" name="note_pusat[]" id="note_pusat' + i + '" class="form-control-label" value="' + note + '"/>';
             } else {
@@ -357,7 +525,7 @@
             dataLoad += response.data[i].satuan;
             dataLoad += "</td>";
             dataLoad += "<td width='10%'>";
-            
+
             if (response.data[i].status == "0") {
                 dataLoad += '<input type="text" name="quantity_update_sobat[]" id="quantity_update_sobat' + i + '" class="form-control-label" value="' + update_quantity + '" onkeypress="validate(event)"/>';
             } else {
@@ -378,7 +546,7 @@
             } else {
                 dataLoad += '<input type="text" name="note_sobat[]" id="note_sobat' + i + '" class="form-control-label" />';
             }
-           
+
             dataLoad += '<input type="hidden" name="kode_sobat[]" id="kode_sobat' + i + '" value="' + response.data[i].kode + '"/>';
             dataLoad += '<input type="hidden" name="quantity_sobat[]" id="quantity_sobat' + i + '" value="' + response.data[i].quantity_sobat + '"/>';
             dataLoad += "</td>";
@@ -606,6 +774,153 @@
 
         });
 
+    }
+
+    function clearAllDataPst() {
+        $(".tbody-table-data-sobat").html("");
+        $(".tbody-table-data-pusat").html("");
+    }
+
+    function saveDataPst(id) {
+        var arr = []
+        ar_loop = []
+        let submit = true;
+        let dataTable = "";
+        var supplier_name = "";
+        var pic = "";
+        var no_hp = "";
+
+
+        if (id == 1) {
+            dataTable = document.getElementById('tbody-table-data-pusat').querySelectorAll('tr');
+
+            supplier_name = $("#purchase_from-pusat").val();
+            pic = $("#pic-pusat").val();
+            no_hp = $("#no_hp-pusat").val();
+
+        } else {
+            dataTable = document.getElementById('tbody-table-data-sobat').querySelectorAll('tr');
+
+            supplier_name = $("#purchase_from-sobat").val();
+            pic = $("#pic-sobat").val();
+            no_hp = $("#no_hp-sobat").val();
+        }
+
+        const dataTableLength = dataTable.length
+
+        if (dataTableLength <= 0) {
+            alert("data barang tidak boleh kosong");
+            return false;
+        }
+
+        for (let i = 0; i < dataTableLength; i++) {
+
+            const element = dataTable[i];
+            const childElement = element.children;
+            var form_costume = document.createElement("form");
+            form_costume.setAttribute("id", "insert-inventory");
+            form_costume.setAttribute("method", "post");
+
+            var po_id = document.createElement('input')
+            po_id.setAttribute('type', 'hidden');
+            po_id.setAttribute('name', 'type')
+            po_id.setAttribute('value', id)
+            form_costume.append(po_id)
+
+            var supp = document.createElement('input')
+            supp.setAttribute('type', 'hidden');
+            supp.setAttribute('name', 'nama')
+            supp.setAttribute('value', supplier_name)
+            form_costume.append(supp)
+
+            var pic_form = document.createElement('input')
+            pic_form.setAttribute('type', 'hidden');
+            pic_form.setAttribute('name', 'pic')
+            pic_form.setAttribute('value', pic)
+            form_costume.append(pic_form)
+
+            var no_hp_form = document.createElement('input')
+            no_hp_form.setAttribute('type', 'hidden');
+            no_hp_form.setAttribute('name', 'no_hp')
+            no_hp_form.setAttribute('value', no_hp)
+            form_costume.append(no_hp_form)
+
+            for (let j = 0; j < childElement.length; j++) {
+                const element1 = childElement[j];
+                const element1Chlid = element1.children;
+                for (let k = 0; k < element1Chlid.length; k++) {
+                    const element2 = element1Chlid[k];
+                    element_select = element2.name
+                    content_select = element2.value
+
+                    var inp = document.createElement('input')
+                    inp.setAttribute('type', 'text');
+                    inp.setAttribute('name', element_select)
+                    inp.setAttribute('value', content_select)
+
+                    if (content_select == null || content_select == "") {
+                        alert("data barang " + element_select + " tidak boleh kosong");
+                        submit = false;
+                        break;
+                    }
+
+                    form_costume.append(inp)
+                    arr[element_select] = content_select
+                }
+            }
+
+            if (submit) {
+
+                if (id == 1) {
+
+                    $('#formSubmitData-pusat').append(form_costume);
+                    $.ajax({
+                        url: '<?= site_url() ?>/inventory-pst/save',
+                        data: $('#insert-inventory').serialize(),
+                        method: 'post',
+                        dataType: 'json',
+                        async: true,
+                        success: function(data) {
+                            alert("success insert data");
+                            location.href = "<?= site_url() ?>/inventory-updatestockpst";
+                        },
+                        error: function(data) {
+                            console.log("Failed");
+                            console.log(data);
+                        }
+
+                    });
+
+                    $('#formSubmitData-pusat').empty();
+
+                } else {
+
+
+                    $('#formSubmitData-sobat').append(form_costume);
+                    $.ajax({
+                        url: '<?= site_url() ?>/inventory-pst/save',
+                        data: $('#insert-inventory').serialize(),
+                        method: 'post',
+                        dataType: 'json',
+                        async: true,
+                        success: function(data) {
+                            alert("success insert data");
+                            location.href = "<?= site_url() ?>/inventory-updatestockpst";
+                        },
+                        error: function(data) {
+                            console.log("Failed");
+                            console.log(data);
+                        }
+
+                    });
+
+                    $('#formSubmitData-sobat').empty();
+                }
+
+
+            }
+
+        }
     }
 
     function clearAllDataSobat() {

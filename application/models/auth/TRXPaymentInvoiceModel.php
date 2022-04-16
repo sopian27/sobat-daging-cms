@@ -92,6 +92,8 @@ class TRXPaymentInvoiceModel extends CI_Model
                          tbo.id_trx_po,
                          tbo.quantity_check,
                          s.nama,
+                         s.pic,
+                         s.no_hp,
                          tbo.create_date,
                          tbo.status,
                          tbo.no_invoice
@@ -121,6 +123,9 @@ class TRXPaymentInvoiceModel extends CI_Model
                         tbo.id_trx_po,
                         tbo.quantity_check,
                         s.nama,
+                        s.nama,
+                         s.pic,
+                         s.no_hp,
                         tbo.create_date,
                         tbo.no_invoice,
                         tbo.status

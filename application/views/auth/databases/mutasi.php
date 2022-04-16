@@ -141,8 +141,8 @@
 
         var batasTampilData = 10;
         var halaman = $('#halaman_paging_mutasi_masuk').val();
-        var keyword = "";
-        $("#search").val("");
+        var keyword = $("#search").val();
+        //$("#search").val("");
         initPaging();
         getDataMutasi(create_date.replaceAll("-", ""), keyword, batasTampilData, halaman);
 
@@ -160,9 +160,9 @@
         var batasTampilData = 10;
         var halaman = $('#halaman_paging_mutasi_masuk').val();
         var keyword = $("#search").val();
-        var create_date = "";
-        $("#create_date").val("");
-        getDataMutasi(create_date, keyword, batasTampilData, halaman);
+        var create_date = document.getElementById("create_date").value;
+        //$("#create_date").val("");
+        getDataMutasi(create_date.replaceAll("-", ""), keyword, batasTampilData, halaman);
 
     }
 

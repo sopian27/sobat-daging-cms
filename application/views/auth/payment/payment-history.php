@@ -414,6 +414,20 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="" class="col-sm-3 col-form-label">Pic </label>
+                            <div class="col-sm-1">:</div>
+                            <div class="col-sm-4">
+                                <label for="" class=" col-form-label" id="pic"></label>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-sm-3 col-form-label">Nomor Hp </label>
+                            <div class="col-sm-1">:</div>
+                            <div class="col-sm-4">
+                                <label for="" class=" col-form-label" id="no_hp"></label>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="" class="col-sm-3 col-form-label">Tanggal Pembelian </label>
                             <div class="col-sm-1">:</div>
                             <div class="col-sm-4">
@@ -883,6 +897,8 @@
 
                     $("#kode_po").html(data.data_kode_po[0].id_trx_po);
                     $("#pembelian_dari").html(data.data_kode_po[0].nama);
+                    $("#pic").html(data.data_kode_po[0].pic);
+                    $("#no_hp").html(data.data_kode_po[0].no_hp);
                     $("#tgl_pembelian").html(dateForShow(data.data_kode_po[0].create_date));
                     $("#jatuh_tempo_kode_po").html(dateForShow(data.data_kode_po[0].jatuh_tempo));
                     $("#total_tagihan_kode_po").html("Rp. " + numberWithCommas(data.sum_total[0].total));

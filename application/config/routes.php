@@ -247,4 +247,5 @@ $route['inventory-updatestockpst/sobatsave'] = 'auth/InventoryPst/sobatSave';
 $route['inventory-updatestockpst/clear-all-sobat'] = 'auth/InventoryPst/clearAllSobat';
 $route['inventory-updatestockpst/confirmsobat'] = 'auth/InventoryPst/confirmDataSobat';
 $route['inventory/save-pst'] = 'auth/inventory/inventorySavePSTMenu';
+$route['inventory-pst/save'] = 'auth/InventoryPst/saveInventoryPst';
 

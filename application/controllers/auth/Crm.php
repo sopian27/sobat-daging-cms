@@ -6,6 +6,7 @@ class Crm extends CI_Controller
 
         date_default_timezone_set('Asia/Jakarta');
         $this->load->model('auth/PelangganModel','plg_model');    
+        $this->load->model('auth/SupplierModel','sup_model');    
 
     } 
 
@@ -45,10 +46,16 @@ class Crm extends CI_Controller
         $data = $this->plg_model->getData($data_post['create_date'], $_POST['keyword'], $halamanAwal, $batasTampilData);
         $dataCounter = $this->plg_model->getDataCount($data_post['create_date'], $_POST['keyword']);
 
+        $dataSup = $this->sup_model->getData($data_post['create_date'], $_POST['keyword'], $halamanAwal, $batasTampilData);
+        $dataCounterSup = $this->sup_model->getDataCount($data_post['create_date'], $_POST['keyword']);
+
         $output = array(
             "length" => count($data),
             "datacrm" => $data,
-            "length_paging" => count($dataCounter)
+            "length_paging" => count($dataCounter),
+            "length_sup" => count($dataSup),
+            "datasup" => $dataSup,
+            "length_paging_sup" => count($dataCounterSup)
         );
 
 

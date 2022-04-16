@@ -35,13 +35,42 @@ class TRXPettyInModel extends CI_Model
 
             $query = "  SELECT sum(tambahan_saldo) as total,substring(create_date,5,2) as date
                         FROM trx_petty_in 
-                        WHERE id_trx_petty_cash like '%$keyword%' group by substring(create_date,5,2)";
+                        WHERE keterangan like '%$keyword%' group by substring(create_date,5,2)";
 
         } else if ($keyword != "" && $date != "...") {
 
             $query = "  SELECT sum(tambahan_saldo) as total,substring(create_date,5,2) as date
                         FROM trx_petty_in 
-                        WHERE id_trx_petty_cash like '%$keyword%' and substring(create_date,1,6) = '$date' group by substring(create_date,5,2)";
+                        WHERE keterangan like '%$keyword%' and substring(create_date,1,4) = '$date' group by substring(create_date,5,2)";
+
+        } else {
+
+            $query = "  SELECT sum(tambahan_saldo) as total,substring(create_date,5,2) as date
+                            FROM trx_petty_in 
+                            WHERE substring(create_date,1,4) = '$date' group by substring(create_date,5,2)";
+        }
+
+        return $this->db->query($query)->result();
+    }
+
+    public function getSaldoByDateDetail($data)
+    {
+
+        $date = $data['create_date'];
+        $keyword = $data['keyword'];
+        $query = "";
+
+        if ($keyword != ""  && $date == "...") {
+
+            $query = "  SELECT sum(tambahan_saldo) as total,substring(create_date,5,2) as date
+                        FROM trx_petty_in 
+                        WHERE keterangan like '%$keyword%' group by substring(create_date,5,2)";
+
+        } else if ($keyword != "" && $date != "...") {
+
+            $query = "  SELECT sum(tambahan_saldo) as total,substring(create_date,5,2) as date
+                        FROM trx_petty_in 
+                        WHERE keterangan like '%$keyword%' and substring(create_date,1,6) = '$date' group by substring(create_date,5,2)";
 
         } else {
 
@@ -85,7 +114,7 @@ class TRXPettyInModel extends CI_Model
                         from 
                             trx_petty_in b
                         where 
-                            id_trx_petty_cash= '" . $keyword . "' 
+                            keterangan= '" . $keyword . "' 
                         order by b.id
                             limit " . $halaman . "," . $batasTampilData;
         } else {
@@ -99,7 +128,7 @@ class TRXPettyInModel extends CI_Model
                         order by b.id
                             limit " . $halaman . "," . $batasTampilData;
         }
-
+        
         return $this->db->query($query)->result();
     }
 
@@ -115,7 +144,7 @@ class TRXPettyInModel extends CI_Model
                         from 
                             trx_petty_in b
                         where 
-                            id_trx_petty_cash= '" . $keyword . "' 
+                            keterangan= '" . $keyword . "' 
                         order by b.id";
         } else {
 

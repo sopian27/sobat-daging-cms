@@ -203,6 +203,20 @@
                                 </div>
                             </div>
                             <div class="form-group row">
+                                <label for="" class="col-sm-3 col-form-label">Pic </label>
+                                <div class="col-sm-1">:</div>
+                                <div class="col-sm-4">
+                                    <label for="" class=" col-form-label" id="pic"></label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="" class="col-sm-3 col-form-label">Nomor Hp </label>
+                                <div class="col-sm-1">:</div>
+                                <div class="col-sm-4">
+                                    <label for="" class=" col-form-label" id="no_hp"></label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                 <label for="" class="col-sm-3 col-form-label">Tanggal Pembelian </label>
                                 <div class="col-sm-1">:</div>
                                 <div class="col-sm-4">
@@ -316,7 +330,7 @@
         $("#jatuh_tempo_kode_po").val("");
     }
 
-    
+
 
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -350,11 +364,11 @@
 
     function confirmDataPo() {
 
-        var jatuh_tempo        = $("#jatuh_tempo_kode_po").val();
-        var no_invoice_co_po   = $("#no_invoice_co_po").val();
-        var kode_po            = $("#kode_po").val();
-        var no_invoice         = $("#no_invoice_kode_po").val();
-        var total_tagihan      = $("#total_tagihan_value_po").val();
+        var jatuh_tempo = $("#jatuh_tempo_kode_po").val();
+        var no_invoice_co_po = $("#no_invoice_co_po").val();
+        var kode_po = $("#kode_po").val();
+        var no_invoice = $("#no_invoice_kode_po").val();
+        var total_tagihan = $("#total_tagihan_value_po").val();
 
         if (checkInvalid(jatuh_tempo)) {
             alert("jatuh tempo tidak boleh kosong");
@@ -364,9 +378,9 @@
         $.ajax({
             url: '<?= site_url() ?>/payment-invoice-pembelian/save',
             data: {
-                'jatuh_tempo' : jatuh_tempo.replaceAll("-", ""),
+                'jatuh_tempo': jatuh_tempo.replaceAll("-", ""),
                 'no_invoice_co_po': no_invoice_co_po,
-                'kode_po' : kode_po,
+                'kode_po': kode_po,
                 'no_invoice': no_invoice,
                 'total_tagihan': total_tagihan
             },
@@ -421,7 +435,7 @@
             return false;
         }
 
-        total_tagihan = parseFloat(total_tagihan) - parseFloat(bonus.replaceAll(",",""));
+        total_tagihan = parseFloat(total_tagihan) - parseFloat(bonus.replaceAll(",", ""));
 
         $.ajax({
             url: '<?= site_url() ?>/payment-invoice-customer/save',
@@ -615,6 +629,8 @@
                 if (data.data_kode_po.length > 0) {
 
                     $("#pembelian_dari").html(data.data_kode_po[0].nama);
+                    $("#pic").html(data.data_kode_po[0].pic);
+                    $("#no_hp").html(data.data_kode_po[0].no_hp);
                     $("#tgl_pembelian").html(dateForShow(data.data_kode_po[0].create_date));
                     $("#total_tagihan_kode_po").html("Rp. " + numberWithCommas(data.sum_total[0].total));
                     $("#total_tagihan_value_po").val(data.sum_total[0].total);

@@ -90,7 +90,7 @@
                             <a class="form-control-button btn btn-outline-light button-action" onclick="showOperational();"> Operational Expenses </a>
                         </div>
                         <div style="margin-top:30px">
-                            <a class="form-control-button btn" style="background-color: #B89874;border:none;padding:10px"> Sallary </a>
+                            <a class="form-control-button btn" style="background-color: #B89874;border:none;padding:10px"> Salary </a>
                         </div>
                     </div>
                     <div class="col-md-8 offset-md-6" style="margin-top: 10px;display: none;" id="pengeluaran-gaji-minggu-div">
@@ -99,7 +99,7 @@
                                 <p>Pengeluaran Gaji Karyawan Minggu </p>
                             </label>
                             <div class="col-sm-5">
-                                <p>:&nbsp;Rp. <span id="data-content-pengeluaran-minggu"></span></p>
+                                <p>:&nbsp;<span id="data-content-pengeluaran-minggu" style="margin-left:40px"></span></p>
                             </div>
                             <hr class="col-md-5" >
                         </div>
@@ -110,7 +110,17 @@
                                 <p>Pengeluaran Gaji Karyawan Bulan</p>
                             </label>
                             <div class="col-sm-5">
-                                <p>:&nbsp;Rp. <span id="data-content-pengeluaran-bulan"></span></p>
+                                <p>:&nbsp;<span id="data-content-pengeluaran-bulan" style="margin-left:40px"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8 offset-md-6" style="margin-top: 10px;display: none;" id="pengeluaran-gaji-total-div">
+                        <div class="form-group row">
+                            <label for="" class="col-sm-3 col-form-label" style="margin-top: -7px;">
+                                <p>Pengeluaran Gaji Karyawan Total</p>
+                            </label>
+                            <div class="col-sm-5">
+                                <p>:&nbsp;<span id="data-content-pengeluaran-total" style="margin-left:40px"></span></p>
                             </div>
                         </div>
                     </div>
@@ -307,6 +317,8 @@
 
                 var dataLoad = "";
                 console.log(response);
+                var total_bulan=0;
+                var total_minggu=0;
 
                 if (response.length_op > 0) {
 
@@ -318,7 +330,7 @@
 
                 if (response.length_minggu > 0) {
 
-                    setMinggu(response, date, keyword, halaman, batasTampilData);
+                    total_minggu = setMinggu(response, date, keyword, halaman, batasTampilData);
 
                 } else {
                     $('.pagination-result-minggu').html("");
@@ -326,17 +338,26 @@
 
                 if (response.length_bulan > 0) {
 
-                    setBulan(response, date, keyword, halaman, batasTampilData);
+                    total_bulan = setBulan(response, date, keyword, halaman, batasTampilData);
+
 
                 } else {
                     $('.pagination-result-bulan').html("");
                 }
+
+                if (response.length_minggu > 0 && response.length_bulan > 0) {
+
+                    $("#data-content-pengeluaran-total").html("Rp. "+numberWithCommas(total_bulan+total_minggu));
+                    
+                }
+
 
                 $("#data-content-title2").html("Operational Expenses " + getMonthOnly(date));
                 $("#data-content-title").html("Operational Expenses " + getMonthOnly(date));
                 $("#penggunaan-dana-div").show();
                 $("#pengeluaran-gaji-minggu-div").show();
                 $("#pengeluaran-gaji-bulan-div").show();
+                $("#pengeluaran-gaji-total-div").show();
                 $("#data-content-div").show();
 
 
@@ -433,7 +454,9 @@
 
         $('.pagination-result-minggu').html(paginationViewHTMLMinggu(halaman, totalHalaman, create_date, keyword, batasTampilData));
         $("#data-minggu").html(dataLoad);
-        $("#data-content-pengeluaran-minggu").html(numberWithCommas(total));
+        $("#data-content-pengeluaran-minggu").html("Rp. "+numberWithCommas(total));
+
+        return total;
 
 
     }
@@ -479,7 +502,12 @@
 
         $('.pagination-result-bulan').html(paginationViewHTMLBulan(halaman, totalHalaman, create_date, keyword, batasTampilData));
         $("#data-bulan").html(dataLoad);
-        $("#data-content-pengeluaran-bulan").html(numberWithCommas(total));
+        $("#data-content-pengeluaran-bulan").html("Rp. "+numberWithCommas(total));
+
+        return total;
+
+
+        
     }
 
     function getDetailDataOperational(id_trx_opt) {

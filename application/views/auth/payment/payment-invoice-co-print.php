@@ -48,7 +48,7 @@ function dateForShow($create_date)
 
                     <div class="row">
                         <div class="col-md-4 offset-md-1" style="color:black">
-                            <a class="navbar-brand" href="index.html"><img class="img-responsive" src="<?php echo base_url() ?>/assets/client/images/img/Logo.png" alt="logo" width="200"></a>
+                            <a class="navbar-brand" href="index.html"><img class="img-responsive" src="<?php echo base_url() ?>/assets/client/images/img/Logo_Black.png" alt="logo" width="200"></a>
                             <p style="font-size: 11px;">Ruko Green Sedayu City Block J No 78
                                 <br>Cakung Timur, Jakarta Timur 17221
                                 <br>No Telephone 081212121212

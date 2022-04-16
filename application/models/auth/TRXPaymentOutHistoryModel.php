@@ -107,7 +107,7 @@ class TRXPaymentOutHistoryModel extends CI_Model
 
         if (isset($keyword) && $keyword != "") {
 
-            $query = "select po.kode,s.nama as nama,po.no_invoice,po.id_trx_po 
+            $query = "select po.kode,s.nama as nama,s.pic,s.no_hp,po.no_invoice,po.id_trx_po 
                 from trx_barang_po po, supplier s,trx_payment_po_invoice inv 
                 where s.id=po.id_supplier 
                 and inv.no_invoice = po.no_invoice
@@ -117,7 +117,7 @@ class TRXPaymentOutHistoryModel extends CI_Model
         } else {
 
             
-            $query = "select po.kode,s.nama as nama,po.no_invoice,po.id_trx_po
+            $query = "select po.kode,s.nama as nama,s.pic,s.no_hp,po.no_invoice,po.id_trx_po
                     from trx_barang_po po, supplier s,trx_payment_po_invoice inv 
                     where s.id=po.id_supplier 
                     and inv.no_invoice = po.no_invoice
@@ -135,7 +135,7 @@ class TRXPaymentOutHistoryModel extends CI_Model
 
         if (isset($keyword) && $keyword != "") {
 
-            $query = "select po.kode,s.nama as nama,po.no_invoice,po.id_trx_po 
+            $query = "select po.kode,s.nama as nama,s.pic,s.no_hp,po.no_invoice,po.id_trx_po 
                     from trx_barang_po po, supplier s,trx_payment_po_invoice inv 
                     where s.id=po.id_supplier 
                     and inv.no_invoice = po.no_invoice
@@ -143,7 +143,7 @@ class TRXPaymentOutHistoryModel extends CI_Model
 
         } else {
 
-            $query = "select po.kode,s.nama as nama,po.no_invoice,po.id_trx_po
+            $query = "select po.kode,s.nama as nama,s.pic,s.no_hp,po.no_invoice,po.id_trx_po
                     from trx_barang_po po, supplier s,trx_payment_po_invoice inv 
                     where s.id=po.id_supplier 
                     and inv.no_invoice = po.no_invoice

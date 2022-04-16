@@ -161,11 +161,11 @@ class HistoryPettyCash extends CI_Controller
         
         $dataPettyIn = $this->petty_in_model->getData($data_post['create_date'], $_POST['keyword'], $halamanAwal, $batasTampilData);
         $dataPettyInCount = $this->petty_in_model->getDataCount($data_post['create_date'], $_POST['keyword']);
-        $dataPettyInTot  = $this->petty_in_model->getSaldoByDate($_POST);
+        $dataPettyInTot  = $this->petty_in_model->getSaldoByDateDetail($_POST);
 
         $dataPettyOut = $this->petty_out_model->getData($data_post['create_date'], $_POST['keyword'], $halamanAwal, $batasTampilData);
         $dataPettyOutCount = $this->petty_out_model->getDataCount($data_post['create_date'], $_POST['keyword']);
-        $dataPettyOutTot = $this->petty_out_model->getSaldoByDate($_POST);
+        $dataPettyOutTot = $this->petty_out_model->getSaldoByDateDetail($_POST);
 
         $saldo = $this->petty_in_model->getSaldo();
         $saldo_current="";

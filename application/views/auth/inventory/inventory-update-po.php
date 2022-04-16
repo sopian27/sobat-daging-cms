@@ -223,9 +223,9 @@
                         dataLoad += "<td>";
                         dataLoad += response.data[i].quantity + " " + response.data[i].satuan
                         dataLoad += "</td>";
-                        dataLoad += '<td width="20%"><input type="text" id="harga_satuan' + i + '" name="harga_satuan[]" value="' + numberWithCommas(response.data[i].harga_satuan) + '" class="form-control-label harga-satuan" onkeypress="validate(event)"></td>'
+                        dataLoad += '<td width="20%"><input type="text" style="text-align:right;" id="harga_satuan' + i + '" name="harga_satuan[]" value="' + numberWithCommas(response.data[i].harga_satuan) + '" class="form-control-label harga-satuan" onkeypress="validate(event)"></td>'
                         dataLoad += '<td width="20%">'
-                        dataLoad += '<input type="text" name="harga_total[]" id="harga_total' + i + '"  value="' + numberWithCommas(response.data[i].harga_total) + '" class="form-control-label harga-total" onkeypress="validate(event)">'
+                        dataLoad += '<input type="text" name="harga_total[]" style="text-align:right;" id="harga_total' + i + '"  value="' + numberWithCommas(response.data[i].harga_total) + '" class="form-control-label harga-total" onkeypress="validate(event)">'
                         dataLoad += '<input type="hidden" name="quantity[]" id="quantity' + i + '" value="' + response.data[i].quantity + '" class="form-control-label">'
                         dataLoad += '<input type="hidden" name="id[]"  id="id' + i + '" value="' + response.data[i].id + '" class="form-control-label">'
                         dataLoad += '<input type="hidden" name="id_trx_po_update[]" id="id_trx_po_update' + i + '" value="' + id_trx_po_update + '" class="form-control-label">'

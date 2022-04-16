@@ -67,7 +67,7 @@ class TRXOtherIncomeModel extends CI_Model
                         from 
                             ot_income b
                         where 
-                            b.id_trx_ot like '%$keyword%' 
+                            b.keterangan like '%$keyword%' 
                         order by b.id
                             limit " . $halaman . "," . $batasTampilData;
 
@@ -78,7 +78,7 @@ class TRXOtherIncomeModel extends CI_Model
                         from 
                             ot_income b
                         where 
-                            b.id_trx_ot like '%$keyword%' 
+                            b.keterangan like '%$keyword%' 
                             and substring(b.create_date,1,6)= '" . $create_date . "' 
                         order by b.id
                             limit " . $halaman . "," . $batasTampilData;
@@ -110,7 +110,7 @@ class TRXOtherIncomeModel extends CI_Model
                         from 
                             ot_income b
                         where 
-                            b.id_trx_ot like '%$keyword%' 
+                            b.keterangan like '%$keyword%' 
                         order by b.id";
 
         } else if ($keyword != "" && $create_date != "Januari, Februari, Maret....") {
@@ -120,7 +120,7 @@ class TRXOtherIncomeModel extends CI_Model
                         from 
                             ot_income b
                         where 
-                            b.id_trx_ot like '%$keyword%' 
+                            b.keterangan like '%$keyword%' 
                             and substring(b.create_date,1,6)= '" . $create_date . "' 
                         order by b.id";
 
