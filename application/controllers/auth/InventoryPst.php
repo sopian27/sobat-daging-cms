@@ -57,15 +57,17 @@ class InventoryPst extends CI_Controller
     }
 
     public function getPstDataPusat()
-    {
+    {   
+
+        $data_post = $_POST;
 
         $batasTampilData = $_POST['batastampil'];
         $id_trx_pst = $_POST['id_trx_pst'];
         $halaman = (isset($_POST['halaman'])) ? $halaman = $_POST['halaman'] : $halaman = 1;
         $halamanAwal = ($halaman > 1) ? ($halaman * $batasTampilData) - $batasTampilData : 0;
 
-        $allDataPo = $this->pst_pusat_model->getTrxPusat($id_trx_pst, $halamanAwal, $batasTampilData);
-        $allDataPoCounter = $this->pst_pusat_model->getTrxPusatCount($id_trx_pst);
+        $allDataPo = $this->pst_pusat_model->getTrxPusat($id_trx_pst,$data_post['create_date'], $_POST['keyword'], $halamanAwal, $batasTampilData);
+        $allDataPoCounter = $this->pst_pusat_model->getTrxPusatCount($id_trx_pst,$data_post['create_date'], $_POST['keyword']);
         $output = array(
             "length" => count($allDataPo),
             "data" => $allDataPo,
@@ -79,13 +81,14 @@ class InventoryPst extends CI_Controller
     public function getPstDataSobat()
     {
 
+        $data_post = $_POST;
         $batasTampilData = $_POST['batastampil'];
         $id_trx_sobat = $_POST['id_trx_sobat'];
         $halaman = (isset($_POST['halaman'])) ? $halaman = $_POST['halaman'] : $halaman = 1;
         $halamanAwal = ($halaman > 1) ? ($halaman * $batasTampilData) - $batasTampilData : 0;
 
-        $allDataPo = $this->pst_sobat_model->getTrxSobat($id_trx_sobat, $halamanAwal, $batasTampilData);
-        $allDataPoCounter = $this->pst_sobat_model->getTrxSobatCount($id_trx_sobat);
+        $allDataPo = $this->pst_sobat_model->getTrxSobatNew($id_trx_sobat,$data_post['create_date'], $_POST['keyword'], $halamanAwal, $batasTampilData);
+        $allDataPoCounter = $this->pst_sobat_model->getTrxSobatNewCount($id_trx_sobat,$data_post['create_date'], $_POST['keyword']);
         $output = array(
             "length" => count($allDataPo),
             "data" => $allDataPo,
@@ -246,9 +249,9 @@ class InventoryPst extends CI_Controller
     public function inventorySaveSupplier($data_post){
 
         $where_sup = array(
-            "nama" => trim($data_post['nama']),
-            "pic" => trim($data_post['pic']),
-            "no_hp" => trim($data_post['no_hp'])
+            strtolower("nama") => strtolower(trim($data_post['nama_supplier'])),
+            strtolower("pic") => strtolower(trim($data_post['pic'])),
+            strtolower("no_hp") => strtolower(trim($data_post['no_hp']))
         );
 
         $data_sup = array(
@@ -269,6 +272,25 @@ class InventoryPst extends CI_Controller
 
         return $getSupplierId;
 
+    }
+
+
+    public function checkQueueData(){
+        $where = array(
+            "status"        => '0',
+        );
+
+        $data = $this->pst_pusat_model->getWhere($where);
+        echo json_encode($data);
+    }
+
+    public function checkQueueDataSobat(){
+        $where = array(
+            "status"        => '0',
+        );
+
+        $data = $this->pst_sobat_model->getWhere($where);
+        echo json_encode($data);
     }
     
 }

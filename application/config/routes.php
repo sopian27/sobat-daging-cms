@@ -71,6 +71,7 @@ $route['history-petty-cash'] = 'auth/HistoryPettyCash';
 $route['history-petty-cash/getdata'] = 'auth/HistoryPettyCash/getData';
 $route['history-petty-cash/loaddata'] = 'auth/HistoryPettyCash/loadData';
 $route['history-petty-cash/getdatahistory'] = 'auth/HistoryPettyCash/getDataHistory';
+$route['history-petty-cash/download'] = 'auth/HistoryPettyCash/downloadFile';
 
 /* expenses */
 $route['expenses'] = 'auth/OperationalExpenses';
@@ -229,6 +230,7 @@ $route['inventory-mutasibarang/insert-mutasi'] = 'auth/InventoryMutasi/insertMut
 $route['inventory-mutasibarang/loadpo'] = 'auth/InventoryMutasi/loadPo';
 $route['inventory-mutasibarang/clear-all'] = 'auth/InventoryMutasi/clearAll';
 $route['inventory-mutasibarang/update-mutasi'] = 'auth/InventoryMutasi/updateMutasi';
+$route['inventory-mutasibarang/check_queue'] = 'auth/InventoryMutasi/checkQueueData';
 
 /* inventory-history*/
 $route['inventory-historypo'] = 'auth/InventoryHistory';
@@ -248,4 +250,6 @@ $route['inventory-updatestockpst/clear-all-sobat'] = 'auth/InventoryPst/clearAll
 $route['inventory-updatestockpst/confirmsobat'] = 'auth/InventoryPst/confirmDataSobat';
 $route['inventory/save-pst'] = 'auth/inventory/inventorySavePSTMenu';
 $route['inventory-pst/save'] = 'auth/InventoryPst/saveInventoryPst';
+$route['inventory-updatestockpst/check_queue'] = 'auth/InventoryPst/checkQueueData';
+$route['inventory-updatestockpst/check_queue_sbt'] = 'auth/InventoryPst/checkQueueDataSobat';
 

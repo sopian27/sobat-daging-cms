@@ -117,6 +117,7 @@
                                     <th> Kode </th>
                                     <th> Tambahan Saldo</th>
                                     <th> Keterangan </th>
+                                    <th> Bukti </th>
                                 </tr>
                             </thead>
                             <tbody id="data-petty-in">
@@ -138,6 +139,7 @@
                                     <th> Kode </th>
                                     <th> Tambahan Saldo</th>
                                     <th> Keterangan </th>
+                                    <th> Bukti </th>
                                 </tr>
                             </thead>
                             <tbody id="data-petty-out">
@@ -151,6 +153,9 @@
         </div>
     </div>
     <div style="margin-top: 20px;"></div>
+    <form id="form-download" name="form-download" action="<?= site_url() ?>/history-petty-cash/download" target="blank" method="post">
+        <input type="hidden" name="filename" id="filename" />
+    </form>
 </div>
 <script>
     $(document).ready(function() {
@@ -591,6 +596,10 @@
                 ket = response.data_in[i].keterangan;
             }
 
+            var functionOnclick ="";
+            
+            if( response.data_in[i].upload_bukti != "")
+                functionOnclick = 'getDetailDataOther("' + response.data_in[i].upload_bukti + '")';
 
             dataLoadIn += "<tr>";
             dataLoadIn += "<td >";
@@ -602,6 +611,14 @@
             dataLoadIn += "<td>";
             dataLoadIn += ket;
             dataLoadIn += "</td>";
+            dataLoadIn += "<td>";
+            if( response.data_in[i].upload_bukti != ""){
+                dataLoadIn += "<span>view </span><a href='#' onclick=" + functionOnclick + " class='btn btn-payment-md'><span></span></a>";
+            }else{
+                dataLoadIn += "<span>-</span>";
+            }
+            
+            dataLoadIn += "</td>";
             dataLoadIn += "</tr>";
 
         }
@@ -612,6 +629,12 @@
         $('.pagination-result-petty-in').html(paginationViewHTMLIn(halaman, totalHalaman, create_date, "", batasTampilData));
         $("#data-petty-in").html(dataLoadIn);
 
+    }
+
+
+    function getDetailDataOther(upload_bukti) {
+        $("#filename").val(upload_bukti);
+        $("#form-download").submit();
     }
 
 
@@ -630,6 +653,11 @@
                 ket = response.data_out[i].keterangan;
             }
 
+            var functionOnclick="";
+
+            if( response.data_out[i].upload_bukti != "")
+                functionOnclick = 'getDetailDataOther("' + response.data_out[i].upload_bukti + '")';
+
 
             dataLoadOut += "<tr>";
             dataLoadOut += "<td >";
@@ -640,6 +668,14 @@
             dataLoadOut += "</td>";
             dataLoadOut += "<td>";
             dataLoadOut += ket;
+            dataLoadOut += "</td>";
+            dataLoadOut += "<td>";
+            if( response.data_out[i].upload_bukti != ""){
+                dataLoadOut += "<span>view </span><a href='#' onclick=" + functionOnclick + " class='btn btn-payment-md'><span></span></a>";
+            }else{
+                dataLoadOut += "<span>-</span>";
+            }
+           
             dataLoadOut += "</td>";
             dataLoadOut += "</tr>";
 

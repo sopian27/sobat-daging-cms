@@ -185,9 +185,9 @@
 
                 $("#mutasi-masuk-title").html("Data Mutasi Masuk " + getMonthOnly(create_date))
                 if (response.length_in > 0) {
-                   
+
                     setMutasiMasuk(response, create_date, keyword, halaman, batasTampilData);
-                  
+
                 } else {
                     $("#mutasi-masuk-data").html("");
                     $('.pagination-result-mutasi-masuk').html("");
@@ -195,9 +195,9 @@
 
                 $("#mutasi-keluar-title").html("Data Mutasi Keluar " + getMonthOnly(create_date))
                 if (response.length_out > 0) {
-                   
+
                     setMutasiKeluar(response, create_date, keyword, halaman, batasTampilData);
-                  
+
                 } else {
                     $("#mutasi-keluar-data").html("");
                     $('.pagination-result-mutasi-keluar').html("");
@@ -215,7 +215,7 @@
     function setMutasiMasuk(response, create_date, keyword, halaman, batasTampilData) {
 
         dataLoad = "";
-
+        var nama_supplier="";
         for (let i = 0; i < response.length_in; i++) {
 
             var isFinished = "";
@@ -373,7 +373,7 @@
             month = "Desember";
         }
 
-        console.log("month"+month);
+        console.log("month" + month);
 
         return month;
     }

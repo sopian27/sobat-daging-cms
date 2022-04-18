@@ -27,6 +27,19 @@
                     <input class="form-control-paging-date" type="text" id="create_date" name="create_date">
                 </div>
             </div>
+            <div class="col-md-2 offset-md-9" style="margin-top:10px;display:none" id="div-status">
+                <div class="input-group">
+                    <span class="input-group-append">
+                        <button class="btn btn-outline-light" type="button">
+                            <span>sort</span>
+                        </button>
+                    </span>
+                    <select class="btn btn-outline-light form" name="status" id="status">
+                        <option value="p">Processed</option>
+                        <option value="f">Finish</option>
+                    </select>
+                </div>
+            </div>
         </div>
         <div class="row" style="margin-top: 90px;display:none" id="content-header">
             <div class="col-md-3 offset-md-1">
@@ -170,6 +183,15 @@
 
                 var dataLoad = "";
                 var total = 0;
+                var nama_supplier="";
+                var no_invoice="";
+                var tgl_masuk="";
+                var tgl_invoice="";
+                var tgl_payment="";
+                var nominal_pembayaran="";
+                var sisa_pembayaran="";
+                var status="";
+
                 console.log(response);
 
                 if (response.length > 0) {
@@ -189,12 +211,23 @@
                             tgl_payment = dateForShow(response.rptobj[i].tgl_payment);
                         }
 
+                       
                         dataLoad += "<tr>";
                         dataLoad += "<td >";
-                        dataLoad += response.rptobj[i].nama.toUpperCase();
+                        //dataLoad += response.rptobj[i].nama.toUpperCase();
+                        if(i == 0 ){
+                            dataLoad +=response.rptobj[i].nama.toUpperCase();
+                            nama_supplier = response.rptobj[i].nama;
+                        }else if(i > 0 && nama_supplier.trim()===response.rptobj[i].nama.trim()){
+                            dataLoad += "";
+                        }else if(i > 0 && nama_supplier != response.rptobj[i].nama){
+                            dataLoad +=response.rptobj[i].nama.toUpperCase();
+                            nama_supplier = response.rptobj[i].nama;
+                        }
+
                         dataLoad += "</td>";
                         dataLoad += "<td >";
-                        dataLoad += response.rptobj[i].nama_barang;
+                        dataLoad +=response.rptobj[i].nama_barang;
                         dataLoad += "</td>";
                         dataLoad += "<td >";
                         dataLoad += response.rptobj[i].kode;
@@ -209,7 +242,16 @@
                         dataLoad += numberWithCommas("Rp. " + response.rptobj[i].harga_total);
                         dataLoad += "</td>";
                         dataLoad += "<td >";
-                        dataLoad += response.rptobj[i].no_invoice;
+                        //dataLoad += response.rptobj[i].no_invoice;
+                        if(i == 0 ){
+                            dataLoad +=response.rptobj[i].no_invoice.toUpperCase();
+                            no_invoice = response.rptobj[i].no_invoice;
+                        }else if(i > 0 && no_invoice.trim()===response.rptobj[i].no_invoice.trim()){
+                            dataLoad += "";
+                        }else if(i > 0 && no_invoice != response.rptobj[i].no_invoice){
+                            dataLoad +=response.rptobj[i].no_invoice.toUpperCase();
+                            no_invoice = response.rptobj[i].no_invoice;
+                        }
                         dataLoad += "</td>";
                         dataLoad += "<td >";
                         dataLoad += dateForShow(response.rptobj[i].tgl_masuk);

@@ -54,7 +54,8 @@ class ArModel extends CI_Model
                             po.no_surat_jalan = inv.no_surat_jalan 
                             and b.id = po.id_barang 
                             and po.id_pelanggan = p.id
-                            and po.no_invoice= '" . $keyword . "'
+                            and po.no_invoice= '" . $keyword . "' 
+                            or p.nama_pelanggan ='".$keyword."'
                             limit " . $halaman . "," . $batasTampilData;
                             
         } else if ($keyword != "" && $create_date != "Januari, Februari, Maret....") {
@@ -86,7 +87,8 @@ class ArModel extends CI_Model
                             po.no_surat_jalan = inv.no_surat_jalan 
                             and b.id = po.id_barang 
                             and po.id_pelanggan = p.id
-                            and po.no_invoice= '" . $keyword . "'
+                            and po.no_invoice= '" . $keyword . "' 
+                            or p.nama_pelanggan ='".$keyword."'
                             and substring(inv.create_date, 1, 6) = '" . $create_date . "'
                             limit " . $halaman . "," . $batasTampilData;
         } else {
@@ -160,7 +162,9 @@ class ArModel extends CI_Model
                             po.no_surat_jalan = inv.no_surat_jalan 
                             and b.id = po.id_barang 
                             and po.id_pelanggan = p.id
-                            and po.no_invoice= '" . $keyword . "'";
+                            and po.no_invoice= '" . $keyword . "' 
+                            or p.nama_pelanggan ='".$keyword."'";
+
         } else if ($keyword != "" && $create_date != "Januari, Februari, Maret....") {
 
             $query = "  select 
@@ -190,7 +194,8 @@ class ArModel extends CI_Model
                             po.no_surat_jalan = inv.no_surat_jalan 
                             and b.id = po.id_barang 
                             and po.id_pelanggan = p.id
-                            and po.no_invoice= '" . $keyword . "'
+                            and po.no_invoice= '" . $keyword . "' 
+                            or p.nama_pelanggan ='".$keyword."'
                             and substring(inv.create_date, 1, 6) = '" . $create_date . "'";
         } else {
 
@@ -234,10 +239,22 @@ class ArModel extends CI_Model
 
         if (isset($keyword) && $keyword != "") {
 
-            $query = " SELECT sum(total_tagihan_history) - sum(total_tagihan) as nominal,
-                    sum(total_tagihan_history) as total_tagihan FROM `trx_payment_co_invoice` co
-                    where 
-                    co.no_surat_jalan in(select no_surat_jalan from trx_order_po where no_invoice ='$keyword')";
+            if(substr($keyword,0,3)=="INV"){
+
+                $query = " SELECT sum(total_tagihan_history) - sum(total_tagihan) as nominal,
+                        sum(total_tagihan_history) as total_tagihan FROM `trx_payment_co_invoice` co
+                        where 
+                        co.no_surat_jalan in(select no_surat_jalan from trx_order_po where no_invoice ='$keyword')";
+
+            }else{
+
+                $query = " SELECT sum(total_tagihan_history) - sum(total_tagihan) as nominal,
+                        sum(total_tagihan_history) as total_tagihan FROM `trx_payment_co_invoice` co
+                        where 
+                        co.no_surat_jalan in(select no_surat_jalan from trx_order_po po,pelanggan p where p.id=po.id_pelanggan  and p.nama_pelanggan='$keyword')";
+
+            }
+
         } else {
 
             $query = " SELECT sum(total_tagihan_history) - sum(total_tagihan) as nominal,

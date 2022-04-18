@@ -34,7 +34,8 @@ class ApModel extends CI_Model
                             po.no_invoice = inv.no_invoice 
                             and b.kode = po.kode 
                             and s.id = po.id_supplier 
-                            and inv.no_invoice = '".$keyword."'
+                            and inv.no_invoice = '".$keyword."' 
+                            or s.nama = '".$keyword."'
                             limit " . $halaman . "," . $batasTampilData;
 
         } else if ($keyword != "" && $create_date != "Januari, Februari, Maret....") {
@@ -64,7 +65,8 @@ class ApModel extends CI_Model
                             po.no_invoice = inv.no_invoice 
                             and b.kode = po.kode 
                             and s.id = po.id_supplier 
-                            and inv.no_invoice = '".$keyword."'
+                            and inv.no_invoice = '".$keyword."' 
+                            or s.nama = '".$keyword."'
                             and substring(inv.create_date, 1, 6) = '".$create_date."'
                             limit " . $halaman . "," . $batasTampilData;
 
@@ -137,7 +139,8 @@ class ApModel extends CI_Model
                             po.no_invoice = inv.no_invoice 
                             and b.kode = po.kode 
                             and s.id = po.id_supplier 
-                            and inv.no_invoice = '".$keyword."'";
+                            and inv.no_invoice = '".$keyword."' 
+                            or s.nama = '".$keyword."'";
 
         } else if ($keyword != "" && $create_date != "Januari, Februari, Maret....") {
 
@@ -166,7 +169,8 @@ class ApModel extends CI_Model
                             po.no_invoice = inv.no_invoice 
                             and b.kode = po.kode 
                             and s.id = po.id_supplier 
-                            and inv.no_invoice = '".$keyword."'
+                            and inv.no_invoice = '".$keyword."' 
+                            or s.nama = '".$keyword."'
                             and substring(inv.create_date, 1, 6) = '".$create_date."'";
 
 
@@ -211,10 +215,19 @@ class ApModel extends CI_Model
 
         if (isset($keyword) && $keyword != "") {
 
-            $query = " SELECT sum(total_tagihan_history) - sum(total_tagihan) as nominal,
-                    sum(total_tagihan_history)as total_tagihan FROM `trx_payment_po_invoice`
-                    where no_invoice ='$keyword' /*GROUP by id_trx_payment*/";
+            if(substr($keyword,0,3)=="INV"){
 
+                $query = " SELECT sum(total_tagihan_history) - sum(total_tagihan) as nominal,
+                        sum(total_tagihan_history)as total_tagihan FROM `trx_payment_po_invoice`
+                        where no_invoice ='$keyword'/*GROUP by id_trx_payment*/";
+
+            }else{
+
+                $query = " SELECT sum(total_tagihan_history) - sum(total_tagihan) as nominal,
+                        sum(total_tagihan_history)as total_tagihan FROM `trx_payment_po_invoice`
+                        where no_invoice in(select po.no_invoice from trx_barang_po po, supplier s where s.id=po.id_supplier and s.nama='$keyword')/*GROUP by id_trx_payment*/";
+            }
+         
         } else {
 
             $query = " SELECT sum(total_tagihan_history) - sum(total_tagihan) as nominal,

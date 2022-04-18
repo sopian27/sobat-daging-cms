@@ -9,6 +9,7 @@ class HistoryPettyCash extends CI_Controller
         date_default_timezone_set('Asia/Jakarta');
         $this->load->model('auth/TRXPettyInModel','petty_in_model');    
         $this->load->model('auth/TRXPettyOutModel','petty_out_model');
+        $this->load->helper('download');
             
 
     } 
@@ -190,5 +191,14 @@ class HistoryPettyCash extends CI_Controller
 
 
         echo json_encode($output);
+    }
+
+    
+    function downloadFile()
+    {
+
+        $data_post = $_POST;
+        $file = "uploads/".$data_post['filename'];
+        force_download($file,NULL);
     }
 }

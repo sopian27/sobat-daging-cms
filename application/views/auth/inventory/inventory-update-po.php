@@ -11,7 +11,7 @@
                 <div class="input-group">
                     <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search" onkeyup="searchData()">
                     <span class="input-group-append">
-                        <button class="btn btn-outline-light" type="button" >
+                        <button class="btn btn-outline-light" type="button">
                             <i class="fa fa-search"></i>
                         </button>
                     </span>
@@ -230,6 +230,7 @@
                         dataLoad += '<input type="hidden" name="id[]"  id="id' + i + '" value="' + response.data[i].id + '" class="form-control-label">'
                         dataLoad += '<input type="hidden" name="id_trx_po_update[]" id="id_trx_po_update' + i + '" value="' + id_trx_po_update + '" class="form-control-label">'
                         dataLoad += '<input type="hidden" name="id_trx_po[]" id="id_trx_po" value="' + id_trx_po + '" class="form-control-label">'
+                        dataLoad += '<input type="hidden" name="status[]" id="status" value="' + response.data[i].status + '" class="form-control-label">'
                         dataLoad += '</td>'
                         dataLoad += "<td>";
 
@@ -262,7 +263,7 @@
                     $("#tbody-table-data").html(dataLoad);
                     $("#data-trigger").hide();
                     $("#div-inventory-update-detail").show();
-                }else{
+                } else {
                     $('.pagination-result_trx_detail').html("");
                 }
             },
@@ -320,11 +321,15 @@
         var quantity = document.getElementsByName('quantity[]');
         var harga_total = document.getElementsByName('harga_total[]');
         var harga_satuan = document.getElementsByName('harga_satuan[]');
+        var status = document.getElementsByName('status[]');
         var result = 0;
         //var resultTot = 0;
         var harga_total_hide = $("#harga-total-sum-hide").val();
         var k = "";
+
+
         for (var i = 0; i < quantity.length; i++) {
+
             var a = quantity[i];
             k = k + "array[" + i + "].value= " +
                 a.value + " ";
@@ -335,7 +340,7 @@
 
             if (harga_satuan[index].value > 0) {
                 result = parseInt(value) * parseInt(harga_satuan[index].value);
-                harga_total[index].value = numberWithCommas(result);
+                harga_total[index].value = numberWithCommas(result);                
             }
 
             if (harga_satuan[index].value == "") {
@@ -415,7 +420,7 @@
                 },
                 success: function(response) {
                     alert("success insert");
-                    location.href = "<?= site_url()?>/inventory-updatepo";
+                    location.href = "<?= site_url() ?>/inventory-updatepo";
                 },
                 error: function(response) {
                     console.log(response);
@@ -494,7 +499,7 @@
             },
             success: function(response) {
                 alert("clear all");
-                location.href = "<?= site_url()?>/inventory-updatepo";
+                location.href = "<?= site_url() ?>/inventory-updatepo";
             },
             error: function(response) {
                 console.log(response);

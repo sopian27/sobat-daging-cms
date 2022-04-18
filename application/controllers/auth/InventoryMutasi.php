@@ -154,7 +154,7 @@ class InventoryMutasi extends CI_Controller
 
         $post = $_POST;
         $id_trx_mutasi   = $post['id_trx_mutasi'];
-        $where = array("id_trx_mutasi" => $id_trx_mutasi);
+        $where = array("status" => '0');
 
         $dataUpdate = array(
             "status"            =>  "1"
@@ -178,5 +178,14 @@ class InventoryMutasi extends CI_Controller
         $this->trx_mutasi_model->deleteData($where);
 
         echo json_encode("success");
+    }
+
+    public function checkQueueData(){
+        $where = array(
+            "status"        => '0',
+        );
+
+        $data = $this->trx_mutasi_model->getWhere($where);
+        echo json_encode($data);
     }
 }

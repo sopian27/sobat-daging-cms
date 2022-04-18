@@ -122,13 +122,13 @@
     $(document).on('click', '.add', function() {
         var dataload = "";
         dataload += '<tr> '
-        //dataload += '    <td class="data" data-dat="kode"><input type="text" name="kode" value="" class="form-control "></td> '
-        dataload += '    <td class="data " data-dat="kode"><input type="text" name="kode[]" value="" class="form-control data-kode"></td> '
-        //dataload += '    <td class="data" data-dat="nama_barang"><input type="text" name="nama_barang" value="" class="form-control "></td> '
-        dataload += '    <td class="data" data-dat="nama_barang" width="25%">'
-        dataload += '       <input type="text" name="nama_barang[]" value="" class="form-control ">'
-        dataload += '       <input type="hidden" name="id_barang[]" class="form-control ">'
-        dataload += '    </td>'
+        dataload += '    <td class="data" data-dat="kode"><input type="text" name="kode" value="" class="form-control "></td> '
+        //dataload += '    <td class="data" data-dat="kode"><input type="text" name="kode[]" value="" class="form-control data-kode"></td> '
+        dataload += '    <td class="data" data-dat="nama_barang"><input type="text" name="nama_barang" value="" class="form-control "></td> '
+        // dataload += '    <td class="data" data-dat="nama_barang" width="25%">'
+        //dataload += '       <input type="text" name="nama_barang[]" value="" class="form-control ">'
+        //dataload += '       <input type="hidden" name="id_barang[]" class="form-control ">'
+        //dataload += '    </td>'
         dataload += '    <td class="data quantity" data-dat="quantity"><input type="number" step="0.01" name="quantity" value="" class="form-control " onkeypress="validate(event)"></td> '
         dataload += '    <td class="data" data-dat="satuan">'
         dataload += '      <select name="satuan" id="" class="form-control">'
@@ -190,28 +190,60 @@
             return false;
         }
 
-        $.ajax({
-            url: '<?= site_url() ?>/inventory/save-supplier',
-            data: {
-                'nama_supplier': supplier_name,
-                'pic': pic,
-                'no_hp': no_hp
-            },
-            dataType: 'json',
-            method: 'post',
-            success: function(data) {
+        const dataTable = document.getElementById('tbody-table-data').querySelectorAll('tr')
+        const dataTableLength = dataTable.length;
+        let submit = true;
+        var element_select = "";
 
-                if (data.result == "ok") {
-                    alert("berhasil menambahkan data po");
-                    confirmData(data.id);
+        for (let i = 0; i < dataTableLength; i++) {
+            const element = dataTable[i];
+            const childElement = element.children;
+
+            for (let j = 0; j < childElement.length; j++) {
+                const element1 = childElement[j];
+                const element1Chlid = element1.children;
+
+                for (let k = 0; k < element1Chlid.length; k++) {
+                    const element2 = element1Chlid[k];
+                    element_select = element2.name
+                    content_select = element2.value
                 }
-            },
-            error: function(data) {
-                console.log("Failed");
-                console.log(data);
-            }
 
-        });
+                if (content_select == null || content_select == "") {
+                    alert("data barang " + content_select + " tidak boleh kosong");
+                    submit = false;
+                    break;
+
+                }
+            }
+        }
+
+        if (submit === true) {
+
+            $.ajax({
+                url: '<?= site_url() ?>/inventory/save-supplier',
+                data: {
+                    'nama_supplier': supplier_name,
+                    'pic': pic,
+                    'no_hp': no_hp
+                },
+                dataType: 'json',
+                method: 'post',
+                success: function(data) {
+
+                    if (data.result == "ok") {
+                        alert("berhasil menambahkan data po");
+                        confirmData(data.id);
+                    }
+                },
+                error: function(data) {
+                    console.log("Failed");
+                    console.log(data);
+                }
+
+            });
+
+        }
     }
 
     function confirmData(id_supplier) {
@@ -327,6 +359,8 @@
     function clearAllData() {
         $('#tbody-table-data').empty();
         $("#purchase_from").val("");
+        $("#pic").val("");
+        $("#no_hp").val("");
     }
 
     function dataPagingBarang() {
@@ -534,7 +568,7 @@
                 kode: value
             },
             success: function(data) {
-                 
+
                 if (data.length > 0) {
                     nama_barang[index].value = data[0]["nama_barang"];
                 }

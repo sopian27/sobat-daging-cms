@@ -123,7 +123,7 @@
 
         var batasTampilData = 10;
         var halaman = $('#halaman').val();
-        loadData("",halaman, batasTampilData);
+        loadData("", halaman, batasTampilData);
     }
 
     function searchData() {
@@ -132,14 +132,14 @@
         $("#halaman").val("1");
         var halaman = $('#halaman').val();
         var keyword = $("#search").val();
-        loadData(keyword, halaman,batasTampilData);
+        loadData(keyword, halaman, batasTampilData);
 
     }
 
 
-    function loadData(keyword,halaman, batasTampilData) {
+    function loadData(keyword, halaman, batasTampilData) {
 
-        console.log("halaman:"+halaman);
+        console.log("halaman:" + halaman);
 
         $.ajax({
             url: '<?= site_url() ?>/inventory-mutasibarang/loadpo',
@@ -171,16 +171,16 @@
                         dataLoad += data.data[i].nama_barang
                         dataLoad += "</td>";
                         dataLoad += '<td>';
-                        dataLoad += data.data[i].quantity_pusat;
+                        dataLoad += parseFloat(data.data[i].quantity_pusat).toFixed(2);
                         dataLoad += "</td>";
                         dataLoad += "<td width='5%'>";
                         dataLoad += data.data[i].satuan
                         dataLoad += "</td>";
 
                         if (data.data[i].status == '0') {
-                            dataLoad += '<td width="15%"><input type="text" name="quantity_mutasi[]" id="quantity_mutasi' + i + '"  value="' + quantityMutasi + '" class="form-control-label quantity-check" onkeypress="validate(event)"></td>'
+                            dataLoad += '<td width="15%"><input type="number" step="0.01" name="quantity_mutasi[]" id="quantity_mutasi' + i + '"  value="' + quantityMutasi + '" class="form-control-label quantity-check" onkeypress="validate(event)"></td>'
                         } else {
-                            dataLoad += '<td width="15%"><input type="text" name="quantity_mutasi[]" id="quantity_mutasi' + i + '"  class="form-control-label quantity-check" onkeypress="validate(event)"></td>'
+                            dataLoad += '<td width="15%"><input type="number" step="0.01" name="quantity_mutasi[]" id="quantity_mutasi' + i + '"  class="form-control-label quantity-check" onkeypress="validate(event)"></td>'
                         }
 
 
@@ -189,6 +189,7 @@
                         dataLoad += '<input type="hidden" name="id[]" id="id' + i + '" value="' + data.data[i].id + '" class="form-control-label">'
                         dataLoad += '<input type="hidden" name="kode[]" id="kode' + i + '" value="' + data.data[i].kode + '" class="form-control-label">'
                         dataLoad += '<input type="hidden" name="quantity_pusat[]" id="quantity_pusat' + i + '" value="' + data.data[i].quantity_pusat + '" class="form-control-label">'
+                        dataLoad += '<input type="hidden" name="status[]" id="status' + i + '" value="' + data.data[i].status + '" class="form-control-label">'
                         dataLoad += '</td>'
                         dataLoad += "<td>";
 
@@ -207,7 +208,7 @@
                     var totalDataBarang = data.length_paging;
                     var totalHalaman = Math.ceil(totalDataBarang / batasTampilData);
 
-                    $('.pagination-result').html(paginationViewHTML(keyword,halaman, totalHalaman,batasTampilData))
+                    $('.pagination-result').html(paginationViewHTML(keyword, halaman, totalHalaman, batasTampilData))
                     $("#tbody-table-data").html(dataLoad);
                     $("#data-trigger").hide();
                     $("#div-inventory-update-detail").show();
@@ -287,15 +288,40 @@
     function confirmData() {
 
         $.ajax({
-            url: '<?= site_url() ?>/inventory-mutasibarang/update-mutasi',
+            url: '<?= site_url() ?>/inventory-mutasibarang/check_queue',
             method: 'post',
             dataType: 'json',
-            data: {
-                "id_trx_mutasi": "<?= $id_trx_mutasi ?>",
-            },
             success: function(response) {
-                alert("success mutasi barang");
-                location.href = "<?= site_url() ?>/inventory-mutasibarang";
+
+                console.log(response);
+
+                if (response.length > 0) {
+
+                    $.ajax({
+                        url: '<?= site_url() ?>/inventory-mutasibarang/update-mutasi',
+                        method: 'post',
+                        dataType: 'json',
+                        data: {
+                            "id_trx_mutasi": "<?= $id_trx_mutasi ?>",
+                        },
+                        success: function(response) {
+                            alert("success mutasi barang");
+                            location.href = "<?= site_url() ?>/inventory-mutasibarang";
+
+                        },
+                        error: function(response) {
+                            console.log(response);
+                        }
+
+                    });
+                } else {
+
+                        alert("quantity mutasi tidak boleh kosong");
+                    
+
+                }
+
+
 
             },
             error: function(response) {
@@ -303,6 +329,8 @@
             }
 
         });
+
+
     }
 
     /*
@@ -418,7 +446,7 @@
         return false;
     }
 
-    function paginationViewHTML(keyword,halaman, totalHalaman,batasTampilData) { //halaman 1 total 6
+    function paginationViewHTML(keyword, halaman, totalHalaman, batasTampilData) { //halaman 1 total 6
 
         var data_load = '';
         prev = parseInt(halaman) - 1;
@@ -470,9 +498,9 @@
         return data_load;
     }
 
-    function dataPagingBarangHREFTrx(keyword,halaman,batasTampilData) {
+    function dataPagingBarangHREFTrx(keyword, halaman, batasTampilData) {
         $('#halaman').val(halaman)
-        loadData(keyword,halaman, batasTampilData);
+        loadData(keyword, halaman, batasTampilData);
     }
 
     function getDataBarangPagination(halaman, keyword, batasTampilData) {

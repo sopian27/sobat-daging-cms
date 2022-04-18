@@ -203,7 +203,7 @@
             <div class="Column">
                 <div class="row offset-top">
                     <div class="bank">
-                        <h4 style="text-align: center;">
+                        <h4 style="text-align: center;margin-top:10px" >
                             <?php echo "BANK " . strtoupper($data[0]->bank_tujuan) . "- " .
                                 strtoupper($data[0]->atas_nama) . "<br> A/N " . strtoupper($data[0]->no_rekening);
                             ?>

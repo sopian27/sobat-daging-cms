@@ -29,10 +29,10 @@
                     <!-- chat and account button begin -->
                     <ul class="top-button ptb10">
                         <li>
-                            <a href="#" class="btn btn-small btn-border btn-green customer-support"><i class="fa fa-phone"></i>(+62) 895-1687-2777</a>
+                            <a href="#" class="btn btn-small  btn-green customer-support"><img class="img-responsive" src="<?php echo base_url()?>/assets/client/images/img/phone.png" width="200" alt="logo"></a>
                         </li>
                         <li>
-                            <a class="btn btn-small btn-border btn-green" href="#"><i class="fa fa-envelope"></i>sobatdaging@gmail.com</a>
+                            <a class="btn btn-small  btn-green" href="#"><i class="fa fa-envelope"></i>sobatdaging@gmail.com</a>
                         </li>
                     </ul>
                     <!-- chat and account button end -->
@@ -47,7 +47,7 @@
         <nav class="navbar navbar-default navbar-static-top fluid_header centered transparent">
             <div class="container" style="width: 1600px;">
 
-                <!-- Logo -->
+                <!-- Logo -->e
                 <div class="col-md-2 col-sm-3 col-xs-3">
                     <a class="navbar-brand" href="index.html"><img class="img-responsive" src="<?php echo base_url()?>/assets/client/images/img/Logo.png" width="200" alt="logo"></a>
                     <!-- INSERT YOUR LOGO HERE -->
@@ -99,7 +99,7 @@
                             <h3 style="color:#B89874">Menyediakan Daging Pilihan Keluarga Nusantara.</h3>
                             <br>
                             <div>
-                                <a href="#" class="btn btn-border btn-blue btn-sobat-lg" onclick="show();">Order Now</a>
+                                <a href="#" class="btn  btn-blue btn-sobat-lg" onclick="show();">Order Now</a>
                                  <!-- start of blog post 1 -->
                                 <!-- End of blog post 1 -->
                             </div>
@@ -117,8 +117,8 @@
                                                     Terima kasih, Enjoy your day !
                                                 </p>
                                                 <br>
-                                                <a href="#" class="btn btn-border btn-blue btn-sobat-md">TOKOPEDIA</a>
-                                                <a href="#" class="btn btn-border btn-blue btn-sobat-md">WHATSAPP</a>
+                                                <a href="#" class="btn  btn-blue btn-sobat-md">TOKOPEDIA</a>
+                                                <a href="#" class="btn  btn-blue btn-sobat-md">WHATSAPP</a>
                                                 <br><br><br>
                                                 <p class="nomargin pb20 text-left" style="color:white"> * Toko kami buka setiap hari senin-sabtu, tanyakan stock dan list harga secara langsung
                                                     melalui link diatas.
@@ -160,7 +160,7 @@
                             <p style="color:white;font-size:20px">Tidak menemukan product yang anda cari? klik order now untuk <br>
                             informasi product dan layanan kami.</p>
                             <div>
-                                <a href="#" class="btn btn-border btn-blue btn-sobat-lg" onclick="show();">Order Now</a>
+                                <a href="#" class="btn  btn-blue btn-sobat-lg" id="btn-order-show">Order Now</a>
                             </div>
                         </div>
                     </div>

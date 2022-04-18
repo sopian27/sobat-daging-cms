@@ -51,12 +51,13 @@ class Inventory extends CI_Controller
 
     public function inventorySaveSupplier(){
 
-        $data_post = $_POST;
 
+        $data_post = $_POST;
+        
         $where_sup = array(
-            "nama" => trim($data_post['nama_supplier']),
-            "pic" => trim($data_post['pic']),
-            "no_hp" => trim($data_post['no_hp'])
+            strtolower("nama") => strtolower(trim($data_post['nama_supplier'])),
+            strtolower("pic") => strtolower(trim($data_post['pic'])),
+            strtolower("no_hp") => strtolower(trim($data_post['no_hp']))
         );
 
         $data_sup = array(
@@ -90,28 +91,46 @@ class Inventory extends CI_Controller
 
         $data_post = $_POST;
 
-       
-        $data_brg_po = array(
-            "kode" => $data_post['kode'],
-            "nama_barang"=> $data_post['nama_barang'],
-            "satuan"=> $data_post['satuan'],
-            "quantity" => $data_post['quantity'],
-            "id_trx_po" => $data_post['id_trx_po'],
-            "id_supplier" => $data_post['id_supplier'],
-            "status" => $data_post['status'],
-            "create_date" => date('YmdHis'),
-            "update_date" => date('YmdHis')
+        $where_brg = array(
+            strtolower("kode") => strtolower(trim($data_post['kode']))
         );
 
-        /*
-        if ($this->trx_brg_model->insertData($data_brg_po) > 0) {
-            echo json_encode("success");
+        $idBarang = $this->trx_brg_model->getWhere($where_brg);
+
+        if (empty($idBarang)) {
+
+            $data_brg_po = array(
+                "kode" => $data_post['kode'],
+                "nama_barang"=> $data_post['nama_barang'],
+                "satuan"=> $data_post['satuan'],
+                "quantity" => $data_post['quantity'],
+                "id_trx_po" => $data_post['id_trx_po'],
+                "id_supplier" => $data_post['id_supplier'],
+                "status" => $data_post['status'],
+                "create_date" => date('YmdHis'),
+                "update_date" => date('YmdHis')
+            );
+    
+            /*
+            if ($this->trx_brg_model->insertData($data_brg_po) > 0) {
+                echo json_encode("success");
+            } else {
+                echo json_encode("failed");
+            }
+            */
+
+            $this->trx_brg_model->insertData($data_brg_po);
+            
+
         } else {
-            echo json_encode("failed");
+            //skip insert
         }
-        */
-        $this->trx_brg_model->insertData($data_brg_po);
+
         echo json_encode("success");
+
+   
+
+
 
     }
     

@@ -246,6 +246,8 @@
 
                 var dataLoad = "";
                 var total = 0;
+                var nama_supplier="";
+                var no_invoice="";
                 console.log(response);
 
                 if (response.length > 0) {
@@ -267,7 +269,16 @@
 
                         dataLoad += "<tr>";
                         dataLoad += "<td >";
-                        dataLoad += response.rptobj[i].nama.toUpperCase();
+                        //dataLoad += response.rptobj[i].nama.toUpperCase();
+                        if(i == 0 ){
+                            dataLoad +=response.rptobj[i].nama.toUpperCase();
+                            nama_supplier = response.rptobj[i].nama;
+                        }else if(i > 0 && nama_supplier.trim()===response.rptobj[i].nama.trim()){
+                            dataLoad += "";
+                        }else if(i > 0 && nama_supplier != response.rptobj[i].nama){
+                            dataLoad +=response.rptobj[i].nama.toUpperCase();
+                            nama_supplier = response.rptobj[i].nama;
+                        }
                         dataLoad += "</td>";
                         dataLoad += "<td >";
                         dataLoad += response.rptobj[i].nama_barang;
@@ -288,7 +299,16 @@
                         dataLoad += numberWithCommas("Rp. " + response.rptobj[i].harga_total);
                         dataLoad += "</td>";
                         dataLoad += "<td >";
-                        dataLoad += response.rptobj[i].no_invoice;
+                        //dataLoad += response.rptobj[i].no_invoice;
+                        if(i == 0 ){
+                            dataLoad +=response.rptobj[i].no_invoice.toUpperCase();
+                            no_invoice = response.rptobj[i].no_invoice;
+                        }else if(i > 0 && no_invoice.trim()===response.rptobj[i].no_invoice.trim()){
+                            dataLoad += "";
+                        }else if(i > 0 && no_invoice != response.rptobj[i].no_invoice){
+                            dataLoad +=response.rptobj[i].no_invoice.toUpperCase();
+                            no_invoice = response.rptobj[i].no_invoice;
+                        }
                         dataLoad += "</td>";
                         dataLoad += "<td >";
                         dataLoad += dateForShow(response.rptobj[i].tgl_masuk);

@@ -261,16 +261,6 @@
 
     }
 
-    function searchData() {
-
-        var batasTampilData = 10;
-        $("#halaman").val("1");
-        var halaman = $('#halaman').val();
-        var keyword = $("#search").val();
-        loadData(keyword, halaman, batasTampilData);
-
-    }
-
     $(document).on('click', '.add-pusat', function() {
         var dataload = "";
         dataload += '<tr> '
@@ -316,29 +306,41 @@
 
 
     $(document).ready(function() {
-        //getData();
-        dataPaging();
-        dataPagingSobat();
+
+        var today = new Date();
+        var year = today.getFullYear();
+        var month = today.getMonth();
+
+        console.log("today:" + year + " " + prefixMonth(month + 1));
+        var create_date = year + prefixMonth(month + 1);
+
+        dataPaging("", "Januari, Februari, Maret....");
+        dataPagingSobat("", "Januari, Februari, Maret....");
     });
 
-    function dataPaging() {
+    function prefixMonth(month) {
+        if (month < 10)
+            return "0" + month;
+    }
+
+    function dataPaging(keyword, create_date) {
 
         var batasTampilData = 10;
         var halaman = $('#halaman_pusat').val();
-        getDataPusat(halaman, batasTampilData);
+        getDataPusat(create_date, keyword, halaman, batasTampilData);
     }
 
-    function dataPagingSobat() {
+    function dataPagingSobat(keyword, create_date) {
 
         var batasTampilData = 10;
         var halaman = $('#halaman_sobat').val();
-        getDataSobat(halaman, batasTampilData);
+        getDataSobat(create_date, keyword, halaman, batasTampilData);
     }
 
     $(function() {
         $("#create_date").datepicker({
             todayHighlight: true,
-            format: "yyyymm",
+            format: "yyyy-mm",
             startView: "months",
             minViewMode: "months",
             autoclose: true
@@ -353,8 +355,31 @@
         var today = new Date();
         var year = today.getFullYear();
         var month = today.getMonth();
+        var keyword = $("#search").val();
+        var halaman_pusat = $('#halaman_pusat').val();
+        var halaman_sobat = $('#halaman_sobat').val();
+        var batasTampilData = 10;
+
+        getDataSobat(create_date.replaceAll("-", ""), keyword, halaman_sobat, batasTampilData);
+        getDataPusat(create_date.replaceAll("-", ""), keyword, halaman_pusat, batasTampilData);
 
     });
+
+    function searchData() {
+
+        var batasTampilData = 10;
+        $("#halaman").val("1");
+        var halaman = $('#halaman').val();
+        var keyword = $("#search").val();
+        var create_date = document.getElementById("create_date").value;
+        var halaman_pusat = $('#halaman_pusat').val();
+        var halaman_sobat = $('#halaman_sobat').val();
+        var batasTampilData = 10;
+
+        getDataSobat(create_date.replaceAll("-", ""), keyword, halaman_sobat, batasTampilData);
+        getDataPusat(create_date.replaceAll("-", ""), keyword, halaman_pusat, batasTampilData);
+
+    }
 
     function checkInvalid(val) {
         if (val == null || val == "") {
@@ -423,7 +448,7 @@
     }
 
 
-    function handlePusat(response, halaman, batasTampilData) {
+    function handlePusat(response, halaman, batasTampilData, keyword, create_date) {
 
         var dataLoad = "";
         var total = 0;
@@ -445,7 +470,7 @@
             dataLoad += response.data[i].nama_barang;
             dataLoad += "</td>";
             dataLoad += "<td width='10%'>";
-            dataLoad += response.data[i].quantity_pusat;
+            dataLoad += parseFloat(response.data[i].quantity_pusat).toFixed(2);
             dataLoad += "</td>";
             dataLoad += "<td>";
             dataLoad += response.data[i].satuan;
@@ -453,9 +478,9 @@
             dataLoad += "<td width='10%'>";
 
             if (response.data[i].status == "0") {
-                dataLoad += '<input type="text" name="quantity_update_pusat[]" id="quantity_update_pusat' + i + '" class="form-control-label" value="' + update_quantity + '" onkeypress="validate(event)"/>';
+                dataLoad += '<input type="number" step="0.01" name="quantity_update_pusat[]" id="quantity_update_pusat' + i + '" class="form-control-label" value="' + update_quantity + '" onkeypress="validate(event)"/>';
             } else {
-                dataLoad += '<input type="text" name="quantity_update_pusat[]" id="quantity_update_pusat' + i + '" class="form-control-label"  onkeypress="validate(event)"/>';
+                dataLoad += '<input type="number" step="0.01" name="quantity_update_pusat[]" id="quantity_update_pusat' + i + '" class="form-control-label"  onkeypress="validate(event)"/>';
             }
 
             dataLoad += "</td>";
@@ -492,12 +517,12 @@
         var totalDataBarang = response.length_paging;
         var totalHalaman = Math.ceil(totalDataBarang / batasTampilData);
 
-        $('.pagination-result-pusat').html(paginationViewHTML(halaman, totalHalaman))
+        $('.pagination-result-pusat').html(paginationViewHTML(halaman, totalHalaman, keyword, create_date))
 
         $("#data-pusat").html(dataLoad);
     }
 
-    function handleSobat(response, halaman, batasTampilData) {
+    function handleSobat(response, halaman, batasTampilData, keyword, create_date) {
 
         var dataLoad = "";
         var total = 0;
@@ -519,7 +544,7 @@
             dataLoad += response.data[i].nama_barang;
             dataLoad += "</td>";
             dataLoad += "<td width='10%'>";
-            dataLoad += response.data[i].quantity_sobat;
+            dataLoad += parseFloat(response.data[i].quantity_sobat).toFixed(2)
             dataLoad += "</td>";
             dataLoad += "<td>";
             dataLoad += response.data[i].satuan;
@@ -527,9 +552,9 @@
             dataLoad += "<td width='10%'>";
 
             if (response.data[i].status == "0") {
-                dataLoad += '<input type="text" name="quantity_update_sobat[]" id="quantity_update_sobat' + i + '" class="form-control-label" value="' + update_quantity + '" onkeypress="validate(event)"/>';
+                dataLoad += '<input type="number" step="0.01" name="quantity_update_sobat[]" id="quantity_update_sobat' + i + '" class="form-control-label" value="' + update_quantity + '" onkeypress="validate(event)"/>';
             } else {
-                dataLoad += '<input type="text" name="quantity_update_sobat[]" id="quantity_update_sobat' + i + '" class="form-control-label" onkeypress="validate(event)"/>';
+                dataLoad += '<input type="number" step="0.01" name="quantity_update_sobat[]" id="quantity_update_sobat' + i + '" class="form-control-label" onkeypress="validate(event)"/>';
             }
 
             dataLoad += "</td>";
@@ -566,7 +591,7 @@
         var totalDataBarang = response.length_paging;
         var totalHalaman = Math.ceil(totalDataBarang / batasTampilData);
 
-        $('.pagination-result-sobat').html(paginationViewHTMLSobat(halaman, totalHalaman))
+        $('.pagination-result-sobat').html(paginationViewHTMLSobat(halaman, totalHalaman, keyword, create_date))
 
         $("#data-sobat").html(dataLoad);
     }
@@ -606,6 +631,9 @@
 
     function update_data_pusat(it) {
 
+        var create_date = $("#create_date").val().replaceAll("-", "");
+        var keyword = $("#search").val();
+
         var quantity_pusat = $("#quantity_pusat" + it).val();
         var quantity_update = $("#quantity_update_pusat" + it).val();
         var satuan = $("#satuan_pusat" + it).val();
@@ -637,7 +665,7 @@
             },
             success: function(response) {
 
-                dataPaging();
+                dataPaging(keyword, create_date);
 
             },
             error: function(response) {
@@ -649,6 +677,9 @@
     }
 
     function update_data_sobat(it) {
+
+        var create_date = $("#create_date").val().replaceAll("-", "");
+        var keyword = $("#search").val();
 
         var quantity_sobat = $("#quantity_sobat" + it).val();
         var quantity_update = $("#quantity_update_sobat" + it).val();
@@ -681,7 +712,7 @@
             },
             success: function(response) {
 
-                dataPagingSobat();
+                dataPagingSobat(keyword, create_date);
 
             },
             error: function(response) {
@@ -695,37 +726,84 @@
     function confirmData() {
 
         $.ajax({
-            url: '<?= site_url() ?>/inventory-updatestockpst/confirm',
+            url: '<?= site_url() ?>/inventory-updatestockpst/check_queue',
             method: 'post',
             dataType: 'json',
             success: function(response) {
-                alert("success update pst");
-                location.href = "<?= site_url() ?>/inventory-updatestockpst";
 
+                console.log(response);
+
+                if (response.length > 0) {
+
+                    $.ajax({
+                        url: '<?= site_url() ?>/inventory-updatestockpst/confirm',
+                        method: 'post',
+                        dataType: 'json',
+                        success: function(response) {
+                            alert("success update pst");
+                            location.href = "<?= site_url() ?>/inventory-updatestockpst";
+
+                        },
+                        error: function(response) {
+                            console.log(response);
+                        }
+
+                    });
+
+                } else {
+
+                    alert("update pst tidak boleh kosong");
+
+                }
             },
             error: function(response) {
                 console.log(response);
             }
 
         });
+
+
     }
 
     function confirmDataSobat() {
 
         $.ajax({
-            url: '<?= site_url() ?>/inventory-updatestockpst/confirmsobat',
+            url: '<?= site_url() ?>/inventory-updatestockpst/check_queue_sbt',
             method: 'post',
             dataType: 'json',
             success: function(response) {
-                alert("success update pst");
-                location.href = "<?= site_url() ?>/inventory-updatestockpst";
 
+                console.log(response);
+
+                if (response.length > 0) {
+
+                    $.ajax({
+                        url: '<?= site_url() ?>/inventory-updatestockpst/confirmsobat',
+                        method: 'post',
+                        dataType: 'json',
+                        success: function(response) {
+                            alert("success update pst");
+                            location.href = "<?= site_url() ?>/inventory-updatestockpst";
+
+                        },
+                        error: function(response) {
+                            console.log(response);
+                        }
+
+                    });
+
+                } else {
+
+                    alert("update pst tidak boleh kosong");
+
+                }
             },
             error: function(response) {
                 console.log(response);
             }
 
         });
+
     }
 
     /*
@@ -989,6 +1067,7 @@
         $("#data-sobat").html(dataLoad);
     }
 
+    /*
     function getData(halaman, batasTampilData) {
 
         $.ajax({
@@ -999,7 +1078,9 @@
                 "halaman": halaman,
                 "batastampil": batasTampilData,
                 "id_trx_pst": "<?= $id_trx_pst ?>",
-                "id_trx_sobat": "<?= $id_trx_sobat ?>"
+                "id_trx_sobat": "<?= $id_trx_sobat ?>",
+                "keyword":keyword,
+                "create_date":create_date
             },
             success: function(response) {
 
@@ -1014,8 +1095,9 @@
 
         });
     }
+    */
 
-    function getDataPusat(halaman, batasTampilData) {
+    function getDataPusat(create_date, keyword, halaman, batasTampilData) {
 
         $.ajax({
             url: '<?= site_url() ?>/inventory-updatestockpst/getdatapusat',
@@ -1024,11 +1106,13 @@
             data: {
                 "halaman": halaman,
                 "batastampil": batasTampilData,
-                "id_trx_pst": "<?= $id_trx_pst ?>"
+                "id_trx_pst": "<?= $id_trx_pst ?>",
+                "keyword": keyword,
+                "create_date": create_date
             },
             success: function(response) {
 
-                handlePusat(response, halaman, batasTampilData);
+                handlePusat(response, halaman, batasTampilData, keyword, create_date);
 
             },
             error: function(xhr, status, error) {
@@ -1039,7 +1123,7 @@
         });
     }
 
-    function getDataSobat(halaman, batasTampilData) {
+    function getDataSobat(create_date, keyword, halaman, batasTampilData) {
 
         $.ajax({
             url: '<?= site_url() ?>/inventory-updatestockpst/getdatasobat',
@@ -1048,11 +1132,13 @@
             data: {
                 "halaman": halaman,
                 "batastampil": batasTampilData,
-                "id_trx_sobat": "<?= $id_trx_sobat ?>"
+                "id_trx_sobat": "<?= $id_trx_sobat ?>",
+                "keyword": keyword,
+                "create_date": create_date
             },
             success: function(response) {
 
-                handleSobat(response, halaman, batasTampilData);
+                handleSobat(response, halaman, batasTampilData, keyword, create_date);
 
             },
             error: function(xhr, status, error) {
@@ -1063,19 +1149,19 @@
         });
     }
 
-    function paginationViewHTML(halaman, totalHalaman) { //halaman 1 total 6
+    function paginationViewHTML(halaman, totalHalaman, keyword, create_date) { //halaman 1 total 6
 
         var data_load = '';
         prev = parseInt(halaman) - 1;
         next = parseInt(halaman) + 1;
         minimal_page = parseInt(halaman) - 2;
         max_page = parseInt(halaman) + 2;
-        var prev_v = "dataPagingBarangHREFTrx('" + prev + "')";
-        var next_v = "dataPagingBarangHREFTrx('" + next + "')";
-        var halaman1 = "dataPagingBarangHREFTrx('1')";
-        var halaman2 = "dataPagingBarangHREFTrx('2')";
-        var halaman3 = "dataPagingBarangHREFTrx('3')";
-        var halaman4 = "dataPagingBarangHREFTrx('4')";
+        var prev_v = "dataPagingBarangHREFTrx('" + prev + "','" + keyword + "','" + create_date + "')";
+        var next_v = "dataPagingBarangHREFTrx('" + next + "','" + keyword + "','" + create_date + "')";
+        var halaman1 = "dataPagingBarangHREFTrx('1','" + keyword + "','" + create_date + "')";
+        var halaman2 = "dataPagingBarangHREFTrx('2','" + keyword + "','" + create_date + "')";
+        var halaman3 = "dataPagingBarangHREFTrx('3','" + keyword + "','" + create_date + "')";
+        var halaman4 = "dataPagingBarangHREFTrx('4','" + keyword + "','" + create_date + "')";
         data_load += '<ul class ="pagination">'
 
         if (halaman > 1) {
@@ -1089,7 +1175,7 @@
         console.log("totalHalaman" + totalHalaman);
 
         for (let i = minimal_page; i <= max_page; i++) {
-            var onclk = "dataPagingBarangHREFTrx('" + i + "')";
+            var onclk = "dataPagingBarangHREFTrx('" + i + "','" + keyword + "','" + create_date + "')";
 
             if (i == halaman && totalHalaman != 0) {
                 data_load += '<li class="page-item active"><a class = "page-link" href="#" onclick="' + onclk + '">' + i + '</a> </li>'
@@ -1115,24 +1201,24 @@
         return data_load;
     }
 
-    function dataPagingBarangHREFTrx(halaman) {
+    function dataPagingBarangHREFTrx(halaman, keyword, create_date) {
         $('#halaman_pusat').val(halaman)
-        dataPaging();
+        dataPaging(keyword, create_date);
     }
 
-    function paginationViewHTMLSobat(halaman, totalHalaman) { //halaman 1 total 6
+    function paginationViewHTMLSobat(halaman, totalHalaman, keyword, create_date) { //halaman 1 total 6
 
         var data_load = '';
         prev = parseInt(halaman) - 1;
         next = parseInt(halaman) + 1;
         minimal_page = parseInt(halaman) - 2;
         max_page = parseInt(halaman) + 2;
-        var prev_v = "dataPagingBarangHREFTrxSobat('" + prev + "')";
-        var next_v = "dataPagingBarangHREFTrxSobat('" + next + "')";
-        var halaman1 = "dataPagingBarangHREFTrxSobat('1')";
-        var halaman2 = "dataPagingBarangHREFTrxSobat('2')";
-        var halaman3 = "dataPagingBarangHREFTrxSobat('3')";
-        var halaman4 = "dataPagingBarangHREFTrxSobat('4')";
+        var prev_v = "dataPagingBarangHREFTrxSobat('" + prev + "','" + keyword + "','" + create_date + "')";
+        var next_v = "dataPagingBarangHREFTrxSobat('" + next + "','" + keyword + "','" + create_date + "')";
+        var halaman1 = "dataPagingBarangHREFTrxSobat('1','" + keyword + "','" + create_date + "')";
+        var halaman2 = "dataPagingBarangHREFTrxSobat('2','" + keyword + "','" + create_date + "')";
+        var halaman3 = "dataPagingBarangHREFTrxSobat('3','" + keyword + "','" + create_date + "')";
+        var halaman4 = "dataPagingBarangHREFTrxSobat('4','" + keyword + "','" + create_date + "')";
         data_load += '<ul class ="pagination">'
 
         if (halaman > 1) {
@@ -1146,7 +1232,7 @@
         console.log("totalHalaman" + totalHalaman);
 
         for (let i = minimal_page; i <= max_page; i++) {
-            var onclk = "dataPagingBarangHREFTrxSobat('" + i + "')";
+            var onclk = "dataPagingBarangHREFTrxSobat('" + i + "','" + keyword + "','" + create_date + "')";
 
             if (i == halaman && totalHalaman != 0) {
                 data_load += '<li class="page-item active"><a class = "page-link" href="#" onclick="' + onclk + '">' + i + '</a> </li>'
@@ -1172,8 +1258,8 @@
         return data_load;
     }
 
-    function dataPagingBarangHREFTrxSobat(halaman) {
+    function dataPagingBarangHREFTrxSobat(halaman, keyword, create_date) {
         $('#halaman_sobat').val(halaman)
-        dataPagingSobat();
+        dataPagingSobat(keyword, create_date);
     }
 </script>

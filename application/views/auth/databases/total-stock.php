@@ -110,7 +110,9 @@
                         }
                         */
 
-                        
+                        var tot = (parseFloat(response.datastock[i].harga_satuan)) * (parseFloat(response.datastock[i].quantity_sobat)+(parseFloat(response.datastock[i].quantity_pusat)));
+                        total += tot;
+                       
 
                         dataLoad += "<tr>";
                         dataLoad += "<td >";

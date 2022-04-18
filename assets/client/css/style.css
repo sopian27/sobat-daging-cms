@@ -610,12 +610,12 @@ img {
 
 .btn-blue:before,
 .btn-blue:after {
-    border-color: #29b1fd;
+    border-color: #B89874;
     
 }
 
 .btn-blue:hover {
-    color: #29b1fd;
+    color: #B89874;
     border-radius: 20px;
 }
 

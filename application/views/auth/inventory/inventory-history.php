@@ -242,7 +242,7 @@
                         dataLoad += "Rp. " + numberWithCommas(response.data[i].harga_satuan)
                         dataLoad += "</td>";
                         dataLoad += "<td>";
-                        dataLoad += "Rp. " + numberWithCommas(result)
+                        dataLoad += "Rp. " + numberWithCommas(result.toFixed(2))
                         dataLoad += "</td>";
                         dataLoad += "</tr>";
 

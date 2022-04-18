@@ -284,8 +284,8 @@
 
                     var dataLoad = "";
                     var id_trx_live_stocks = '<?= $id_trx_po ?>';
-                    dataLoad += '<div class="container"> ';
-                    dataLoad += '<div class="row"> ';
+                    //dataLoad += '<div class="container"> ';
+                    //dataLoad += '<div class="row"> ';
 
                     for (i = 0; i < data.length; i++) {
 
@@ -332,8 +332,8 @@
 
 
                     }
-                    dataLoad += '</div>';
-                    dataLoad += '</div>';
+                    //dataLoad += '</div>';
+                    //dataLoad += '</div>';
 
                     var totalDataBarang = data.length_paging;
                     var totalHalaman = Math.ceil(totalDataBarang / batasTampilData);

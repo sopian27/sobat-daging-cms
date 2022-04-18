@@ -55,6 +55,7 @@ class TRXPSTSobatModel extends CI_Model
         return $this->db->insert_id();
     }
 
+    /*
     public function getTrxSobat($id_trx_pst,$halaman,$batasTampilData){
         $query="SELECT b.id,b.kode,b.nama_barang,b.quantity_sobat,trx.update_quantity,b.satuan,trx.status,trx.note
         from barang b left join trx_update_pst_sobat trx on b.kode=trx.kode limit " . $halaman . ", " . $batasTampilData;
@@ -65,6 +66,117 @@ class TRXPSTSobatModel extends CI_Model
     public function getTrxSobatCount($id_trx_pst){
         $query="SELECT b.id,b.kode,b.nama_barang,b.quantity_pusat,trx.update_quantity,b.satuan
         from barang b left join trx_update_pst_sobat trx on b.kode=trx.kode";
+
+        return $this->db->query($query)->result();
+    }*/
+
+    public function getTrxSobat($id_trx_pst, $create_date, $keyword, $halaman, $batasTampilData)
+    {
+        /*
+        $query = "SELECT b.id,b.kode,b.nama_barang,b.quantity_pusat,trx.update_quantity,b.satuan,trx.status,trx.note
+        from barang b left join trx_update_pst_pusat trx on b.kode=trx.kode limit " . $halaman . ", " . $batasTampilData;
+        */
+
+        $query = "";
+
+        if ($keyword != ""  && $create_date == "Januari, Februari, Maret....") {
+
+            $query = "SELECT b.id,b.kode,b.nama_barang,b.quantity_sobat,trx.update_quantity,b.satuan,trx.status,trx.note
+            from barang b left join trx_update_pst_sobat trx on b.kode=trx.kode and b.nama_barang ='$keyword' limit " . $halaman . ", " . $batasTampilData;
+
+        } else if ($keyword != "" && $create_date != "Januari, Februari, Maret....") {
+
+            $query = "SELECT b.id,b.kode,b.nama_barang,b.quantity_sobat,trx.update_quantity,b.satuan,trx.status,trx.note
+            from barang b left join trx_update_pst_sobat trx on b.kode=trx.kode and b.nama_barang ='$keyword'and substring(trx.update_date,1,6) ='$create_date' limit " . $halaman . ", " . $batasTampilData;
+
+        } else {
+
+            $query = "SELECT b.id,b.kode,b.nama_barang,b.quantity_sobat,trx.update_quantity,b.satuan,trx.status,trx.note
+            from barang b left join trx_update_pst_sobat trx on b.kode=trx.kode and substring(trx.update_date,1,6) ='$create_date' limit " . $halaman . ", " . $batasTampilData;
+
+        }
+
+        return $this->db->query($query)->result();
+    }
+
+    public function getTrxSobatCount($id_trx_pst,$create_date, $keyword)
+    {
+        $query = "";
+
+        if ($keyword != ""  && $create_date == "Januari, Februari, Maret....") {
+
+            $query = "SELECT b.id,b.kode,b.nama_barang,b.quantity_sobat,trx.update_quantity,b.satuan,trx.status,trx.note
+            from barang b left join trx_update_pst_sobat trx on b.kode=trx.kode and b.nama_barang ='$keyword'";
+
+        } else if ($keyword != "" && $create_date != "Januari, Februari, Maret....") {
+
+            $query = "SELECT b.id,b.kode,b.nama_barang,b.quantity_sobat,trx.update_quantity,b.satuan,trx.status,trx.note
+            from barang b left join trx_update_pst_sobat trx on b.kode=trx.kode and b.nama_barang ='$keyword'and substring(trx.update_date,1,6) ='$create_date'";
+
+        } else {
+
+            $query = "SELECT b.id,b.kode,b.nama_barang,b.quantity_sobat,trx.update_quantity,b.satuan,trx.status,trx.note
+            from barang b left join trx_update_pst_sobat trx on b.kode=trx.kode and substring(trx.update_date,1,6) ='$create_date'";
+
+        }
+
+        return $this->db->query($query)->result();
+    }
+
+    public function getTrxSobatNew($id_trx_pst, $create_date, $keyword, $halaman, $batasTampilData)
+    {
+
+        $query = "";
+
+        if ($keyword != ""  && $create_date == "Januari, Februari, Maret....") {
+
+            $query = "select c.id,c.kode,c.nama_barang,c.quantity_sobat,c.update_quantity,c.satuan,c.status,c.note,c.create_date from ( SELECT b.id,b.kode,b.nama_barang,b.quantity_sobat,trx.update_quantity,b.satuan,trx.status,trx.note,b.create_date
+            from barang b left join trx_update_pst_sobat trx on b.kode=trx.kode and status ='0' ) c where c.nama_barang ='$keyword' limit " . $halaman . ", " . $batasTampilData;
+
+        } else if ($keyword != "" && $create_date != "Januari, Februari, Maret....") {
+
+            $query = "select c.id,c.kode,c.nama_barang,c.quantity_sobat,c.update_quantity,c.satuan,c.status,c.note,c.create_date from ( SELECT b.id,b.kode,b.nama_barang,b.quantity_sobat,trx.update_quantity,b.satuan,trx.status,trx.note,b.create_date
+            from barang b left join trx_update_pst_sobat trx on b.kode=trx.kode and status ='0') c where c.nama_barang ='$keyword' and substring(c.create_date,1,6) ='$create_date' limit " . $halaman . ", " . $batasTampilData;
+
+        } else if ( $create_date != "Januari, Februari, Maret....") {
+
+            $query = "select c.id,c.kode,c.nama_barang,c.quantity_sobat,c.update_quantity,c.satuan,c.status,c.note,c.create_date from ( SELECT b.id,b.kode,b.nama_barang,b.quantity_sobat,trx.update_quantity,b.satuan,trx.status,trx.note,b.create_date
+            from barang b left join trx_update_pst_sobat trx on b.kode=trx.kode and status ='0') c where substring(c.create_date,1,6) ='$create_date' limit " . $halaman . ", " . $batasTampilData;
+
+        }else{
+            $query = "select c.id,c.kode,c.nama_barang,c.quantity_sobat,c.update_quantity,c.satuan,c.status,c.note,c.create_date from ( SELECT b.id,b.kode,b.nama_barang,b.quantity_sobat,trx.update_quantity,b.satuan,trx.status,trx.note,b.create_date
+            from barang b left join trx_update_pst_sobat trx on b.kode=trx.kode and status ='0' ) c limit " . $halaman . ", " . $batasTampilData;
+
+        }
+
+        return $this->db->query($query)->result();
+    }
+
+    public function getTrxSobatNewCount($id_trx_pst,$create_date, $keyword)
+    {
+        $query = "";
+
+        if ($keyword != ""  && $create_date == "Januari, Februari, Maret....") {
+
+            $query = "select c.id,c.kode,c.nama_barang,c.quantity_sobat,c.update_quantity,c.satuan,c.status,c.note,c.create_date from ( SELECT b.id,b.kode,b.nama_barang,b.quantity_sobat,trx.update_quantity,b.satuan,trx.status,trx.note,b.create_date
+            from barang b left join trx_update_pst_sobat trx on b.kode=trx.kode and status ='0') c where c.nama_barang ='$keyword'";
+
+        } else if ($keyword != "" && $create_date != "Januari, Februari, Maret....") {
+
+            $query = "select c.id,c.kode,c.nama_barang,c.quantity_sobat,c.update_quantity,c.satuan,c.status,c.note,c.create_date from ( SELECT b.id,b.kode,b.nama_barang,b.quantity_sobat,trx.update_quantity,b.satuan,trx.status,trx.note,b.create_date
+            from barang b left join trx_update_pst_sobat trx on b.kode=trx.kode and status ='0') c where c.nama_barang ='$keyword' and substring(c.create_date,1,6) ='$create_date'";
+
+        } else if ( $create_date != "Januari, Februari, Maret....") {
+
+            $query = "select c.id,c.kode,c.nama_barang,c.quantity_sobat,c.update_quantity,c.satuan,c.status,c.note,c.create_date from ( SELECT b.id,b.kode,b.nama_barang,b.quantity_sobat,trx.update_quantity,b.satuan,trx.status,trx.note,b.create_date
+            from barang b left join trx_update_pst_sobat trx on b.kode=trx.kode and status ='0') c where substring(c.create_date,1,6) ='$create_date' ";
+
+        }else{
+            $query = "select c.id,c.kode,c.nama_barang,c.quantity_sobat,c.update_quantity,c.satuan,c.status,c.note,c.create_date from ( SELECT b.id,b.kode,b.nama_barang,b.quantity_sobat,trx.update_quantity,b.satuan,trx.status,trx.note,b.create_date
+            from barang b left join trx_update_pst_sobat trx on b.kode=trx.kode and status ='0') c ";
+
+        }
+        
 
         return $this->db->query($query)->result();
     }
@@ -79,5 +191,10 @@ class TRXPSTSobatModel extends CI_Model
         $this->db->set($data);
         $this->db->where($where);
         $this->db->update('trx_update_pst_sobat');
+    }
+
+    public function getWhere($where)
+    {
+        return $this->db->get_where('trx_update_pst_sobat', $where)->result();
     }
 }
