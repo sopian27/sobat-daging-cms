@@ -67,7 +67,8 @@ class ApModel extends CI_Model
                             and s.id = po.id_supplier 
                             and inv.no_invoice = '".$keyword."' 
                             or s.nama = '".$keyword."'
-                            and substring(inv.create_date, 1, 6) = '".$create_date."'
+                           /*  and substring(inv.create_date, 1, 6) = '".$create_date."' */
+                            and date_format(inv.create_date,'%Y%m')= '".$create_date."'
                             limit " . $halaman . "," . $batasTampilData;
 
 
@@ -98,7 +99,8 @@ class ApModel extends CI_Model
                             po.no_invoice = inv.no_invoice 
                             and b.kode = po.kode 
                             and s.id = po.id_supplier 
-                            and substring(inv.create_date, 1, 6) = '".$create_date."'
+                            /*  and substring(inv.create_date, 1, 6) = '".$create_date."' */
+                            and date_format(inv.create_date,'%Y%m')= '".$create_date."'
                             limit " . $halaman . "," . $batasTampilData;
 
         }
@@ -171,7 +173,8 @@ class ApModel extends CI_Model
                             and s.id = po.id_supplier 
                             and inv.no_invoice = '".$keyword."' 
                             or s.nama = '".$keyword."'
-                            and substring(inv.create_date, 1, 6) = '".$create_date."'";
+                            /*  and substring(inv.create_date, 1, 6) = '".$create_date."' */
+                            and date_format(inv.create_date,'%Y%m')= '".$create_date."'";
 
 
         } else {
@@ -201,7 +204,8 @@ class ApModel extends CI_Model
                             po.no_invoice = inv.no_invoice 
                             and b.kode = po.kode 
                             and s.id = po.id_supplier 
-                            and substring(inv.create_date, 1, 6) = '".$create_date."'";
+                            /*  and substring(inv.create_date, 1, 6) = '".$create_date."' */
+                            and date_format(inv.create_date,'%Y%m')= '".$create_date."'";
 
         }
 
@@ -232,7 +236,8 @@ class ApModel extends CI_Model
 
             $query = " SELECT sum(total_tagihan_history) - sum(total_tagihan) as nominal,
                     sum(total_tagihan_history)as total_tagihan FROM `trx_payment_po_invoice`
-                    where substring(create_date,1,6) ='$create_date' /*GROUP by id_trx_payment*/";
+                    where /*  and substring(inv.create_date, 1, 6) = '".$create_date."' */
+                            and #date_format(create_date,'%Y-%m')= '".$create_date."'/*GROUP by id_trx_payment*/";
         }
 
         return $this->db->query($query)->result();

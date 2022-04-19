@@ -18,18 +18,26 @@ class InventoryLiveStock extends CI_Controller
     {
         //$countData = $this->trx_brg_model->getTrxIdLiveStocks();
         $countDataBarang = $this->brg_model->countDataBarang();
-
         $dataBarangCount =  $countDataBarang[0]->CountData;
         //$num = $countData[0]->trx_id + 1;
         //$num_padded = sprintf("%04d", $num);
 
-        $trxData = $this->trx_brg_model->getTrxIdLiveStocks();
+        $tgl_trx = date("Y-m-d");
+
+/*         $trxData = $this->trx_brg_model->getTrxIdLiveStocks();
         $trxId = $trxData[0]->trx_id;
         $lastNoUrut = substr($trxId, 5, 4);
         $nextNoUrut = intval($lastNoUrut) + 1;
         $t = time();
         $currentDate = date("d/m/Y", $t);
-        $kodeInvoice = 'ILS-' . sprintf('%04s', $nextNoUrut) . "/" . $currentDate;
+        $kodeInvoice = 'ILS-' . sprintf('%04s', $nextNoUrut) . "/" . $currentDate; */
+        
+        $t = time();
+        $trxData = $this->trx_brg_model->getTrxIdLiveStocks($tgl_trx);
+        $datax = $trxData[0]->trx_id;
+        $lastNoUrut = substr($datax, 4,5);
+        $nextNoUrut = intval($lastNoUrut)+1;
+        $kodeInvoice = 'ILS-' . sprintf('%05s',$nextNoUrut)."/". date('d/m/Y',strtotime($tgl_trx));
 
         //$t = time();
         //$currentDate = date("d/m/Y", $t);
@@ -48,13 +56,14 @@ class InventoryLiveStock extends CI_Controller
     public function getTrxIdNoInvoice()
     {
 
-        $trxData = $this->trx_brg_model->getTrxIdNoInvoice();
+        $tgl_trx = date("Y-m-d");
+        $trxData = $this->trx_brg_model->getTrxIdNoInvoice($tgl_trx);
         $trxId = $trxData[0]->trx_id;
-        $lastNoUrut = substr($trxId, 5, 4);
+        $lastNoUrut = substr($trxId, 7, 5);
         $nextNoUrut = intval($lastNoUrut) + 1;
         $t = time();
         $currentDate = date("d/m/Y", $t);
-        $kodeInvoice = 'INV-PO-' . sprintf('%04s', $nextNoUrut) . "/" . $currentDate;
+        $kodeInvoice = 'INV-PO-' . sprintf('%05s', $nextNoUrut) . "/" . $currentDate;
 
         return $kodeInvoice;
     }

@@ -3,7 +3,7 @@
 class TRXMutasiModel extends CI_Model
 {
 
-    public function getTrxId()
+    public function getTrxId($tgl_trx)
     {
 
         $query = "SELECT 
@@ -11,7 +11,7 @@ class TRXMutasiModel extends CI_Model
                 FROM 
                     trx_mutasi 
                 WHERE 
-                    substring(create_date,1,8) =DATE_FORMAT(SYSDATE(), '%Y%m%d')";
+                date_format(create_date,'%Y-%m-%d') = '$tgl_trx'";
 
         return $this->db->query($query)->result();
     }
@@ -39,11 +39,11 @@ class TRXMutasiModel extends CI_Model
         if (isset($keyword) && $keyword != "") {
 
             $query="SELECT c.id,c.kode,c.nama_barang,c.quantity_pusat,c.quantity_mutasi,c.satuan,c.status FROM ( SELECT b.id,b.kode,b.nama_barang,b.quantity_pusat,trx.quantity_mutasi,b.satuan,trx.status 
-            from barang b left join trx_mutasi trx on b.kode=trx.kode and trx.create_date like '%$createdate%' and status='0') c where c.kode ='$keyword' limit ". $halaman . ", " . $batasTampilData;
+            from barang b left join trx_mutasi trx on b.kode=trx.kode and date_format(trx.create_date,'%Y-%m-%d') = '$createdate' and status='0') c where c.kode ='$keyword' limit ". $halaman . ", " . $batasTampilData;
     
         }else{
             $query="SELECT b.id,b.kode,b.nama_barang,b.quantity_pusat,trx.quantity_mutasi,b.satuan,trx.status 
-            from barang b left join trx_mutasi trx on b.kode=trx.kode and trx.create_date like '%$createdate%' and status='0' limit " . $halaman . ", " . $batasTampilData;
+            from barang b left join trx_mutasi trx on b.kode=trx.kode and date_format(trx.create_date,'%Y-%m-%d') = '$createdate' and status='0' limit " . $halaman . ", " . $batasTampilData;
     
         }
 
@@ -56,11 +56,11 @@ class TRXMutasiModel extends CI_Model
         if (isset($keyword) && $keyword != "") {
 
             $query="SELECT * FROM ( SELECT b.id,b.kode,b.nama_barang,b.quantity_pusat,trx.quantity_mutasi,b.satuan,trx.status 
-            from barang b left join trx_mutasi trx on b.kode=trx.kode and trx.create_date like '%$createdate%' and status='0' ) c where c.kode ='$keyword' " ;
+            from barang b left join trx_mutasi trx on b.kode=trx.kode and date_format(trx.create_date,'%Y-%m-%d') = '$createdate' and status='0' ) c where c.kode ='$keyword' " ;
     
         }else{
             $query="SELECT b.id,b.kode,b.nama_barang,b.quantity_pusat,trx.quantity_mutasi,b.satuan,trx.status 
-            from barang b left join trx_mutasi trx on b.kode=trx.kode and trx.create_date like '%$createdate%' and status='0'";
+            from barang b left join trx_mutasi trx on b.kode=trx.kode and date_format(trx.create_date,'%Y-%m-%d') = '$createdate' and status='0'";
     
         }
 

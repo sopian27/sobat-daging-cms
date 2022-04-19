@@ -23,14 +23,24 @@ class InventoryMutasi extends CI_Controller
        
         $data['date'] = date("d F Y", $t);
 
+        /*      
         $trxData = $this->trx_mutasi_model->getTrxId();
         $trxId = $trxData[0]->trx_id;
         $lastNoUrut = substr($trxId, 5, 4);
         $nextNoUrut = intval($lastNoUrut) + 1;
         $t = time();
         $currentDate = date("d/m/Y", $t);
-        $kodeInvoice = 'IMB-' . sprintf('%04s', $nextNoUrut) . "/" . $currentDate;
-        $data['id_trx_mutasi'] = $kodeInvoice;
+        $kodeInvoice = 'IMB-' . sprintf('%04s', $nextNoUrut) . "/" . $currentDate; */
+
+      /*   $tgl_trx = date("Y-m-d");
+        $trxData = $this->trx_mutasi_model->getTrxId($tgl_trx);
+        $datax = $trxData[0]->trx_id;
+        $lastNoUrut = substr($datax, 4,5);
+        $nextNoUrut = intval($lastNoUrut)+1;
+        $kodeInvoice = 'IMB-' . sprintf('%05s',$nextNoUrut)."/". date('d/m/Y',strtotime($tgl_trx));
+ */
+        
+        //$data['id_trx_mutasi'] = $kodeInvoice;
         $countDataBarang = $this->brg_model->countDataBarang();
         $dataBarangCount =  $countDataBarang[0]->CountData;
         $data['dataBarangCount'] = $dataBarangCount;
@@ -44,19 +54,29 @@ class InventoryMutasi extends CI_Controller
     public function loadPo()
     {
 
+
+        $tgl_trx = date("Y-m-d");
+        $trxData = $this->trx_mutasi_model->getTrxId($tgl_trx);
+        $datax = $trxData[0]->trx_id;
+        $lastNoUrut = substr($datax, 4,5);
+        $nextNoUrut = intval($lastNoUrut)+1;
+        $kodeInvoice = 'IMB-' . sprintf('%05s',$nextNoUrut)."/". date('d/m/Y',strtotime($tgl_trx));
+
+
         $batasTampilData = $_POST['batastampil'];
-        $id_trx_mutasi = $_POST['id_trx_mutasi'];
+        //$id_trx_mutasi = $_POST['id_trx_mutasi'];
         $halaman = (isset($_POST['halaman'])) ? $halaman = $_POST['halaman'] : $halaman = 1;
         $halamanAwal = ($halaman > 1) ? ($halaman * $batasTampilData) - $batasTampilData : 0;
         $t = time();
-        $createdate = date("Ymd", $t);
+        $createdate = date("Y-m-d");
 
         $allDataPo = $this->trx_mutasi_model->getTrxMutasi($_POST['keyword'],$createdate, $halamanAwal, $batasTampilData);
         $allDataPoCounter = $this->trx_mutasi_model->getTrxMutasiCount($_POST['keyword'],$createdate);
         $output = array(
             "length" => count($allDataPo),
             "data" => $allDataPo,
-            "length_paging" => count($allDataPoCounter)
+            "length_paging" => count($allDataPoCounter),
+            "id_trx_mutasi" => $kodeInvoice
 
         );
 
@@ -153,7 +173,7 @@ class InventoryMutasi extends CI_Controller
     {
 
         $post = $_POST;
-        $id_trx_mutasi   = $post['id_trx_mutasi'];
+        //$id_trx_mutasi   = $post['id_trx_mutasi'];
         $where = array("status" => '0');
 
         $dataUpdate = array(

@@ -20,20 +20,20 @@ class InventoryHistory extends CI_Controller
         //$countData = $this->trx_brg_model->getTrxId();
        // $num = $countData[0]->trx_id + 1;
        // $num_padded = sprintf("%04d", $num);
-
+/* 
         $trxData = $this->trx_brg_model->getTrxId();
         $trxId = $trxData[0]->trx_id;
         $lastNoUrut = substr($trxId, 5, 4);
         $nextNoUrut = intval($lastNoUrut) + 1;
         $t = time();
         $currentDate = date("d/m/Y", $t);
-        $kodeInvoice = 'PO-' . sprintf('%04s', $nextNoUrut) . "/" . $currentDate;
+        $kodeInvoice = 'PO-' . sprintf('%04s', $nextNoUrut) . "/" . $currentDate; */
 
         //$dataBarangCount =  $countDataBarang[0]->CountData;
 
         $t = time();
         $currentDate = date("d/m/Y", $t);
-        $data['id_trx_po'] = $kodeInvoice;//"PO-" . $num_padded . "/" . $currentDate;
+        $data['id_trx_po'] = "";//$kodeInvoice;//"PO-" . $num_padded . "/" . $currentDate;
         $data['date'] = date("d F Y", $t);
 
         $this->load->view('auth/templates/header', $data);

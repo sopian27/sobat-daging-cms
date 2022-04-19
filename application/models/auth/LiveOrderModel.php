@@ -2,10 +2,10 @@
 class LiveOrderModel extends CI_Model
 {
 
-    public function getTrxId()
+    public function getTrxId($tgl_trx)
     {
 
-        $query = " select max(id_trx_live_order) as trx_id from trx_order_po where substring(create_date,1,8) =DATE_FORMAT(SYSDATE(), '%Y%m%d')";
+        $query = " select max(id_trx_live_order) as trx_id from trx_order_po where date_format(create_date,'%Y-%m-%d') = '$tgl_trx'";
 
         return $this->db->query($query)->result();
     }
@@ -17,7 +17,8 @@ class LiveOrderModel extends CI_Model
         $query = " SELECT id_trx_order,p.nama_pelanggan 
                   FROM trx_order_po t,pelanggan p 
                   WHERE t.id_pelanggan=p.id and status='0' and
-                  substring(t.create_date,1,8) ='$date' group by id_trx_order";
+                  /*  and substring(t.create_date, 1, 6) = '".$date."' */
+                  and date_format(t.create_date,'%Y%m%d')= '".$date."' group by id_trx_order";
 
         return $this->db->query($query)->result();
     }
@@ -45,7 +46,8 @@ class LiveOrderModel extends CI_Model
                     WHERE 
                         t.id_pelanggan=p.id
                         and p.nama_pelanggan like '%$keyword%'
-                        and substring(t.create_date,1,8) ='$create_date'
+                        /*and substring(t.create_date,1,8) ='$create_date' */
+                        and date_format(t.create_date,'%Y%m%d')= '".$create_date."'
                     GROUP BY t.id_trx_order
                     limit " . $halaman . "," . $batasTampilData;
 
@@ -56,7 +58,8 @@ class LiveOrderModel extends CI_Model
                             trx_order_po t,pelanggan p 
                         WHERE 
                             t.id_pelanggan=p.id
-                            and substring(t.create_date,1,8) ='$create_date'
+                           /*and substring(t.create_date,1,8) ='$create_date' */
+                           and date_format(t.create_date,'%Y%m%d')= '".$create_date."'
                         GROUP BY t.id_trx_order
                         limit " . $halaman . "," . $batasTampilData;
         }
@@ -86,7 +89,8 @@ class LiveOrderModel extends CI_Model
                     WHERE 
                         t.id_pelanggan=p.id
                         and p.nama_pelanggan like '%$keyword%'
-                        and substring(t.create_date,1,8) ='$create_date'
+                       /*and substring(t.create_date,1,8) ='$create_date' */
+                       and date_format(t.create_date,'%Y%m%d')= '".$create_date."'
                     GROUP BY t.id_trx_order";
         
         } else {
@@ -96,7 +100,8 @@ class LiveOrderModel extends CI_Model
                         trx_order_po t,pelanggan p 
                     WHERE 
                         t.id_pelanggan=p.id
-                        and substring(t.create_date,1,8) ='$create_date'
+                        /*and substring(t.create_date,1,8) ='$create_date' */
+                        and date_format(t.create_date,'%Y%m%d')= '".$create_date."'
                     GROUP BY t.id_trx_order";
         }
 
@@ -115,7 +120,8 @@ class LiveOrderModel extends CI_Model
                         FROM trx_order_po t,pelanggan p, barang b 
                         WHERE t.id_pelanggan=p.id and  
                         b.id = t.id_barang 
-                        and substring(t.create_date,1,8) ='$create_date'
+                        /*and substring(t.create_date,1,8) ='$create_date' */
+                        and date_format(t.update_date,'%Y%m%d')= '".$create_date."'
                         limit " . $halaman . "," . $batasTampilData;
 
                         
@@ -136,7 +142,8 @@ class LiveOrderModel extends CI_Model
                         FROM trx_order_po t,pelanggan p, barang b 
                         WHERE t.id_pelanggan=p.id and  
                         b.id = t.id_barang 
-                        and substring(t.create_date,1,8) ='$create_date'";
+                       /*and substring(t.create_date,1,8) ='$create_date' */
+                       and date_format(t.create_date,'%Y%m%d')= '".$create_date."'";
         }
 
         return $this->db->query($query)->result();
@@ -153,7 +160,7 @@ class LiveOrderModel extends CI_Model
                         and b.id = t.id_barang
                         and t.id_alamat = al.id
                         and t.id_telephone = tl.id
-                        and substring(t.create_date,1,8) ='$create_date'
+                        and date_format(t.create_date,'%Y%m%d')= '".$create_date."'
                         order by t.id_trx_order";
                        /* limit " . $halaman . "," . $batasTampilData; */
 
@@ -171,7 +178,7 @@ class LiveOrderModel extends CI_Model
                         and b.id = t.id_barang
                         and t.id_alamat = al.id
                         and t.id_telephone = tl.id
-                        and substring(t.create_date,1,8) ='$create_date'";
+                        and date_format(t.create_date,'%Y%m%d')= '".$create_date."'";
 
         return $this->db->query($query)->result();
     }
@@ -193,7 +200,7 @@ class LiveOrderModel extends CI_Model
                     FROM trx_order_po t,pelanggan p, barang b 
                     WHERE t.id_pelanggan=p.id and  
                     b.id = t.id_barang and status='0' and
-                    substring(t.create_date,1,8) ='$date' order by id_trx_order ";
+                    and date_format(t.create_date,'%Y%m%d')= '".$date."' order by id_trx_order ";
 
         return $this->db->query($query)->result();
     }
@@ -221,6 +228,8 @@ class LiveOrderModel extends CI_Model
 
         return $this->db->query($query)->result();
     }
+
+
 
     public function getDataByIdLiveOrder($id_trx_order, $halaman, $batasTampilData)
     {
@@ -289,5 +298,11 @@ class LiveOrderModel extends CI_Model
         $this->db->where($where);
         $this->db->update('trx_order_po');
         return $this->db->affected_rows();
+    }
+
+    
+    public function getWhere($where)
+    {
+        return $this->db->get_where('trx_order_po', $where)->result();
     }
 }

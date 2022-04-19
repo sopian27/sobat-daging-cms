@@ -24,7 +24,7 @@ class InventoryPst extends CI_Controller
         //$trx_pst_pusat = $this->pst_pusat_model->getTrxId();
         //$trx_pst_sobat = $this->pst_sobat_model->getTrxId();
 
-        $trxData = $this->pst_pusat_model->getTrxId();
+/*         $trxData = $this->pst_pusat_model->getTrxId();
         $trxId = $trxData[0]->trx_id;
         $lastNoUrut = substr($trxId, 5, 4);
         $nextNoUrut = intval($lastNoUrut) + 1;
@@ -36,17 +36,17 @@ class InventoryPst extends CI_Controller
         $trxIdSobat = $trxDataSobat[0]->trx_id;
         $lastNoUrutSobat = substr($trxIdSobat, 5, 4);
         $nextNoUrutSobat = intval($lastNoUrutSobat) + 1;
-        $trx_pst_sobat = 'IPST-' . sprintf('%04s', $nextNoUrutSobat) . "/" . $currentDate;
+        $trx_pst_sobat = 'IPST-' . sprintf('%04s', $nextNoUrutSobat) . "/" . $currentDate; */
        
         //$num = $trx_pst_pusat[0]->trx_id + 1;
         //$num_padded = sprintf("%04d", $num);
         //$data['id_trx_pst'] = "IUS-" . $num_padded . "/" . $data['tanggal'];
-         $data['id_trx_pst'] = $trx_pst_pusat;
+       //  $data['id_trx_pst'] = $trx_pst_pusat;
 
         //$num = $trx_pst_sobat[0]->trx_id + 1;
         //$num_padded = sprintf("%04d", $num);
         //$data['id_trx_sobat'] = "IPST-" . $num_padded . "/" . $data['tanggal'];
-        $data['id_trx_sobat'] = $trx_pst_sobat;
+        //$data['id_trx_sobat'] = $trx_pst_sobat;
 
         $data['date'] = date("d F Y", $t);
 
@@ -60,9 +60,15 @@ class InventoryPst extends CI_Controller
     {   
 
         $data_post = $_POST;
+        $tgl_trx = date("Y-m-d");
+        $trxData = $this->pst_pusat_model->getTrxId($tgl_trx);
+        $datax = $trxData[0]->trx_id;
+        $lastNoUrut = substr($datax, 4,5);
+        $nextNoUrut = intval($lastNoUrut)+1;
+        $kodeInvoice = 'IUS-' . sprintf('%05s',$nextNoUrut)."/". date('d/m/Y',strtotime($tgl_trx));
 
         $batasTampilData = $_POST['batastampil'];
-        $id_trx_pst = $_POST['id_trx_pst'];
+        $id_trx_pst ="";
         $halaman = (isset($_POST['halaman'])) ? $halaman = $_POST['halaman'] : $halaman = 1;
         $halamanAwal = ($halaman > 1) ? ($halaman * $batasTampilData) - $batasTampilData : 0;
 
@@ -71,7 +77,8 @@ class InventoryPst extends CI_Controller
         $output = array(
             "length" => count($allDataPo),
             "data" => $allDataPo,
-            "length_paging" => count($allDataPoCounter)
+            "length_paging" => count($allDataPoCounter),
+            "id_trx_pst" => $kodeInvoice
 
         );
 
@@ -82,8 +89,16 @@ class InventoryPst extends CI_Controller
     {
 
         $data_post = $_POST;
+
+        $tgl_trx = date("Y-m-d");
+        $trxData = $this->pst_sobat_model->getTrxId($tgl_trx);
+        $datax = $trxData[0]->trx_id;
+        $lastNoUrut = substr($datax, 5,5);
+        $nextNoUrut = intval($lastNoUrut)+1;
+        $kodeInvoice = 'IPST-' . sprintf('%05s',$nextNoUrut)."/". date('d/m/Y',strtotime($tgl_trx));
+
         $batasTampilData = $_POST['batastampil'];
-        $id_trx_sobat = $_POST['id_trx_sobat'];
+        $id_trx_sobat = "";
         $halaman = (isset($_POST['halaman'])) ? $halaman = $_POST['halaman'] : $halaman = 1;
         $halamanAwal = ($halaman > 1) ? ($halaman * $batasTampilData) - $batasTampilData : 0;
 
@@ -92,8 +107,8 @@ class InventoryPst extends CI_Controller
         $output = array(
             "length" => count($allDataPo),
             "data" => $allDataPo,
-            "length_paging" => count($allDataPoCounter)
-
+            "length_paging" => count($allDataPoCounter),
+            "id_trx_pst" => $kodeInvoice
         );
 
         echo json_encode($output);
@@ -198,14 +213,13 @@ class InventoryPst extends CI_Controller
         
         $post = $_POST;
         $type = $post['type'];
+        $tgl_trx = date("Y-m-d");
 
-        $trxData = $this->pst_pusat_model->getTrxIdPst();
-        $trxId = $trxData[0]->trx_id;
-        $lastNoUrut = substr($trxId, 5, 4);
-        $nextNoUrut = intval($lastNoUrut) + 1;
-        $t = time();
-        $currentDate = date("d/m/Y", $t);
-        $kodeInvoice = 'IPO-' . sprintf('%04s', $nextNoUrut) . "/" . $currentDate;
+        $trxData = $this->pst_pusat_model->getTrxIdPst($tgl_trx);
+        $datax = $trxData[0]->trx_id;
+        $lastNoUrut = substr($datax, 4,5);
+        $nextNoUrut = intval($lastNoUrut)+1;
+        $kodeInvoice = 'IPO-' . sprintf('%05s',$nextNoUrut)."/". date('d/m/Y',strtotime($tgl_trx));
 
         $id_supplier = $this->inventorySaveSupplier($post);
 
@@ -249,7 +263,7 @@ class InventoryPst extends CI_Controller
     public function inventorySaveSupplier($data_post){
 
         $where_sup = array(
-            strtolower("nama") => strtolower(trim($data_post['nama_supplier'])),
+            strtolower("nama") => strtolower(trim($data_post['nama'])),
             strtolower("pic") => strtolower(trim($data_post['pic'])),
             strtolower("no_hp") => strtolower(trim($data_post['no_hp']))
         );

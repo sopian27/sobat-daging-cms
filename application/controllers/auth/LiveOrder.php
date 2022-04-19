@@ -16,14 +16,20 @@ class LiveOrder extends CI_Controller{
        // $num = $countData[0]->trx_id + 1;
        // $num_padded = sprintf("%04d", $num);
 
-
-        $trxData = $this->lv_model->getTrxId();
+        $tgl_trx = date("Y-m-d");
+/*         $trxData = $this->lv_model->getTrxId($tgl_trx);
         $trxId = $trxData[0]->trx_id;
         $lastNoUrut = substr($trxId, 5, 4);
         $nextNoUrut = intval($lastNoUrut) + 1;
         $t = time();
         $currentDate = date("d/m/Y", $t);
-        $kode = 'ORLO-' . sprintf('%04s', $nextNoUrut) . "/" . $currentDate;
+        $kode = 'ORLO-' . sprintf('%04s', $nextNoUrut) . "/" . $currentDate; */
+
+        $trxData = $this->lv_model->getTrxId($tgl_trx);
+        $datax = $trxData[0]->trx_id;
+        $lastNoUrut = substr($datax, 5,5);
+        $nextNoUrut = intval($lastNoUrut)+1;
+        $kode = 'ORLO-' . sprintf('%05s',$nextNoUrut)."/". date('d/m/Y',strtotime($tgl_trx));
 
         $t = time();
         $currentDate = date("d/m/Y", $t);
@@ -88,6 +94,23 @@ class LiveOrder extends CI_Controller{
     public function getDetailTrx(){
         $getDetailTrx = $this->lv_model->getliveOrderDetailTrx($_POST['id_trx_order']);
         echo json_encode($getDetailTrx);
+    }
+
+    public function isLiveOrderConfirmed(){
+
+        $where = array(
+                    "id_trx_order"=>$_POST['id_trx_order'],
+                    "status" => "2"
+        );
+
+        $getDetailTrx = $this->lv_model->getWhere($where);
+
+        $output = array(
+            "length" => count($getDetailTrx)
+
+        );
+        
+        echo json_encode($output);
     }
 
     public function liveOrderDetail(){

@@ -1,7 +1,7 @@
 <?php
 class TRXPSTPusatModel extends CI_Model
 {
-    public function getTrxId()
+    public function getTrxId($tgl_trx)
     {
 
         $query = "SELECT 
@@ -9,11 +9,10 @@ class TRXPSTPusatModel extends CI_Model
                 FROM 
                     trx_update_pst_pusat 
                 WHERE 
-                    substring(create_date,1,8) =DATE_FORMAT(SYSDATE(), '%Y%m%d')";
+                date_format(create_date,'%Y-%m-%d') = '$tgl_trx'";
 
         return $this->db->query($query)->result();
-    }
-
+    } 
 
     public function getPstData()
     {
@@ -46,12 +45,12 @@ class TRXPSTPusatModel extends CI_Model
         } else if ($keyword != "" && $create_date != "Januari, Februari, Maret....") {
 
             $query = "select c.id,c.kode,c.nama_barang,c.quantity_pusat,c.update_quantity,c.satuan,c.status,c.note,c.create_date from ( SELECT b.id,b.kode,b.nama_barang,b.quantity_pusat,trx.update_quantity,b.satuan,trx.status,trx.note,b.create_date
-            from barang b left join trx_update_pst_pusat trx on b.kode=trx.kode and status ='0') c where c.nama_barang ='$keyword' and substring(c.create_date,1,6) ='$create_date' limit " . $halaman . ", " . $batasTampilData;
+            from barang b left join trx_update_pst_pusat trx on b.kode=trx.kode and status ='0') c where c.nama_barang ='$keyword' and date_format(c.create_date,'%Y%m') = '$create_date' limit " . $halaman . ", " . $batasTampilData;
 
         } else if ( $create_date != "Januari, Februari, Maret....") {
 
             $query = "select c.id,c.kode,c.nama_barang,c.quantity_pusat,c.update_quantity,c.satuan,c.status,c.note,c.create_date from ( SELECT b.id,b.kode,b.nama_barang,b.quantity_pusat,trx.update_quantity,b.satuan,trx.status,trx.note,b.create_date
-            from barang b left join trx_update_pst_pusat trx on b.kode=trx.kode and status ='0') c where substring(c.create_date,1,6) ='$create_date' limit " . $halaman . ", " . $batasTampilData;
+            from barang b left join trx_update_pst_pusat trx on b.kode=trx.kode and status ='0') c where date_format(c.create_date,'%Y%m') = '$create_date'  limit " . $halaman . ", " . $batasTampilData;
 
         }else{
             $query = "select c.id,c.kode,c.nama_barang,c.quantity_pusat,c.update_quantity,c.satuan,c.status,c.note,c.create_date from ( SELECT b.id,b.kode,b.nama_barang,b.quantity_pusat,trx.update_quantity,b.satuan,trx.status,trx.note,b.create_date
@@ -74,12 +73,12 @@ class TRXPSTPusatModel extends CI_Model
         } else if ($keyword != "" && $create_date != "Januari, Februari, Maret....") {
 
             $query = "select c.id,c.kode,c.nama_barang,c.quantity_pusat,c.update_quantity,c.satuan,c.status,c.note,c.create_date from ( SELECT b.id,b.kode,b.nama_barang,b.quantity_pusat,trx.update_quantity,b.satuan,trx.status,trx.note,b.create_date
-            from barang b left join trx_update_pst_pusat trx on b.kode=trx.kode and status ='0') c where c.nama_barang ='$keyword' and substring(c.create_date,1,6) ='$create_date'";
+            from barang b left join trx_update_pst_pusat trx on b.kode=trx.kode and status ='0') c where c.nama_barang ='$keyword' and date_format(c.create_date,'%Y%m') = '$create_date'";
 
         } else if ( $create_date != "Januari, Februari, Maret....") {
 
             $query = "select c.id,c.kode,c.nama_barang,c.quantity_pusat,c.update_quantity,c.satuan,c.status,c.note,c.create_date from ( SELECT b.id,b.kode,b.nama_barang,b.quantity_pusat,trx.update_quantity,b.satuan,trx.status,trx.note,b.create_date
-            from barang b left join trx_update_pst_pusat trx on b.kode=trx.kode and status ='0') c where substring(c.create_date,1,6) ='$create_date' ";
+            from barang b left join trx_update_pst_pusat trx on b.kode=trx.kode and status ='0') c where date_format(c.create_date,'%Y%m') = '$create_date' ";
 
         }else{
             $query = "select c.id,c.kode,c.nama_barang,c.quantity_pusat,c.update_quantity,c.satuan,c.status,c.note,c.create_date from ( SELECT b.id,b.kode,b.nama_barang,b.quantity_pusat,trx.update_quantity,b.satuan,trx.status,trx.note,b.create_date
@@ -104,7 +103,7 @@ class TRXPSTPusatModel extends CI_Model
     }
 
 
-    public function getTrxIdPst()
+    public function getTrxIdPst($tgl_trx)
     {
 
         $query = "SELECT 
@@ -112,7 +111,7 @@ class TRXPSTPusatModel extends CI_Model
                 FROM 
                     barang_pst 
                 WHERE 
-                    substring(create_date,1,8) =DATE_FORMAT(SYSDATE(), '%Y%m%d')";
+                date_format(create_date,'%Y-%m-%d') = '$tgl_trx'";
 
         return $this->db->query($query)->result();
     }

@@ -19,15 +19,23 @@ class InventoryUpdate extends CI_Controller
 
         $data['judul']  = 'Update PO';
         $countDataBarang = $this->brg_model->countDataBarang();
+        $tgl_trx = date("Y-m-d");
         //$countData = $this->trx_brg_model->getTrxIdUpdate();
 
-        $trxData = $this->trx_brg_model->getTrxIdUpdate();
-        $trxId = $trxData[0]->trx_id;
+        //$trxData = $this->trx_brg_model->getTrxIdUpdate($tgl_trx);
+       /*  $trxId = $trxData[0]->trx_id;
         $lastNoUrut = substr($trxId, 5, 4);
         $nextNoUrut = intval($lastNoUrut) + 1;
         $t = time();
         $currentDate = date("d/m/Y", $t);
-        $kodeInvoice = 'IUPO-' . sprintf('%04s', $nextNoUrut) . "/" . $currentDate;
+        $kodeInvoice = 'IUPO-' . sprintf('%04s', $nextNoUrut) . "/" . $currentDate; */
+
+        $t = time();
+        $trxData = $this->trx_brg_model->getTrxIdUpdate($tgl_trx);
+        $datax = $trxData[0]->trx_id;
+        $lastNoUrut = substr($datax, 5,5);
+        $nextNoUrut = intval($lastNoUrut)+1;
+        $kodeInvoice = 'IUPO-' . sprintf('%05s',$nextNoUrut)."/". date('d/m/Y',strtotime($tgl_trx));
 
         //$countData = $this->trx_brg_model->getTrxId();
         //$num = $countData[0]->trx_id;

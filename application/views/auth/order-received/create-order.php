@@ -97,7 +97,7 @@
                             <button class="form-control-button btn btn-outline-light button-action" onclick="clearAllData();"> Clear All </button>
                         </div>
                         <div class="col-md-2" id="loader-confirmed">
-                            <button class="form-control-button btn btn-outline-light button-action" onclick="savePelangganData();">Confirmed</button>
+                            <button class="form-control-button btn btn-outline-light button-action" onclick="savePelangganData();">Confirm</button>
                         </div>
                         <div class="col-md-2" id="loader" style="display: none;">
                             <button class="form-control-button btn btn-outline-light button-action">Saving Data...</button>
@@ -155,11 +155,11 @@
         var dataload = "";
         dataload += '<tr> '
         dataload += '    <td class="data " data-dat="kode" width="11%"><input type="text" name="kode[]" value="" class="form-control data-kode"></td> '
-        dataload += '    <td class="data" data-dat="nama_barang" width="20%">'
+        dataload += '    <td class="data" data-dat="nama_barang" width="15%">'
         dataload += '       <input type="text" name="nama_barang[]" value="" class="form-control ">'
         dataload += '       <input type="hidden" name="id_barang[]" class="form-control ">'
         dataload += '    </td>'
-        dataload += '    <td class="data" data-dat="keterangan_barang" style="width: 20%;"><input type="text" name="keterangan_barang[]" value="" class="form-control "></td> '
+        dataload += '    <td class="data" data-dat="keterangan_barang" style="width: 15%;"><input type="text" name="keterangan_barang[]" value="" class="form-control "></td> '
         dataload += '    <td class="data" data-dat="quantity" style="width: 9%;"><input type="number" step="0.01" value="1" name="quantity[]" value="" class="form-control data-quantity" onkeypress="validate(event)"></td> '
         dataload += '    <td class="data" data-dat="satuan select-wrapper" style="width: 7%;"> '
         dataload += '      <select name="satuan[]" class="form-control" >'
@@ -169,7 +169,7 @@
         dataload += '    </td> '
         dataload += '    <td class="data" data-dat="harga_satuan" style="width: 12%;"><input type="text" name="harga_satuan[]" style="text-align:right;" value="" class="form-control data-harga-satuan" onkeypress="validate(event)"></td> '
         dataload += '    <td class="data" data-dat="harga_total" style="width: 12%;"><input type="text" name="harga_total[]" style="text-align:right;" value="" class="form-control "></td> '
-        dataload += '    <td class="data" data-dat="keterangan" style="width: 25%;"><input type="text" name="keterangan[]" value="" class="form-control "></td> '
+        dataload += '    <td class="data" data-dat="keterangan" style="width: 30%;"><textarea type="text" name="keterangan[]" value="" class="form-control" rows="1"></textarea></td> '
         dataload += '</tr>'
 
         $('#tbody-table-data').append(dataload);
@@ -211,30 +211,48 @@
             return false;
         }
 
-        const dataTable = document.getElementById('tbody-table-data').querySelectorAll('tr')
-        const dataTableLength = dataTable.length;
+        const dataTable = document.getElementById('tbody-table-data').querySelectorAll('tr');
         let submit = true;
-        var element_select = "";
 
-        for (let i = 0; i < dataTableLength; i++) {
-            const element = dataTable[i];
-            const childElement = element.children;
+        if (dataTable.length == 0) {
+            alert("data barang tidak boleh kosong");
+            return false;
 
-            for (let j = 0; j < childElement.length; j++) {
-                const element1 = childElement[j];
-                const element1Chlid = element1.children;
+        } else {
 
-                for (let k = 0; k < element1Chlid.length; k++) {
-                    const element2 = element1Chlid[k];
-                    element_select = element2.name
-                    content_select = element2.value
-                }
+            const dataTableLength = dataTable.length;
+            var element_select = "";
 
-                if (content_select == null || content_select == "") {
-                    alert("data barang " + content_select + " tidak boleh kosong");
-                    submit = false;
-                    break;
+            for (let i = 0; i < dataTableLength; i++) {
+                const element = dataTable[i];
+                const childElement = element.children;
 
+                for (let j = 0; j < childElement.length; j++) {
+                    const element1 = childElement[j];
+                    const element1Chlid = element1.children;
+
+                    for (let k = 0; k < element1Chlid.length; k++) {
+                        const element2 = element1Chlid[k];
+                        element_select = element2.name
+                        content_select = element2.value
+                    }
+
+                    if (content_select == null || content_select == "") {
+                        console.log("content_select:" + element_select);
+
+                        if (element_select != "keterangan[]" && element_select != "id_barang[]") {
+                            alert("data barang " + element_select + " tidak boleh kosong");
+                            submit = false;
+                            break;
+                        }
+
+                        if (element_select == "id_barang[]") {
+                            alert("data barang kode belum tersedia");
+                            submit = false;
+                            break;
+                        }
+
+                    }
                 }
             }
         }
@@ -503,7 +521,7 @@
                 kode: value
             },
             success: function(data) {
-                if (data["nama_barang"] != "undefined") {
+                if (data.length > 0) {
                     nama_barang[index].value = data[0]["nama_barang"];
                     //harga_satuan[index].value = data[0]["harga_satuan"];
                     id_barang[index].value = data[0]["id"];

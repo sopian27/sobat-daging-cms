@@ -30,7 +30,7 @@ class TRXBarangPoModel extends CI_Model
     }
 
     /* create po */
-    public function getTrxId()
+    public function getTrxId($tgl_trx)
     {
 
         $query = "SELECT 
@@ -38,13 +38,13 @@ class TRXBarangPoModel extends CI_Model
                 FROM 
                     trx_barang_po 
                 WHERE 
-                    substring(create_date,1,8) =DATE_FORMAT(SYSDATE(), '%Y%m%d')";
+                    date_format(create_date,'%Y-%m-%d') = '$tgl_trx'";
 
         return $this->db->query($query)->result();
     }
 
     /* update po */
-    public function getTrxIdUpdate()
+    public function getTrxIdUpdate($tgl_trx)
     {
 
         $query = "SELECT 
@@ -52,7 +52,7 @@ class TRXBarangPoModel extends CI_Model
                     FROM 
                         trx_barang_po 
                     WHERE 
-                        substring(create_date,1,8) =DATE_FORMAT(SYSDATE(), '%Y%m%d')";
+                        date_format(create_date,'%Y-%m-%d') = '$tgl_trx'";
 
         return $this->db->query($query)->result();
     }
@@ -195,7 +195,7 @@ class TRXBarangPoModel extends CI_Model
     }
 
     /* live stock */
-    public function getTrxIdLiveStocks()
+    public function getTrxIdLiveStocks($tgl_trx)
     {
 
         $query = "SELECT 
@@ -203,13 +203,13 @@ class TRXBarangPoModel extends CI_Model
                     FROM 
                         trx_barang_po 
                     WHERE 
-                        substring(create_date,1,8) =DATE_FORMAT(SYSDATE(), '%Y%m%d')";
+                        date_format(create_date,'%Y-%m-%d') = '$tgl_trx'";
 
         return $this->db->query($query)->result();
     }
 
     /* live stock no invoice */
-    public function getTrxIdNoInvoice()
+    public function getTrxIdNoInvoice($tgl_trx)
     {
 
         $query = "SELECT 
@@ -217,7 +217,7 @@ class TRXBarangPoModel extends CI_Model
                         FROM 
                             trx_barang_po 
                         WHERE 
-                            substring(create_date,1,8) =DATE_FORMAT(SYSDATE(), '%Y%m%d')";
+                             date_format(create_date,'%Y-%m-%d') = '$tgl_trx'";
 
         return $this->db->query($query)->result();
     }
@@ -256,7 +256,8 @@ class TRXBarangPoModel extends CI_Model
                 and tbo.status in('0','2','3','4')
                 /*and tbo.id_trx_live_stocks ='' */
                 and s.nama like '%$keyword%'
-                and substring(tbo.update_date,1,8) ='$create_date'
+                /* and substring(tbo.update_date,1,8) ='$create_date' */
+                and date_format(tbo.update_date,'%Y%m%d')='$create_date'
             GROUP BY tbo.id_trx_po
             limit " . $halaman . "," . $batasTampilData;
         } else {
@@ -271,7 +272,8 @@ class TRXBarangPoModel extends CI_Model
                         and tbo.id_trx_update !=''*/
                         and tbo.status in('0','2','3','4')
                         /*and tbo.id_trx_live_stocks ='' */
-                        and substring(tbo.update_date,1,8) ='$create_date'
+                         /* and substring(tbo.update_date,1,8) ='$create_date' */
+                        and date_format(tbo.update_date,'%Y%m%d')='$create_date'
                     GROUP BY tbo.id_trx_po
                     limit " . $halaman . "," . $batasTampilData;
         }
@@ -310,7 +312,8 @@ class TRXBarangPoModel extends CI_Model
                 and tbo.status in('0','2','3','4')
                 /*and tbo.id_trx_live_stocks ='' */
                 and s.nama like '%$keyword%'
-                and substring(tbo.update_date,1,8) ='$create_date'
+               /*  and substring(tbo.update_date,1,8) ='$create_date' */
+                and date_format(tbo.update_date,'%Y%m%d')='$create_date'
             GROUP BY tbo.id_trx_po";
         } else {
 
@@ -324,7 +327,7 @@ class TRXBarangPoModel extends CI_Model
                         and tbo.id_trx_update !=''*/
                         and tbo.status in('0','2','3','4')
                         /*and tbo.id_trx_live_stocks ='' */
-                        and substring(tbo.update_date,1,8) ='$create_date'
+                        and date_format(tbo.update_date,'%Y%m%d')='$create_date'
                     GROUP BY tbo.id_trx_po";
         }
         return $this->db->query($query)->result();
@@ -489,7 +492,8 @@ class TRXBarangPoModel extends CI_Model
                 /*and tbo.status >='3' 
                 and tbo.id_trx_live_stocks !='' */
                 and s.nama like '%$keyword%'
-                and substring(tbo.create_date,1,6) ='$create_date'
+                /* and substring(tbo.create_date,1,6) ='$create_date' */
+                and date_format(tbo.create_date,'%Y%m')='$create_date'
             GROUP BY tbo.id_trx_po,substring(tbo.create_date,5,2)
             limit " . $halaman . "," . $batasTampilData;
         } else {
@@ -502,11 +506,11 @@ class TRXBarangPoModel extends CI_Model
                 tbo.id_supplier = s.id 
                 /*and tbo.status >='3' 
                 and tbo.id_trx_live_stocks !='' */
-                and substring(tbo.create_date,1,6) ='$create_date'
+                /* and substring(tbo.create_date,1,6) ='$create_date' */
+                and date_format(tbo.create_date,'%Y%m')='$create_date'
             GROUP BY tbo.id_trx_po,substring(tbo.create_date,5,2)
             limit " . $halaman . "," . $batasTampilData;
         }
-
 
         return $this->db->query($query)->result();
     }
@@ -565,7 +569,8 @@ class TRXBarangPoModel extends CI_Model
                  /*and tbo.status >='3' 
                 and tbo.id_trx_live_stocks !='' */
                 and s.nama like '%$keyword%'
-                and substring(tbo.create_date,1,6) ='$create_date'
+                /* and substring(tbo.create_date,1,6) ='$create_date' */
+                and date_format(tbo.create_date,'%Y%m')='$create_date'
             GROUP BY tbo.id_trx_po,substring(tbo.create_date,5,2)";
         } else {
 
@@ -577,7 +582,8 @@ class TRXBarangPoModel extends CI_Model
                 tbo.id_supplier = s.id 
                 /*and tbo.status >='3' 
                 and tbo.id_trx_live_stocks !='' */
-                and substring(tbo.create_date,1,6) ='$create_date'
+                /* and substring(tbo.create_date,1,6) ='$create_date' */
+                and date_format(tbo.create_date,'%Y%m')='$create_date'
             GROUP BY tbo.id_trx_po,substring(tbo.create_date,5,2)";
         }
 

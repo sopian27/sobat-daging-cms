@@ -184,7 +184,7 @@
 
                 } else {
                     // $("#div-create-date").html("");
-                    // $('#data-trigger-content').html("");
+                     $('#data-trigger-content').html("");
                     $('.pagination-result_trx').html("");
                 }
 
@@ -277,6 +277,8 @@
                 }else{
 
                     $('.pagination-result_trx_detail').html("");
+                    $("#tbody-table-data").html("");
+                    $("#div-inventory-update-detail").hide();
                 }
             },
             error: function(response) {
@@ -304,9 +306,9 @@
 
     function dateForShow(create_date) {
 
-        var day = create_date.substring(6, 8);
+        var day = create_date.substring(8, 10);
         var year = create_date.substring(0, 4);
-        var month = create_date.substring(4, 6)
+        var month = create_date.substring(5, 7)
 
 
         if (month == "01") {
@@ -341,7 +343,7 @@
     function dateForMonth(create_date) {
 
         var year = create_date.substring(0, 4);
-        var month = create_date.substring(4, 6)
+        var month = create_date.substring(5, 7)
 
 
         if (month == "01") {

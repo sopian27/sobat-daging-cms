@@ -7,7 +7,7 @@
     </div>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-3 offset-md-1"><?= $id_trx_mutasi ?></div>
+            <div class="col-md-3 offset-md-1" ><span><input type="text" name="kode_mutasi" id="kode_mutasi" class="form-control"/></span></div>
             <div class="col-md-2 offset-md-5"><?= $date ?></div>
             <p class="col-md-2 offset-md-10">
                 <button class="btn btn-outline-light" type="button" data-bs-toggle="collapse" data-bs-target="#data-barang-collapse" aria-expanded="false" aria-controls="data-barang-collapse">
@@ -148,7 +148,6 @@
             data: {
                 "halaman": halaman,
                 "batastampil": batasTampilData,
-                "id_trx_mutasi": "<?= $id_trx_mutasi ?>",
                 "keyword": keyword
             },
             success: function(data) {
@@ -210,6 +209,7 @@
 
                     $('.pagination-result').html(paginationViewHTML(keyword, halaman, totalHalaman, batasTampilData))
                     $("#tbody-table-data").html(dataLoad);
+                    $("#kode_mutasi").val(data.id_trx_mutasi);
                     $("#data-trigger").hide();
                     $("#div-inventory-update-detail").show();
 
@@ -247,6 +247,8 @@
         console.log("it:" + it);
         console.log("halaman:" + halaman);
 
+        var kode_mutasi = $("#kode_mutasi").val();
+
         var quantity_mutasi = $("#quantity_mutasi" + it).val();
         var id = $("#id" + it).val();
         var kode = $("#kode" + it).val();
@@ -268,7 +270,7 @@
             dataType: 'json',
             data: {
                 'quantity_mutasi': quantity_mutasi,
-                "id_trx_mutasi": "<?= $id_trx_mutasi ?>",
+                "id_trx_mutasi": kode_mutasi,
                 "kode": kode,
                 "quantity_pusat": quantity_pusat
             },
@@ -301,9 +303,6 @@
                         url: '<?= site_url() ?>/inventory-mutasibarang/update-mutasi',
                         method: 'post',
                         dataType: 'json',
-                        data: {
-                            "id_trx_mutasi": "<?= $id_trx_mutasi ?>",
-                        },
                         success: function(response) {
                             alert("success mutasi barang");
                             location.href = "<?= site_url() ?>/inventory-mutasibarang";
@@ -377,16 +376,12 @@
 
     function clearAllData() {
 
-        var id_trx_mutasi = "<?= $id_trx_mutasi ?>";
 
         $.ajax({
             url: '<?= site_url() ?>/inventory-mutasibarang/clear-all',
             method: 'post',
             dataType: 'json',
             async: false,
-            data: {
-                'id_trx_mutasi': id_trx_mutasi
-            },
             success: function(response) {
                 alert("clear all");
                 location.href = "<?= site_url() ?>/inventory-mutasibarang";

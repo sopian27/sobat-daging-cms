@@ -89,7 +89,8 @@ class ArModel extends CI_Model
                             and po.id_pelanggan = p.id
                             and po.no_invoice= '" . $keyword . "' 
                             or p.nama_pelanggan ='".$keyword."'
-                            and substring(inv.create_date, 1, 6) = '" . $create_date . "'
+                            /*  and substring(inv.create_date, 1, 6) = '".$create_date."' */
+                            and date_format(inv.create_date,'%Y%m')= '".$create_date."'
                             limit " . $halaman . "," . $batasTampilData;
         } else {
 
@@ -120,7 +121,8 @@ class ArModel extends CI_Model
                             po.no_surat_jalan = inv.no_surat_jalan 
                             and b.id = po.id_barang 
                             and po.id_pelanggan = p.id
-                            and substring(inv.create_date, 1, 6) = '" . $create_date . "'
+                            /*  and substring(inv.create_date, 1, 6) = '".$create_date."' */
+                            and date_format(inv.create_date,'%Y%m')= '".$create_date."'
                             limit " . $halaman . "," . $batasTampilData;
         }
 
@@ -196,7 +198,8 @@ class ArModel extends CI_Model
                             and po.id_pelanggan = p.id
                             and po.no_invoice= '" . $keyword . "' 
                             or p.nama_pelanggan ='".$keyword."'
-                            and substring(inv.create_date, 1, 6) = '" . $create_date . "'";
+                            /*  and substring(inv.create_date, 1, 6) = '".$create_date."' */
+                            and date_format(inv.create_date,'%Y%m')= '".$create_date."'";
         } else {
 
             $query = "  select 
@@ -226,7 +229,8 @@ class ArModel extends CI_Model
                             po.no_surat_jalan = inv.no_surat_jalan 
                             and b.id = po.id_barang 
                             and po.id_pelanggan = p.id
-                            and substring(inv.create_date, 1, 6) = '" . $create_date . "'";
+                            /*  and substring(inv.create_date, 1, 6) = '".$create_date."' */
+                            and date_format(inv.create_date,'%Y%m')= '".$create_date."'";
         }
 
         return $this->db->query($query)->result();
@@ -259,7 +263,8 @@ class ArModel extends CI_Model
 
             $query = " SELECT sum(total_tagihan_history) - sum(total_tagihan) as nominal,
                     sum(total_tagihan_history)as total_tagihan FROM `trx_payment_co_invoice`
-                    where substring(update_date,1,6) ='$create_date' /*GROUP by id_trx_payment*/";
+                    where /*  and substring(update_date, 1, 6) = '".$create_date."' */
+                            and date_format(update_date,'%Y%m')= '".$create_date."' /*GROUP by id_trx_payment*/";
         }
 
         return $this->db->query($query)->result();

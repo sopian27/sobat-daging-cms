@@ -10,7 +10,9 @@ class HistoryOrderModel extends CI_Model
         $query = " SELECT id_trx_order,p.nama_pelanggan 
                   FROM trx_order_po t,pelanggan p 
                   WHERE t.id_pelanggan=p.id and status='1' and
-                  substring(t.create_date,1,8) ='$date' group by id_trx_order";
+                  /*  and substring(t.create_date, 1, 6) = '".$date."' */
+                  and date_format(t.create_date,'%Y%m%d')= '".$date."'
+                  group by id_trx_order";
 
         return $this->db->query($query)->result();
     }
@@ -87,7 +89,8 @@ class HistoryOrderModel extends CI_Model
                             and t.id_alamat = al.id
                             and t.id_telephone = tl.id
                             and p.nama_pelanggan like '%$keyword%'
-                            and substring(t.create_date,1,6) ='$create_date'
+                           /*  and substring(t.create_date, 1, 6) = '".$create_date."' */
+                            and date_format(t.create_date,'%Y%m')= '".$create_date."'
                             group by t.id_trx_order
                             order by t.id_trx_order 
                             limit " . $halaman . "," . $batasTampilData;
@@ -102,7 +105,8 @@ class HistoryOrderModel extends CI_Model
                                     and b.id = t.id_barang
                                     and t.id_alamat = al.id
                                     and t.id_telephone = tl.id
-                                    and substring(t.create_date,1,6) ='$create_date'
+                                   /*  and substring(t.create_date, 1, 6) = '".$create_date."' */
+                                    and date_format(t.create_date,'%Y%m')= '".$create_date."'
                                     group by t.id_trx_order
                                     order by t.id_trx_order
                                     limit " . $halaman . "," . $batasTampilData;
@@ -178,7 +182,8 @@ class HistoryOrderModel extends CI_Model
                             and t.id_alamat = al.id
                             and t.id_telephone = tl.id
                             and p.nama_pelanggan like '%$keyword%'
-                            and substring(t.create_date,1,6) ='$create_date'
+                            /*  and substring(t.create_date, 1, 6) = '".$create_date."' */
+                            and date_format(t.create_date,'%Y%m')= '".$create_date."'
                             group by t.id_trx_order
                             order by t.id_trx_order";
         } else {
@@ -192,7 +197,8 @@ class HistoryOrderModel extends CI_Model
                                     and b.id = t.id_barang
                                     and t.id_alamat = al.id
                                     and t.id_telephone = tl.id
-                                    and substring(t.create_date,1,6) ='$create_date'
+                                   /*  and substring(t.create_date, 1, 6) = '".$create_date."' */
+                                   and date_format(t.create_date,'%Y%m')= '".$create_date."'
                                     group by t.id_trx_order
                                     order by t.id_trx_order";
         }

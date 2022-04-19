@@ -191,32 +191,42 @@
         }
 
         const dataTable = document.getElementById('tbody-table-data').querySelectorAll('tr')
-        const dataTableLength = dataTable.length;
         let submit = true;
         var element_select = "";
 
-        for (let i = 0; i < dataTableLength; i++) {
-            const element = dataTable[i];
-            const childElement = element.children;
+        if (dataTable.length == 0) {
+            alert("data barang tidak boleh kosong");
+            return false;
 
-            for (let j = 0; j < childElement.length; j++) {
-                const element1 = childElement[j];
-                const element1Chlid = element1.children;
+        } else {
 
-                for (let k = 0; k < element1Chlid.length; k++) {
-                    const element2 = element1Chlid[k];
-                    element_select = element2.name
-                    content_select = element2.value
-                }
+            const dataTableLength = dataTable.length;
+            var element_select = "";
 
-                if (content_select == null || content_select == "") {
-                    alert("data barang " + content_select + " tidak boleh kosong");
-                    submit = false;
-                    break;
+            for (let i = 0; i < dataTableLength; i++) {
+                const element = dataTable[i];
+                const childElement = element.children;
 
+                for (let j = 0; j < childElement.length; j++) {
+                    const element1 = childElement[j];
+                    const element1Chlid = element1.children;
+
+                    for (let k = 0; k < element1Chlid.length; k++) {
+                        const element2 = element1Chlid[k];
+                        element_select = element2.name
+                        content_select = element2.value
+                    }
+
+                    if (content_select == null || content_select == "") {
+                        alert("data barang " + content_select + " tidak boleh kosong");
+                        submit = false;
+                        break;
+
+                    }
                 }
             }
         }
+
 
         if (submit === true) {
 

@@ -255,7 +255,7 @@
             console.log("submit " + submit);
 
             $.ajax({
-                url: '<?= site_url() ?>/live-order/update-bungkusan-confirm',
+                url: '<?= site_url() ?>/live-order/isliveorderconfirmed',
                 method: 'post',
                 dataType: 'json',
                 async: false,
@@ -263,15 +263,44 @@
                     'id_trx_order': id_trx_order
                 },
                 success: function(response) {
-                    alert("success insert");
-                    var id_trx_encrypt = id_trx_order.replace(/\//g, "_");
-                    location.href = "<?= site_url() ?>/history-order/print-directly/"+id_trx_encrypt;
+
+                    if (response.length == 0) {
+
+                        $.ajax({
+                            url: '<?= site_url() ?>/live-order/update-bungkusan-confirm',
+                            method: 'post',
+                            dataType: 'json',
+                            async: false,
+                            data: {
+                                'id_trx_order': id_trx_order
+                            },
+                            success: function(response) {
+                                alert("success insert");
+                                var id_trx_encrypt = id_trx_order.replace(/\//g, "_");
+                                location.href = "<?= site_url() ?>/history-order/print-directly/" + id_trx_encrypt;
+                            },
+                            error: function(response) {
+                                console.log(response);
+                            }
+
+                        });
+                    } else {
+
+                        location.href = "<?= site_url() ?>/live-order";
+
+                    }
+
+
                 },
                 error: function(response) {
                     console.log(response);
                 }
 
             });
+
+
+
+
 
         } else {
             return false;
@@ -332,13 +361,16 @@
                         dataLoad += "<td>";
                         dataLoad += data.data[i].quantity + " " + data.data[i].satuan
                         dataLoad += "</td>";
-                        dataLoad += '<td width="15%"><input type="text" name="bungkusan[]" id="bungkusan' + i + '"  value="' + data.data[i].bungkusan + '" class="form-control-label quantity-check" onkeypress="validate(event)"></td>'
-                        dataLoad += '<td class="data" data-dat="satuan" width="20%">'
-                        dataLoad += '<input type="text" name="note[]" id="note' + i + '" class="form-control-label " value="' + data.data[i].keterangan + '">'
+                        dataLoad += '<td width="15%">'
+                        dataLoad += '<input type="text" name="bungkusan[]" id="bungkusan' + i + '"  value="' + data.data[i].bungkusan + '" class="form-control-label quantity-check" onkeypress="validate(event)">'
+                        dataLoad += '<input type="hidden" name="note[]" id="note' + i + '" class="form-control-label " value="' + data.data[i].keterangan + '">'
                         dataLoad += '<input type="hidden" name="id[]" id="id' + i + '" value="' + data.data[i].id + '" class="form-control-label">'
                         dataLoad += '<input type="hidden" name="id_trx_order[]" id="id_trx_order" value="' + id_trx_order + '" class="form-control-label">'
                         dataLoad += '<input type="hidden" name="id_trx_live_order[]" id="id_trx_live_order' + i + '"  value="' + id_trx_live_order + '" class="form-control-label">'
                         dataLoad += '</td>'
+                        dataLoad += "<td width='20%'>";
+                        dataLoad += data.data[i].keterangan
+                        dataLoad += "</td>";
                         dataLoad += "<td>";
 
                         if (data.data[i].status == '1') {
@@ -364,11 +396,11 @@
                     $("#nama_pelanggan").val(data.data[0].nama_pelanggan);
                     $("#nomor_hp").val(data.data[0].nomor);
                     $("#alamat").val(data.data[0].alamat);
-                    $("#tgl_pengiriman").val(dateForShow(data.data[0].tgl_pengiriman));
+                    $("#tgl_pengiriman").val(dateForShowVarchar(data.data[0].tgl_pengiriman));
                     $("#data-trigger").hide();
                     $("#div-inventory-update-detail").show();
 
-                }else{
+                } else {
                     $('.pagination-result_trx_detail').html("");
                 }
             },
@@ -607,7 +639,7 @@
 
                             dataload += '<hr style="border-width: 2px;border-style: solid;border-color:white">';
                             dataload += '</div>';
-    
+
                         } else {
                             dataload += '<div class="col-md-6"> ';
                             dataload += '<p style="color:#B89874;">' + data.data[i].nama_pelanggan.toUpperCase() + '</p>';
@@ -816,10 +848,44 @@
 
     function dateForShow(create_date) {
 
+        var day = create_date.substring(8, 10);
+        var year = create_date.substring(0, 4);
+        var month = create_date.substring(5, 7)
+
+        if (month == "01") {
+            month = "Januari";
+        } else if (month == "02") {
+            month = "Februari";
+        } else if (month == "03") {
+            month = "Maret";
+        } else if (month == "04") {
+            month = "April";
+        } else if (month == "05") {
+            month = "Mei";
+        } else if (month == "06") {
+            month = "Juni";
+        } else if (month == "07") {
+            month = "Juli";
+        } else if (month == "08") {
+            month = "Agustus";
+        } else if (month == "09") {
+            month = "September";
+        } else if (month == "10") {
+            month = "Oktober";
+        } else if (month == "11") {
+            month = "November";
+        } else if (month == "12") {
+            month = "Desember";
+        }
+
+        return day + " " + month + " " + year;
+    }
+
+    function dateForShowVarchar(create_date) {
+
         var day = create_date.substring(6, 8);
         var year = create_date.substring(0, 4);
         var month = create_date.substring(4, 6)
-
 
         if (month == "01") {
             month = "Januari";

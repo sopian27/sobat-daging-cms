@@ -16,7 +16,8 @@ class DataMutasiModel extends CI_Model
                    b.id_supplier=s.id and b.kode=po.kode and 
                    po.id_trx_po = inv.id_trx_po and 
                    inv.id_trx_payment=pout.id_trx_payment_po and 
-                   substring(inv.create_date,1,6) ='$date'";
+                   /*  and substring(inv.create_date, 1, 6) = '".$date."' */
+                   and date_format(inv.create_date,'%Y%m')= '".$date."'";
 
         return $this->db->query($query)->result();
     }
@@ -30,7 +31,8 @@ class DataMutasiModel extends CI_Model
                    where po.id_barang= b.id and po.id_pelanggan=p.id and 
                    inv.no_surat_jalan=po.no_surat_jalan and 
                    trx.id_trx_payment_co=inv.id_trx_payment and
-                   substring(inv.create_date,1,6) = '$date'";
+                   /*  and substring(inv.create_date, 1, 6) = '".$date."' */
+                   and date_format(inv.create_date,'%Y%m')= '".$date."'";
 
         return $this->db->query($query)->result();
     }

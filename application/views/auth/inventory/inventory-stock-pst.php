@@ -34,7 +34,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-2 offset-md-1">
-                        <p id="trx_pst_pusat"><?= $id_trx_pst ?></p>
+                        <p id="trx_pst_pusat"><span><input type="text" name="kode_pst_pusat" id="kode_pst_pusat" class="form-control"/></span></p>
                         <div>
                             <a class="form-control-button btn" style="background-color: #B89874;border:none;padding:10px;width:50%"> Gudang Luar </a>
                         </div>
@@ -44,7 +44,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-7">
+                    <div class="col-md-7" style="display:none">
                         <form>
                             <div class="form-group row">
                                 <label for="" class="col-sm-2 offset-md-4 col-form-label">Purchase From : </label>
@@ -138,7 +138,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-2 offset-md-1">
-                        <p id="trx_pst_sobat" style="display: none;"><?= $id_trx_sobat ?></p>
+                        <p id="trx_pst_sobat" style="display: none;"><span><input type="text" name="kode_pst_sobat" id="kode_pst_sobat" class="form-control"/></p>
                         <div>
                             <a class="form-control-button btn btn-outline-light button-action" onclick="showPusat();" style="width:50%"> Gudang Luar </a>
                         </div>
@@ -149,7 +149,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-7">
+                    <div class="col-md-7" style="display:none">
                         <form>
                             <div class="form-group row">
                                 <label for="" class="col-sm-2 offset-md-4 col-form-label">Purchase From : </label>
@@ -516,9 +516,8 @@
 
         var totalDataBarang = response.length_paging;
         var totalHalaman = Math.ceil(totalDataBarang / batasTampilData);
-
         $('.pagination-result-pusat').html(paginationViewHTML(halaman, totalHalaman, keyword, create_date))
-
+        $("#kode_pst_pusat").val(response.id_trx_pst);
         $("#data-pusat").html(dataLoad);
     }
 
@@ -592,7 +591,7 @@
         var totalHalaman = Math.ceil(totalDataBarang / batasTampilData);
 
         $('.pagination-result-sobat').html(paginationViewHTMLSobat(halaman, totalHalaman, keyword, create_date))
-
+        $("#kode_pst_sobat").val(response.id_trx_pst);
         $("#data-sobat").html(dataLoad);
     }
 
@@ -605,7 +604,7 @@
         var satuan = $("#satuan_pusat" + it).val();
         var note = $("#note_pusat" + it).val();
         var kode = $("#kode_pusat" + it).val();
-        var id_trx_pusat = <?= $id_trx_pst ?>;
+
 
         if (checkInvalid(quantity_update)) {
             alert("update pst tidak boleh kosong");
@@ -639,7 +638,7 @@
         var satuan = $("#satuan_pusat" + it).val();
         var note = $("#note_pusat" + it).val();
         var kode = $("#kode_pusat" + it).val();
-        var id_trx_pusat = "<?= $id_trx_pst ?>";
+        var id_trx_pusat = $("#kode_pst_pusat").val();
 
         if (checkInvalid(quantity_update)) {
             alert("update pst tidak boleh kosong");
@@ -686,7 +685,7 @@
         var satuan = $("#satuan_sobat" + it).val();
         var note = $("#note_sobat" + it).val();
         var kode = $("#kode_sobat" + it).val();
-        var id_trx_sobat = "<?= $id_trx_sobat ?>";
+        var id_trx_sobat = $("#kode_pst_sobat").val();
 
         if (checkInvalid(quantity_update)) {
             alert("update pst tidak boleh kosong");
@@ -872,17 +871,22 @@
         if (id == 1) {
             dataTable = document.getElementById('tbody-table-data-pusat').querySelectorAll('tr');
 
-            supplier_name = $("#purchase_from-pusat").val();
+          /*   supplier_name = $("#purchase_from-pusat").val();
             pic = $("#pic-pusat").val();
-            no_hp = $("#no_hp-pusat").val();
+            no_hp = $("#no_hp-pusat").val(); */
 
         } else {
             dataTable = document.getElementById('tbody-table-data-sobat').querySelectorAll('tr');
 
-            supplier_name = $("#purchase_from-sobat").val();
+/*             supplier_name = $("#purchase_from-sobat").val();
             pic = $("#pic-sobat").val();
-            no_hp = $("#no_hp-sobat").val();
+            no_hp = $("#no_hp-sobat").val(); */
         }
+
+        supplier_name ="DEFAULT_SUPP";
+        pic           ="DEFAULT_PIC";
+        no_hp         ="DEFAULT_PHONE";
+
 
         const dataTableLength = dataTable.length
 
@@ -1077,8 +1081,6 @@
             data: {
                 "halaman": halaman,
                 "batastampil": batasTampilData,
-                "id_trx_pst": "<?= $id_trx_pst ?>",
-                "id_trx_sobat": "<?= $id_trx_sobat ?>",
                 "keyword":keyword,
                 "create_date":create_date
             },
@@ -1106,7 +1108,6 @@
             data: {
                 "halaman": halaman,
                 "batastampil": batasTampilData,
-                "id_trx_pst": "<?= $id_trx_pst ?>",
                 "keyword": keyword,
                 "create_date": create_date
             },
@@ -1132,7 +1133,6 @@
             data: {
                 "halaman": halaman,
                 "batastampil": batasTampilData,
-                "id_trx_sobat": "<?= $id_trx_sobat ?>",
                 "keyword": keyword,
                 "create_date": create_date
             },

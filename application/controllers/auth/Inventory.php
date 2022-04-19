@@ -18,17 +18,30 @@ class Inventory extends CI_Controller
     public function index()
     {
         //$countData = $this->trx_brg_model->getTrxId();
-        $countDataBarang = $this->brg_model->countDataBarang();
 
-        $trxData = $this->trx_brg_model->getTrxId();
+        
+        $countDataBarang = $this->brg_model->countDataBarang();
+        $tgl_trx = date("Y-m-d");
+        
+        /*      
+        $trxData = $this->trx_brg_model->getTrxId($tgl_trx);
         $trxId = $trxData[0]->trx_id;
         $lastNoUrut = substr($trxId, 5, 4);
         $nextNoUrut = intval($lastNoUrut) + 1;
         $t = time();
         $currentDate = date("d/m/Y", $t);
-        $kodeInvoice = 'IPO-' . sprintf('%04s', $nextNoUrut) . "/" . $currentDate;
+        $kodeInvoice = 'IPO-' . sprintf('%04s', $nextNoUrut) . "/" . $currentDate; 
+        */
+
+        $t = time();
+        $trxData = $this->trx_brg_model->getTrxId($tgl_trx);
+        $datax = $trxData[0]->trx_id;
+        $lastNoUrut = substr($datax, 4,5);
+        $nextNoUrut = intval($lastNoUrut)+1;
+        $kodeInvoice = 'IPO-' . sprintf('%05s',$nextNoUrut)."/". date('d/m/Y',strtotime($tgl_trx));
 
         $dataBarangCount =  $countDataBarang[0]->CountData;
+
         /*
         $num = $countData[0]->trx_id;
         $lastNoUrut = substr($num, -4);
@@ -38,6 +51,8 @@ class Inventory extends CI_Controller
 
         //$t = time();
         //$currentDate = date("d/m/Y", $t);
+
+
         $data['judul'] = 'Create PO';
         $data['id_trx_po'] = $kodeInvoice;
         $data['date'] = date("d F Y", $t);

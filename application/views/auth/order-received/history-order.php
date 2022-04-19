@@ -129,8 +129,8 @@
             </div>
         </div>
         <div style="margin-top: 10px;"></div>
-        <form method="post" action="<?= site_url()?>/history-order/print" id="form-history-order-print" name="form-history-order-print" target="blank">
-            <input type="hidden" name="id_trx_order" id="id_trx_order"/>
+        <form method="post" action="<?= site_url() ?>/history-order/print" id="form-history-order-print" name="form-history-order-print" target="blank">
+            <input type="hidden" name="id_trx_order" id="id_trx_order" />
         </form>
     </div>
 </div>
@@ -176,7 +176,7 @@
 
     }
 
-    function print(){
+    function print() {
         var kode_co = $("#kode_co").val();
         $("#id_trx_order").val(kode_co);
         $("#form-history-order-print").submit();
@@ -322,13 +322,13 @@
                     $("#nomor_hp").val(response.data[0].nomor);
                     $("#alamat").val(response.data[0].alamat);
                     $("#tgl_co").val(dateForShow(response.data[0].create_date));
-                    $("#tgl_pengiriman").val(dateForShow(response.data[0].tgl_pengiriman));
+                    $("#tgl_pengiriman").val(dateForShowVarchar(response.data[0].tgl_pengiriman));
                     $("#surat_jalan").val((response.data[0].no_surat_jalan));
                     //$("#id_trx_order").val(id_trx_order);
                     $("#tbody-table-data").html(dataLoad);
                     $("#data-trigger").hide();
                     $("#div-inventory-update-detail").show();
-                }else{
+                } else {
                     $('.pagination-result_trx_detail').html("");
                 }
             },
@@ -351,7 +351,7 @@
         }
     });
 
-    function back(){
+    function back() {
         location.href = "<?= site_url() ?>/history-order";
     }
 
@@ -361,10 +361,45 @@
 
     function dateForShow(create_date) {
 
+        var day = create_date.substring(8, 10);
+        var year = create_date.substring(0, 4);
+        var month = create_date.substring(5, 7)
+
+
+        if (month == "01") {
+            month = "Januari";
+        } else if (month == "02") {
+            month = "Februari";
+        } else if (month == "03") {
+            month = "Maret";
+        } else if (month == "04") {
+            month = "April";
+        } else if (month == "05") {
+            month = "Mei";
+        } else if (month == "06") {
+            month = "Juni";
+        } else if (month == "07") {
+            month = "Juli";
+        } else if (month == "08") {
+            month = "Agustus";
+        } else if (month == "09") {
+            month = "September";
+        } else if (month == "10") {
+            month = "Oktober";
+        } else if (month == "11") {
+            month = "November";
+        } else if (month == "12") {
+            month = "Desember";
+        }
+
+        return day + " " + month + " " + year;
+    }
+
+    function dateForShowVarchar(create_date) {
+
         var day = create_date.substring(6, 8);
         var year = create_date.substring(0, 4);
         var month = create_date.substring(4, 6)
-
 
         if (month == "01") {
             month = "Januari";
@@ -398,7 +433,7 @@
     function dateForMonth(create_date) {
 
         var year = create_date.substring(0, 4);
-        var month = create_date.substring(4, 6)
+        var month = create_date.substring(5, 7)
 
 
         if (month == "01") {

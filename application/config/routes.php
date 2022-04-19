@@ -184,6 +184,7 @@ $route['live-order/update-bungkusan'] = 'auth/LiveOrder/updateBungkusan';
 $route['live-order/update-bungkusan-confirm'] = 'auth/LiveOrder/updateBungkusanConfirm';
 $route['live-order/clear-all'] = 'auth/LiveOrder/clearAll';
 $route['live-order/live-order-detailtrx/(:any)'] = 'auth/LiveOrder/liveOrderDetailTrx/$1';
+$route['live-order/isliveorderconfirmed'] = 'auth/LiveOrder/isLiveOrderConfirmed';
 
 /* history-order */
 $route['history-order'] = 'auth/HistoryOrder';
