@@ -196,10 +196,45 @@
 
     function dateForShow(create_date) {
 
+        var day = create_date.substring(8, 10);
+        var year = create_date.substring(0, 4);
+        var month = create_date.substring(5, 7)
+
+
+        if (month == "01") {
+            month = "Januari";
+        } else if (month == "02") {
+            month = "Februari";
+        } else if (month == "03") {
+            month = "Maret";
+        } else if (month == "04") {
+            month = "April";
+        } else if (month == "05") {
+            month = "Mei";
+        } else if (month == "06") {
+            month = "Juni";
+        } else if (month == "07") {
+            month = "Juli";
+        } else if (month == "08") {
+            month = "Agustus";
+        } else if (month == "09") {
+            month = "September";
+        } else if (month == "10") {
+            month = "Oktober";
+        } else if (month == "11") {
+            month = "November";
+        } else if (month == "12") {
+            month = "Desember";
+        }
+
+        return day + " " + month + " " + year;
+    }
+
+    function dateForShowVarchar(create_date) {
+
         var day = create_date.substring(6, 8);
         var year = create_date.substring(0, 4);
         var month = create_date.substring(4, 6)
-
 
         if (month == "01") {
             month = "Januari";
@@ -246,15 +281,22 @@
 
                 var dataLoad = "";
                 var total = 0;
-                var nama_supplier="";
-                var no_invoice="";
+                var nama_supplier = "";
+                var no_invoice = "";
+                var tgl_masuk = "";
+                var tgl_invoice = "";
+                var tgl_payment = "";
+                var tgl_payment_inv = "";
+                var nominal_pembayaran = "";
+                var sisa_pembayaran = "";
+                var status = "";
                 console.log(response);
 
                 if (response.length > 0) {
                     for (let i = 0; i < response.rptobj.length; i++) {
 
                         var isFinished = "";
-                        if (parseFloat(response.rptobj[i].total_tagihan) > 0) {
+                        if (parseFloat(response.rptobj[i].sisa_pembayaran) > 0) {
                             isFinished = "P";
                         } else {
                             isFinished = "F";
@@ -270,15 +312,16 @@
                         dataLoad += "<tr>";
                         dataLoad += "<td >";
                         //dataLoad += response.rptobj[i].nama.toUpperCase();
-                        if(i == 0 ){
-                            dataLoad +=response.rptobj[i].nama.toUpperCase();
-                            nama_supplier = response.rptobj[i].nama;
-                        }else if(i > 0 && nama_supplier.trim()===response.rptobj[i].nama.trim()){
+                        if (i == 0) {
+                            dataLoad += response.rptobj[i].nama.toUpperCase();
+                            nama_supplier = response.rptobj[i].no_invoice;
+                        } else if (i > 0 && nama_supplier.trim() === response.rptobj[i].no_invoice.trim()) {
                             dataLoad += "";
-                        }else if(i > 0 && nama_supplier != response.rptobj[i].nama){
-                            dataLoad +=response.rptobj[i].nama.toUpperCase();
-                            nama_supplier = response.rptobj[i].nama;
+                        } else if (i > 0 && nama_supplier != response.rptobj[i].no_invoice) {
+                            dataLoad += response.rptobj[i].nama.toUpperCase();
+                            nama_supplier = response.rptobj[i].no_invoice;
                         }
+
                         dataLoad += "</td>";
                         dataLoad += "<td >";
                         dataLoad += response.rptobj[i].nama_barang;
@@ -300,40 +343,103 @@
                         dataLoad += "</td>";
                         dataLoad += "<td >";
                         //dataLoad += response.rptobj[i].no_invoice;
-                        if(i == 0 ){
-                            dataLoad +=response.rptobj[i].no_invoice.toUpperCase();
+                        if (i == 0) {
+                            dataLoad += response.rptobj[i].no_invoice.toUpperCase();
                             no_invoice = response.rptobj[i].no_invoice;
-                        }else if(i > 0 && no_invoice.trim()===response.rptobj[i].no_invoice.trim()){
+                        } else if (i > 0 && no_invoice.trim() === response.rptobj[i].no_invoice.trim()) {
                             dataLoad += "";
-                        }else if(i > 0 && no_invoice != response.rptobj[i].no_invoice){
-                            dataLoad +=response.rptobj[i].no_invoice.toUpperCase();
+                        } else if (i > 0 && no_invoice != response.rptobj[i].no_invoice) {
+                            dataLoad += response.rptobj[i].no_invoice.toUpperCase();
                             no_invoice = response.rptobj[i].no_invoice;
                         }
                         dataLoad += "</td>";
                         dataLoad += "<td >";
-                        dataLoad += dateForShow(response.rptobj[i].tgl_masuk);
+                        //dataLoad += dateForShow(response.rptobj[i].tgl_masuk);
+                        if (i == 0) {
+                            dataLoad += dateForShow(response.rptobj[i].tgl_masuk);
+                            tgl_masuk = response.rptobj[i].no_invoice;
+                        } else if (i > 0 && tgl_masuk.trim() === response.rptobj[i].no_invoice.trim()) {
+                            dataLoad += "";
+                        } else if (i > 0 && tgl_masuk != response.rptobj[i].no_invoice) {
+                            dataLoad += dateForShow(response.rptobj[i].tgl_masuk);
+                            tgl_masuk = response.rptobj[i].no_invoice;
+                        }
                         dataLoad += "</td>";
                         dataLoad += "<td >";
-                        dataLoad += dateForShow(response.rptobj[i].tgl_invoice);
+                        //dataLoad += dateForShow(response.rptobj[i].tgl_invoice);
+                        if (i == 0) {
+                            dataLoad += dateForShow(response.rptobj[i].tgl_invoice);
+                            tgl_invoice = response.rptobj[i].no_invoice;
+                        } else if (i > 0 && tgl_invoice.trim() === response.rptobj[i].no_invoice.trim()) {
+                            dataLoad += "";
+                        } else if (i > 0 && tgl_invoice != response.rptobj[i].no_invoice) {
+                            dataLoad += dateForShow(response.rptobj[i].tgl_invoice);
+                            tgl_invoice = response.rptobj[i].no_invoice;
+                        }
                         dataLoad += "</td>";
                         dataLoad += "<td style='color:red'>";
-                        dataLoad += dateForShow(response.rptobj[i].jatuh_tempo);
+                        //dataLoad += dateForShowVarchar(response.rptobj[i].jatuh_tempo);
+                        if (i == 0) {
+                            dataLoad += dateForShowVarchar(response.rptobj[i].jatuh_tempo);
+                            jatuh_tempo = response.rptobj[i].no_invoice;
+                        } else if (i > 0 && jatuh_tempo.trim() === response.rptobj[i].no_invoice.trim()) {
+                            dataLoad += "";
+                        } else if (i > 0 && jatuh_tempo != response.rptobj[i].no_invoice) {
+                            dataLoad += dateForShowVarchar(response.rptobj[i].jatuh_tempo);
+                            jatuh_tempo = response.rptobj[i].no_invoice;
+                        }
                         dataLoad += "</td>";
                         dataLoad += "<td >";
-                        dataLoad += tgl_payment;
+                        //dataLoad += tgl_payment;
+                        if (i == 0) {
+                            dataLoad += tgl_payment;
+                            tgl_payment_inv = response.rptobj[i].no_invoice;
+                        } else if (i > 0 && tgl_payment_inv.trim() === response.rptobj[i].no_invoice.trim()) {
+                            dataLoad += "";
+                        } else if (i > 0 && tgl_payment_inv != response.rptobj[i].no_invoice) {
+                            dataLoad += tgl_payment;
+                            tgl_payment_inv = response.rptobj[i].no_invoice;
+                        }
                         dataLoad += "</td>";
                         dataLoad += "<td >";
                         //if (response.rptobj[i].sisa_pembayaran == response.rptobj[i].nominal_bayar) {
-                        dataLoad += numberWithCommas("Rp. " + response.rptobj[i].nominal_bayar);
+                        //dataLoad += numberWithCommas("Rp. " + response.rptobj[i].nominal_bayar);
                         // } else {
                         //     dataLoad += numberWithCommas("Rp. " + response.rptobj[i].sisa_pembayaran);
                         //  }
+                        if (i == 0) {
+                            dataLoad += numberWithCommas("Rp. " + response.rptobj[i].nominal_bayar);
+                            nominal_bayar = response.rptobj[i].no_invoice;
+                        } else if (i > 0 && nominal_bayar.trim() === response.rptobj[i].no_invoice.trim()) {
+                            dataLoad += "";
+                        } else if (i > 0 && nominal_bayar != response.rptobj[i].no_invoice) {
+                            dataLoad += numberWithCommas("Rp. " + response.rptobj[i].nominal_bayar);
+                            nominal_bayar = response.rptobj[i].no_invoice;
+                        }
                         dataLoad += "</td>";
                         dataLoad += "<td style='color:red'>";
-                        dataLoad += numberWithCommas("Rp. " + response.rptobj[i].sisa_pembayaran);
+                        //dataLoad += numberWithCommas("Rp. " + response.rptobj[i].sisa_pembayaran);
+                        if (i == 0) {
+                            dataLoad += numberWithCommas("Rp. " + response.rptobj[i].sisa_pembayaran);
+                            sisa_pembayaran = response.rptobj[i].no_invoice;
+                        } else if (i > 0 && sisa_pembayaran.trim() === response.rptobj[i].no_invoice.trim()) {
+                            dataLoad += "";
+                        } else if (i > 0 && sisa_pembayaran != response.rptobj[i].no_invoice) {
+                            dataLoad += numberWithCommas("Rp. " + response.rptobj[i].sisa_pembayaran);
+                            sisa_pembayaran = response.rptobj[i].no_invoice;
+                        }
                         dataLoad += "</td>";
                         dataLoad += "<td >";
-                        dataLoad += isFinished;
+                        //dataLoad += isFinished;
+                        if (i == 0) {
+                            dataLoad +=isFinished;
+                            status = response.rptobj[i].no_invoice;
+                        } else if (i > 0 && status.trim() === response.rptobj[i].no_invoice.trim()) {
+                            dataLoad += "";
+                        } else if (i > 0 && status != response.rptobj[i].no_invoice) {
+                            dataLoad +=isFinished;
+                            status = response.rptobj[i].no_invoice;
+                        }
                         dataLoad += "</td>";
                         dataLoad += "</tr>";
 
@@ -343,15 +449,15 @@
                     var totalHalaman = Math.ceil(totalDataBarang / batasTampilData);
 
                     $('.pagination-result').html(paginationViewHTML(halaman, totalHalaman, create_date, keyword, batasTampilData));
-                    
+
 
                     if (create_date != 'Januari, Februari, Maret....') {
-                        
+
                         $("#trx-ar").html("PCPI-0001/" + getMonthTrx(create_date));
                         $("#trx-ar-month").html("Data AR " + getMonthYear(create_date));
                         $("#table-title").html("Data AR " + getMonthYear(create_date));
 
-                    }else{
+                    } else {
                         $("#trx-ar").html("PCPI-0001");
                         $("#trx-ar-month").html("Data AR");
                         $("#table-title").html("Data AR");

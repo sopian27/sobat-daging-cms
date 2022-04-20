@@ -219,7 +219,7 @@
         for (let i = 0; i < response.length_in; i++) {
 
             var isFinished = "";
-            if (parseFloat(response.data_in[i].total_tagihan) > 0) {
+            if (parseFloat(response.data_in[i].sisa_pembayaran) > 0) {
                 isFinished = "P";
             } else {
                 isFinished = "F";
@@ -264,7 +264,7 @@
         for (let i = 0; i < response.length_out; i++) {
 
             var isFinished = "";
-            if (parseFloat(response.data_out[i].total_tagihan) > 0) {
+            if (parseFloat(response.data_out[i].sisa_pembayaran) > 0) {
                 isFinished = "P";
             } else {
                 isFinished = "F";

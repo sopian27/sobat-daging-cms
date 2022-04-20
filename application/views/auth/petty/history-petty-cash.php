@@ -439,6 +439,8 @@
                 if (response.result != undefined) {
                     for (let i = 0; i < response.data.length; i++) {
 
+                        console.log(response);
+
                         var obj = response.data[i];
                         var key = Object.keys(obj)[0];
                         var value = obj[Object.keys(obj)[0]];

@@ -256,5 +256,20 @@ class PaymentHistory extends CI_Controller{
 
         $this->fungsi->PdfGenerator($html,'History Payment Customer','A4','landscape');
     }
+
+    public function printDirectly($url){
+       
+        $html="";
+        $no_surat_jln = str_replace("_","/",$url);
+
+        $t = time();
+        $data['date'] = date("d F Y", $t);
+        $data['data'] = $this->trx_payment_in_history_model->getNoSuratJalanDataCount($no_surat_jln);
+        $data['sumTotal'] = $this->trx_payment_in_history_model->getSumTotal($no_surat_jln);
+        
+        $html = $this->load->view('auth/payment/history-payment-customer-print',$data,true);
+
+        $this->fungsi->PdfGenerator($html,'History Payment Customer','A4','landscape');
+    }
 }
 ?>

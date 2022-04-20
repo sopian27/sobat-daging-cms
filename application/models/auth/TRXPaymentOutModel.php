@@ -2,10 +2,10 @@
 class TRXPaymentOutModel extends CI_Model
 {
 
-    public function getTrxId()
+    public function getTrxId($tgl_trx)
     {
 
-        $query = " select max(id_trx_payment_out) as trx_id from trx_payment_out where substring(create_date,1,8) =DATE_FORMAT(SYSDATE(), '%Y%m%d')";
+        $query = " select max(id_trx_payment_out) as trx_id from trx_payment_out where date_format(create_date,'%Y-%m-%d') = '$tgl_trx'";
 
         return $this->db->query($query)->result();
     }
@@ -15,7 +15,7 @@ class TRXPaymentOutModel extends CI_Model
         $date = $data['date_choosen'];
         $query = "SELECT poo.no_invoice,poo.create_date as tgl_pembayaran, s.nama as nama 
                   from trx_payment_out poo,trx_barang_po po,supplier s 
-                  where poo.no_invoice = po.no_invoice and s.id= po.id_supplier and substring(poo.create_date,1,6) ='$date' group by poo.no_invoice";
+                  where poo.no_invoice = po.no_invoice and s.id= po.id_supplier and date_format(poo.create_date,'%Y%m')= '$date' group by poo.no_invoice";
 
         return $this->db->query($query)->result();
     }
@@ -25,7 +25,7 @@ class TRXPaymentOutModel extends CI_Model
         $date = $data['date_choosen'];
         $query = "SELECT sum(poo.harga_total) as total
                   FROM trx_payment_out poo
-                  where substring(poo.create_date,1,6) ='$date' group by poo.no_invoice";
+                  where date_format(poo.create_date,'%Y%m')= '$date' group by poo.no_invoice";
 
         return $this->db->query($query)->result();
     }

@@ -6,7 +6,7 @@
         <hr style="margin-left:160px;border-width: 2px;border-style: solid;border-color:white">
     </div>
     <div class="row">
-        <div class="col-md-3 offset-md-1"><?= $kode_po ?></div>
+        <div class="col-md-3 offset-md-1"><span><input type="text" name="id_trx_return" id="id_trx_return" class="form-control" /></span></div>
         <div class="col-md-2 offset-md-5 "><?= $date ?></div>
     </div>
 
@@ -26,15 +26,14 @@
                             <label for="" class="col-sm-3 col-form-label">Nama Pelanggan </label>
                             <div class="col-sm-1">:</div>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control-label" id="nama_pelanggan" name="nama_pelanggan">
-                                <input type="hidden" class="form-control" id="id_trx_return" name="id_trx_return" value="<?= $kode_po ?>">
+                                <input type="text" class="form-control-label" id="nama_pelanggan" name="nama_pelanggan" readonly="readonly">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="" class="col-sm-3 col-form-label">Tanggal Pengiriman </label>
                             <div class="col-sm-1">:</div>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control-label" id="tgl_pengiriman" name="tgl_pengiriman">
+                                <input type="text" class="form-control-label" id="tgl_pengiriman" name="tgl_pengiriman" readonly="readonly">
                             </div>
                         </div>
                     </div>
@@ -87,6 +86,7 @@
 
 <script>
     $(function() {
+
         $("#tgl_return").datepicker({
             todayHighlight: true,
             format: "yyyy-mm-dd",
@@ -274,7 +274,7 @@
                     $("#tbody-table-data").html(dataload);
                     var totalDataBarang = data.length_paging;
                     var totalHalaman = Math.ceil(totalDataBarang / batasTampilData);
-
+                    $("#id_trx_return").val(data.kode_po);
                     $('.pagination-result').html(paginationView(halaman, totalHalaman, no_invoice, batasTampilData))
 
 
@@ -321,9 +321,26 @@
 
 
     function confirmData() {
- 
+
         var tgl_return = $("#tgl_return").val();
         var no_invoice = $('#no_invoice').val();
+        var nama_pelanggan = $('#nama_pelanggan').val();
+        var tgl_pengiriman = $('#tgl_pengiriman').val();
+
+        if (checkInvalid(no_invoice)) {
+            alert("nomor invoice tidak boleh kosong");
+            return;
+        }
+
+        if (checkInvalid(nama_pelanggan)) {
+            alert("nama pelanggan tidak boleh kosong");
+            return;
+        }
+
+        if (checkInvalid(tgl_pengiriman)) {
+            alert("tanggal pengiriman tidak boleh kosong");
+            return;
+        }
 
         if (checkInvalid(tgl_return)) {
             alert("tanggal return tidak boleh kosong");
@@ -331,17 +348,39 @@
         }
 
         $.ajax({
-            url: '<?= site_url() ?>/return-cancel/save',
+            url: '<?= site_url() ?>/return-cancel/isconfirmed',
             method: 'post',
             dataType: 'json',
             data: {
-                'tgl_return': tgl_return.replaceAll("-", ""),
                 'no_invoice': no_invoice
             },
             success: function(response) {
 
-                alert("success return cancel");
-                location.href = "<?= site_url() ?>/return-cancel";
+                if (response.length > 0) {
+
+                    $.ajax({
+                        url: '<?= site_url() ?>/return-cancel/save',
+                        method: 'post',
+                        dataType: 'json',
+                        data: {
+                            'tgl_return': tgl_return.replaceAll("-", ""),
+                            'no_invoice': no_invoice
+                        },
+                        success: function(response) {
+
+                            alert("success return cancel");
+                            location.href = "<?= site_url() ?>/return-cancel";
+
+                        },
+                        error: function(response) {
+                            console.log(response);
+                        }
+
+                    });
+                }else{
+                    
+                    alert("quantity barang tidak boleh kosong");
+                }
 
             },
             error: function(response) {
@@ -349,6 +388,7 @@
             }
 
         });
+
     }
 
     function clearAllData() {

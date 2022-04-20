@@ -18,13 +18,14 @@ class ReturnHistory extends CI_Controller{
         $t = time();
         $data['date'] = date("d F Y", $t);
         $current_date = date("d/m/Y", $t);
+        /*   
         $trxData = $this->trx_ret_model->getTrxId();
         $trxId = $trxData[0]->trx_id;
 
         $lastNoUrut = substr($trxId, 5,4);
         $nextNoUrut = intval($lastNoUrut)+1;
         $kodePo = 'RRI-'. sprintf('%04s',$nextNoUrut)."/".$current_date;
-        $data['kode_po'] = $kodePo;
+        $data['kode_po'] = $kodePo; */
 
         $this->load->view('auth/templates/header', $data);
         $this->load->view('auth/templates/return/sidemenu', $data);
@@ -63,8 +64,8 @@ class ReturnHistory extends CI_Controller{
         $halaman = (isset($_POST['halaman'])) ? $halaman = $_POST['halaman'] : $halaman = 1;
         $halamanAwal = ($halaman > 1) ? ($halaman * $batasTampilData) - $batasTampilData : 0;
 
-        $allDataPo = $this->trx_ret_model->getDataDetail($data_post['id_trx_return'], $halamanAwal, $batasTampilData);
-        $allDataPoCounter = $this->trx_ret_model->getDataDetailCount($data_post['id_trx_return']);
+        $allDataPo = $this->trx_ret_model->getDataDetail($data_post['no_invoice'], $halamanAwal, $batasTampilData);
+        $allDataPoCounter = $this->trx_ret_model->getDataDetailCount($data_post['no_invoice']);
 
         $output = array(
             "length" => count($allDataPo),

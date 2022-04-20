@@ -101,7 +101,6 @@
                             <div class="col-sm-5">
                                 <p>:&nbsp;<span id="data-content-pengeluaran-minggu" style="margin-left:40px"></span></p>
                             </div>
-                            <hr class="col-md-5" >
                         </div>
                     </div>
                     <div class="col-md-8 offset-md-6" style="margin-top: 10px;display: none;" id="pengeluaran-gaji-bulan-div">
@@ -112,6 +111,7 @@
                             <div class="col-sm-5">
                                 <p>:&nbsp;<span id="data-content-pengeluaran-bulan" style="margin-left:40px"></span></p>
                             </div>
+                            <hr class="col-md-5" >
                         </div>
                     </div>
                     <div class="col-md-8 offset-md-6" style="margin-top: 10px;display: none;" id="pengeluaran-gaji-total-div">
@@ -439,14 +439,14 @@
             dataLoad += "Rp. " + numberWithCommas(response.data_minggu[i].upah_lembur);
             dataLoad += "</td>";
             dataLoad += "<td>";
-            dataLoad += "Rp. " + numberWithCommas((parseFloat(response.data_minggu[i].upah_harian) +  parseFloat(response.data_minggu[i].upah_lembur))* parseInt(response.data_minggu[i].jml_hari_kerja));
+            dataLoad += "Rp. " + numberWithCommas((parseFloat(response.data_minggu[i].upah_harian) *  parseFloat(response.data_minggu[i].jml_hari_kerja)) + parseInt(response.data_minggu[i].upah_lembur));
             dataLoad += "</td>";
             dataLoad += "</tr>";
 
         }
 
         for (let i = 0; i < response.data_minggu_sum.length; i++) {
-            total += (parseFloat(response.data_minggu_sum[i].upah_harian) +  parseFloat(response.data_minggu_sum[i].upah_lembur))* parseInt(response.data_minggu_sum[i].jml_hari_kerja);
+            total += ((parseFloat(response.data_minggu_sum[i].upah_harian)* parseInt(response.data_minggu_sum[i].jml_hari_kerja)) + parseFloat(response.data_minggu_sum[i].upah_lembur));
         }
 
         var totalDataBarang = response.length_minggu_paging;

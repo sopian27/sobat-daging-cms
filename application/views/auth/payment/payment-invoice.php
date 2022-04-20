@@ -213,7 +213,7 @@
                                 <label for="" class="col-sm-3 col-form-label">Nomor Hp </label>
                                 <div class="col-sm-1">:</div>
                                 <div class="col-sm-4">
-                                    <label for="" class=" col-form-label" id="no_hp"></label>
+                                    <label for="" class=" col-form-label" id="no_hp_po"></label>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -411,7 +411,7 @@
         var no_surat_jalan = $("#no_surat_jalan").val();
 
         if (checkInvalid(bonus)) {
-            alert("bonus tidak boleh kosong");
+            alert("diskon tidak boleh kosong");
             return false;
         }
 
@@ -438,29 +438,56 @@
         total_tagihan = parseFloat(total_tagihan) - parseFloat(bonus.replaceAll(",", ""));
 
         $.ajax({
-            url: '<?= site_url() ?>/payment-invoice-customer/save',
-            data: {
-                'bonus': bonus,
-                'jatuh_tempo': jatuh_tempo.replaceAll("-", ""),
-                'no_rekening': no_rekening,
-                'atas_nama': atas_nama,
-                'total_tagihan': total_tagihan,
-                'id_trx_payment': id_trx_payment,
-                'no_surat_jalan': no_surat_jalan,
-                'bank_tujuan': bank_tujuan
-            },
-            dataType: 'json',
+            url: '<?= site_url() ?>/payment-invoice-customer/isConfirmed',
             method: 'post',
+            dataType: 'json',
+            async: false,
+            data: {
+                'no_surat_jalan': no_surat_jalan
+            },
             success: function(response) {
 
-                alert("success insert data");
-                location.href = "<?= site_url() ?>/payment-invoice";
-            },
-            error: function(xhr, status, error) {
-                //var err = eval("(" + xhr.responseText + ")");
-                console.log(error);
-            }
+                if (response.length == 0) {
 
+                    $.ajax({
+                        url: '<?= site_url() ?>/payment-invoice-customer/save',
+                        data: {
+                            'bonus': bonus,
+                            'jatuh_tempo': jatuh_tempo.replaceAll("-", ""),
+                            'no_rekening': no_rekening,
+                            'atas_nama': atas_nama,
+                            'total_tagihan': total_tagihan,
+                            'id_trx_payment': id_trx_payment,
+                            'no_surat_jalan': no_surat_jalan,
+                            'bank_tujuan': bank_tujuan
+                        },
+                        dataType: 'json',
+                        method: 'post',
+                        success: function(response) {
+
+                            alert("success insert data");
+                            var id_trx_encrypt = no_surat_jalan.replace(/\//g, "_");
+                            location.href = "<?= site_url() ?>/payment-history/print-directly/" + id_trx_encrypt;
+
+                        },
+                        error: function(xhr, status, error) {
+                            //var err = eval("(" + xhr.responseText + ")");
+                            console.log(error);
+                        }
+
+                    });
+
+                } else {
+
+                    location.href = "<?= site_url() ?>/payment-invoice";
+
+                }
+
+
+            },
+            error: function(response) {
+                console.log(response);
+            }
         });
     }
 
@@ -630,8 +657,8 @@
 
                     $("#pembelian_dari").html(data.data_kode_po[0].nama);
                     $("#pic").html(data.data_kode_po[0].pic);
-                    $("#no_hp").html(data.data_kode_po[0].no_hp);
-                    $("#tgl_pembelian").html(dateForShow(data.data_kode_po[0].create_date));
+                    $("#no_hp_po").html(data.data_kode_po[0].no_hp);
+                    $("#tgl_pembelian").html(dateForShowCreateDate(data.data_kode_po[0].create_date));
                     $("#total_tagihan_kode_po").html("Rp. " + numberWithCommas(data.sum_total[0].total));
                     $("#total_tagihan_value_po").val(data.sum_total[0].total);
                     $("#no_invoice_kode_po").val(data.data_kode_po[0].no_invoice);
@@ -694,6 +721,41 @@
         var year = create_date.substring(0, 4);
         var month = create_date.substring(4, 6)
 
+
+        if (month == "01") {
+            month = "Januari";
+        } else if (month == "02") {
+            month = "Februari";
+        } else if (month == "03") {
+            month = "Maret";
+        } else if (month == "04") {
+            month = "April";
+        } else if (month == "05") {
+            month = "Mei";
+        } else if (month == "06") {
+            month = "Juni";
+        } else if (month == "07") {
+            month = "Juli";
+        } else if (month == "08") {
+            month = "Agustus";
+        } else if (month == "09") {
+            month = "September";
+        } else if (month == "10") {
+            month = "Oktober";
+        } else if (month == "11") {
+            month = "November";
+        } else if (month == "12") {
+            month = "Desember";
+        }
+
+        return day + " " + month + " " + year;
+    }
+
+    function dateForShowCreateDate(create_date) {
+
+        var day = create_date.substring(8, 10);
+        var year = create_date.substring(0, 4);
+        var month = create_date.substring(5, 7)
 
         if (month == "01") {
             month = "Januari";

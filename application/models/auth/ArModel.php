@@ -264,7 +264,7 @@ class ArModel extends CI_Model
             $query = " SELECT sum(total_tagihan_history) - sum(total_tagihan) as nominal,
                     sum(total_tagihan_history)as total_tagihan FROM `trx_payment_co_invoice`
                     where /*  and substring(update_date, 1, 6) = '".$create_date."' */
-                            and date_format(update_date,'%Y%m')= '".$create_date."' /*GROUP by id_trx_payment*/";
+                            date_format(update_date,'%Y%m')= '".$create_date."' /*GROUP by id_trx_payment*/";
         }
 
         return $this->db->query($query)->result();

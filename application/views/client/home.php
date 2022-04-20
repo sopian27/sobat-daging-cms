@@ -54,7 +54,7 @@
             <div class="col-md-2 col-sm-4" style="width: 20%;">
                 <div class="card-dashboard card-dashboard-block">
                     <div class="dashboard-div">
-                        <a href="<?= site_url() ?>/inventory"><img src="<?php echo base_url() ?>assets/client/images/img/inventory.png" class="dashboard-image img-dashboard"></a>
+                        <a href="<?= site_url() ?>/inventory"><img src="<?php echo base_url() ?>assets/client/images/img/Sobat_Daging_Icon_1_Inventory.png" class="dashboard-image img-dashboard"></a>
                     </div>
                     <div style="margin-top: 60px;">
                         <h5 class="card-dashboard-title mt-3 mb-3">Inventory</h5>
@@ -65,7 +65,7 @@
             <div class="col-md-2 col-sm-4" style="width: 20%;">
                 <div class="card-dashboard card-dashboard-block">
                     <div class="dashboard-div">
-                        <a href="<?= site_url() ?>/order-received"><img src="<?php echo base_url() ?>assets/client/images/img/order_received.png" class="dashboard-image img-dashboard"></a>
+                        <a href="<?= site_url() ?>/order-received"><img src="<?php echo base_url() ?>assets/client/images/img/Sobat_Daging_Icon_2_Order_Recieved.png" class="dashboard-image img-dashboard"></a>
                     </div>
                     <div style="margin-top: 60px;">
                         <h5 class="card-dashboard-title mt-3 mb-3">Order Received</h5>
@@ -76,7 +76,7 @@
             <div class="col-md-2 col-sm-4" style="width: 20%;">
                 <div class="card-dashboard card-dashboard-block">
                     <div class="dashboard-div">
-                        <a href="<?= site_url() ?>/return-cancel"><img src="<?php echo base_url() ?>assets/client/images/img/return.png" class="dashboard-image img-dashboard"></a>
+                        <a href="<?= site_url() ?>/return-cancel"><img src="<?php echo base_url() ?>assets/client/images/img/Sobat_Daging_Icon_3_Return_Cancel.png" class="dashboard-image img-dashboard"></a>
                     </div>
                     <div style="margin-top: 60px;">
                         <h5 class="card-dashboard-title mt-3 mb-3">Return/Cancel</h5>
@@ -87,7 +87,7 @@
             <div class="col-md-2 col-sm-4" style="width: 20%;">
                 <div class="card-dashboard card-dashboard-block">
                     <div class="dashboard-div">
-                        <a href="<?php echo site_url() ?>/petty-cash"><img src="<?php echo base_url() ?>assets/client/images/img/petty_cash.png" class="dashboard-image img-dashboard"></a>
+                        <a href="<?php echo site_url() ?>/petty-cash"><img src="<?php echo base_url() ?>assets/client/images/img/Sobat_Daging_Icon_4_Patty_Cash.png" class="dashboard-image img-dashboard"></a>
                     </div>
                     <div style="margin-top: 60px;">
                         <h5 class="card-dashboard-title mt-3 mb-3">Petty Cash</h5>
@@ -98,7 +98,7 @@
             <div class="col-md-2 col-sm-4" style="width: 20%;">
                 <div class="card-dashboard card-dashboard-block">
                     <div class="dashboard-div">
-                        <a href="<?=site_url()?>/expenses"><img src="<?php echo base_url() ?>assets/client/images/img/expense.png" class="dashboard-image img-dashboard"></a>
+                        <a href="<?=site_url()?>/expenses"><img src="<?php echo base_url() ?>assets/client/images/img/Sobat_Daging_Icon_5_Expenses.png" class="dashboard-image img-dashboard"></a>
                     </div>
                     <div style="margin-top: 60px;">
                         <h5 class="card-dashboard-title mt-2 mb-2">Expenses</h5>
@@ -113,7 +113,7 @@
             <div class="col-md-2 col-sm-4" style="width: 20%;">
                 <div class="card-dashboard card-dashboard-block">
                     <div class="dashboard-div">
-                        <a href="<?=site_url()?>/other"><img src="<?php echo base_url() ?>assets/client/images/img/order_income.png" class="dashboard-image img-dashboard"></a>
+                        <a href="<?=site_url()?>/other"><img src="<?php echo base_url() ?>assets/client/images/img/Sobat_Daging_Icon_6_Other_Income.png" class="dashboard-image img-dashboard"></a>
                     </div>
                     <div style="margin-top: 60px;">
                         <h5 class="card-dashboard-title mt-3 mb-3">Other Income</h5>
@@ -124,7 +124,7 @@
             <div class="col-md-2 col-sm-4" style="width: 20%;">
                 <div class="card-dashboard card-dashboard-block">
                     <div class="dashboard-div">
-                        <a href="<?php echo site_url() ?>/payment"><img src="<?php echo base_url() ?>assets/client/images/img/payment.png" class="dashboard-image img-dashboard"></a>
+                        <a href="<?php echo site_url() ?>/payment"><img src="<?php echo base_url() ?>assets/client/images/img/Sobat_Daging_Icon_7_Payment.png" class="dashboard-image img-dashboard"></a>
                     </div>
                     <div style="margin-top: 60px;">
                         <h5 class="card-dashboard-title mt-3 mb-3">Payment</h5>
@@ -135,7 +135,7 @@
             <div class="col-md-2 col-sm-4" style="width: 20%;">
                 <div class="card-dashboard card-dashboard-block">
                     <div class="dashboard-div">
-                        <a href="<?=site_url()?>/ap"><img src="<?php echo base_url() ?>assets/client/images/img/database.png" class="dashboard-image img-dashboard"></a>
+                        <a href="<?=site_url()?>/ap"><img src="<?php echo base_url() ?>assets/client/images/img/Sobat_Daging_Icon_8_Database.png" class="dashboard-image img-dashboard"></a>
                     </div>
                     <div style="margin-top: 60px;">
                         <h5 class="card-dashboard-title mt-3 mb-3">Database</h5>
@@ -146,7 +146,7 @@
             <div class="col-md-2 col-sm-4" style="width: 20%;">
                 <div class="card-dashboard card-dashboard-block">
                     <div class="dashboard-div">
-                        <a href="<?=site_url()?>/expenses"><img src="<?php echo base_url() ?>assets/client/images/img/summary.png" class="dashboard-image img-dashboard"></a>
+                        <a href="<?=site_url()?>/expenses"><img src="<?php echo base_url() ?>assets/client/images/img/Sobat_Daging_Icon_9_Summary.png" class="dashboard-image img-dashboard"></a>
                     </div>
                     <div style="margin-top: 60px;">
                         <h5 class="card-dashboard-title mt-3 mb-3">Summary</h5>

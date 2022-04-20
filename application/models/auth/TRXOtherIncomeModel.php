@@ -7,10 +7,10 @@ class TRXOtherIncomeModel extends CI_Model
         return $this->db->insert_id();  
     }
 
-    public function getTrxId()
+    public function getTrxId($tgl_trx)
     {
 
-        $query = " select max(id_trx_ot) as trx_id from ot_income where substring(create_date,1,8) =DATE_FORMAT(SYSDATE(), '%Y%m%d')";
+        $query = " select max(id_trx_ot) as trx_id from ot_income where date_format(create_date,'%Y-%m-%d') = '$tgl_trx'";
 
         return $this->db->query($query)->result();
     }
@@ -20,7 +20,7 @@ class TRXOtherIncomeModel extends CI_Model
         $date = $data['date_value'];
         $query = " SELECT penggunaan_dana,keterangan,id_trx_ot as kode 
                    FROM ot_income 
-                   WHERE substring(create_date,1,6) = '$date'";
+                   WHERE date_format(create_date,'%Y%m')= '$date'";
 
         return $this->db->query($query)->result();
     }
@@ -36,22 +36,21 @@ class TRXOtherIncomeModel extends CI_Model
 
             $query = "  SELECT sum(penggunaan_dana) as total
                         FROM ot_income 
-                        WHERE id_trx_ot like '%$keyword%' group by substring(create_date,1,6) ";
+                        WHERE keterangan like '%$keyword%' group by date_format(create_date,'%Y%m') ";
 
         } else if ($keyword != "" && $date != "Januari, Februari, Maret....") {
 
             $query = "  SELECT sum(penggunaan_dana) as total
                         FROM ot_income 
-                        WHERE id_trx_ot like '%$keyword%' and substring(create_date,1,6) ='$date' group by substring(create_date,1,6) ";
+                        WHERE keterangan like '%$keyword%' and date_format(create_date,'%Y%m')= '$date' group by date_format(create_date,'%Y%m')";
 
         } else {
 
             $query = " SELECT sum(penggunaan_dana) as total
                         FROM ot_income 
-                        WHERE substring(create_date,1,6) ='$date' group by substring(create_date,1,6) ";
+                        WHERE date_format(create_date,'%Y%m')= '$date' group by date_format(create_date,'%Y%m') ";
 
-        }
-       
+        }       
         return $this->db->query($query)->result();
     }
 
@@ -78,8 +77,8 @@ class TRXOtherIncomeModel extends CI_Model
                         from 
                             ot_income b
                         where 
-                            b.keterangan like '%$keyword%' 
-                            and substring(b.create_date,1,6)= '" . $create_date . "' 
+                            b.keterangan like '%$keyword%' and
+                            date_format(create_date,'%Y%m')= '$create_date'
                         order by b.id
                             limit " . $halaman . "," . $batasTampilData;
 
@@ -90,7 +89,7 @@ class TRXOtherIncomeModel extends CI_Model
                         from 
                             ot_income b
                         where 
-                            substring(b.create_date,1,6)= '" . $create_date . "'                          
+                            date_format(create_date,'%Y%m')= '$create_date'                          
                         order by b.id
                             limit " . $halaman . "," . $batasTampilData;
         }
@@ -121,7 +120,7 @@ class TRXOtherIncomeModel extends CI_Model
                             ot_income b
                         where 
                             b.keterangan like '%$keyword%' 
-                            and substring(b.create_date,1,6)= '" . $create_date . "' 
+                            and date_format(create_date,'%Y%m')= '$create_date' 
                         order by b.id";
 
         } else {
@@ -131,7 +130,7 @@ class TRXOtherIncomeModel extends CI_Model
                         from 
                             ot_income b
                         where 
-                            substring(b.create_date,1,6)= '" . $create_date . "'                          
+                            date_format(create_date,'%Y%m')= '$create_date'                         
                         order by b.id";
         }
 

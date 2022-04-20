@@ -20,9 +20,10 @@ class PettyCashOut extends CI_Controller{
         $t = time();
         $data['date'] = date("d F Y", $t);
         $current_date = date("d/m/Y", $t);
-        $trxData = $this->trx_petty_out_model->getTrxId();
+        //$trxData = $this->trx_petty_out_model->getTrxId();
         $saldo=$this->trx_petty_in_model->getSaldo();
-        $trxId = $trxData[0]->trx_id;
+        //$trxId = $trxData[0]->trx_id;
+        $tgl_trx = date("Y-m-d");
 
         if(empty($saldo)){
             $data['saldo'] = "0";
@@ -30,10 +31,18 @@ class PettyCashOut extends CI_Controller{
             $data['saldo'] = $saldo[0]->saldo;
         }
 
-        $lastNoUrut = substr($trxId, 5,4);
+        $trxData = $this->trx_petty_out_model->getTrxId($tgl_trx);
+        $datax = $trxData[0]->trx_id;
+        $lastNoUrut = substr($datax, 5,5);
+        $nextNoUrut = intval($lastNoUrut)+1;
+        $kodePo = 'PCPO-' . sprintf('%05s',$nextNoUrut)."/". date('d/m/Y',strtotime($tgl_trx));
+
+        $data['kode_po'] = $kodePo;
+
+      /*   $lastNoUrut = substr($trxId, 5,4);
         $nextNoUrut = intval($lastNoUrut)+1;
         $kodePo = 'PCPO-'. sprintf('%04s',$nextNoUrut)."/".$current_date;
-        $data['kode_po'] = $kodePo;
+        $data['kode_po'] = $kodePo; */
 
         $this->load->view('auth/templates/header', $data);
         $this->load->view('auth/templates/petty/sidemenu', $data);
@@ -64,7 +73,7 @@ class PettyCashOut extends CI_Controller{
             } else {
 
                 $data=array(
-                    "saldo_awal" =>  str_replace(",", "", $data_post['saldo_awal']),
+                    "saldo_awal" =>  str_replace(".", "", $data_post['saldo_awal']),
                     "tambahan_saldo" =>  str_replace(",", "", $data_post['tambahan_saldo']),
                     "keterangan"=> $data_post['keterangan'],
                     "upload_bukti" => $file_name,
@@ -79,7 +88,7 @@ class PettyCashOut extends CI_Controller{
         }else{
 
             $data=array(
-                "saldo_awal" =>  str_replace(",", "", $data_post['saldo_awal']),
+                "saldo_awal" =>  str_replace(".", "", $data_post['saldo_awal']),
                 "tambahan_saldo" =>  str_replace(",", "", $data_post['tambahan_saldo']),
                 "keterangan"=> $data_post['keterangan'],
                 "id_trx_petty_cash"=> $data_post['id_trx_petty_cash'],

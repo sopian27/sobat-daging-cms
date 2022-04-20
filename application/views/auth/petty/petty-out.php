@@ -20,7 +20,8 @@
                                 <label for="" class="col-sm-4 col-form-label">Saldo Awal </label>
                                 <div class="col-sm-1" style="width:10%">: &nbsp;(Rp)</div>
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control-label" id="saldo_awal" style="text-align:right;" name="saldo_awal" placeholder="Rp. 0">
+                                    <input type="text" class="form-control-label" style="text-align:right;" readonly="readonly" id="saldo-init">
+                                    <input type="hidden" class="form-control-label" id="saldo_awal" name="saldo_awal">
                                     <input type="hidden" class="form-control-label" id="id_trx_petty_cash" name="id_trx_petty_cash" value="<?= $kode_po ?> ">
                                 </div>
                             </div>
@@ -113,6 +114,7 @@
                 console.log(response);
                 var saldo = response.saldo;
                 $("#saldo_awal").val(numberWithCommas(saldo));
+                $("#saldo-init").val(numberWithCommas(saldo));
 
             },
             error: function(response) {

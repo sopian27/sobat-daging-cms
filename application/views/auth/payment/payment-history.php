@@ -781,9 +781,9 @@
 
     function dateForShow(create_date) {
 
-        var day = create_date.substring(6, 8);
+        var day = create_date.substring(8, 10);
         var year = create_date.substring(0, 4);
-        var month = create_date.substring(4, 6)
+        var month = create_date.substring(5, 7)
 
 
         if (month == "01") {
@@ -1125,7 +1125,7 @@
 
                         }
 
-
+                        var sisanya = parseFloat(data.data[0].harga_total) - parseFloat(data.data[0].nominal_bayar);
                         dataload += '<div class="form-group row" >' +
                             '<label for="" class="col-sm-6 col-form-label">Nama Pelanggan </label>' +
                             '<div class="col-sm-1">:</div>' +
@@ -1156,7 +1156,7 @@
                             '<label for="" class="col-sm-6 col-form-label">Kekurangan Pembayaran </label>' +
                             '<div class="col-sm-1">:</div>' +
                             '<div class="col-sm-5">' +
-                            '<label>' + "Rp. 0" + '</label>' +
+                            '<label >Rp. ' + numberWithCommas(sisa) + '</label>' +
                             '</div>' +
                             '</div>';
 
@@ -1291,7 +1291,7 @@
 
                         }
 
-
+                        var sisanya = parseFloat(data.data[0].harga_total) - parseFloat(data.data[0].nominal_bayar);
                         dataload += '<div class="form-group row" >' +
                             '<label for="" class="col-sm-6 col-form-label">Nama Pelanggan </label>' +
                             '<div class="col-sm-1">:</div>' +
@@ -1322,7 +1322,7 @@
                             '<label for="" class="col-sm-6 col-form-label">Kekurangan Pembayaran </label>' +
                             '<div class="col-sm-1">:</div>' +
                             '<div class="col-sm-5">' +
-                            '<label>' + "Rp. 0" + '</label>' +
+                            '<label >Rp. ' + numberWithCommas(sisa) + '</label>' +
                             '</div>' +
                             '</div>';
 

@@ -16,13 +16,22 @@ class OperationalExpenses extends CI_Controller
         $data['subMenu'] = "EXPENSES";
         $t = time();
         $data['date'] = date("d F Y", $t);
-        $current_date = date("d/m/Y", $t);
-        $trxData = $this->trx_exp_model->getTrxId();
+        //$current_date = date("d/m/Y", $t);
+        /* $trxData = $this->trx_exp_model->getTrxId();
         $trxId = $trxData[0]->trx_id;
 
         $lastNoUrut = substr($trxId, 5, 4);
         $nextNoUrut = intval($lastNoUrut) + 1;
         $kodePo = 'OPEX-' . sprintf('%04s', $nextNoUrut) . "/" . $current_date;
+        $data['kode_po'] = $kodePo; */
+        $tgl_trx = date("Y-m-d");
+
+        $trxData = $this->trx_exp_model->getTrxId($tgl_trx);
+        $datax = $trxData[0]->trx_id;
+        $lastNoUrut = substr($datax, 5,5);
+        $nextNoUrut = intval($lastNoUrut)+1;
+        $kodePo = 'OPEX-' . sprintf('%05s',$nextNoUrut)."/". date('d/m/Y',strtotime($tgl_trx));
+
         $data['kode_po'] = $kodePo;
 
         $this->load->view('auth/templates/header', $data);

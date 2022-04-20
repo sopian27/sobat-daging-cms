@@ -2,10 +2,10 @@
 class TRXReturnModel extends CI_Model
 {
 
-    public function getTrxId()
+    public function getTrxId($tgl_trx)
     {
 
-        $query = " select max(id_trx_return) as trx_id from trx_return where substring(create_date,1,8) =DATE_FORMAT(SYSDATE(), '%Y%m%d')";
+        $query = " select max(id_trx_return) as trx_id from trx_return where date_format(create_date,'%Y-%m-%d') = '$tgl_trx'";
 
         return $this->db->query($query)->result();
     }
@@ -73,7 +73,7 @@ class TRXReturnModel extends CI_Model
                         FROM trx_return tr, trx_order_po po, pelanggan p 
                         where tr.id_trx_po=po.id and po.id_pelanggan=p.id 
                         and tr.no_invoice ='$keyword'
-                        and substring(tr.create_date,1,6) ='$create_date'
+                        and date_format(tr.create_date,'%Y%m') = '$create_date'
                         GROUP BY day
                         limit " . $halaman . "," . $batasTampilData;
 
@@ -82,7 +82,7 @@ class TRXReturnModel extends CI_Model
             $query = "  SELECT tr.id_trx_return,p.nama_pelanggan,tr.tgl_return,substring(tr.tgl_return,7,2) as day,tr.no_invoice,tr.create_date 
                         FROM trx_return tr, trx_order_po po, pelanggan p 
                         where tr.id_trx_po=po.id and po.id_pelanggan=p.id 
-                        and  substring(tr.create_date,1,6) ='$create_date'
+                        and date_format(tr.create_date,'%Y%m') = '$create_date'
                         GROUP BY day
                         limit " . $halaman . "," . $batasTampilData;
         }
@@ -108,7 +108,7 @@ class TRXReturnModel extends CI_Model
                     FROM trx_return tr, trx_order_po po, pelanggan p 
                     where tr.id_trx_po=po.id and po.id_pelanggan=p.id 
                     and tr.no_invoice ='$keyword'
-                    and substring(tr.create_date,1,6) ='$create_date'
+                    and date_format(tr.create_date,'%Y%m') = '$create_date'
                     GROUP BY day";
 
     } else {
@@ -116,7 +116,7 @@ class TRXReturnModel extends CI_Model
         $query = "  SELECT tr.id_trx_return,p.nama_pelanggan,tr.tgl_return,substring(tr.tgl_return,7,2) as day,tr.no_invoice,tr.create_date 
                     FROM trx_return tr, trx_order_po po, pelanggan p 
                     where tr.id_trx_po=po.id and po.id_pelanggan=p.id 
-                    and  substring(tr.create_date,1,6) ='$create_date'
+                    and date_format(tr.create_date,'%Y%m') = '$create_date'
                     GROUP BY day";
     }
 
@@ -124,27 +124,27 @@ class TRXReturnModel extends CI_Model
         return $this->db->query($query)->result();
     }
 
-    public function getDataDetail($id_trx_return, $halaman, $batasTampilData)
+    public function getDataDetail($no_invoice, $halaman, $batasTampilData)
     {
 
         $query = "SELECT tr.id_trx_return,p.nama_pelanggan,tr.tgl_return,substring(tr.tgl_return,7,2) as day,tr.no_invoice,tr.tgl_return,
                 po.id,p.nama_pelanggan,po.tgl_pengiriman,b.kode,b.nama_barang,tr.quantity_before,tr.quantity_return,tr.note  
                 FROM trx_return tr, trx_order_po po, pelanggan p,barang b 
                 where tr.id_trx_po=po.id and po.id_pelanggan=p.id and po.id_barang=b.id
-                and tr.id_trx_return='$id_trx_return'
+                and tr.no_invoice='$no_invoice'
                 limit " . $halaman . "," . $batasTampilData;
 
         return $this->db->query($query)->result();
     }
 
-    public function getDataDetailCount($id_trx_return)
+    public function getDataDetailCount($no_invoice)
     {
 
         $query = "SELECT tr.id_trx_return,p.nama_pelanggan,tr.tgl_return,substring(tr.tgl_return,7,2) as day,tr.no_invoice,tr.tgl_return,
                 po.id,p.nama_pelanggan,po.tgl_pengiriman,b.kode,b.nama_barang,tr.quantity_before,tr.quantity_return,tr.note  
                 FROM trx_return tr, trx_order_po po, pelanggan p,barang b 
                 where tr.id_trx_po=po.id and po.id_pelanggan=p.id and po.id_barang=b.id
-                and tr.id_trx_return='$id_trx_return'";
+                and tr.no_invoice='$no_invoice'";
 
         return $this->db->query($query)->result();
     }
@@ -161,5 +161,10 @@ class TRXReturnModel extends CI_Model
         $this->db->set($data);
         $this->db->where($where);
         $this->db->update('trx_return');
+    }
+
+    public function getWhere($where)
+    {
+        return $this->db->get_where('trx_return', $where)->result();
     }
 }

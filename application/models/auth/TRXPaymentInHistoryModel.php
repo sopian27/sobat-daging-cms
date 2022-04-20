@@ -1,13 +1,13 @@
 <?php
 class TRXPaymentInHistoryModel extends CI_Model
 {
-    public function getTrxId()
+/*     public function getTrxId()
     {
 
         $query = " select max(id_trx_payment_in) as trx_id from trx_payment_in where substring(create_date,1,8) =DATE_FORMAT(SYSDATE(), '%Y%m%d')";
 
         return $this->db->query($query)->result();
-    }
+    } */
 
     public function getInvoiceData($data)
     {
@@ -48,7 +48,7 @@ class TRXPaymentInHistoryModel extends CI_Model
 
             $query = "SELECT sum(poo.harga_total) as total
             FROM trx_payment_in poo
-            where substring(poo.create_date,1,6) ='$create_date' group by poo.no_invoice";
+            where date_format(poo.create_date,'%Y%m')= '$create_date' group by poo.no_invoice";
 
         }
 
@@ -72,7 +72,7 @@ class TRXPaymentInHistoryModel extends CI_Model
 
             $query = " SELECT po.no_invoice,pi.create_date as tgl_pembayaran, p.nama_pelanggan as nama 
             from trx_payment_co_invoice pi,trx_order_po po,pelanggan p
-            where pi.no_surat_jalan = po.no_surat_jalan and p.id= po.id_pelanggan and substring(pi.create_date,1,6) ='$create_date' group by pi.no_surat_jalan
+            where pi.no_surat_jalan = po.no_surat_jalan and p.id= po.id_pelanggan and date_format(pi.create_date,'%Y%m')= '$create_date' group by pi.no_surat_jalan
             limit " . $halaman . "," . $batasTampilData;
         }
 
@@ -93,7 +93,7 @@ class TRXPaymentInHistoryModel extends CI_Model
         } else {
             $query = " SELECT po.no_invoice,pi.create_date as tgl_pembayaran, p.nama_pelanggan as nama 
             from trx_payment_co_invoice pi,trx_order_po po,pelanggan p
-            where pi.no_surat_jalan = po.no_surat_jalan and p.id= po.id_pelanggan and substring(pi.create_date,1,6) ='$create_date' group by pi.no_surat_jalan";
+            where pi.no_surat_jalan = po.no_surat_jalan and p.id= po.id_pelanggan and date_format(pi.create_date,'%Y%m')= '$create_date' group by pi.no_surat_jalan";
 
 
         }
@@ -121,7 +121,7 @@ class TRXPaymentInHistoryModel extends CI_Model
             from trx_order_po po, pelanggan p,trx_payment_co_invoice inv  
             where po.id_pelanggan=p.id 
             and inv.no_surat_jalan = po.no_surat_jalan 
-            and substring(po.create_date,1,6) ='$create_date' group by po.no_invoice
+            and date_format(po.create_date,'%Y%m')= '$create_date' group by po.no_invoice
             limit " . $halaman . "," . $batasTampilData;
 
 
@@ -149,7 +149,7 @@ class TRXPaymentInHistoryModel extends CI_Model
             from trx_order_po po, pelanggan p,trx_payment_co_invoice inv  
             where po.id_pelanggan=p.id 
             and inv.no_surat_jalan = po.no_surat_jalan 
-            and substring(po.create_date,1,6) ='$create_date' group by po.no_invoice";
+            and date_format(po.create_date,'%Y%m')= '$create_date' group by po.no_invoice";
 
         }
 
@@ -167,7 +167,7 @@ class TRXPaymentInHistoryModel extends CI_Model
                     /*and co.no_surat_jalan = t.no_surat_jalan*/
                     and t.id_telephone = te.id
                     and t.id_alamat = a.id
-                    and t.no_surat_jalan ='$no_surat_jalan' group by b.id 
+                    and t.no_surat_jalan ='$no_surat_jalan' group by t.id 
                     limit " . $halaman . "," . $batasTampilData;
 
         return $this->db->query($query)->result();
@@ -184,7 +184,7 @@ class TRXPaymentInHistoryModel extends CI_Model
                     /*and co.no_surat_jalan = t.no_surat_jalan*/
                     and t.id_telephone = te.id
                     and t.id_alamat = a.id
-                    and t.no_surat_jalan ='$no_surat_jalan' group by b.id";
+                    and t.no_surat_jalan ='$no_surat_jalan' group by t.id";
 
         return $this->db->query($query)->result();
     }

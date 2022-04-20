@@ -24,20 +24,35 @@ class PaymentInvoice extends CI_Controller
         $data['subMenu'] = "PAYMENT";
         $t = time();
         $data['date'] = date("d F Y", $t);
-        $current_date = date("d/m/Y", $t);
+/*         $current_date = date("d/m/Y", $t);
         $trxData = $this->trx_payment_inv_model->getTrxId();
         $trxDataPo = $this->trx_payment_inv_model->getTrxIdPo();
         $trxId = $trxData[0]->trx_id;
-        $trxIdPo = $trxDataPo[0]->trx_id;
+        $trxIdPo = $trxDataPo[0]->trx_id; */
 
-        $lastNoUrut = substr($trxId, 5, 4);
+
+        $tgl_trx = date("Y-m-d");
+
+        $trxData = $this->trx_payment_inv_model->getTrxId($tgl_trx);
+        $datax = $trxData[0]->trx_id;
+        $lastNoUrut = substr($datax, 4,5);
+        $nextNoUrut = intval($lastNoUrut)+1;
+        $kodePo = 'PIC-' . sprintf('%05s',$nextNoUrut)."/". date('d/m/Y',strtotime($tgl_trx));
+
+/*         $lastNoUrut = substr($trxId, 5, 4);
         $nextNoUrut = intval($lastNoUrut) + 1;
-        $kodePo = 'PIC-' . sprintf('%04s', $nextNoUrut) . "/" . $current_date;
+        $kodePo = 'PIC-' . sprintf('%04s', $nextNoUrut) . "/" . $current_date; */
         $data['no_invoice_co'] = $kodePo;
 
-        $lastNoUrutPo = substr($trxIdPo, 5, 4);
+        $trxDataPo = $this->trx_payment_inv_model->getTrxIdPo($tgl_trx);
+        $dataxPo = $trxDataPo[0]->trx_id;
+        $lastNoUrutPo = substr($dataxPo, 4,5);
+        $nextNoUrutPo = intval($lastNoUrutPo)+1;
+        $kodePoPo = 'PIP-' . sprintf('%05s',$nextNoUrutPo)."/". date('d/m/Y',strtotime($tgl_trx));
+
+/*         $lastNoUrutPo = substr($trxIdPo, 5, 4);
         $nextNoUrutPo = intval($lastNoUrutPo) + 1;
-        $kodePoPo = 'PIP-' . sprintf('%04s', $nextNoUrutPo) . "/" . $current_date;
+        $kodePoPo = 'PIP-' . sprintf('%04s', $nextNoUrutPo) . "/" . $current_date; */
         $data['no_invoice_co_po'] = $kodePoPo;
 
         /*
@@ -260,9 +275,34 @@ class PaymentInvoice extends CI_Controller
     public function printPreview()
     {
 
-        $post_data = array("no_surat_jalan" => $_POST['no_surat_jalan']);
+/*         $post_data = array("no_surat_jalan" => $_POST['no_surat_jalan']);
         $data['historyOrderData'] = $this->history_order_model->getHistoryOrderDetailTrxBySsj($post_data);
         $data['sumTotal'] = $this->trx_payment_inv_model->getSumTotal($post_data);
+
+        $data['judul']   = 'Invoice';
+        $data['subMenu'] = "PAYMENT";
+        $t = time();
+        $data['date'] = date("YmdHis"); */
+
+        $data['judul']   = 'Invoice';
+        $data['subMenu'] = "PAYMENT";
+        $t = time();
+        $data['date'] = date("d F Y", $t);
+        $data['historyOrderData'] = $this->trx_payment_in_history_model->getNoSuratJalanDataCount($_POST['no_surat_jln']);
+        $data['sumTotal'] = $this->trx_payment_in_history_model->getSumTotal($_POST['no_surat_jln']);
+
+        $this->load->view('auth/templates/header', $data);
+        $this->load->view('auth/templates/payment/sidemenu', $data);
+        $this->load->view('auth/payment/payment-invoice-co-print', $data);
+        $this->load->view('auth/templates/footer');
+    }
+
+    public function printPreviewDirectly($url)
+    {
+        $no_surat_jalan = str_replace("_","/",$url);
+        //$post_data = array("no_surat_jalan" => $no_surat_jalan);
+        $data['historyOrderData'] = $this->trx_payment_in_history_model->getNoSuratJalanDataCount($no_surat_jalan);
+        $data['sumTotal'] = $this->trx_payment_in_history_model->getSumTotal($no_surat_jalan);
 
         $data['judul']   = 'Invoice';
         $data['subMenu'] = "PAYMENT";
@@ -279,7 +319,7 @@ class PaymentInvoice extends CI_Controller
     public function printData()
     {
 
-        $html = "";
+/*         $html = "";
         $data['date'] = date("YmdHis");
         $post_data = array("no_surat_jalan" => $_POST['no_surat_jalan']);
         $data['historyOrderData'] = $this->history_order_model->getHistoryOrderDetailTrxBySsj($post_data);
@@ -289,7 +329,16 @@ class PaymentInvoice extends CI_Controller
 
         $html = $this->load->view('auth/payment/download-payment-invoice-co', $data, true);
 
-        $this->fungsi->PdfGenerator($html, 'Payment Invoice Customer', 'A4', 'potrait');
+        $this->fungsi->PdfGenerator($html, 'Payment Invoice Customer', 'A4', 'potrait'); */
+
+        $t = time();
+        $data['date'] = date("d F Y", $t);
+        $data['data'] = $this->trx_payment_in_history_model->getNoSuratJalanDataCount($_POST['no_surat_jln']);
+        $data['sumTotal'] = $this->trx_payment_in_history_model->getSumTotal($_POST['no_surat_jln']);
+        
+        $html = $this->load->view('auth/payment/history-payment-customer-print',$data,true);
+
+        $this->fungsi->PdfGenerator($html,'Payment Customer','A4','landscape');
     }
 
     public function trxKodePoSave()
@@ -343,5 +392,21 @@ class PaymentInvoice extends CI_Controller
             //redirect('payment-invoice');
         }
 
+    }
+
+    public function isConfirmed(){
+
+        $where = array(
+                    "no_surat_jalan"=>$_POST['no_surat_jalan'],
+        );
+
+        $getDetailTrx = $this->trx_payment_inv_model->getWhere($where);
+
+        $output = array(
+            "length" => count($getDetailTrx)
+
+        );
+        
+        echo json_encode($output);
     }
 }

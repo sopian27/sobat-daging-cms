@@ -2,10 +2,10 @@
 class TRXPaymentOutHistoryModel extends CI_Model
 {
 
-    public function getTrxId()
+    public function getTrxId($tgl_trx)
     {
 
-        $query = " select max(id_trx_payment_out) as trx_id from trx_payment_out where substring(create_date,1,8) =DATE_FORMAT(SYSDATE(), '%Y%m%d')";
+        $query = " select max(id_trx_payment_out) as trx_id from trx_payment_out where date_format(create_date,'%Y-%m-%d') = '$tgl_trx'";
 
         return $this->db->query($query)->result();
     }
@@ -25,7 +25,7 @@ class TRXPaymentOutHistoryModel extends CI_Model
         } else {
             $query = "SELECT poo.no_invoice,poo.create_date as tgl_pembayaran, s.nama as nama 
             from trx_payment_po_invoice poo,trx_barang_po po,supplier s 
-            where poo.no_invoice = po.no_invoice and s.id= po.id_supplier and substring(poo.create_date,1,6) ='$create_date' group by poo.no_invoice
+            where poo.no_invoice = po.no_invoice and s.id= po.id_supplier and date_format(poo.create_date,'%Y%m')= '$create_date' group by poo.no_invoice
             limit " . $halaman . "," . $batasTampilData;
 
 
@@ -49,7 +49,7 @@ class TRXPaymentOutHistoryModel extends CI_Model
 
             $query = "SELECT poo.no_invoice,poo.create_date as tgl_pembayaran, s.nama as nama 
             from trx_payment_po_invoice poo,trx_barang_po po,supplier s 
-            where poo.no_invoice = po.no_invoice and s.id= po.id_supplier and substring(poo.create_date,1,6) ='$create_date' group by poo.no_invoice";
+            where poo.no_invoice = po.no_invoice and s.id= po.id_supplier and date_format(poo.create_date,'%Y%m')= '$create_date' group by poo.no_invoice";
 
         }
 
@@ -72,7 +72,7 @@ class TRXPaymentOutHistoryModel extends CI_Model
 
             $query = "SELECT sum(poo.harga_total) as total
             FROM trx_payment_out poo
-            where substring(poo.create_date,1,6) ='$create_date' group by poo.no_invoice";
+            where date_format(poo.create_date,'%Y%m')= '$create_date' group by poo.no_invoice";
         }
 
         return $this->db->query($query)->result();
@@ -121,7 +121,7 @@ class TRXPaymentOutHistoryModel extends CI_Model
                     from trx_barang_po po, supplier s,trx_payment_po_invoice inv 
                     where s.id=po.id_supplier 
                     and inv.no_invoice = po.no_invoice
-                    and substring(po.create_date,1,6) ='$create_date' group by po.no_invoice
+                    and date_format(po.create_date,'%Y%m')= '$create_date' group by po.no_invoice
                     limit  " . $halaman . "," . $batasTampilData;
         }
 
@@ -147,7 +147,7 @@ class TRXPaymentOutHistoryModel extends CI_Model
                     from trx_barang_po po, supplier s,trx_payment_po_invoice inv 
                     where s.id=po.id_supplier 
                     and inv.no_invoice = po.no_invoice
-                    and substring(po.create_date,1,6) ='$create_date' group by po.no_invoice";
+                    and date_format(po.create_date,'%Y%m')= '$create_date' group by po.no_invoice";
         }
 
         return $this->db->query($query)->result();

@@ -20,20 +20,31 @@ class PettyCash extends CI_Controller
         $data['subMenu'] = "PETTY CASH";
         $t = time();
         $data['date'] = date("d F Y", $t);
-        $current_date = date("d/m/Y", $t);
-        $trxData = $this->trx_petty_in_model->getTrxId();
+        //$current_date = date("d/m/Y", $t);
+        $tgl_trx = date("Y-m-d");
+        //$trxData = $this->trx_petty_in_model->getTrxId();
         $saldo = $this->trx_petty_in_model->getSaldo();
-        $trxId = $trxData[0]->trx_id;
+        //$trxId = $trxData[0]->trx_id;
 
         if (empty($saldo)) {
             $data['saldo'] = "0";
+            //$saldo=array("saldo"=>0);
+            //$this->trx_petty_in_model->initSaldo($saldo);
+            
         } else {
             $data['saldo'] = $saldo[0]->saldo;
         }
 
-        $lastNoUrut = substr($trxId, 5, 4);
+/*         $lastNoUrut = substr($trxId, 5, 4);
         $nextNoUrut = intval($lastNoUrut) + 1;
-        $kodePo = 'PCPI-' . sprintf('%04s', $nextNoUrut) . "/" . $current_date;
+        $kodePo = 'PCPI-' . sprintf('%04s', $nextNoUrut) . "/" . $current_date; */
+
+        $trxData = $this->trx_petty_in_model->getTrxId($tgl_trx);
+        $datax = $trxData[0]->trx_id;
+        $lastNoUrut = substr($datax, 5,5);
+        $nextNoUrut = intval($lastNoUrut)+1;
+        $kodePo = 'PCPI-' . sprintf('%05s',$nextNoUrut)."/". date('d/m/Y',strtotime($tgl_trx));
+
         $data['kode_po'] = $kodePo;
 
         $this->load->view('auth/templates/header', $data);
@@ -78,7 +89,7 @@ class PettyCash extends CI_Controller
             } else {
 
                 $data = array(
-                    "saldo_awal" =>  $data_post['saldo_awal'], //str_replace(".", "", $data_post['saldo_awal']),
+                    "saldo_awal" =>  str_replace(".", "", $data_post['saldo_awal']),
                     "tambahan_saldo" =>  str_replace(",", "", $data_post['tambahan_saldo']),
                     "keterangan" => $data_post['keterangan'],
                     "id_trx_petty_cash" => $data_post['id_trx_petty_cash'],
@@ -92,7 +103,7 @@ class PettyCash extends CI_Controller
         }else{
 
             $data = array(
-                "saldo_awal" =>  $data_post['saldo_awal'], //str_replace(".", "", $data_post['saldo_awal']),
+                "saldo_awal" =>  str_replace(".", "", $data_post['saldo_awal']),
                 "tambahan_saldo" =>  str_replace(",", "", $data_post['tambahan_saldo']),
                 "keterangan" => $data_post['keterangan'],
                 "id_trx_petty_cash" => $data_post['id_trx_petty_cash'],

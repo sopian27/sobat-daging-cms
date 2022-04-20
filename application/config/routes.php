@@ -114,6 +114,8 @@ $route['payment-invoice/getnosuratjalan'] = 'auth/PaymentInvoice/getNoSuratJalan
 $route['payment-invoice-customer/save'] = 'auth/PaymentInvoice/trxNoSuratJalanSave';
 $route['payment-invoice-customer-print'] = 'auth/PaymentInvoice/printData';
 $route['payment-invoice-customer-print-preview'] = 'auth/PaymentInvoice/printPreview';
+$route['payment-invoice-customer-print-preview-directly/(:any)'] = 'auth/PaymentInvoice/printPreviewDirectly/$1';
+$route['payment-invoice-customer/isConfirmed'] = 'auth/PaymentInvoice/isConfirmed';
 
 /* payment-invoice pembelian */
 $route['payment-invoice-pembelian/getkodepo'] = 'auth/PaymentInvoice/getKodePo';
@@ -127,7 +129,7 @@ $route['payment-history/loadhistoryout'] = 'auth/PaymentHistory/loadHistoryPayme
 $route['payment-history/gethistorysuratjalan'] = 'auth/PaymentHistory/getNoSuratJalanHistory';
 $route['payment-history/gethistorykodepo'] = 'auth/PaymentHistory/getKodePoHistory';
 $route['payment-history/print'] = 'auth/PaymentHistory/print';
-
+$route['payment-history/print-directly/(:any)'] = 'auth/PaymentHistory/printDirectly/$1';
 
 /* return-cancel */
 $route['return-cancel'] = 'auth/ReturnCancel';
@@ -135,6 +137,7 @@ $route['return-cancel/getinvoice'] = 'auth/ReturnCancel/getInvoiceData';
 $route['return-cancel/save'] = 'auth/ReturnCancel/saveData';
 $route['return-cancel/insert_data'] = 'auth/ReturnCancel/insertData';
 $route['return-cancel/clear-all'] = 'auth/ReturnCancel/clearAll';
+$route['return-cancel/isconfirmed'] = 'auth/ReturnCancel/isConfirmed';
 
 /* return-history */
 $route['return-history'] = 'auth/ReturnHistory';

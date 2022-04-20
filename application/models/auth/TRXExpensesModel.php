@@ -14,18 +14,18 @@ class TRXExpensesModel extends CI_Model
         return $this->db->insert_id();
     }
 
-    public function getTrxId()
+    public function getTrxId($tgl_trx)
     {
 
-        $query = " select max(id_trx_ex_opt) as trx_id from ex_opt where substring(create_date,1,8) =DATE_FORMAT(SYSDATE(), '%Y%m%d')";
+        $query = " select max(id_trx_ex_opt) as trx_id from ex_opt where date_format(create_date,'%Y-%m-%d') = '$tgl_trx'";
 
         return $this->db->query($query)->result();
     }
 
-    public function getTrxIdSallary()
+    public function getTrxIdSallary($tgl_trx)
     {
 
-        $query = " select max(id_trx) as trx_id from ex_sallary where substring(create_date,1,8) =DATE_FORMAT(SYSDATE(), '%Y%m%d')";
+        $query = " select max(id_trx) as trx_id from ex_sallary where date_format(create_date,'%Y-%m-%d') = '$tgl_trx'";
 
         return $this->db->query($query)->result();
     }
@@ -35,7 +35,7 @@ class TRXExpensesModel extends CI_Model
         $date = $data['date_value'];
         $query = " SELECT penggunaan_dana,keterangan,id_trx_ex_opt as kode 
                    FROM ex_opt 
-                   WHERE substring(create_date,1,6) ='$date'";
+                   WHERE date_format(create_date,'%Y%m')= '$date'";
         return $this->db->query($query)->result();
     }
 
@@ -44,7 +44,7 @@ class TRXExpensesModel extends CI_Model
         $date = $data['create_date'];
         $query = " SELECT sum(penggunaan_dana) as total
                    FROM ex_opt 
-                   WHERE substring(create_date,1,6) ='$date' group by substring(create_date,1,6) ";
+                   WHERE date_format(create_date,'%Y%m')= '$date' group by date_format(create_date,'%Y%m') ";
 
         return $this->db->query($query)->result();
     }
@@ -73,7 +73,7 @@ class TRXExpensesModel extends CI_Model
                             ex_opt b
                         where 
                             b.id_trx_ex_opt like  '%$keyword%' 
-                            and substring(b.create_date,1,6)= '" . $create_date . "'
+                            and date_format(create_date,'%Y%m')= '$create_date'
                         order by b.id
                             limit " . $halaman . "," . $batasTampilData;
 
@@ -84,7 +84,7 @@ class TRXExpensesModel extends CI_Model
                         from 
                             ex_opt b
                         where 
-                            substring(b.create_date,1,6)= '" . $create_date . "'                          
+                            date_format(create_date,'%Y%m')= '$create_date'                         
                         order by b.id
                             limit " . $halaman . "," . $batasTampilData;
         }
@@ -115,7 +115,7 @@ class TRXExpensesModel extends CI_Model
                             ex_opt b
                         where 
                             b.id_trx_ex_opt like  '%$keyword%' 
-                            and substring(b.create_date,1,6)= '" . $create_date . "'
+                            date_format(create_date,'%Y%m')= '$create_date'
                         order by b.id";
 
         } else {
@@ -125,7 +125,7 @@ class TRXExpensesModel extends CI_Model
                         from 
                             ex_opt b
                         where 
-                            substring(b.create_date,1,6)= '" . $create_date . "'                          
+                            date_format(create_date,'%Y%m')= '$create_date'                          
                         order by b.id";
         }
 
@@ -158,7 +158,7 @@ class TRXExpensesModel extends CI_Model
                         where 
                             b.nama like '%$keyword%' 
                             and type='".$type."'
-                            and substring(b.create_date,1,6)= '" . $create_date . "'  
+                            and date_format(b.create_date,'%Y%m')= '$create_date' 
                         order by b.id
                             limit " . $halaman . "," . $batasTampilData;
 
@@ -169,7 +169,7 @@ class TRXExpensesModel extends CI_Model
                         from 
                             ex_sallary b
                         where 
-                            substring(b.create_date,1,6)= '" . $create_date . "'  
+                            date_format(create_date,'%Y%m')= '$create_date'
                             and type='".$type."'                      
                         order by b.id
                             limit " . $halaman . "," . $batasTampilData;
@@ -203,7 +203,7 @@ class TRXExpensesModel extends CI_Model
                         where 
                             b.nama like '%$keyword%' 
                             and type='".$type."'
-                            and substring(b.create_date,1,6)= '" . $create_date . "'  
+                            and date_format(create_date,'%Y%m')= '$create_date' 
                         order by b.id";
 
         } else {
@@ -213,7 +213,7 @@ class TRXExpensesModel extends CI_Model
                         from 
                             ex_sallary b
                         where 
-                            substring(b.create_date,1,6)= '" . $create_date . "'  
+                             date_format(create_date,'%Y%m')= '$create_date' 
                             and type='".$type."'                      
                         order by b.id";
         }

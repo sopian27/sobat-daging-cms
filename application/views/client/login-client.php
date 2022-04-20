@@ -1,4 +1,4 @@
-<body class="login" style="height: 100vh;background: url('<?php echo base_url()?>/assets/client/images/img/bg3.jpg'); background-size: cover;">
+<body class="login" style="height: 100vh;background: url('<?php echo base_url()?>/assets/client/images/img/Background_Login.jpg'); background-size: cover;">
 	<div class="container" >
         <div class="login-div">
             <form method="POST" action="<?= site_url()?>/login-client"> 

@@ -111,7 +111,7 @@ function dateForShow($create_date)
         </div>
         <div class="row d-flex offset-md-9" style="margin-top: 20px;">
             <div class="col-md-4">
-                <button class="form-control-button btn btn-outline-light button-action" onclick="clearAllData();"> Cancel </button>
+                <button class="form-control-button btn btn-outline-light button-action" onclick="back();"> Cancel </button>
             </div>
             <div class="col-md-4">
                 <button class="form-control-button btn btn-outline-light button-action" type="submit"> Print </button>
@@ -122,4 +122,9 @@ function dateForShow($create_date)
 </div>
 
 <script>
+
+    function back() {
+        location.href="<?= site_url() ?>/sallary"
+    }
+
 </script>

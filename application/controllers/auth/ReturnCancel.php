@@ -15,18 +15,25 @@ class ReturnCancel extends CI_Controller
     public function index()
     {
 
+        //$tgl_trx = date("Y-m-d");
         $data['judul']   = 'Return Item';
         $data['subMenu'] = "Return/Cancel";
         $t = time();
         $data['date'] = date("d F Y", $t);
-        $current_date = date("d/m/Y", $t);
-        $trxData = $this->trx_ret_model->getTrxId();
+        //$current_date = date("d/m/Y", $t);
+        //$trxData = $this->trx_ret_model->getTrxId($tgl_trx);
+        /*   
         $trxId = $trxData[0]->trx_id;
-
         $lastNoUrut = substr($trxId, 5, 4);
         $nextNoUrut = intval($lastNoUrut) + 1;
-        $kodePo = 'RRI-' . sprintf('%04s', $nextNoUrut) . "/" . $current_date;
-        $data['kode_po'] = $kodePo;
+        $kodePo = 'RRI-' . sprintf('%04s', $nextNoUrut) . "/" . $current_date; */
+        /* 
+        $datax = $trxData[0]->trx_id;
+        $lastNoUrut = substr($datax, 4,5);
+        $nextNoUrut = intval($lastNoUrut)+1;
+        $kodePo = 'RRI-' . sprintf('%05s',$nextNoUrut)."/". date('d/m/Y',strtotime($tgl_trx)); */
+
+        //$data['kode_po'] = $kodePo;
 
         $this->load->view('auth/templates/header', $data);
         $this->load->view('auth/templates/return/sidemenu', $data);
@@ -40,6 +47,13 @@ class ReturnCancel extends CI_Controller
 
         $data_post = $_POST;
 
+        $tgl_trx = date("Y-m-d");
+        $trxData = $this->trx_ret_model->getTrxId($tgl_trx);
+        $datax = $trxData[0]->trx_id;
+        $lastNoUrut = substr($datax, 4,5);
+        $nextNoUrut = intval($lastNoUrut)+1;
+        $kodePo = 'RRI-' . sprintf('%05s',$nextNoUrut)."/". date('d/m/Y',strtotime($tgl_trx));
+
         $batasTampilData = $_POST['batastampil'];
         $halaman = (isset($_POST['halaman'])) ? $halaman = $_POST['halaman'] : $halaman = 1;
         $halamanAwal = ($halaman > 1) ? ($halaman * $batasTampilData) - $batasTampilData : 0;
@@ -50,7 +64,8 @@ class ReturnCancel extends CI_Controller
         $output = array(
             "length" => count($data),
             "data" => $data,
-            "length_paging" => count($dataCounter)
+            "length_paging" => count($dataCounter),
+            "kode_po" => $kodePo
 
         );
 
@@ -106,6 +121,23 @@ class ReturnCancel extends CI_Controller
         $this->trx_ret_model->update($data, $where);
 
         echo json_encode("success");
+    }
+
+    public function isConfirmed(){
+
+        $where = array(
+            "no_invoice" => $_POST['no_invoice'],
+            "status"     => "0"
+        );
+
+        $getDetailTrx = $this->trx_ret_model->getWhere($where);
+
+        $output = array(
+            "length" => count($getDetailTrx)
+
+        );
+        
+        echo json_encode($output);
     }
 
     public function insertData()

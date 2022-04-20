@@ -59,22 +59,21 @@
                             <div class="form-group row">
                                 <label for="" class="col-sm-4 col-form-label">Nomor Invoice </label>
                                 <div class="col-sm-1">:</div>
-                                <div class="col-sm-5">
+                                <div class="col-sm-6">
                                     <input type="text" class="form-control-label" id="no_invoice" name="no_invoice">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="" class="col-sm-4 col-form-label">Nama Pelanggan </label>
                                 <div class="col-sm-1">:</div>
-                                <div class="col-sm-5">
+                                <div class="col-sm-6">
                                     <input type="text" class="form-control-label" id="nama_pelanggan" name="nama_pelanggan">
-                                    <input type="hidden" class="form-control" id="id_trx_return" name="id_trx_return" value="<?= $kode_po ?>">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="" class="col-sm-4 col-form-label">Tanggal Pengiriman </label>
                                 <div class="col-sm-1">:</div>
-                                <div class="col-sm-5">
+                                <div class="col-sm-6">
                                     <input type="text" class="form-control-label" id="tgl_pengiriman" name="tgl_pengiriman">
                                 </div>
                             </div>
@@ -83,7 +82,7 @@
                             <div class="form-group row">
                                 <label for="" class="col-sm-5 col-form-label">Tanggal Return </label>
                                 <div class="col-sm-1">:</div>
-                                <div class="col-sm-5">
+                                <div class="col-sm-6">
                                     <input type="text" class="form-control-label" id="tgl_return" name="tgl_return">
                                 </div>
                             </div>
@@ -156,7 +155,7 @@
         $("#halaman_paging_trx").val("1");
         var halaman = $('#halaman_paging_trx').val();
         var keyword = $("#search").val();
-         var create_date = document.getElementById("create_date").value;
+        var create_date = document.getElementById("create_date").value;
 
         getData(create_date.replaceAll("-", ""), keyword, batasTampilData, halaman);
 
@@ -183,17 +182,18 @@
                     dataload += '<div class="row"> ';
 
                     if (create_date != "") {
-                        dataload += '<h4 style="text-decoration: underline;margin-top:10px">' + dateForShow(create_date) + '</h4>'
+                        dataload += '<h4 style="text-decoration: underline;margin-top:10px">' + dateForShow(data.data[0].tgl_return) + '</h4>'
                     }
 
                     for (i = 0; i < data.length; i++) {
 
                         if (keyword != "") {
-                            dataload += '<h4 style="text-decoration: underline;margin-top:10px">' + dateForShow(data.data[i].create_date) + '</h4>'
+                            //dataload += '<h4 style="text-decoration: underline;margin-top:10px">' + dateForShow(data.data[i].create_date) + '</h4>'
                         }
 
-                        var id_trx_return = data.data[i].id_trx_return;
-                        var functionOnclickCheck = 'dataPagingDetailCheck("' + id_trx_return + '")';
+                        //var id_trx_return = data.data[i].id_trx_return;
+                        var no_invoice = data.data[i].no_invoice;
+                        var functionOnclickCheck = 'dataPagingDetailCheck("' + no_invoice + '")';
 
                         dataload += '<div class="col-md-12" style="margin-top:10px"> ';
                         dataload += '<a class="btn-sobat-md" href="#"';
@@ -333,11 +333,11 @@
     }
 
 
-    function dataPagingDetailCheck(id_trx_return) {
+    function dataPagingDetailCheck(no_invoice) {
 
         batasTampilData = 10;
         halaman = $('#halaman_paging_trx_detail').val();
-        getDetail(halaman, id_trx_return, batasTampilData);
+        getDetail(halaman, no_invoice, batasTampilData);
     }
 
     function dateOnlyDay(create_date) {
@@ -376,14 +376,14 @@
         return day;
     }
 
-    function getDetail(halaman, id_trx_return, batasTampilData) {
+    function getDetail(halaman, no_invoice, batasTampilData) {
 
         $.ajax({
             url: '<?= site_url() ?>/return-history/getdatahistory',
             method: 'post',
             dataType: 'json',
             data: {
-                "id_trx_return": id_trx_return,
+                "no_invoice": no_invoice,
                 "halaman": halaman,
                 "batastampil": batasTampilData
             },
@@ -403,7 +403,7 @@
                     for (i = 0; i < data.length; i++) {
 
                         dataload += '<tr> '
-                        dataload += '    <td class="data " data-dat="kode"><input type="text" name="kode[]" value="' + data.data[i].kode + '" class="form-control data-kode"></td> '
+                        dataload += '    <td class="data " data-dat="kode"><input type="text" name="kodekode[]" value="' + data.data[i].kode + '" class="form-control data-kode"></td> '
                         dataload += '    <td class="data" data-dat="nama_barang" width="30%">'
                         dataload += '       <input type="text" name="nama_barang[]" value="' + data.data[i].nama_barang + '" class="form-control ">'
                         dataload += '       <input type="hidden" name="id_trx_po[]" value="' + data.data[i].id + '" class="form-control ">'
@@ -430,7 +430,7 @@
                     var totalDataBarang = data.length_paging;
                     var totalHalaman = Math.ceil(totalDataBarang / batasTampilData);
 
-                    $('.pagination-result_trx_detail').html(paginationViewHTMLDetail(halaman, totalHalaman, id_trx_return))
+                    $('.pagination-result_trx_detail').html(paginationViewHTMLDetail(halaman, totalHalaman, no_invoice))
 
                     $("#return-filter").hide();
                     $("#tbody-table-data").html(dataload);
@@ -561,19 +561,19 @@
         getData(create_date, keyword, batasTampilData, halaman);
     }
 
-    function paginationViewHTMLDetail(halaman, totalHalaman, id_trx_po) { //halaman 1 total 6
+    function paginationViewHTMLDetail(halaman, totalHalaman, no_invoice) { //halaman 1 total 6
 
         var data_load = '';
         prev = parseInt(halaman) - 1;
         next = parseInt(halaman) + 1;
         minimal_page = parseInt(halaman) - 2;
         max_page = parseInt(halaman) + 2;
-        var prev_v = "dataPagingBarangHREFTrxDetail('" + prev + "','" + id_trx_po + "')";
-        var next_v = "dataPagingBarangHREFTrxDetail('" + next + "','" + id_trx_po + "')";
-        var halaman1 = "dataPagingBarangHREFTrxDetail('1','" + id_trx_po + "')";
-        var halaman2 = "dataPagingBarangHREFTrxDetail('2','" + id_trx_po + "')";
-        var halaman3 = "dataPagingBarangHREFTrxDetail('3','" + id_trx_po + "')";
-        var halaman4 = "dataPagingBarangHREFTrxDetail('4','" + id_trx_po + "')";
+        var prev_v = "dataPagingBarangHREFTrxDetail('" + prev + "','" + no_invoice + "')";
+        var next_v = "dataPagingBarangHREFTrxDetail('" + next + "','" + no_invoice + "')";
+        var halaman1 = "dataPagingBarangHREFTrxDetail('1','" + no_invoice + "')";
+        var halaman2 = "dataPagingBarangHREFTrxDetail('2','" + no_invoice + "')";
+        var halaman3 = "dataPagingBarangHREFTrxDetail('3','" + no_invoice + "')";
+        var halaman4 = "dataPagingBarangHREFTrxDetail('4','" + no_invoice + "')";
         data_load += '<ul class ="pagination">'
 
         if (halaman > 1) {
@@ -587,7 +587,7 @@
         console.log("totalHalaman" + totalHalaman);
 
         for (let i = minimal_page; i <= max_page; i++) {
-            var onclk = "dataPagingBarangHREFTrxDetail('" + i + "','" + id_trx_po + "')";
+            var onclk = "dataPagingBarangHREFTrxDetail('" + i + "','" + no_invoice + "')";
 
             if (i == halaman && totalHalaman != 0) {
                 data_load += '<li class="page-item active"><a class = "page-link" href="#" onclick="' + onclk + '">' + i + '</a> </li>'
@@ -613,8 +613,8 @@
         return data_load;
     }
 
-    function dataPagingBarangHREFTrxDetail(halaman, id_trx_po) {
+    function dataPagingBarangHREFTrxDetail(halaman, no_invoice) {
         $('#halaman_paging_trx_detail').val(halaman)
-        dataPagingDetailCheck(id_trx_po);
+        dataPagingDetailCheck(no_invoice);
     }
 </script>

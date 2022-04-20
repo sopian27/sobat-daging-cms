@@ -2,16 +2,16 @@
 class TRXPaymentInvoiceModel extends CI_Model
 {
 
-    public function getTrxId(){
+    public function getTrxId($tgl_trx){
 
-        $query = " select max(id_trx_payment) as trx_id from trx_payment_co_invoice where substring(create_date,1,8) =DATE_FORMAT(SYSDATE(), '%Y%m%d')";
+        $query = " select max(id_trx_payment) as trx_id from trx_payment_co_invoice where date_format(create_date,'%Y-%m-%d') = '$tgl_trx'";
 
         return $this->db->query($query)->result();
     }
 
-    public function getTrxIdPo(){
+    public function getTrxIdPo($tgl_trx){
 
-        $query = " select max(id_trx_payment) as trx_id from trx_payment_po_invoice where substring(create_date,1,8) =DATE_FORMAT(SYSDATE(), '%Y%m%d')";
+        $query = " select max(id_trx_payment) as trx_id from trx_payment_po_invoice where date_format(create_date,'%Y-%m-%d') = '$tgl_trx'";
 
         return $this->db->query($query)->result();
     }
@@ -58,7 +58,7 @@ class TRXPaymentInvoiceModel extends CI_Model
                     /*and co.no_surat_jalan = t.no_surat_jalan*/
                     and t.id_telephone = te.id
                     and t.id_alamat = a.id
-                    and t.no_surat_jalan ='$no_surat_jalan' group by b.id 
+                    and t.no_surat_jalan ='$no_surat_jalan' group by t.id 
                     limit " . $halaman . "," . $batasTampilData;
 
         return $this->db->query($query)->result();
@@ -74,7 +74,7 @@ class TRXPaymentInvoiceModel extends CI_Model
                     /*and co.no_surat_jalan = t.no_surat_jalan*/
                     and t.id_telephone = te.id
                     and t.id_alamat = a.id
-                    and t.no_surat_jalan ='$no_surat_jalan' group by b.id";
+                    and t.no_surat_jalan ='$no_surat_jalan' group by t.id";
 
         return $this->db->query($query)->result();
     }
@@ -210,6 +210,9 @@ class TRXPaymentInvoiceModel extends CI_Model
         return $this->db->rowCount();
     }
     */
-
+    public function getWhere($where)
+    {
+        return $this->db->get_where('trx_payment_co_invoice', $where)->result();
+    }
     
 }
