@@ -101,7 +101,7 @@ class Inventory extends CI_Controller
 
     }
 
-    public function inventorySaveInvMenu()
+    public function inventorySaveInvMenuBak()
     {
 
         $data_post = $_POST;
@@ -142,10 +142,43 @@ class Inventory extends CI_Controller
         }
 
         echo json_encode("success");
+    }
 
-   
+    public function inventorySaveInvMenu(){
 
+        $dataInsert=array();
 
+        for($i=0; $i<count($_POST["kode"]); $i++){
+
+            $data_post = $_POST;
+            $j=0;
+
+            $where_brg = array(
+                strtolower("kode") => strtolower(trim($data_post['kode'][$j]))
+            );
+    
+            $idBarang = $this->trx_brg_model->getWhere($where_brg);
+
+            if (empty($idBarang)) {
+                
+                $dataInsert[] = array(
+                    "kode" => $data_post['kode'][$j],
+                    "nama_barang"=> $data_post['nama_barang'][$j],
+                    "satuan"=> $data_post['satuan'][$j],
+                    "quantity" => $data_post['quantity'][$j],
+                    "id_trx_po" => $data_post['id_trx_po'],
+                    "id_supplier" => $data_post['id_supplier'],
+                    "status" => $data_post['status'],
+                    "create_date" => date('YmdHis'),
+                    "update_date" => date('YmdHis')
+                );
+
+                $this->trx_brg_model->insertDataBatch($dataInsert);
+                
+            }  
+        }
+
+        echo json_encode("success");
 
     }
     

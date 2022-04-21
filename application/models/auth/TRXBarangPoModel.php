@@ -238,7 +238,7 @@ class TRXBarangPoModel extends CI_Model
                 tbo.id_supplier = s.id 
                 /*and tbo.status >='3' */
                 /*and tbo.id_trx_update !=''*/
-                and tbo.status in('0','2','3','4')
+                and tbo.status in('0','2','3','4','5')
                 /*and tbo.id_trx_live_stocks ='' */
                 and s.nama like '%$keyword%'
             GROUP BY tbo.id_trx_po
@@ -253,7 +253,7 @@ class TRXBarangPoModel extends CI_Model
                 tbo.id_supplier = s.id 
                 /*and tbo.status >='3'
                 and tbo.id_trx_update !=''*/
-                and tbo.status in('0','2','3','4')
+                and tbo.status in('0','2','3','4','5')
                 /*and tbo.id_trx_live_stocks ='' */
                 and s.nama like '%$keyword%'
                 /* and substring(tbo.update_date,1,8) ='$create_date' */
@@ -270,7 +270,7 @@ class TRXBarangPoModel extends CI_Model
                         tbo.id_supplier = s.id 
                          /*and tbo.status >='3'
                         and tbo.id_trx_update !=''*/
-                        and tbo.status in('0','2','3','4')
+                        and tbo.status in('0','2','3','4','5')
                         /*and tbo.id_trx_live_stocks ='' */
                          /* and substring(tbo.update_date,1,8) ='$create_date' */
                         and date_format(tbo.update_date,'%Y%m%d')='$create_date'
@@ -295,7 +295,7 @@ class TRXBarangPoModel extends CI_Model
                 tbo.id_supplier = s.id 
                 and tbo.status >='3'
                 /*and tbo.id_trx_update !=''*/
-                and tbo.status in('0','2','3','4')
+                and tbo.status in('0','2','3','4','5')
                 /*and tbo.id_trx_live_stocks ='' */
                 and s.nama like '%$keyword%'
             GROUP BY tbo.id_trx_po";
@@ -309,7 +309,7 @@ class TRXBarangPoModel extends CI_Model
                 tbo.id_supplier = s.id 
                 /*and tbo.status >='3'
                 and tbo.id_trx_update !=''*/
-                and tbo.status in('0','2','3','4')
+                and tbo.status in('0','2','3','4','5')
                 /*and tbo.id_trx_live_stocks ='' */
                 and s.nama like '%$keyword%'
                /*  and substring(tbo.update_date,1,8) ='$create_date' */
@@ -325,7 +325,7 @@ class TRXBarangPoModel extends CI_Model
                         tbo.id_supplier = s.id 
                         /*and tbo.status >='3'
                         and tbo.id_trx_update !=''*/
-                        and tbo.status in('0','2','3','4')
+                        and tbo.status in('0','2','3','4','5')
                         /*and tbo.id_trx_live_stocks ='' */
                         and date_format(tbo.update_date,'%Y%m%d')='$create_date'
                     GROUP BY tbo.id_trx_po";
@@ -941,4 +941,136 @@ class TRXBarangPoModel extends CI_Model
     }
 
      */
+
+    public function insertDataBatch($data)
+    {
+        $this->db->insert_batch('trx_barang_po', $data);
+        //return $this->db->insert_id();  
+    }
+
+    public function insertDataLiveStockEdit($data)
+    {
+        $this->db->insert('trx_livestock_edit', $data);
+        return $this->db->insert_id();  
+    }
+
+    
+    public function deleteDataLiveStockEdit($where)
+    {
+        $this->db->delete('trx_livestock_edit', $where);
+    }
+
+    public function updateLiveStockEdit($data, $where)
+    {
+        $this->db->set($data);
+        $this->db->where($where);
+        $this->db->update('trx_livestock_edit');
+    }
+
+    /* live stock */
+    public function getDataByIdLiveStockEdit($id_trx_po, $halaman, $batasTampilData)
+    {
+        $query = " SELECT a.kode, 
+                        a.nama_barang, 
+                        a.satuan, 
+                        a.harga_satuan,
+                        a.harga_total,
+                        a.id,
+                        a.quantity, 
+                        a.id_trx_po,
+                        a.quantity_check,
+                        a.id_supplier,
+                        a.create_date,
+                        a.status_po,
+                        a.quantity_update,
+                        a.status,
+                        s.nama
+                        from 
+                        ( SELECT tbo.kode, 
+                         tbo.nama_barang, 
+                         tbo.satuan, 
+                         tbo.harga_satuan,
+                         tbo.harga_total,
+                         tbo.id,
+                         tbo.quantity, 
+                         tbo.id_trx_po,
+                         tbo.quantity_check,
+                         tbo.id_supplier,
+                         tbo.create_date,
+                         tbo.status as status_po,
+                         trx.quantity_update,
+                         trx.status
+                         from trx_barang_po tbo left join trx_livestock_edit trx on tbo.id=trx.id_trx_po and trx.status ='0' ) a, supplier s
+                         WHERE 
+                         a.id_supplier = s.id 
+                         and a.id_trx_po = '$id_trx_po'
+                         and a.harga_satuan !=0 
+                         limit " . $halaman . "," . $batasTampilData;
+        
+/*         $query = " SELECT 
+                             tbo.kode, 
+                             tbo.nama_barang, 
+                             tbo.satuan, 
+                             tbo.harga_satuan,
+                             tbo.harga_total,
+                             tbo.id,
+                             tbo.quantity, 
+                             tbo.id_trx_po,
+                             tbo.quantity_check,
+                             s.nama,
+                             tbo.create_date,
+                             tbo.status
+                         FROM 
+                             trx_barang_po tbo,
+                             supplier s 
+                         WHERE 
+                             tbo.id_supplier = s.id 
+                             and tbo.id_trx_po = '$id_trx_po'
+                             and tbo.harga_satuan !=0 
+                             limit " . $halaman . "," . $batasTampilData; */
+
+        return $this->db->query($query)->result();
+    }
+
+    /* live stock */
+    public function getDataByIdLiveStockCounterEdit($id_trx_po)
+    {
+        $query = " SELECT a.kode, 
+                        a.nama_barang, 
+                        a.satuan, 
+                        a.harga_satuan,
+                        a.harga_total,
+                        a.id,
+                        a.quantity, 
+                        a.id_trx_po,
+                        a.quantity_check,
+                        a.id_supplier,
+                        a.create_date,
+                        a.status_po,
+                        a.quantity_update,
+                        a.status,
+                        s.nama
+                        from 
+                        ( SELECT tbo.kode, 
+                         tbo.nama_barang, 
+                         tbo.satuan, 
+                         tbo.harga_satuan,
+                         tbo.harga_total,
+                         tbo.id,
+                         tbo.quantity, 
+                         tbo.id_trx_po,
+                         tbo.quantity_check,
+                         tbo.id_supplier,
+                         tbo.create_date,
+                         tbo.status as status_po,
+                         trx.quantity_update,
+                         trx.status
+                         from trx_barang_po tbo left join trx_livestock_edit trx on tbo.id=trx.id_trx_po and trx.status ='0' ) a, supplier s
+                         WHERE 
+                         a.id_supplier = s.id 
+                         and a.id_trx_po = '$id_trx_po'
+                         and a.harga_satuan !=0 ";
+
+        return $this->db->query($query)->result();
+    }
 }

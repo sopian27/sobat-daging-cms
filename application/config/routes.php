@@ -224,6 +224,11 @@ $route['inventory-livestock/insertqtycheck'] = 'auth/InventoryLiveStock/insertQu
 $route['inventory-livestock/update-quantity-check'] = 'auth/InventoryLiveStock/updateQuantityCheck';
 $route['inventory-livestock/clear-all'] = 'auth/InventoryLiveStock/clearAll';
 $route['inventory-livestock/confirm'] = 'auth/InventoryLiveStock/confirmData';
+$route['inventory-livestock/clear-all-edit'] = 'auth/InventoryLiveStock/clearAllEdit';
+$route['inventory-livestock/confirm-edit'] = 'auth/InventoryLiveStock/confirmDataEdit';
+$route['inventory-livestock/getedit'] = 'auth/InventoryLiveStock/getEdit';
+$route['inventory-livestock/update-quantity-edit'] = 'auth/InventoryLiveStock/updateQuantityEdit';
+
 //$route['inventory/update-data-livestock'] = 'auth/inventory/inventoryLiveStocksInvMenu';
 //$route['inventory/get-data-livestock-trx'] = 'auth/inventory/getDataLiveStocksByTRX';
 

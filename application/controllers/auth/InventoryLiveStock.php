@@ -199,6 +199,52 @@ class InventoryLiveStock extends CI_Controller
         echo json_encode("success");
     }
 
+    public function updateQuantityEdit()
+    {
+
+        $post = $_POST;
+        $data=array(
+            "kode"            => $post['id_trx_po'],
+            "create_date"     => date('YmdHis'),
+            "update_date"     => date('YmdHis'),
+            "quantity"        => $post['quantity'],
+            "quantity_update" => $post['quantity_update'],
+            "id_trx_po"       => $post['id'],
+            "status"          => "0"
+        );
+
+        $this->trx_brg_model->insertDataLiveStockEdit($data);
+
+        echo json_encode("success");
+    }
+
+    public function clearAllEdit()
+    {
+
+        $data_post = $_POST;
+        $where = array("kode" => $data_post['id_trx_po'], "status"=>"0");
+        $this->trx_brg_model->deleteDataLiveStockEdit($where);
+
+        echo json_encode("success");
+    }
+
+    public function confirmDataEdit()
+    {
+
+        $data_post = $_POST;
+        $where = array(
+            "kode" => $data_post['id_trx_po'],
+            "status =" => "0"    
+        );
+
+        $dataUpdate = array(
+            "status"          => "1"
+        );
+
+        $this->trx_brg_model->updateLiveStockEdit($dataUpdate, $where);
+        echo json_encode("success");
+    }
+
 
     public function insertQuantityCheck()
     {
@@ -246,5 +292,26 @@ class InventoryLiveStock extends CI_Controller
         }
 
         redirect('inventory-livestock');
+    }
+
+
+    public function getEdit()
+    {
+
+        $data_post = $_POST;
+        $batasTampilData = $_POST['batastampil'];
+        $halaman = (isset($_POST['halaman'])) ? $halaman = $_POST['halaman'] : $halaman = 1;
+        $halamanAwal = ($halaman > 1) ? ($halaman * $batasTampilData) - $batasTampilData : 0;
+
+        $allDataPo = $this->trx_brg_model->getDataByIdLiveStockEdit($data_post['id_trx_po'], $halamanAwal, $batasTampilData);
+        $allDataPoCounter = $this->trx_brg_model->getDataByIdLiveStockCounterEdit($data_post['id_trx_po']);
+
+        $output = array(
+            "length" => count($allDataPo),
+            "data" => $allDataPo,
+            "length_paging" => count($allDataPoCounter),
+        );
+
+        echo json_encode($output);
     }
 }

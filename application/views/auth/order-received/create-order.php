@@ -240,7 +240,7 @@
                     if (content_select == null || content_select == "") {
                         console.log("content_select:" + element_select);
 
-                        if (element_select != "keterangan[]" && element_select != "id_barang[]") {
+                        if (element_select != "keterangan[]" && element_select != "id_barang[]" && element_select != "nama_barang[]") {
                             alert("data barang " + element_select + " tidak boleh kosong");
                             submit = false;
                             break;

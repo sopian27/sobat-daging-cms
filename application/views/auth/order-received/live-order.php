@@ -126,27 +126,29 @@
             <div class="col-md-2 offset-md-1" id="date-live-order"></div>
         </div>
         <div class="container-fluid" style="margin-top: 20px;">
-            <div class="row justify-content-center">
-                <div class="row" style="margin-top: 20px;">
-                    <div class="col-md-6 offset-md-1 justify-content-center">
-                        <div class="row mt-2 ">
-                            <table class="table table-dark table-bordered data" style="display: none;">
-                                <tbody id='tbody-table-data-live-order'></tbody>
-                            </table>
-                            <div id="data-live-order"></div>
-                            <input type="hidden" name="halaman_paging_live_order" id="halaman_paging_live_order" value="1">
-                            <div class="pagination-result-live-order" style="margin-top:10px;margin-left:45%"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div id="data-live-order"></div>
+            <input type="hidden" name="halaman_paging_live_order" id="halaman_paging_live_order" value="1">
+            <div class="pagination-result-live-order" style="margin-top:10px;margin-left:45%"></div>
         </div>
     </div>
     <div style="margin-top:20px"></div>
 </div>
 
 <script>
-    $(document).ready(function() {});
+    $(document).ready(function() {
+
+        var today = new Date();
+        var year = today.getFullYear();
+        var month = today.getMonth()+1;
+        var date = today.getDate();
+        var createDate = year+prefixMonth(month)+date;
+
+        var batasTampilData = 10;
+        var halaman = $('#halaman_paging_trx').val();
+
+        console.log("create_date:"+createDate);
+        getData(createDate, "", batasTampilData, halaman);
+    });
 
     $(function() {
         $("#create_date").datepicker({
@@ -156,7 +158,13 @@
         })
 
         $("#create_date").val("...");
+        
     });
+
+    function prefixMonth(month) {
+        if (month < 10)
+            return "0" + month;
+    }
 
     $(document).on('change', '#create_date', function() {
         var create_date = document.getElementById("create_date").value;
@@ -297,10 +305,6 @@
                 }
 
             });
-
-
-
-
 
         } else {
             return false;
@@ -458,11 +462,13 @@
                     dataload += '<div class="container"> ';
                     dataload += '<div class="row"> ';
 
-                    dataload += '<h4 style="text-decoration: underline;margin-top:10px">' + dateForShow(data.data[0].create_date) + '</h4>'
+                    var functionOnclickDate = 'liveOrderPaging("' + data.data[0].create_date + '")';
+                    //dataload += '<h4 style="text-decoration: underline;margin-top:10px">' + dateForShow(data.data[0].create_date) + '</h4>'
+                    dataload += '<a href="#" style="color:white;text-decoration:none"  onclick=' + functionOnclickDate + '><h4 style="text-decoration: underline;margin-top:10px">' + dateForShow(data.data[0].create_date) + '</h4></a>'
 
                     for (i = 0; i < data.length; i++) {
 
-                        var functionOnclickDate = 'liveOrderPaging("' + create_date + '")';
+                        //var functionOnclickDate = 'liveOrderPaging("' + create_date + '")';
 
                         /*
                         if (create_date != "") {
@@ -588,12 +594,13 @@
     */
 
     function getLiveOrderDate(create_date, batasTampilData, halaman) {
+
         $.ajax({
             url: '<?= site_url() ?>/live-order/getdata',
             method: 'post',
             dataType: 'json',
             data: {
-                'create_date': create_date.trim(),
+                'create_date': create_date.replaceAll("-", "").trim(),
                 'halaman': halaman,
                 'batastampil': batasTampilData,
                 'keyword': ''
@@ -605,34 +612,35 @@
 
                     var dataload = "";
                     var flag = false;
-                    dataload += '<div class="container"> ';
-                    dataload += '<div class="row offset-md-3 col-md-12"> ';
+                    //dataload += '<div class="container"> ';
+                    dataload += '<div class="row"> ';
 
                     for (i = 0; i < data.length; i++) {
 
                         if (i % 2 == 0) {
-                            dataload += '<div class="col-md-6"> ';
-                            dataload += '<p style="color:#B89874;">' + data.data[i].nama_pelanggan.toUpperCase() + '</p>';
+                            dataload += '<div class="col-md-3 offset-md-2"> ';
+                                dataload += '<p style="color:#B89874;">' + data.data[i].nama_pelanggan.toUpperCase() + '</p>';
 
                             for (j = 0; j < data.datapo.length; j++) {
                                 if (data.data[i].id_trx_order == data.datapo[j].id_trx_order) {
 
                                     dataload += '<div class="row" style="margin-top:10px"> ';
-                                    dataload += '<div class="col-md-4"> ';
-                                    // if(flag==true){
-                                    //    dataload += data.datapo[i].nama_pelanggan.toUpperCase();
-                                    // }
+                                        dataload += '<div class="col-md-3"> ';
+                                        dataload += '</div>';
 
-                                    dataload += '</div>';
+                                        dataload += '<div class="col-md-5"> ';
+                                        dataload += data.datapo[j].nama_barang.toUpperCase();
+                                        dataload += '</div>';
 
-                                    dataload += '<div class="col-md-6"> ';
-                                    dataload += data.datapo[j].nama_barang.toUpperCase();
-                                    dataload += '</div>';
-
-                                    dataload += '<div class="col-md-2"> ';
-                                    dataload += data.datapo[j].quantity + " " + data.datapo[j].satuan;
-                                    dataload += '</div>';
+                                        dataload += '<div class="col-md-2"> ';
+                                        dataload += data.datapo[j].quantity + " " + data.datapo[j].satuan;
+                                        dataload += '</div>';
+                                        
+                                        dataload += '<div class="col-md-2"> ';
+                                        dataload += "<a href='#' class='btn btn-payment-md'><span></span></a>";
+                                        dataload += '</div>';
                                     dataload += '</div> ';
+
                                 }
 
                             }
@@ -641,27 +649,28 @@
                             dataload += '</div>';
 
                         } else {
-                            dataload += '<div class="col-md-6"> ';
+                            dataload += '<div class="col-md-3 offset-md-1"> ';
                             dataload += '<p style="color:#B89874;">' + data.data[i].nama_pelanggan.toUpperCase() + '</p>';
 
                             for (j = 0; j < data.datapo.length; j++) {
                                 if (data.data[i].id_trx_order == data.datapo[j].id_trx_order) {
 
                                     dataload += '<div class="row" style="margin-top:10px"> ';
-                                    dataload += '<div class="col-md-4"> ';
-                                    // if(flag==true){
-                                    //    dataload += data.datapo[i].nama_pelanggan.toUpperCase();
-                                    // }
+                                        dataload += '<div class="col-md-3"> ';
+                                        dataload += '</div>';
 
-                                    dataload += '</div>';
+                                        dataload += '<div class="col-md-5"> ';
+                                        dataload += data.datapo[j].nama_barang.toUpperCase();
+                                        dataload += '</div>';
 
-                                    dataload += '<div class="col-md-6"> ';
-                                    dataload += data.datapo[j].nama_barang.toUpperCase();
-                                    dataload += '</div>';
+                                        dataload += '<div class="col-md-2"> ';
+                                        dataload += data.datapo[j].quantity + " " + data.datapo[j].satuan;
+                                        dataload += '</div>';
 
-                                    dataload += '<div class="col-md-2"> ';
-                                    dataload += data.datapo[j].quantity + " " + data.datapo[j].satuan;
-                                    dataload += '</div>';
+                                        dataload += '<div class="col-md-2"> ';
+                                        dataload += "<a href='#' class='btn btn-payment-md'><span></span></a>";
+                                        dataload += '</div>';
+                                        
                                     dataload += '</div> ';
                                 }
 
@@ -671,14 +680,10 @@
                             dataload += '</div>';
 
                         }
-
-
-
-
                     }
 
                     dataload += '</div>';
-                    dataload += '</div>';
+                    //dataload += '</div>';
 
                     var totalDataBarang = data.length_paging;
                     var totalHalaman = Math.ceil(totalDataBarang / batasTampilData);
