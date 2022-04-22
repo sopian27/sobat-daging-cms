@@ -75,17 +75,12 @@ th {
                             <tr>
                                 <th>Upah Harian</th>
                                 <th>:</th>
-                                <th><?= $upah_harian?></th>
+                                <th><?= str_replace(",",".",$upah_harian)?></th>
                             </tr>
                             <tr>
                                 <th>Upah Lembur</th>
                                 <th>:</th>
-                                <th><?= $upah_lembur?></th>
-                            </tr>
-                            <tr>
-                                <th>Upah Lembur</th>
-                                <th>:</th>
-                                <th><?= $upah_lembur?></th>
+                                <th><?= str_replace(",",".",$upah_lembur)?></th>
                             </tr>
                         </table>
                         <hr style="width:50%;margin-left:0px"> 
@@ -94,7 +89,7 @@ th {
                                 <th>Total Upah</th>
                                 <th>:</th>
                                 <th></th>
-                                <th><?= $total_upah?></th>
+                                <th><?= str_replace(",",".",$total_upah)?></th>
                             </tr>
                         </table>                        
                     </div>

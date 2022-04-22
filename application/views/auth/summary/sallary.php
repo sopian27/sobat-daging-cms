@@ -29,7 +29,7 @@
                             </div>
                             <div class="form-group row" style="margin-top:30px">
                                 <label for="" class="col-sm-3 col-form-label">Nama </label>
-                                <div class="col-sm-1">:</div>
+                                <div class="col-sm-1" style="width:10%">: &nbsp;</div>
                                 <div class="col-sm-4">
                                     <input type="text" class="form-control-label" id="nama_minggu" name="nama">
                                     <input type="hidden" class="form-control-label" id="type" name="type" value="1">
@@ -38,31 +38,31 @@
                             </div>
                             <div class="form-group row" >
                                 <label for="" class="col-sm-3 col-form-label">Jumlah Hari Kerja </label>
-                                <div class="col-sm-1">:</div>
+                                <div class="col-sm-1" style="width:10%">: &nbsp;</div>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control-label" id="jml_hari_kerja" name="jml_hari_kerja">
+                                    <input type="text" class="form-control-label" id="jml_hari_kerja" style="text-align:right;" name="jml_hari_kerja">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="" class="col-sm-3 col-form-label">Upah Harian (Rp) </label>
-                                <div class="col-sm-1">:</div>
+                                <label for="" class="col-sm-3 col-form-label">Upah Harian </label>
+                                <div class="col-sm-1" style="width:10%">: &nbsp;(Rp)</div>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control-label" id="upah_harian" name="upah_harian">
+                                    <input type="text" class="form-control-label" id="upah_harian" style="text-align:right;" name="upah_harian">
                                 </div>
                             </div>
                             <div class="form-group row" >
-                                <label for="" class="col-sm-3 col-form-label">Upah Lembur (Rp)</label>
-                                <div class="col-sm-1">:</div>
+                                <label for="" class="col-sm-3 col-form-label">Upah Lembur </label>
+                                <div class="col-sm-1" style="width:10%">: &nbsp;(Rp)</div>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control-label" id="upah_lembur" name="upah_lembur">
+                                    <input type="text" class="form-control-label" id="upah_lembur" style="text-align:right;" name="upah_lembur">
                                 </div>
                             </div>
                             <hr style="width: 500px;border-width: 2px;border-style: solid;border-color:white">
                             <div class="form-group row" >
-                                <label for="" class="col-sm-3 col-form-label">Total Upah (Rp) </label>
-                                <div class="col-sm-1">:</div>
+                                <label for="" class="col-sm-3 col-form-label">Total Upah </label>
+                                <div class="col-sm-1" style="width:10%">: &nbsp;(Rp)</div>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control-label" id="total_upah_minggu" name="total_upah">
+                                    <input type="text" class="form-control-label" id="total_upah_minggu" style="text-align:right;" name="total_upah">
                                 </div>
                             </div>
                         </div>
@@ -97,7 +97,7 @@
                             </div>
                             <div class="form-group row" style="margin-top:30px">
                                 <label for="" class="col-sm-3 col-form-label">Nama </label>
-                                <div class="col-sm-1">:</div>
+                                <div class="col-sm-1" style="width:10%">: &nbsp;</div>
                                 <div class="col-sm-4">
                                     <input type="text" class="form-control-label" id="nama_bulan" name="nama">
                                     <input type="hidden" class="form-control-label" id="type" name="type" value="2">
@@ -106,31 +106,31 @@
                             </div>
                             <div class="form-group row" >
                                 <label for="" class="col-sm-3 col-form-label">Upah Bulanan </label>
-                                <div class="col-sm-1">:</div>
+                                <div class="col-sm-1" style="width:10%">: &nbsp;(Rp)</div>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control-label" id="upah_bulanan" name="upah_bulanan">
+                                    <input type="text" class="form-control-label" id="upah_bulanan" name="upah_bulanan" style="text-align:right;">
                                 </div>
                             </div>
                             <div class="form-group row" >
                                 <label for="" class="col-sm-3 col-form-label">Bulanan </label>
-                                <div class="col-sm-1">:</div>
+                                <div class="col-sm-1" style="width:10%">: &nbsp;</div>
                                 <div class="col-sm-4">
                                     <input type="text" class="form-control-label" id="bulan" name="bulan">
                                 </div>
                             </div>
                             <div class="form-group row" >
                                 <label for="" class="col-sm-3 col-form-label">Bonus </label>
-                                <div class="col-sm-1">:</div>
+                                <div class="col-sm-1" style="width:10%">: &nbsp;(Rp)</div>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control-label" id="bonus" name="bonus">
+                                    <input type="text" class="form-control-label" id="bonus" name="bonus" style="text-align:right;">
                                 </div>
                             </div>
                             <hr style="width: 500px;border-width: 2px;border-style: solid;border-color:white">
                             <div class="form-group row" >
                                 <label for="" class="col-sm-3 col-form-label">Total Upah </label>
-                                <div class="col-sm-1">:</div>
+                                <div class="col-sm-1" style="width:10%">: &nbsp;(Rp)</div>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control-label" id="total_upah_bulan" name="total_upah">
+                                    <input type="text" class="form-control-label" id="total_upah_bulan" name="total_upah" style="text-align:right;">
                                 </div>
                             </div>
                         </div>
@@ -367,8 +367,9 @@
         }
 
         if (checkInvalid(upah_lembur)) {
-            alert("upah lembur tidak boleh kosong");
-            return;
+            //alert("upah lembur tidak boleh kosong");
+            //return;
+            $("#upah_lembur").val("0");
         }
         
         confirm();
@@ -398,8 +399,9 @@
         }
 
         if (checkInvalid(bonus)) {
-            alert("bonus tidak boleh kosong");
-            return;
+            //alert("bonus tidak boleh kosong");
+            //return;
+            $("#bonus").val("0");
         }
 
         var data_bulan = bulan.replaceAll("-","");

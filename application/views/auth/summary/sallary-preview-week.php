@@ -75,14 +75,14 @@ function dateForShow($create_date)
                                 <label for="" class="col-sm-4 col-form-label">Upah Harian </label>
                                 <div class="col-sm-1">:</div>
                                 <div class="col-sm-4">
-                                    <input type="text" style="border-bottom:none;color:black" class="form-control-label" id="upah_harian" name="upah_harian" value="<?php echo "Rp. ".$upah_harian ?>">
+                                    <input type="text" style="border-bottom:none;color:black" class="form-control-label" id="upah_harian" name="upah_harian" value="<?php echo "Rp. ".str_replace(",",".",$upah_harian) ?>">
                                 </div>
                             </div>
                             <div class="form-group row" >
                                 <label for="" class="col-sm-4 col-form-label">Upah Lembur </label>
                                 <div class="col-sm-1">:</div>
                                 <div class="col-sm-4">
-                                    <input type="text" style="border-bottom:none;color:black" class="form-control-label" id="upah_lembur" name="upah_lembur" value="<?php echo "Rp. ".$upah_lembur ?>">
+                                    <input type="text" style="border-bottom:none;color:black" class="form-control-label" id="upah_lembur" name="upah_lembur" value="<?php echo "Rp. ".str_replace(",",".",$upah_lembur) ?>">
                                 </div>
                             </div>
                             <hr style="width: 500px;border-width: 2px;border-style: solid;border-color:black">
@@ -90,7 +90,7 @@ function dateForShow($create_date)
                                 <label for="" class="col-sm-4 col-form-label">Total Upah </label>
                                 <div class="col-sm-1">:</div>
                                 <div class="col-sm-4">
-                                    <input type="text" style="border-bottom:none;color:black" class="form-control-label" id="total_upah_minggu" name="total_upah" value="<?php echo "Rp. ".$total_upah ?>">
+                                    <input type="text" style="border-bottom:none;color:black" class="form-control-label" id="total_upah_minggu" name="total_upah" value="<?php echo "Rp. ".str_replace(",",".",$total_upah) ?>">
                                 </div>
                             </div>
                         </div>
@@ -111,7 +111,7 @@ function dateForShow($create_date)
         </div>
         <div class="row d-flex offset-md-9" style="margin-top: 20px;">
             <div class="col-md-4">
-                <button class="form-control-button btn btn-outline-light button-action" onclick="clearAllData();"> Cancel </button>
+                <button class="form-control-button btn btn-outline-light button-action" onclick="back();"> Cancel </button>
             </div>
             <div class="col-md-4">
                 <button class="form-control-button btn btn-outline-light button-action" type="submit"> Print </button>
@@ -122,4 +122,9 @@ function dateForShow($create_date)
 </div>
 
 <script>
+
+    function back() {
+        location.href="<?= site_url() ?>/sallary"
+    }
+
 </script>

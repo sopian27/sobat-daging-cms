@@ -31,6 +31,8 @@
         <div class="row" style="margin-top: 60px;">
             <div class="col-md-7" style="margin-left:7%;margin-top:10px">
                 <div class="collapse-content"></div>
+                <div class="col-md-1 offset-md-4 justify-content-center" id="button-show-detail">
+                </div>
                 <input type="hidden" name="halaman_paging_trx" id="halaman_paging_trx" value="1">
                 <div class="pagination-result_trx" style="margin-left:160px;margin-top:10px;margin-left:30%"></div>
             </div>
@@ -461,10 +463,12 @@
                     var dataload = "";
                     dataload += '<div class="container"> ';
                     dataload += '<div class="row"> ';
+                    var dataLoadBtn="";
 
                     var functionOnclickDate = 'liveOrderPaging("' + data.data[0].create_date + '")';
-                    //dataload += '<h4 style="text-decoration: underline;margin-top:10px">' + dateForShow(data.data[0].create_date) + '</h4>'
-                    dataload += '<a href="#" style="color:white;text-decoration:none"  onclick=' + functionOnclickDate + '><h4 style="text-decoration: underline;margin-top:10px">' + dateForShow(data.data[0].create_date) + '</h4></a>'
+                    dataload += '<h4 style="text-decoration: underline;margin-top:10px">' + dateForShow(data.data[0].create_date) + '</h4>'
+                    //dataload += '<a href="#" style="color:white;text-decoration:none"  onclick=' + functionOnclickDate + '><h4 style="text-decoration: underline;margin-top:10px">' + dateForShow(data.data[0].create_date) + '</h4></a>'
+                    dataLoadBtn += '<button class="form-control-button btn btn-outline-light button-action" onclick='+functionOnclickDate+'>Show</button>'
 
                     for (i = 0; i < data.length; i++) {
 
@@ -516,6 +520,7 @@
                     dataload += '</div>';
 
                     $('.collapse-content').html(dataload);
+                    $('#button-show-detail').html(dataLoadBtn);
                     var totalDataBarang = data.length_paging;
                     var totalHalaman = Math.ceil(totalDataBarang / batasTampilData);
 
