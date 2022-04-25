@@ -1,389 +1,160 @@
-<div class="container-fluid mt-3">
-    <div class="col-md-3 offset-md-1">
-        <h2><?= ucfirst($judul) ?></h2>
+<div class="container mt-3">
+
+    <div class="row">
+        <div class="col-12">
+            <h2><?= ucfirst($judul) ?></h2>
+        </div>
     </div>
-    <div class="col-md-11">
-        <hr style="margin-left:160px;border-width: 2px;border-style: solid;border-color:white">
+
+    <div class="row">
+        <div class="col-12">
+            <hr style="border-width: 2px;border-style: solid;border-color:white">
+        </div>
     </div>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-2 offset-md-1">
-                <div class="input-group">
-                    <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search" onkeyup="searchData()">
-                    <span class="input-group-append">
-                        <button class="btn btn-outline-light" type="button">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </span>
-                </div>
+
+    <div class="row">
+        <div class="col-5 col-md-4 col-lg-3">
+            <div class="input-group">
+                <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search" onkeyup="searchData()">
+                <span class="input-group-append">
+                    <button class="btn btn-outline-light" type="button">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
             </div>
-            <div class="col-md-2 offset-md-6">
-                <div class="input-group">
-                    <span class="input-group-append">
-                        <button class="btn btn-outline-light" type="button">
-                            <span>sort</span>
-                        </button>
-                    </span>
-                    <input class="form-control-paging-date" type="text" id="create_date" name="create_date">
-                </div>
+        </div>
+        <div class="col-6 offset-1 col-md-4 offset-md-4 col-lg-3 offset-lg-6">
+            <div class="input-group">
+                <span class="input-group-append">
+                    <button class="btn btn-outline-light" type="button">
+                        <span>sort</span>
+                    </button>
+                </span>
+                <input class="form-control-paging-date" type="text" id="create_date" name="create_date">
             </div>
         </div>
     </div>
-    <div class="container-fluid" style="margin-top:40px" id="payment-main">
-        <div class="row justify-content-center">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-1 offset-md-1">
-                        <div>
-                            <a class="form-control-button btn" style="background-color: #B89874;border:none;padding:10px"> Payment </a>
-                        </div>
-                        <div style="margin-top:30px">
-                            <a class="form-control-button btn btn-outline-light button-action" style="padding:10px" onclick="showInvoice();"> Invoice </a>
-                        </div>
+
+    <div id="payment-main">
+        <div class="row mt-5 justify-content-center">
+            <div class="row">
+                <div class="col-12 col-md-3 col-lg-2">
+                    <div>
+                        <a class="form-control-button btn" style="background-color: #B89874;border:none;padding:10px"> Payment </a>
                     </div>
-                    <div class="col-md-5 offset-md-1">
+                    <div class="mt-3">
+                        <a class="form-control-button btn btn-outline-light button-action" style="padding:10px" onclick="showInvoice();"> Invoice </a>
+                    </div>
+                </div>
+                <div class="col-12 col-md-5">
+                    <div class="form-group row mt-2">
+                        <label for="" class="col-10 col-form-label">
+                            <?php
+                            $t = time();
+                            $date = date("d/m/Y", $t);
+                            echo "PIP-0001/" . $date;
+                            ?>
+                        </label>
+                        <h4 id="payment-main-title"></h4>
+                    </div>
+                </div>
+
+                <div class="row mt-4 justify-content-end">
+                    <div class="col-12 col-md-7 col-lg-4 offset-lg-1">
                         <div class="form-group row">
-                            <label for="" class="col-sm-4 col-form-label">
-                                <?php
-                                $t = time();
-                                $date = date("d/m/Y", $t);
-                                echo "PIP-0001/" . $date;
-                                ?>
+                            <label for="" class="col-6 col-form-label">
+                                Payment In
                             </label>
-                            <h4 id="payment-main-title"></h4>
+                            <div class="col-6 mt-1" id="payment-in-tot">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="" class="col-6 col-form-label">
+                                Payment Out
+                            </label>
+                            <div class="col-6 mt-1" id="payment-out-tot">
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group row">
+                            <label for="" class="col-6 col-form-label">
+                                Total
+                            </label>
+                            <div class="col-6 mt-1" id="payment-tot">
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-3 offset-md-1">
-                        <div class="form-group row">
-                            <label for="" class="col-sm-3 col-form-label" style="margin-top: -7px;">Payment In </label>
-                            <div class="col-sm-3" id="payment-in-tot"></div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="" class="col-sm-3 col-form-label" style="margin-top: -7px;">Payment Out </label>
-                            <div class="col-sm-3" id="payment-out-tot"></div>
-                        </div>
-                        <hr style="width: 300px;">
-                        <div class="form-group row">
-                            <label for="" class="col-sm-3 col-form-label" style="margin-top: -7px;">Total </label>
-                            <div class="col-sm-3" id="payment-tot"></div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 offset-md-2">
+                </div>
+
+                <div class="row mt-5">
+                    <div class="col-7 offset-3">
                         <a href="#" style="color:white" onclick="show_payment_in();">Payment In</a> /
                         <a style="color:white" href="#" onclick="show_payment_out();">Payment Out</a>
                     </div>
-                    <div class="col-md-6 offset-md-2" style="margin-top: 20px;" id="div-payment-in">
-                        <table class="table table-dark table-bordered data">
-                            <thead>
-                                <tr>
-                                    <th colspan="4"> Payment In </th>
-                                </tr>
-                                <tr>
-                                    <th> Nomor Invoice </th>
-                                    <th> Nama Pelanggan </th>
-                                    <th> Tanggal Pembayaran </th>
-                                    <th> View </th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbody-payment-in">
-                            </tbody>
-                        </table>
-                        <input type="hidden" name="halaman_paging_payment_in" id="halaman_paging_payment_in" value="1">
-                        <div class="pagination-result-payment-in" style="margin-top:10px;margin-left:45%"></div>
+                </div>
+
+                <div class="col-12 col-md-7 offset-md-2 justify-content-center mt-3" style="margin-top: 20px;" id="div-payment-in">
+                    <table class="table table-dark table-bordered data table-responsive">
+                        <thead>
+                            <tr>
+                                <th colspan="4"> Payment In </th>
+                            </tr>
+                            <tr>
+                                <th> Nomor Invoice </th>
+                                <th> Nama Pelanggan </th>
+                                <th> Tanggal Pembayaran </th>
+                                <th> View </th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-payment-in">
+                        </tbody>
+                    </table>
+                    <input type="hidden" name="halaman_paging_payment_in" id="halaman_paging_payment_in" value="1">
+                    <div class="row">
+                        <div class="pagination-result-payment-in offset-7"></div>
                     </div>
-                    <div class="col-md-6 offset-md-2" style="margin-top: 20px;display:none" id="div-payment-out">
-                        <table class="table table-dark table-bordered data">
-                            <thead>
-                                <tr>
-                                    <th colspan="4"> Payment Out </th>
-                                </tr>
-                                <tr>
-                                    <th> Nomor Invoice </th>
-                                    <th> Nama Pelanggan </th>
-                                    <th> Tanggal Pembayaran </th>
-                                    <th> View </th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbody-payment-out">
-                            </tbody>
-                        </table>
-                        <input type="hidden" name="halaman_paging_payment_out" id="halaman_paging_payment_out" value="1">
-                        <div class="pagination-result-payment-out" style="margin-top:10px;margin-left:45%"></div>
+                </div>
+
+                <div class="col-12 col-md-7 offset-md-2 justify-content-center mt-3" style="display:none" id="div-payment-out">
+                    <table class="table table-dark table-bordered data table-responsive">
+                        <thead>
+                            <tr>
+                                <th colspan="4"> Payment Out </th>
+                            </tr>
+                            <tr>
+                                <th> Nomor Invoice </th>
+                                <th> Nama Pelanggan </th>
+                                <th> Tanggal Pembayaran </th>
+                                <th> View </th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-payment-out">
+                        </tbody>
+                    </table>
+                    <input type="hidden" name="halaman_paging_payment_out" id="halaman_paging_payment_out" value="1">
+                    <div class="row">
+                        <div class="pagination-result-payment-out offset-7"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="container-fluid" style="margin-top:40px;display:none" id="invoice-main">
-        <div class="row justify-content-center">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-1 offset-md-1">
-                        <div>
-                            <a class="form-control-button btn btn-outline-light button-action" style="padding:10px" onclick="showPayment();"> Payment </a>
-                        </div>
-                        <div style="margin-top:30px">
-                            <a class="form-control-button btn" style="background-color: #B89874;border:none;padding:10px"> Invoice </a>
-                        </div>
-                    </div>
-                    <div class="col-md-5 offset-md-1">
-                        <div class="form-group row">
-                            <label for="" class="col-sm-4 col-form-label">
-                                <?php
-                                $t = time();
-                                $date = date("d/m/Y", $t);
-                                echo "PIP-0001/" . $date;
-                                ?>
-                            </label>
-                            <h4 id="invoice-main-title"></h4>
-                        </div>
-                    </div>
-                    <div class="col-md-3 offset-md-2">
-                        <a href="#" style="color:white" onclick="show_invoice_co();">Invoice Customer</a> /
-                        <a style="color:white" href="#" onclick="show_invoice_po();">Invoice Pembelian</a>
-                    </div>
-                    <div class="col-md-6 offset-md-2" style="margin-top: 20px;" id="div-invoice-co">
-                        <table class="table table-dark table-bordered data">
-                            <thead>
-                                <tr>
-                                    <th colspan="4"> Invoice Customer </th>
-                                </tr>
-                                <tr>
-                                    <th> No Surat Jalan </th>
-                                    <th> Nama Pelanggan </th>
-                                    <th> No Invoice </th>
-                                    <th> View </th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbody-invoice-co">
-                            </tbody>
-                        </table>
-                        <input type="hidden" name="halaman_paging_invoice-co" id="halaman_paging_invoice-co" value="1">
-                        <div class="pagination-result-invoice-co" style="margin-top:10px;margin-left:45%"></div>
-                    </div>
-                    <div class="col-md-6 offset-md-2" style="margin-top: 20px;display:none" id="div-invoice-po">
-                        <table class="table table-dark table-bordered data">
-                            <thead>
-                                <tr>
-                                    <th colspan="4"> Invoice Pembelian </th>
-                                </tr>
-                                <tr>
-                                    <th> Kode Po </th>
-                                    <th> Nama Pelanggan </th>
-                                    <th> No Invoice </th>
-                                    <th> View </th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbody-invoice-po">
-                            </tbody>
-                        </table>
-                        <input type="hidden" name="halaman_paging_invoice-po" id="halaman_paging_invoice-po" value="1">
-                        <div class="pagination-result-invoice-po" style="margin-top:10px;margin-left:45%"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container-fluid" style="margin-top: 40px;display:none" id="payment-history-side">
-        <div class="row justify-content-center">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-1 offset-md-1">
-                        <div>
-                            <a class="form-control-button btn" style="background-color: #B89874;border:none;padding:10px"> Payment </a>
-                        </div>
-                        <div style="margin-top:30px">
-                            <a class="form-control-button btn btn-outline-light button-action" style="padding:10px" onclick="showInvoice();"> Invoice </a>
-                        </div>
-                    </div>
-                    <div class="col-md-5 offset-md-1">
-                        <div class="form-group row">
-                            <label for="" class="col-sm-4 col-form-label">
-                                <?php
-                                $t = time();
-                                $date = date("d/m/Y", $t);
-                                echo "PIP-0001/" . $date;
-                                ?>
-                            </label>
-                            <h4 id="payment-main-title"></h4>
-                        </div>
-                    </div>
-                    <div class="col-md-5 offset-md-2" id="payment-history">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container-fluid" style="margin-top: 40px;display:none" id="invoice-customer">
-        <div class="row justify-content-center">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-1 offset-md-1">
-                        <div>
-                            <a class="form-control-button btn btn-outline-light button-action" style="padding:10px" onclick="showPayment();"> Payment </a>
-                        </div>
-                        <div style="margin-top:30px">
-                            <a class="form-control-button btn" style="background-color: #B89874;border:none;padding:10px"> Invoice </a>
-                        </div>
-                    </div>
-                    <div class="col-md-5 offset-md-1">
-                        <div class="form-group row">
-                            <label for="" class="col-sm-4 col-form-label">
-                                <?php
-                                $t = time();
-                                $date = date("d/m/Y", $t);
-                                echo "PIP-0001/" . $date;
-                                ?>
-                            </label>
-                            <h4 id="invoice-main-title"></h4>
-                        </div>
-                    </div>
-                    <div class="col-md-5 offset-md-2">
-                        <div class="form-group row">
-                            <label for="" class="col-sm-4 col-form-label"></label>
-                        </div>
-                        <div class="form-group row" style="margin-top:30px">
-                            <label for="" class="col-sm-3 col-form-label">Nomor Surat Jalan </label>
-                            <div class="col-sm-1">:</div>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control-label" id="no_surat_jalan" name="no_surat_jalan">
-                            </div>
-                        </div>
-                        <div class="div_no_surat_jln">
-                            <hr style="border-width: 2px;border-style: solid;border-color:white" class="col-md-8">
-                            <div class="form-group row">
-                                <label for="" class="col-sm-3 col-form-label">Nomor Invoice </label>
-                                <div class="col-sm-1">:</div>
-                                <div class="col-sm-4">
-                                    <label for="" class="col-form-label" id="nomor_invoice"></label>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="" class="col-sm-3 col-form-label">Nama Pelanggan </label>
-                                <div class="col-sm-1">:</div>
-                                <div class="col-sm-4">
-                                    <label for="" class="col-form-label" id="nama_pelanggan"></label>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="" class="col-sm-3 col-form-label">Nomor Hp </label>
-                                <div class="col-sm-1">:</div>
-                                <div class="col-sm-4">
-                                    <label for="" class="col-form-label" id="no_hp"></label>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="" class="col-sm-3 col-form-label">Alamat Pengiriman </label>
-                                <div class="col-sm-1">:</div>
-                                <div class="col-sm-4">
-                                    <label for="" class="col-form-label" id="alamat_pengiriman"></label>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="" class="col-sm-3 col-form-label">Tanggal Pengiriman </label>
-                                <div class="col-sm-1">:</div>
-                                <div class="col-sm-4">
-                                    <label for="" class="col-form-label" id="tgl_pengiriman"></label>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="" class="col-sm-3 col-form-label">Jatuh Tempo </label>
-                                <div class="col-sm-1">:</div>
-                                <div class="col-sm-4">
-                                    <label for="" class="col-form-label" id="jatuh_tempo_no_surat_jln" style="color:red"></label>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="" class="col-sm-3 col-form-label">Total Tagihan </label>
-                                <div class="col-sm-1">:</div>
-                                <div class="col-sm-4">
-                                    <label for="" class="col-form-label" id="total_tagihan"></label>
-                                </div>
-                            </div>
-                            <div class="form-group row" style="display: none;">
-                                <label for="" class="col-sm-3 col-form-label">Bonus </label>
-                                <div class="col-sm-1">:</div>
-                                <div class="col-sm-4">
-                                    <label for="" class="col-form-label" id="bonus"></label>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="" class="col-sm-3 col-form-label">Bank Tujuan </label>
-                                <div class="col-sm-1">:</div>
-                                <div class="col-sm-4">
-                                    <label for="" class="col-form-label" id="bank_tujuan"></label>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="" class="col-sm-3 col-form-label">No. Rekening </label>
-                                <div class="col-sm-1">:</div>
-                                <div class="col-sm-4">
-                                    <label for="" class="col-form-label" id="no_rekening"></label>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="" class="col-sm-3 col-form-label">Atas Nama </label>
-                                <div class="col-sm-1">:</div>
-                                <div class="col-sm-4">
-                                    <label for="" class="col-form-label" id="atas_nama"></label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="div_no_surat_jln">
-                    <div class="row" style="margin-top: 50px;">
-                        <div class="col-md-7 offset-md-2 justify-content-center">
-                            <div class="row mt-2 ">
-                                <table class="table table-dark table-bordered data" id="tableInv">
-                                    <thead>
-                                        <tr class="align-middle">
-                                            <th rowspan="2"> Kode </th>
-                                            <th rowspan="2"> Nama Bahan </th>
-                                            <th rowspan="2"> Nama Barang </th>
-                                            <th rowspan="1" colspan="2"> Quantity</th>
-                                            <th rowspan="2"> Harga Satuan </th>
-                                            <th rowspan="2"> Harga Total </th>
-                                        </tr>
-                                        <tr>
-                                            <th> Quantity / Kg </th>
-                                            <th> Pcs / Bungkus </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id='tbody-table-data-no_surat_jln'></tbody>
-                                </table>
-                                <input type="hidden" name="halaman_paging_no_surat_jln" id="halaman_paging_no_surat_jln" value="1">
-                                <div class="pagination-result-no_surat_jln" style="margin-top:10px;margin-left:45%"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row d-flex offset-md-7">
-                        <div class="col-md-2">
-                            <button class="form-control-button btn btn-outline-light button-action" onclick="back();"> Back </button>
-                        </div>
-                        <div class="col-md-2">
-                            <button class="form-control-button btn btn-outline-light button-action" onclick="print()"> Print </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row justify-content-center" style="margin-top: 40px;display:none" id="invoice-pembelian">
-        <div class="container">
+    <div style="display:none" id="invoice-main">
+        <div class="row mt-5 justify-content-center">
             <div class="row">
-                <div class="col-md-1 offset-md-1">
+                <div class="col-12 col-md-3 col-lg-2">
                     <div>
                         <a class="form-control-button btn btn-outline-light button-action" style="padding:10px" onclick="showPayment();"> Payment </a>
                     </div>
-                    <div style="margin-top:30px">
+                    <div class="mt-3">
                         <a class="form-control-button btn" style="background-color: #B89874;border:none;padding:10px"> Invoice </a>
                     </div>
                 </div>
-                <div class="col-md-5 offset-md-1">
-                    <div class="form-group row">
-                        <label for="" class="col-sm-4 col-form-label">
+                <div class="col-12 col-md-5">
+                    <div class="form-group row mt-2">
+                        <label for="" class="col-10 col-form-label">
                             <?php
                             $t = time();
                             $date = date("d/m/Y", $t);
@@ -393,100 +164,354 @@
                         <h4 id="invoice-main-title"></h4>
                     </div>
                 </div>
-                <div class="col-md-5 offset-md-2">
+
+                <div class="row mt-5">
+                    <div class="col-9 offset-3">
+                        <a href="#" style="color:white" onclick="show_invoice_co();">Invoice Customer</a> /
+                        <a style="color:white" href="#" onclick="show_invoice_po();">Invoice Pembelian</a>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-7 offset-md-2 justify-content-center mt-3" id="div-invoice-co">
+                    <table class="table table-dark table-bordered data table-responsive">
+                        <thead>
+                            <tr>
+                                <th colspan="4"> Invoice Customer </th>
+                            </tr>
+                            <tr>
+                                <th> No Surat Jalan </th>
+                                <th> Nama Pelanggan </th>
+                                <th> No Invoice </th>
+                                <th> View </th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-invoice-co">
+                        </tbody>
+                    </table>
+                    <input type="hidden" name="halaman_paging_invoice-co" id="halaman_paging_invoice-co" value="1">
+                    <div class="row">
+                        <div class="pagination-result-invoice-co offset-7"></div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-7 offset-md-2 justify-content-center mt-3" style="display:none" id="div-invoice-po">
+                    <table class="table table-dark table-bordered data">
+                        <thead>
+                            <tr>
+                                <th colspan="4"> Invoice Pembelian </th>
+                            </tr>
+                            <tr>
+                                <th> Kode Po </th>
+                                <th> Nama Pelanggan </th>
+                                <th> No Invoice </th>
+                                <th> View </th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-invoice-po">
+                        </tbody>
+                    </table>
+                    <input type="hidden" name="halaman_paging_invoice-po" id="halaman_paging_invoice-po" value="1">
+                    <div class="row">
+                        <div class="pagination-result-invoice-po offset-7"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="display:none" id="payment-history-side">
+        <div class="row mt-5 justify-content-center">
+            <div class="row">
+                <div class="col-12 col-md-3 col-lg-2">
+                    <div>
+                        <a class="form-control-button btn" style="background-color: #B89874;border:none;padding:10px"> Payment </a>
+                    </div>
+                    <div class="mt-3">
+                        <a class="form-control-button btn btn-outline-light button-action" style="padding:10px" onclick="showInvoice();"> Invoice </a>
+                    </div>
+                </div>
+                <div class="col-12 col-md-9">
+                    <div class="form-group row mt-2">
+                        <label for="" class="col-10 col-form-label">
+                            <?php
+                            $t = time();
+                            $date = date("d/m/Y", $t);
+                            echo "PIP-0001/" . $date;
+                            ?>
+                        </label>
+                        <h4 id="payment-main-title"></h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-12 col-md-7 offset-md-2 col-lg-5" id="payment-history">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="display:none" id="invoice-customer">
+        <div class="row mt-5 justify-content-center">
+            <div class="row">
+                <div class="col-12 col-md-3 col-lg-2">
+                    <div>
+                        <a class="form-control-button btn btn-outline-light button-action" style="padding:10px" onclick="showPayment();"> Payment </a>
+                    </div>
+                    <div class="mt-3">
+                        <a class="form-control-button btn" style="background-color: #B89874;border:none;padding:10px"> Invoice </a>
+                    </div>
+                </div>
+                <div class="col-12 col-md-5">
+                    <div class="form-group row mt-2">
+                        <label for="" class="col-10 col-form-label">
+                            <?php
+                            $t = time();
+                            $date = date("d/m/Y", $t);
+                            echo "PIP-0001/" . $date;
+                            ?>
+                        </label>
+                        <h4 id="invoice-main-title"></h4>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-8 offset-md-2 col-lg-6 mt-3">
                     <div class="form-group row">
-                        <label for="" class="col-sm-4 col-form-label"></label>
-                    </div>
-                    <div class="form-group row" style="margin-top:30px">
-                        <label for="" class="col-sm-3 col-form-label">Kode Po </label>
-                        <div class="col-sm-1">:</div>
-                        <div class="col-sm-4">
-                            <label for="" class=" col-form-label" id="kode_po"></label>
+                        <label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Nomor Surat Jalan </label>
+                        <div class="col-1 col-md-3 col-lg-2">: </div>
+                        <div class="col-5 col-md-6 col-lg-5">
+                            <input type="text" class="form-control-label" id="no_surat_jalan" name="no_surat_jalan">
                         </div>
                     </div>
-                    <div class="div_kode_po">
-                        <hr style="border-width: 2px;border-style: solid;border-color:white" class="col-md-8">
+                    <div class="div_no_surat_jln">
+                        <hr style="border-width: 2px;border-style: solid;border-color:white">
                         <div class="form-group row">
-                            <label for="" class="col-sm-3 col-form-label">Pembelian dari </label>
-                            <div class="col-sm-1">:</div>
-                            <div class="col-sm-4">
-                                <label for="" class=" col-form-label" id="pembelian_dari"></label>
+                            <label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Nomor Invoice </label>
+                            <div class="col-1 col-md-3 col-lg-2">: </div>
+                            <div class="col-5 col-md-6 col-lg-5">
+                                <label for="" class="col-form-label" id="nomor_invoice"></label>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="" class="col-sm-3 col-form-label">Pic </label>
-                            <div class="col-sm-1">:</div>
-                            <div class="col-sm-4">
-                                <label for="" class=" col-form-label" id="pic"></label>
+                            <label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Nama Pelanggan </label>
+                            <div class="col-1 col-md-3 col-lg-2">: </div>
+                            <div class="col-5 col-md-6 col-lg-5">
+                                <label for="" class="col-form-label" id="nama_pelanggan"></label>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="" class="col-sm-3 col-form-label">Nomor Hp </label>
-                            <div class="col-sm-1">:</div>
-                            <div class="col-sm-4">
-                                <label for="" class=" col-form-label" id="no_hp"></label>
+                            <label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Nomor Hp </label>
+                            <div class="col-1 col-md-3 col-lg-2">: </div>
+                            <div class="col-5 col-md-6 col-lg-5">
+                                <label for="" class="col-form-label" id="no_hp"></label>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="" class="col-sm-3 col-form-label">Tanggal Pembelian </label>
-                            <div class="col-sm-1">:</div>
-                            <div class="col-sm-4">
-                                <label for="" class=" col-form-label" id="tgl_pembelian"> </label>
+                            <label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Alamat Pengiriman </label>
+                            <div class="col-1 col-md-3 col-lg-2">: </div>
+                            <div class="col-5 col-md-6 col-lg-5">
+                                <label for="" class="col-form-label" id="alamat_pengiriman"></label>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="" class="col-sm-3 col-form-label">Jatuh Tempo </label>
-                            <div class="col-sm-1">:</div>
-                            <div class="col-sm-4">
-                                <label for="" class=" col-form-label" id="jatuh_tempo_kode_po" style="color:red"></label>
+                            <label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Tanggal Pengiriman </label>
+                            <div class="col-1 col-md-3 col-lg-2">: </div>
+                            <div class="col-5 col-md-6 col-lg-5">
+                                <label for="" class="col-form-label" id="tgl_pengiriman"></label>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="" class="col-sm-3 col-form-label">Total Tagihan </label>
-                            <div class="col-sm-1">:</div>
-                            <div class="col-sm-4">
-                                <label for="" class=" col-form-label" id="total_tagihan_kode_po"></label>
+                            <label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Total Tagihan </label>
+                            <div class="col-1 col-md-3 col-lg-2">: </div>
+                            <div class="col-5 col-md-6 col-lg-5">
+                                <label for="" class="col-form-label" id="total_tagihan"></label>
+                            </div>
+                        </div>
+                        <div class="form-group row" style="display: none;">
+                            <label for="" class="col-6 col-md-3 col-lg-4 col-form-label"> diskon </label>
+                            <div class="col-1 col-md-3 col-lg-2">: </div>
+                            <div class="col-4 col-md-6 col-lg-5">
+                                <label for="" class="col-form-label" id="bonus"></label>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Bank Tujuan </label>
+                            <div class="col-1 col-md-3 col-lg-2">: </div>
+                            <div class="col-4 col-md-6 col-lg-5">
+                                <label for="" class="col-form-label" id="bank_tujuan"></label>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-6 col-md-3 col-lg-4 col-form-label">No. Rekening </label>
+                            <div class="col-1 col-md-3 col-lg-2">: </div>
+                            <div class="col-4 col-md-6 col-lg-5">
+                                <label for="" class="col-form-label" id="no_rekening"></label>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Atas Nama </label>
+                            <div class="col-1 col-md-3 col-lg-2">: </div>
+                            <div class="col-4 col-md-6 col-lg-5">
+                                <label for="" class="col-form-label" id="atas_nama"></label>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="div_kode_po">
-                <div class="row" style="margin-top: 50px;">
-                    <div class="col-md-7 offset-md-2 justify-content-center">
+            <div class="div_no_surat_jln">
+                <div class="row mt-5">
+                    <div class="col-12 col-md-8 offset-md-2 justify-content-center">
                         <div class="row mt-2 ">
-                            <table class="table table-dark table-bordered data" id="tableInv">
+                            <table class="table table-dark table-bordered data table-responsive" id="tableInv">
                                 <thead>
                                     <tr class="align-middle">
                                         <th rowspan="2"> Kode </th>
+                                        <th rowspan="2"> Nama Bahan </th>
                                         <th rowspan="2"> Nama Barang </th>
                                         <th rowspan="1" colspan="2"> Quantity</th>
                                         <th rowspan="2"> Harga Satuan </th>
                                         <th rowspan="2"> Harga Total </th>
                                     </tr>
                                     <tr>
-                                        <th> Quantity / Po </th>
-                                        <th> Quantity / Update </th>
+                                        <th> Quantity / Kg </th>
+                                        <th> Pcs / Bungkus </th>
                                     </tr>
                                 </thead>
-                                <tbody id='tbody-table-data_kode_po'></tbody>
+                                <tbody id='tbody-table-data-no_surat_jln'></tbody>
                             </table>
-                            <input type="hidden" name="halaman_paging_kode_po" id="halaman_paging_kode_po" value="1">
-                            <div class="pagination-result-kode-po" style="margin-top:10px;margin-left:45%"></div>
+                            <input type="hidden" name="halaman_paging_no_surat_jln" id="halaman_paging_no_surat_jln" value="1">
+                            <div class="row">
+                                <div class="pagination-result-no_surat_jln offset-7"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="row d-flex offset-md-7">
-                    <div class="col-md-2">
+                <div class="row d-flex justify-content-center mt-5">
+                    <div class="col-4 col-lg-2">
                         <button class="form-control-button btn btn-outline-light button-action" onclick="back();"> Back </button>
+                    </div>
+                    <div class="col-4 col-lg-2">
+                        <button class="form-control-button btn btn-outline-light button-action" onclick="print()"> Print </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="row mt-5 justify-content-center" style="display:none" id="invoice-pembelian">
+        <div class="row">
+            <div class="col-12 col-md-3 col-lg-2">
+                <div>
+                    <a class="form-control-button btn btn-outline-light button-action" style="padding:10px" onclick="showPayment();"> Payment </a>
+                </div>
+                <div class="mt-3">
+                    <a class="form-control-button btn" style="background-color: #B89874;border:none;padding:10px"> Invoice </a>
+                </div>
+            </div>
+            <div class="col-12 col-md-5">
+                <div class="form-group row mt-2">
+                    <label for="" class="col-10 col-form-label">
+                        <?php
+                        $t = time();
+                        $date = date("d/m/Y", $t);
+                        echo "PIP-0001/" . $date;
+                        ?>
+                    </label>
+                    <h4 id="invoice-main-title"></h4>
+                </div>
+            </div>
+            <div class="col-12 col-md-8 offset-md-2 col-lg-6 mt-3">
+                <div class="form-group row">
+                    <label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Kode Po </label>
+                    <div class="col-1 col-md-3 col-lg-2">: </div>
+                    <div class="col-5 col-md-6 col-lg-5">
+                        <label for="" class=" col-form-label" id="kode_po"></label>
+                    </div>
+                </div>
+                <div class="div_kode_po">
+                    <hr style="border-width: 2px;border-style: solid;border-color:white" class="col-md-8">
+                    <div class="form-group row">
+                        <label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Pembelian dari </label>
+                        <div class="col-1 col-md-3 col-lg-2">: </div>
+                        <div class="col-5 col-md-6 col-lg-5">
+                            <label for="" class=" col-form-label" id="pembelian_dari"></label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Pic </label>
+                        <div class="col-1 col-md-3 col-lg-2">: </div>
+                        <div class="col-5 col-md-6 col-lg-5">
+                            <label for="" class=" col-form-label" id="pic"></label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Nomor Hp </label>
+                        <div class="col-1 col-md-3 col-lg-2">: </div>
+                        <div class="col-5 col-md-6 col-lg-5">
+                            <label for="" class=" col-form-label" id="no_hp"></label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Tanggal Pembelian </label>
+                        <div class="col-1 col-md-3 col-lg-2">: </div>
+                        <div class="col-5 col-md-6 col-lg-5">
+                            <label for="" class=" col-form-label" id="tgl_pembelian"> </label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Jatuh Tempo </label>
+                        <div class="col-1 col-md-3 col-lg-2">: </div>
+                        <div class="col-5 col-md-6 col-lg-5">
+                            <label for="" class=" col-form-label" id="jatuh_tempo_kode_po" style="color:red"></label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Total Tagihan </label>
+                        <div class="col-1 col-md-3 col-lg-2">: </div>
+                        <div class="col-5 col-md-6 col-lg-5">
+                            <label for="" class=" col-form-label" id="total_tagihan_kode_po"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="div_kode_po">
+            <div class="row mt-5">
+                <div class="col-12 col-md-8 offset-md-2 justify-content-center">
+                    <div class="row mt-2 ">
+                        <table class="table table-dark table-bordered data table-responsive" id="tableInv">
+                            <thead>
+                                <tr class="align-middle">
+                                    <th rowspan="2"> Kode </th>
+                                    <th rowspan="2"> Nama Barang </th>
+                                    <th rowspan="1" colspan="2"> Quantity</th>
+                                    <th rowspan="2"> Harga Satuan </th>
+                                    <th rowspan="2"> Harga Total </th>
+                                </tr>
+                                <tr>
+                                    <th> Quantity / Po </th>
+                                    <th> Quantity / Update </th>
+                                </tr>
+                            </thead>
+                            <tbody id='tbody-table-data_kode_po'></tbody>
+                        </table>
+                        <input type="hidden" name="halaman_paging_kode_po" id="halaman_paging_kode_po" value="1">
+                        <div class="row">
+                            <div class="pagination-result-kode-po offset-7"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row d-flex justify-content-center mt-5">
+                <div class="col-4 col-lg-2">
+                    <button class="form-control-button btn btn-outline-light button-action" onclick="back();"> Back </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div style="margin-top:60px">
-        <form name="form-payment-history" id="form-payment-history" action="<?= site_url()?>/payment-history/print" target="blank" method="POST">
-            <input type="hidden" name="no_surat_jln" id="no_surat_jln"/>
+        <form name="form-payment-history" id="form-payment-history" action="<?= site_url() ?>/payment-history/print" target="blank" method="POST">
+            <input type="hidden" name="no_surat_jln" id="no_surat_jln" />
         </form>
     </div>
 </div>
@@ -498,7 +523,7 @@
         $("#payment-tot").html("Rp. 0");
     });
 
-    function print(){
+    function print() {
         $("#form-payment-history").submit();
     }
 
@@ -982,7 +1007,7 @@
                     $("#nama_pelanggan").html(data.data_surat_jln[0].nama_pelanggan.toUpperCase());
                     $("#no_hp").html(data.data_surat_jln[0].nomor);
                     $("#alamat_pengiriman").html(data.data_surat_jln[0].alamat);
-                    $("#tgl_pengiriman").html(dateForShow(data.data_surat_jln[0].tgl_pengiriman));
+                    $("#tgl_pengiriman").html(dateForShowVarchar(data.data_surat_jln[0].tgl_pengiriman));
                     $("#total_tagihan").html("Rp. " + numberWithCommas(data.sum_total[0].total));
                     $("#total_tagihan_value").html(data.sum_total[0].total);
                     $("#bonus").html("Rp. " + numberWithCommas(data.data_surat_jln[0].bonus));
@@ -992,7 +1017,7 @@
                     $("#no_rekening").html(data.data_surat_jln[0].no_rekening);
                     $("#total_tagihan_value").html(data.sum_total[0].total);
                     $("#total_tagihan_value").html(data.sum_total[0].total);
-                    
+
 
                     for (let i = 0; i < data.data_surat_jln.length; i++) {
 
@@ -1048,6 +1073,41 @@
         });
     }
 
+    function dateForShowVarchar(create_date) {
+
+        var day = create_date.substring(6, 8);
+        var year = create_date.substring(0, 4);
+        var month = create_date.substring(4, 6)
+
+        if (month == "01") {
+            month = "Januari";
+        } else if (month == "02") {
+            month = "Februari";
+        } else if (month == "03") {
+            month = "Maret";
+        } else if (month == "04") {
+            month = "April";
+        } else if (month == "05") {
+            month = "Mei";
+        } else if (month == "06") {
+            month = "Juni";
+        } else if (month == "07") {
+            month = "Juli";
+        } else if (month == "08") {
+            month = "Agustus";
+        } else if (month == "09") {
+            month = "September";
+        } else if (month == "10") {
+            month = "Oktober";
+        } else if (month == "11") {
+            month = "November";
+        } else if (month == "12") {
+            month = "Desember";
+        }
+
+        return day + " " + month + " " + year;
+    }
+
     function backToHistory() {
         location.reload();
     }
@@ -1065,10 +1125,10 @@
 
                 $("#payment-history").html("");
                 var dataload = "";
-                dataload += '<div class="form-group row" style="margin-top:30px">' +
-                    '<label for="" class="col-sm-6 col-form-label">Nomor Invoice </label>' +
-                    '<div class="col-sm-1">:</div>' +
-                    '<div class="col-sm-5">' +
+                dataload += '<div class="form-group row">' +
+                    '<label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Nomor Invoice </label>' +
+                    '<div class="col-1 col-md-3 col-lg-2">: </div>' +
+                    '<div class="col-5 col-md-6 col-lg-5">' +
                     '<label>' + no_invoice + '</label>' +
                     '</div>' +
                     '</div>';
@@ -1086,37 +1146,37 @@
 
                             var sisa = parseFloat(data.data[i].harga_total) - parseFloat(data.data[i].nominal_bayar);
                             dataload += '<div class="collapse" id="collapseExample">';
-                            dataload += '<hr style="width: 275px;border-width: 2px;border-style: solid;border-color:white">' +
-                                '<div style="font-size: 14px;">' +
-                                '<div class="form-group row">' +
-                                '<label for="" class="col-sm-6 col-form-label">Nama Pelanggan </label>' +
-                                '<div class="col-sm-1">:</div>' +
-                                '<div class="col-sm-5">' +
-                                '<label >' + data.data[i].nama_pelanggan.toUpperCase() + '</label>' +
+                            //dataload += '<hr style="border-width: 2px;border-style: solid;border-color:white">' +
+                            '<div style="font-size: 14px;">' +
+                            '<div class="form-group row">' +
+                            '<label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Nama Pelanggan </label>' +
+                            '<div class="col-1 col-md-3 col-lg-2">: </div>' +
+                            '<div class="col-5 col-md-6 col-lg-5">' +
+                            '<label >' + data.data[i].nama_pelanggan.toUpperCase() + '</label>' +
                                 '</div>' +
                                 '</div>';
 
-                            dataload += '<div class="form-group row" style="margin-top: 10px;">' +
-                                '<label for="" class="col-sm-6 col-form-label">Total Tagihan </label>' +
-                                '<div class="col-sm-1">:</div>' +
-                                '<div class="col-sm-5">' +
+                            dataload += '<div class="form-group row">' +
+                                '<label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Total Tagihan </label>' +
+                                '<div class="col-1 col-md-3 col-lg-2">: </div>' +
+                                '<div class="col-5 col-md-6 col-lg-5">' +
                                 '<label >Rp. ' + numberWithCommas(data.data[i].harga_total) + '</label>' +
                                 '</div>' +
                                 '</div>';
 
-                            dataload += '<div class="form-group row" style="margin-top: 10px;">' +
-                                '<label for="" class="col-sm-6 col-form-label">Nominal Pembayaran </label>' +
-                                '<div class="col-sm-1">:</div>' +
-                                '<div class="col-sm-5">' +
+                            dataload += '<div class="form-group row">' +
+                                '<label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Nominal Pembayaran </label>' +
+                                '<div class="col-1 col-md-3 col-lg-2">: </div>' +
+                                '<div class="col-5 col-md-6 col-lg-5">' +
                                 '<label>Rp. ' + numberWithCommas(data.data[i].nominal_bayar) + '</label>' +
                                 '</div>' +
                                 '</div>' +
                                 '<hr>';
 
-                            dataload += '<div class="form-group row" style="margin-top: 10px;">' +
-                                '<label for="" class="col-sm-6 col-form-label">Kekurangan Pembayaran </label>' +
-                                '<div class="col-sm-1">:</div>' +
-                                '<div class="col-sm-5">' +
+                            dataload += '<div class="form-group row">' +
+                                '<label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Kekurangan Pembayaran </label>' +
+                                '<div class="col-1 col-md-3 col-lg-2">: </div>' +
+                                '<div class="col-5 col-md-6 col-lg-5">' +
                                 '<label >Rp. ' + numberWithCommas(sisa) + '</label>' +
                                 '</div>' +
                                 '</div>' +
@@ -1127,25 +1187,25 @@
 
                         var sisanya = parseFloat(data.data[0].harga_total) - parseFloat(data.data[0].nominal_bayar);
                         dataload += '<div class="form-group row" >' +
-                            '<label for="" class="col-sm-6 col-form-label">Nama Pelanggan </label>' +
-                            '<div class="col-sm-1">:</div>' +
-                            '<div class="col-sm-5">' +
-                            '<label>' + data.data[0].nama_pelanggan + '</label>' +
+                            '<label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Nama Pelanggan </label>' +
+                            '<div class="col-1 col-md-3 col-lg-2">: </div>' +
+                            '<div class="col-5 col-md-6 col-lg-5">' +
+                            '<label >' + data.data[0].nama_pelanggan.toUpperCase() + '</label>' +
                             '</div>' +
                             '</div>';
 
                         dataload += '<div class="form-group row" >' +
-                            '<label for="" class="col-sm-6 col-form-label">Kekurangan Pembayaran </label>' +
-                            '<div class="col-sm-1">:</div>' +
-                            '<div class="col-sm-5">' +
+                            '<label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Kekurangan Pembayaran </label>' +
+                            '<div class="col-1 col-md-3 col-lg-2">: </div>' +
+                            '<div class="col-5 col-md-6 col-lg-5">' +
                             '<label>' + "Rp. " + numberWithCommas(data.data[0].harga_total) + '</label>' +
                             '</div>' +
                             '</div>';
 
                         dataload += '<div class="form-group row" >' +
-                            '<label for="" class="col-sm-6 col-form-label">Nominal Pembayaran </label>' +
-                            '<div class="col-sm-1">:</div>' +
-                            '<div class="col-sm-5">' +
+                            '<label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Nominal Pembayaran </label>' +
+                            '<div class="col-1 col-md-3 col-lg-2">: </div>' +
+                            '<div class="col-5 col-md-6 col-lg-5">' +
                             '<label>' + "Rp. " + numberWithCommas(data.data[0].harga_total) + '</label>' +
                             '</div>' +
                             '</div>';
@@ -1153,9 +1213,9 @@
                         dataload += '<hr style="border-width: 2px;border-style: solid;border-color:white">';
 
                         dataload += '<div class="form-group row" >' +
-                            '<label for="" class="col-sm-6 col-form-label">Kekurangan Pembayaran </label>' +
-                            '<div class="col-sm-1">:</div>' +
-                            '<div class="col-sm-5">' +
+                            '<label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Kekurangan Pembayaran </label>' +
+                            '<div class="col-1 col-md-3 col-lg-2">: </div>' +
+                            '<div class="col-5 col-md-6 col-lg-5">' +
                             '<label >Rp. ' + numberWithCommas(sisa) + '</label>' +
                             '</div>' +
                             '</div>';
@@ -1163,25 +1223,25 @@
                     } else {
 
                         dataload += '<div class="form-group row" >' +
-                            '<label for="" class="col-sm-6 col-form-label">Nama Pelanggan </label>' +
-                            '<div class="col-sm-1">:</div>' +
-                            '<div class="col-sm-5">' +
+                            '<label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Nama Pelanggan </label>' +
+                            '<div class="col-1 col-md-3 col-lg-2">: </div>' +
+                            '<div class="col-5 col-md-6 col-lg-5">' +
                             '<label>' + data.data[0].nama_pelanggan + '</label>' +
                             '</div>' +
                             '</div>';
 
                         dataload += '<div class="form-group row" >' +
-                            '<label for="" class="col-sm-6 col-form-label">Kekurangan Pembayaran </label>' +
-                            '<div class="col-sm-1">:</div>' +
-                            '<div class="col-sm-5">' +
+                            '<label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Kekurangan Pembayaran </label>' +
+                            '<div class="col-1 col-md-3 col-lg-2">: </div>' +
+                            '<div class="col-5 col-md-6 col-lg-5">' +
                             '<label>' + "Rp. " + numberWithCommas(data.data[0].total_tagihan) + '</label>' +
                             '</div>' +
                             '</div>';
 
                         dataload += '<div class="form-group row" >' +
-                            '<label for="" class="col-sm-6 col-form-label">Nominal Pembayaran </label>' +
-                            '<div class="col-sm-1">:</div>' +
-                            '<div class="col-sm-5">' +
+                            '<label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Nominal Pembayaran </label>' +
+                            '<div class="col-1 col-md-3 col-lg-2">: </div>' +
+                            '<div class="col-5 col-md-6 col-lg-5">' +
                             '<label>' + "Rp. 0" + '</label>' +
                             '</div>' +
                             '</div>';
@@ -1189,19 +1249,19 @@
                         dataload += '<hr style="border-width: 2px;border-style: solid;border-color:white">';
 
                         dataload += '<div class="form-group row" >' +
-                            '<label for="" class="col-sm-6 col-form-label">Kekurangan Pembayaran </label>' +
-                            '<div class="col-sm-1">:</div>' +
-                            '<div class="col-sm-5">' +
+                            '<label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Kekurangan Pembayaran </label>' +
+                            '<div class="col-1 col-md-3 col-lg-2">: </div>' +
+                            '<div class="col-5 col-md-6 col-lg-5">' +
                             '<label>' + "Rp. " + numberWithCommas(data.data[0].total_tagihan) + '</label>' +
                             '</div>' +
                             '</div>';
                     }
 
-
-
-                    dataload += '<div class="col-md-3 offset-md-3" style="margin-top:30px">' +
-                        '<button class="form-control-button btn btn-outline-light button-action" onclick="back();"> Back </button>' +
-                        '</div>';
+                    dataload += '<div class="row d-flex justify-content-center mt-3">' +
+                                    ' <div class="col-4 col-lg-2 mt-3">' +
+                                    '<button class="form-control-button btn btn-outline-light button-action" onclick="back();"> Back </button>' +
+                                    '</div>'
+                                '</div>';
 
                     hidePaymentAndInvoice();
 
@@ -1231,10 +1291,10 @@
 
                 $("#payment-history").html("");
                 var dataload = "";
-                dataload += '<div class="form-group row" style="margin-top:30px">' +
-                    '<label for="" class="col-sm-6 col-form-label">Nomor Invoice </label>' +
-                    '<div class="col-sm-1">:</div>' +
-                    '<div class="col-sm-5">' +
+                dataload += '<div class="form-group row">' +
+                    '<label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Nomor Invoice </label>' +
+                    '<div class="col-1 col-md-3 col-lg-2">: </div>' +
+                    '<div class="col-5 col-md-6 col-lg-5">' +
                     '<label>' + no_invoice + '</label>' +
                     '</div>' +
                     '</div>';
@@ -1252,37 +1312,37 @@
 
                             var sisa = parseFloat(data.data[i].harga_total) - parseFloat(data.data[i].nominal_bayar);
                             dataload += '<div class="collapse" id="collapseExample">';
-                            dataload += '<hr style="width: 275px;border-width: 2px;border-style: solid;border-color:white">' +
+                            dataload += '<hr style="border-width: 2px;border-style: solid;border-color:white">' +
                                 '<div style="font-size: 14px;">' +
                                 '<div class="form-group row">' +
-                                '<label for="" class="col-sm-6 col-form-label">Nama Pelanggan </label>' +
-                                '<div class="col-sm-1">:</div>' +
-                                '<div class="col-sm-5">' +
+                                '<label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Nama Pelanggan </label>' +
+                                '<div class="col-1 col-md-3 col-lg-2">: </div>' +
+                                '<div class="col-5 col-md-6 col-lg-5">' +
                                 '<label >' + data.data[i].nama.toUpperCase() + '</label>' +
                                 '</div>' +
                                 '</div>';
 
                             dataload += '<div class="form-group row" style="margin-top: 10px;">' +
-                                '<label for="" class="col-sm-6 col-form-label">Total Tagihan </label>' +
-                                '<div class="col-sm-1">:</div>' +
-                                '<div class="col-sm-5">' +
+                                '<label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Total Tagihan </label>' +
+                                '<div class="col-1 col-md-3 col-lg-2">: </div>' +
+                                '<div class="col-5 col-md-6 col-lg-5">' +
                                 '<label >Rp. ' + numberWithCommas(data.data[i].harga_total) + '</label>' +
                                 '</div>' +
                                 '</div>';
 
                             dataload += '<div class="form-group row" style="margin-top: 10px;">' +
-                                '<label for="" class="col-sm-6 col-form-label">Nominal Pembayaran </label>' +
-                                '<div class="col-sm-1">:</div>' +
-                                '<div class="col-sm-5">' +
+                                '<label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Nominal Pembayaran </label>' +
+                                '<div class="col-1 col-md-3 col-lg-2">: </div>' +
+                                '<div class="col-5 col-md-6 col-lg-5">' +
                                 '<label>Rp. ' + numberWithCommas(data.data[i].nominal_bayar) + '</label>' +
                                 '</div>' +
                                 '</div>' +
                                 '<hr>';
 
                             dataload += '<div class="form-group row" style="margin-top: 10px;">' +
-                                '<label for="" class="col-sm-6 col-form-label">Kekurangan Pembayaran </label>' +
-                                '<div class="col-sm-1">:</div>' +
-                                '<div class="col-sm-5">' +
+                                '<label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Kekurangan Pembayaran </label>' +
+                                '<div class="col-1 col-md-3 col-lg-2">: </div>' +
+                                '<div class="col-5 col-md-6 col-lg-5">' +
                                 '<label >Rp. ' + numberWithCommas(sisa) + '</label>' +
                                 '</div>' +
                                 '</div>' +
@@ -1293,25 +1353,25 @@
 
                         var sisanya = parseFloat(data.data[0].harga_total) - parseFloat(data.data[0].nominal_bayar);
                         dataload += '<div class="form-group row" >' +
-                            '<label for="" class="col-sm-6 col-form-label">Nama Pelanggan </label>' +
-                            '<div class="col-sm-1">:</div>' +
-                            '<div class="col-sm-5">' +
+                            '<label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Nama Pelanggan </label>' +
+                            '<div class="col-1 col-md-3 col-lg-2">: </div>' +
+                            '<div class="col-5 col-md-6 col-lg-5">' +
                             '<label>' + data.data[0].nama + '</label>' +
                             '</div>' +
                             '</div>';
 
                         dataload += '<div class="form-group row" >' +
-                            '<label for="" class="col-sm-6 col-form-label">Kekurangan Pembayaran </label>' +
-                            '<div class="col-sm-1">:</div>' +
-                            '<div class="col-sm-5">' +
+                            '<label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Kekurangan Pembayaran </label>' +
+                            '<div class="col-1 col-md-3 col-lg-2">: </div>' +
+                            '<div class="col-5 col-md-6 col-lg-5">' +
                             '<label>' + "Rp. " + numberWithCommas(data.data[0].harga_total) + '</label>' +
                             '</div>' +
                             '</div>';
 
                         dataload += '<div class="form-group row" >' +
-                            '<label for="" class="col-sm-6 col-form-label">Nominal Pembayaran </label>' +
-                            '<div class="col-sm-1">:</div>' +
-                            '<div class="col-sm-5">' +
+                            '<label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Nominal Pembayaran </label>' +
+                            '<div class="col-1 col-md-3 col-lg-2">: </div>' +
+                            '<div class="col-5 col-md-6 col-lg-5">' +
                             '<label>' + "Rp. " + numberWithCommas(data.data[0].harga_total) + '</label>' +
                             '</div>' +
                             '</div>';
@@ -1319,9 +1379,9 @@
                         dataload += '<hr style="border-width: 2px;border-style: solid;border-color:white">';
 
                         dataload += '<div class="form-group row" >' +
-                            '<label for="" class="col-sm-6 col-form-label">Kekurangan Pembayaran </label>' +
-                            '<div class="col-sm-1">:</div>' +
-                            '<div class="col-sm-5">' +
+                            '<label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Kekurangan Pembayaran </label>' +
+                            '<div class="col-1 col-md-3 col-lg-2">: </div>' +
+                            '<div class="col-5 col-md-6 col-lg-5">' +
                             '<label >Rp. ' + numberWithCommas(sisa) + '</label>' +
                             '</div>' +
                             '</div>';
@@ -1329,25 +1389,25 @@
                     } else {
 
                         dataload += '<div class="form-group row" >' +
-                            '<label for="" class="col-sm-6 col-form-label">Nama Pelanggan </label>' +
-                            '<div class="col-sm-1">:</div>' +
-                            '<div class="col-sm-5">' +
+                            '<label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Nama Pelanggan </label>' +
+                            '<div class="col-1 col-md-3 col-lg-2">: </div>' +
+                            '<div class="col-5 col-md-6 col-lg-5">' +
                             '<label>' + data.data[0].nama + '</label>' +
                             '</div>' +
                             '</div>';
 
                         dataload += '<div class="form-group row" >' +
-                            '<label for="" class="col-sm-6 col-form-label">Kekurangan Pembayaran </label>' +
-                            '<div class="col-sm-1">:</div>' +
-                            '<div class="col-sm-5">' +
+                            '<label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Kekurangan Pembayaran </label>' +
+                            '<div class="col-1 col-md-3 col-lg-2">: </div>' +
+                            '<div class="col-5 col-md-6 col-lg-5">' +
                             '<label>' + "Rp. " + numberWithCommas(data.data[0].total_tagihan) + '</label>' +
                             '</div>' +
                             '</div>';
 
                         dataload += '<div class="form-group row" >' +
-                            '<label for="" class="col-sm-6 col-form-label">Nominal Pembayaran </label>' +
-                            '<div class="col-sm-1">:</div>' +
-                            '<div class="col-sm-5">' +
+                            '<label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Nominal Pembayaran </label>' +
+                            '<div class="col-1 col-md-3 col-lg-2">: </div>' +
+                            '<div class="col-5 col-md-6 col-lg-5">' +
                             '<label>' + "Rp. 0" + '</label>' +
                             '</div>' +
                             '</div>';
@@ -1355,17 +1415,20 @@
                         dataload += '<hr style="border-width: 2px;border-style: solid;border-color:white">';
 
                         dataload += '<div class="form-group row" >' +
-                            '<label for="" class="col-sm-6 col-form-label">Kekurangan Pembayaran </label>' +
-                            '<div class="col-sm-1">:</div>' +
-                            '<div class="col-sm-5">' +
+                            '<label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Kekurangan Pembayaran </label>' +
+                            '<div class="col-1 col-md-3 col-lg-2">: </div>' +
+                            '<div class="col-5 col-md-6 col-lg-5">' +
                             '<label>' + "Rp. " + numberWithCommas(data.data[0].total_tagihan) + '</label>' +
                             '</div>' +
                             '</div>';
                     }
 
-                    dataload += '<div class="col-md-3  offset-md-3" style="margin-top:30px">' +
-                        '<button class="form-control-button btn btn-outline-light button-action" onclick="back();"> Back </button>' +
-                        '</div>';
+                
+                    dataload += '<div class="row d-flex justify-content-center mt-3">' +
+                                    ' <div class="col-4 col-lg-2 mt-3">' +
+                                    '<button class="form-control-button btn btn-outline-light button-action" onclick="back();"> Back </button>' +
+                                    '</div>'
+                                '</div>';
 
                     hidePaymentAndInvoice();
                     $("#payment-history").html(dataload);
@@ -1773,5 +1836,4 @@
         $('#halaman_paging_kode_po').val(halaman)
         invoicePembelianPaging(kodePo);
     }
-
 </script>

@@ -1,283 +1,288 @@
-<div class="container-fluid mt-3">
-    <div class="col-md-3 offset-md-1">
-        <h2><?= ucfirst($judul) ?></h2>
-    </div>
-    <div class="col-md-11">
-        <hr style="margin-left:160px;border-width: 2px;border-style: solid;border-color:white">
-    </div>
+<div class="container mt-3">
+
     <div class="row">
-        <div class="col-md-3 offset-md-9 "><?= $date ?></div>
+        <div class="col-12">
+            <h2><?= ucfirst($judul) ?></h2>
+        </div>
     </div>
 
-    <div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <hr style="border-width: 2px;border-style: solid;border-color:white">
+        </div>
+    </div>
 
-        <div class="row justify-content-center" id="form-invoice-customer">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-2 offset-md-1">
-                        <div>
-                            <a class="form-control-button btn" style="background-color: #B89874;border:none;padding:10px"> Invoice Costumer </a>
-                        </div>
-                        <div style="margin-top:30px">
-                            <a class="form-control-button btn btn-outline-light button-action" style="padding:10px" onclick="showInvoicePembelian();"> Invoice Pembelian </a>
-                        </div>
-                        <div style="margin-top:30px">
-                            <p id="info-co"></p>
-                        </div>
-                    </div>
-                    <div class="col-md-5">
-                        <div class="form-group row">
-                            <label for="" class="col-sm-4 col-form-label"><?= $no_invoice_co ?></label>
-                        </div>
-                        <div class="form-group row" style="margin-top:30px">
-                            <label for="" class="col-sm-3 col-form-label">Nomor Surat Jalan </label>
-                            <div class="col-sm-1">:</div>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control-label" id="no_surat_jalan" name="no_surat_jalan">
-                                <input type="hidden" class="form-control" id="no_invoice_co" name="no_invoice_co">
-                                <input type="hidden" class="form-control" id="id_trx_payment_value" name="id_trx_payment" value="<?php echo $no_invoice_co ?>">
-                                <input type="hidden" class="form-control" id="total_tagihan_value" name="total_tagihan">
-                            </div>
-                        </div>
+    <div class="row">
+        <div class="col-2 offset-10"><?= $date ?></div>
+    </div>
 
-                        <div class="div_no_surat_jln" style="display:none">
-                            <hr style="border-width: 2px;border-style: solid;border-color:white" class="col-md-8">
-                            <div class="form-group row">
-                                <label for="" class="col-sm-3 col-form-label">Nomor Invoice </label>
-                                <div class="col-sm-1">:</div>
-                                <div class="col-sm-4">
-                                    <label for="" class="col-form-label" id="nomor_invoice"></label>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="" class="col-sm-3 col-form-label">Nama Pelanggan </label>
-                                <div class="col-sm-1">:</div>
-                                <div class="col-sm-4">
-                                    <label for="" class="col-form-label" id="nama_pelanggan"></label>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="" class="col-sm-3 col-form-label">Nomor Hp </label>
-                                <div class="col-sm-1">:</div>
-                                <div class="col-sm-4">
-                                    <label for="" class="col-form-label" id="no_hp"></label>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="" class="col-sm-3 col-form-label">Alamat Pengiriman </label>
-                                <div class="col-sm-1">:</div>
-                                <div class="col-sm-4">
-                                    <label for="" class="col-form-label" id="alamat_pengiriman"></label>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="" class="col-sm-3 col-form-label">Tanggal Pengiriman </label>
-                                <div class="col-sm-1">:</div>
-                                <div class="col-sm-4">
-                                    <label for="" class="col-form-label" id="tgl_pengiriman"></label>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="" class="col-sm-3 col-form-label">Total Tagihan </label>
-                                <div class="col-sm-1">:</div>
-                                <div class="col-sm-4">
-                                    <label for="" class="col-form-label" id="total_tagihan"></label>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="" class="col-sm-3 col-form-label">diskon </label>
-                                <div class="col-sm-1">:</div>
-                                <div class="col-sm-4">
-                                    <input type="text" name="bonus" id="bonus" class="form-control-label">
-                                </div>
-                                <div class="col-sm-1"><span class="fa fa-pencil"><span></div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="" class="col-sm-3 col-form-label">Jatuh Tempo </label>
-                                <div class="col-sm-1">:</div>
-                                <div class="col-sm-4">
-                                    <input type="text" name="jatuh_tempo" id="jatuh_tempo_no_surat_jln" class="form-control-label" style="color:red">
-                                </div>
-                                <div class="col-sm-1"><span class="fa fa-pencil"><span></div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="" class="col-sm-3 col-form-label">Bank Tujuan </label>
-                                <div class="col-sm-1">:</div>
-                                <div class="col-sm-4">
-                                    <input type="text" name="bank_tujuan" id="bank_tujuan" class="form-control-label" />
-                                </div>
-                                <div class="col-sm-1"><span class="fa fa-pencil"><span></div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="" class="col-sm-3 col-form-label">No. Rekening </label>
-                                <div class="col-sm-1">:</div>
-                                <div class="col-sm-4">
-                                    <input type="text" name="no_rekening" id="no_rekening" class="form-control-label" onkeypress="validate(event)" />
-                                </div>
-                                <div class="col-sm-1"><span class="fa fa-pencil"><span></div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="" class="col-sm-3 col-form-label">Atas Nama </label>
-                                <div class="col-sm-1">:</div>
-                                <div class="col-sm-4">
-                                    <input type="text" name="atas_nama" id="atas_nama" class="form-control-label" />
-                                </div>
-                                <div class="col-sm-1"><span class="fa fa-pencil"><span></div>
-                            </div>
-                        </div>
+    <div class="row mt-5 justify-content-center" id="form-invoice-customer">
+        <div class="row">
+            <div class="col-12 col-md-3 col-lg-2">
+                <div>
+                    <a class="form-control-button btn" style="background-color: #B89874;border:none;padding:10px"> Invoice Costumer </a>
+                </div>
+                <div class="mt-3">
+                    <a class="form-control-button btn btn-outline-light button-action" style="padding:10px" onclick="showInvoicePembelian();"> Invoice Pembelian </a>
+                </div>
+                <div class="mt-3">
+                    <p id="info-co"></p>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-8 offset-md-1 col-lg-6">
+                <div class="form-group row">
+                    <label for="" class="col-5 col-md-6 col-form-label"><?= $no_invoice_co ?></label>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Nomor Surat Jalan </label>
+                    <div class="col-1 col-md-3 col-lg-2">: </div>
+                    <div class="col-5 col-md-6 col-lg-5">
+                        <input type="text" class="form-control-label" id="no_surat_jalan" name="no_surat_jalan">
+                        <input type="hidden" class="form-control" id="no_invoice_co" name="no_invoice_co">
+                        <input type="hidden" class="form-control" id="id_trx_payment_value" name="id_trx_payment" value="<?php echo $no_invoice_co ?>">
+                        <input type="hidden" class="form-control" id="total_tagihan_value" name="total_tagihan">
                     </div>
                 </div>
+
                 <div class="div_no_surat_jln" style="display:none">
-                    <div class="row" style="margin-top: 50px;">
-                        <div class="col-md-7 offset-md-2 justify-content-center">
-                            <div class="row mt-2 ">
-                                <table class="table table-dark table-bordered data" id="tableInv">
-                                    <thead>
-                                        <tr class="align-middle">
-                                            <th rowspan="2"> Kode </th>
-                                            <th rowspan="2"> Nama Barang </th>
-                                            <th rowspan="2"> Nama Bahan </th>
-                                            <th rowspan="1" colspan="2"> Quantity</th>
-                                            <th rowspan="2"> Harga Satuan </th>
-                                            <th rowspan="2"> Harga Total </th>
-                                        </tr>
-                                        <tr>
-                                            <th> Quantity / Kg </th>
-                                            <th> Pcs / Bungkus </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id='tbody-table-data-no_surat_jln'></tbody>
-                                </table>
-                                <input type="hidden" name="halaman_paging_co" id="halaman_paging_co" value="1">
-                                <div class="pagination-result-co" style="margin-top:10px;margin-left:40%"></div>
-                            </div>
+                    <hr style="border-width: 2px;border-style: solid;border-color:white">
+                    <div class="form-group row">
+                        <label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Nomor Invoice </label>
+                        <div class="col-1 col-md-3 col-lg-2">: </div>
+                        <div class="col-5 col-md-6 col-lg-5">
+                            <label for="" class="col-form-label" id="nomor_invoice"></label>
                         </div>
                     </div>
-                    <div class="row d-flex offset-md-7" style="margin-top: 30px;">
-                        <div class="col-md-2">
-                            <button class="form-control-button btn btn-outline-light button-action" onclick="clearAllCo();"> Clear All </button>
+                    <div class="form-group row">
+                        <label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Nama Pelanggan </label>
+                        <div class="col-1 col-md-3 col-lg-2">: </div>
+                        <div class="col-5 col-md-6 col-lg-5">
+                            <label for="" class="col-form-label" id="nama_pelanggan"></label>
                         </div>
-                        <div class="col-md-2">
-                            <button class="form-control-button btn btn-outline-light button-action" onclick="return confirmDataCo();"> Confirm </button>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Nomor Hp </label>
+                        <div class="col-1 col-md-3 col-lg-2">: </div>
+                        <div class="col-5 col-md-6 col-lg-5">
+                            <label for="" class="col-form-label" id="no_hp"></label>
                         </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Alamat Pengiriman </label>
+                        <div class="col-1 col-md-3 col-lg-2">: </div>
+                        <div class="col-5 col-md-6 col-lg-5">
+                            <label for="" class="col-form-label" id="alamat_pengiriman"></label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Tanggal Pengiriman </label>
+                        <div class="col-1 col-md-3 col-lg-2">: </div>
+                        <div class="col-5 col-md-6 col-lg-5">
+                            <label for="" class="col-form-label" id="tgl_pengiriman"></label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Total Tagihan </label>
+                        <div class="col-1 col-md-3 col-lg-2">: </div>
+                        <div class="col-5 col-md-6 col-lg-5">
+                            <label for="" class="col-form-label" id="total_tagihan"></label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-6 col-md-3 col-lg-4 col-form-label">diskon </label>
+                        <div class="col-1 col-md-3 col-lg-2">: </div>
+                        <div class="col-4 col-md-6 col-lg-5">
+                            <input type="text" name="bonus" id="bonus" class="form-control-label">
+                        </div>
+                        <div class="col-1"><span class="fa fa-pencil"><span></div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Jatuh Tempo </label>
+                        <div class="col-1 col-md-3 col-lg-2">: </div>
+                        <div class="col-4 col-md-6 col-lg-5">
+                            <input type="text" name="jatuh_tempo" id="jatuh_tempo_no_surat_jln" class="form-control-label" style="color:red">
+                        </div>
+                        <div class="col-sm-1"><span class="fa fa-pencil"><span></div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Bank Tujuan </label>
+                        <div class="col-1 col-md-3 col-lg-2">: </div>
+                        <div class="col-4 col-md-6 col-lg-5">
+                            <input type="text" name="bank_tujuan" id="bank_tujuan" class="form-control-label" />
+                        </div>
+                        <div class="col-1"><span class="fa fa-pencil"><span></div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-6 col-md-3 col-lg-4 col-form-label">No. Rekening </label>
+                        <div class="col-1 col-md-3 col-lg-2">: </div>
+                        <div class="col-4 col-md-6 col-lg-5">
+                            <input type="text" name="no_rekening" id="no_rekening" class="form-control-label" onkeypress="validate(event)" />
+                        </div>
+                        <div class="col-1"><span class="fa fa-pencil"><span></div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Atas Nama </label>
+                        <div class="col-1 col-md-3 col-lg-2">: </div>
+                        <div class="col-4 col-md-6 col-lg-5">
+                            <input type="text" name="atas_nama" id="atas_nama" class="form-control-label" />
+                        </div>
+                        <div class="col-1"><span class="fa fa-pencil"><span></div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="row justify-content-center" style="display: none;" id="form-invoice-pembelian">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-2 offset-md-1">
-                        <div>
-                            <a class="form-control-button btn btn-outline-light button-action" onclick="showInvoiceCustomer();"> Invoice Costumer </a>
-                        </div>
-                        <div style="margin-top:30px">
-                            <a class="form-control-button btn" style="background-color: #B89874;border:none;padding:10px"> Invoice Pembelian </a>
-                        </div>
-                        <div style="margin-top:30px">
-                            <p id="info-po"></p>
+        <div class="div_no_surat_jln" style="display:none">
+            <div class="row mt-5">
+                <div class="col-12 col-md-7 offset-md-2 justify-content-center">
+                    <div class="row mt-2 ">
+                        <table class="table table-dark table-bordered data table-responsive" id="tableInv">
+                            <thead>
+                                <tr class="align-middle">
+                                    <th rowspan="2"> Kode </th>
+                                    <th rowspan="2"> Nama Barang </th>
+                                    <th rowspan="2"> Nama Bahan </th>
+                                    <th rowspan="1" colspan="2"> Quantity</th>
+                                    <th rowspan="2"> Harga Satuan </th>
+                                    <th rowspan="2"> Harga Total </th>
+                                </tr>
+                                <tr>
+                                    <th> Quantity / Kg </th>
+                                    <th> Pcs / Bungkus </th>
+                                </tr>
+                            </thead>
+                            <tbody id='tbody-table-data-no_surat_jln'></tbody>
+                        </table>
+                        <input type="hidden" name="halaman_paging_co" id="halaman_paging_co" value="1">
+                        <div class="row">
+                            <div class="pagination-result-co offset-7"></div>
                         </div>
                     </div>
-                    <div class="col-md-5">
-                        <div class="form-group row">
-                            <label for="" class="col-sm-4 col-form-label"><?= $no_invoice_co_po ?> </label>
-                        </div>
-                        <div class="form-group row" style="margin-top:30px">
-                            <label for="" class="col-sm-3 col-form-label">Kode Po </label>
-                            <div class="col-sm-1">:</div>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control-label" id="kode_po" name="kode_po">
-                                <input type="hidden" class="form-control" id="no_invoice_co_po" name="no_invoice_co_po" value="<?= $no_invoice_co_po ?>">
-                                <input type="hidden" class="form-control" id="total_tagihan_value_po" name="total_tagihan">
-                                <input type="hidden" class="form-control" id="no_invoice_kode_po" name="no_invoice">
-                            </div>
-                        </div>
-                        <div class="div_kode_po" style="display:none">
-                            <hr style="border-width: 2px;border-style: solid;border-color:white" class="col-md-8">
-                            <div class="form-group row">
-                                <label for="" class="col-sm-3 col-form-label">Pembelian dari </label>
-                                <div class="col-sm-1">:</div>
-                                <div class="col-sm-4">
-                                    <label for="" class=" col-form-label" id="pembelian_dari"></label>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="" class="col-sm-3 col-form-label">Pic </label>
-                                <div class="col-sm-1">:</div>
-                                <div class="col-sm-4">
-                                    <label for="" class=" col-form-label" id="pic"></label>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="" class="col-sm-3 col-form-label">Nomor Hp </label>
-                                <div class="col-sm-1">:</div>
-                                <div class="col-sm-4">
-                                    <label for="" class=" col-form-label" id="no_hp_po"></label>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="" class="col-sm-3 col-form-label">Tanggal Pembelian </label>
-                                <div class="col-sm-1">:</div>
-                                <div class="col-sm-4">
-                                    <label for="" class=" col-form-label" id="tgl_pembelian"> </label>
-                                </div>
-                            </div>
-                            <div class="form-group row" style="margin-top:10px">
-                                <label for="" class="col-sm-3 col-form-label">Jatuh Tempo </label>
-                                <div class="col-sm-1">:</div>
-                                <div class="col-sm-4">
-                                    <input type="text" name="jatuh_tempo" id="jatuh_tempo_kode_po" class="form-control-label" style="color:red">
-                                </div>
-                                <div class="col-sm-1"><span class="fa fa-pencil"><span></div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="" class="col-sm-3 col-form-label">Total Tagihan </label>
-                                <div class="col-sm-1">:</div>
-                                <div class="col-sm-4">
-                                    <label for="" class=" col-form-label" id="total_tagihan_kode_po"></label>
-                                </div>
-                            </div>
-                        </div>
+                </div>
+            </div>
+            <div class="row d-flex justify-content-center mt-5">
+                <div class="col-4 col-lg-2">
+                    <button class="form-control-button btn btn-outline-light button-action" onclick="clearAllCo();"> Clear All </button>
+                </div>
+                <div class="col-4 col-lg-2">
+                    <button class="form-control-button btn btn-outline-light button-action" onclick="return confirmDataCo();"> Confirm </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5 justify-content-center" style="display: none;" id="form-invoice-pembelian">
+        <div class="row">
+            <div class="col-12 col-md-3 col-lg-2">
+                <div>
+                    <a class="form-control-button btn btn-outline-light button-action" onclick="showInvoiceCustomer();"> Invoice Costumer </a>
+                </div>
+                <div class="mt-3">
+                    <a class="form-control-button btn" style="background-color: #B89874;border:none;padding:10px"> Invoice Pembelian </a>
+                </div>
+                <div class="mt-3">
+                    <p id="info-po"></p>
+                </div>
+            </div>
+            <div class="col-12 col-md-8 offset-md-1 col-lg-6">
+                <div class="form-group row">
+                    <label for="" class="col-5 col-md-6 col-form-label"><?= $no_invoice_co_po ?> </label>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Kode Po </label>
+                    <div class="col-1 col-md-3 col-lg-2">: </div>
+                    <div class="col-5 col-md-6 col-lg-5">
+                        <input type="text" class="form-control-label" id="kode_po" name="kode_po">
+                        <input type="hidden" class="form-control" id="no_invoice_co_po" name="no_invoice_co_po" value="<?= $no_invoice_co_po ?>">
+                        <input type="hidden" class="form-control" id="total_tagihan_value_po" name="total_tagihan">
+                        <input type="hidden" class="form-control" id="no_invoice_kode_po" name="no_invoice">
                     </div>
                 </div>
                 <div class="div_kode_po" style="display:none">
-                    <div class="row" style="margin-top: 50px;">
-                        <div class="col-md-7 offset-md-2 justify-content-center">
-                            <div class="row mt-2 ">
-                                <table class="table table-dark table-bordered data" id="tableInv">
-                                    <thead>
-                                        <tr class="align-middle">
-                                            <th rowspan="2"> Kode </th>
-                                            <th rowspan="2"> Nama Barang </th>
-                                            <th rowspan="1" colspan="2"> Quantity</th>
-                                            <th rowspan="2"> Harga Satuan </th>
-                                            <th rowspan="2"> Harga Total </th>
-                                        </tr>
-                                        <tr>
-                                            <th> Quantity / Po </th>
-                                            <th> Quantity / Update </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id='tbody-table-data_kode_po'></tbody>
-                                </table>
-                                <input type="hidden" name="halaman_paging_po" id="halaman_paging_po" value="1">
-                                <div class="pagination-result-po" style="margin-top:10px;margin-left:40%"></div>
-                            </div>
+                    <hr style="border-width: 2px;border-style: solid;border-color:white">
+                    <div class="form-group row">
+                        <label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Pembelian dari </label>
+                        <div class="col-1 col-md-3 col-lg-2">: </div>
+                        <div class="col-4 col-md-6 col-lg-5">
+                            <label for="" class=" col-form-label" id="pembelian_dari"></label>
                         </div>
                     </div>
-                    <div class="row d-flex offset-md-7" style="margin-top: 30px;">
-                        <div class="col-md-2">
-                            <button class="form-control-button btn btn-outline-light button-action" onclick="clearAllPo();"> Clear All </button>
+                    <div class="form-group row">
+                        <label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Pic </label>
+                        <div class="col-1 col-md-3 col-lg-2">: </div>
+                        <div class="col-4 col-md-6 col-lg-5">
+                            <label for="" class=" col-form-label" id="pic"></label>
                         </div>
-                        <div class="col-md-2">
-                            <button class="form-control-button btn btn-outline-light button-action" onclick="confirmDataPo();"> Confirm </button>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Nomor Hp </label>
+                        <div class="col-1 col-md-3 col-lg-2">: </div>
+                        <div class="col-4 col-md-6 col-lg-5">
+                            <label for="" class=" col-form-label" id="no_hp_po"></label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Tanggal Pembelian </label>
+                        <div class="col-1 col-md-3 col-lg-2">: </div>
+                        <div class="col-4 col-md-6 col-lg-5">
+                            <label for="" class=" col-form-label" id="tgl_pembelian"> </label>
+                        </div>
+                    </div>
+                    <div class="form-group row" style="margin-top:10px">
+                        <label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Jatuh Tempo </label>
+                        <div class="col-1 col-md-3 col-lg-2">: </div>
+                        <div class="col-4 col-md-6 col-lg-5">
+                            <input type="text" name="jatuh_tempo" id="jatuh_tempo_kode_po" class="form-control-label" style="color:red">
+                        </div>
+                        <div class="col-1"><span class="fa fa-pencil"><span></div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Total Tagihan </label>
+                        <div class="col-1 col-md-3 col-lg-2">: </div>
+                        <div class="col-4 col-md-6 col-lg-5">
+                            <label for="" class=" col-form-label" id="total_tagihan_kode_po"></label>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
+        <div class="div_kode_po" style="display:none">
+            <div class="row mt-5">
+                <div class="col-12 col-md-7 offset-md-2 justify-content-center">
+                    <div class="row mt-2 ">
+                        <table class="table table-dark table-bordered data table-responsive" id="tableInv">
+                            <thead>
+                                <tr class="align-middle">
+                                    <th rowspan="2"> Kode </th>
+                                    <th rowspan="2"> Nama Barang </th>
+                                    <th rowspan="1" colspan="2"> Quantity</th>
+                                    <th rowspan="2"> Harga Satuan </th>
+                                    <th rowspan="2"> Harga Total </th>
+                                </tr>
+                                <tr>
+                                    <th> Quantity / Po </th>
+                                    <th> Quantity / Update </th>
+                                </tr>
+                            </thead>
+                            <tbody id='tbody-table-data_kode_po'></tbody>
+                        </table>
+                        <input type="hidden" name="halaman_paging_po" id="halaman_paging_po" value="1">
+                        <div class="row">
+                            <div class="pagination-result-po offset-7"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row d-flex justify-content-center mt-5">
+                <div class="col-4 col-lg-2">
+                    <button class="form-control-button btn btn-outline-light button-action" onclick="clearAllPo();"> Clear All </button>
+                </div>
+                <div class="col-4 col-lg-2">
+                    <button class="form-control-button btn btn-outline-light button-action" onclick="confirmDataPo();"> Confirm </button>
+                </div>
+            </div>
+        </div>
     </div>
     <div style="margin-top:60px"></div>
 </div>

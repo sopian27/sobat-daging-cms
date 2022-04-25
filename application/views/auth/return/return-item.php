@@ -1,82 +1,84 @@
-<div class="container-fluid mt-3">
-    <div class="col-md-3 offset-md-1">
-        <h2><?= ucfirst($judul) ?></h2>
-    </div>
-    <div class="col-md-11">
-        <hr style="margin-left:160px;border-width: 2px;border-style: solid;border-color:white">
-    </div>
+<div class="container mt-3">
+
     <div class="row">
-        <div class="col-md-3 offset-md-1"><span><input type="text" name="id_trx_return" id="id_trx_return" class="form-control" /></span></div>
-        <div class="col-md-2 offset-md-5 "><?= $date ?></div>
+        <div class="col-12">
+            <h2><?= ucfirst($judul) ?></h2>
+        </div>
     </div>
 
-    <div class="container-fluid" style="margin-top: 60px;">
-        <div class="row justify-content-center">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-5 offset-md-2">
-                        <div class="form-group row">
-                            <label for="" class="col-sm-3 col-form-label">Nomor Invoice </label>
-                            <div class="col-sm-1">:</div>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control-label" id="no_invoice" name="no_invoice">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="" class="col-sm-3 col-form-label">Nama Pelanggan </label>
-                            <div class="col-sm-1">:</div>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control-label" id="nama_pelanggan" name="nama_pelanggan" readonly="readonly">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="" class="col-sm-3 col-form-label">Tanggal Pengiriman </label>
-                            <div class="col-sm-1">:</div>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control-label" id="tgl_pengiriman" name="tgl_pengiriman" readonly="readonly">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group row">
-                            <label for="" class="col-sm-3 col-form-label">Tanggal Return </label>
-                            <div class="col-sm-1">:</div>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control-label" id="tgl_return" name="tgl_return">
-                            </div>
-                        </div>
-                    </div>
+    <div class="row">
+        <div class="col-12">
+            <hr style="border-width: 2px;border-style: solid;border-color:white">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-2"><span><input type="text" name="id_trx_return" id="id_trx_return" class="form-control" /></span></div>
+        <div class="col-2 offset-8"><?= $date ?></div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-12 col-md-6">
+            <div class="form-group row">
+                <label for="" class="col-12 col-md-6 col-xl-5 col-form-label">Nomor Invoice : </label>
+
+                <div class="col-12 col-md-6 col-lg-6">
+                    <input type="text" class="form-control-label" id="no_invoice" name="no_invoice">
                 </div>
             </div>
+            <div class="form-group row">
+                <label for="" class="col-12 col-md-6 col-xl-5 col-form-label">Nama Pelanggan : </label>
 
-            <div class="row" style="margin-top: 50px;">
-                <div class="col-md-7 offset-md-2 justify-content-center">
-                    <div class="row mt-2 ">
-                        <table class="table table-dark table-bordered data" id="mytable">
-                            <thead>
-                                <tr>
-                                    <th> Kode </th>
-                                    <th> Nama Barang </th>
-                                    <th colspan="2"> Quantity </th>
-                                    <th colspan="2"> Quantity Barang Return </th>
-                                    <th> Note </th>
-                                    <th> Action </th>
-                                </tr>
-                            </thead>
-                            <tbody id='tbody-table-data'>
-                            </tbody>
-                        </table>
-                        <input type="hidden" name="halaman_paging" id="halaman_paging" value="1">
-                        <div class="pagination-result" style="margin-top:10px;margin-left:40%"></div>
-                    </div>
-                    <div class="row d-flex justify-content-end" style="margin-top: 30px;">
-                        <div class="col-md-2">
-                            <button class="form-control-button btn btn-outline-light button-action" onclick="clearAllData();"> Clear All </button>
-                        </div>
-                        <div class="col-md-2">
-                            <button class="form-control-button btn btn-outline-light button-action" onclick="return confirmData();"> Confirm </button>
-                        </div>
-                    </div>
+                <div class="col-12 col-md-6 col-lg-6">
+                    <input type="text" class="form-control-label" id="nama_pelanggan" name="nama_pelanggan" readonly="readonly">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="" class="col-12 col-md-6 col-xl-5 col-form-label">Tanggal Pengiriman : </label>
+
+                <div class="col-12 col-md-6 col-lg-6">
+                    <input type="text" class="form-control-label" id="tgl_pengiriman" name="tgl_pengiriman" readonly="readonly">
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-5 offset-md-1">
+            <div class="form-group row">
+                <label for="" class="col-12 col-md-6 col-xl-5 col-form-label">Tanggal Return : </label>
+                <div class="col-12 col-md-6 col-lg-6">
+                    <input type="text" class="form-control-label" id="tgl_return" name="tgl_return">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-12 col-md-7 offset-md-1 justify-content-center">
+            <div class="row mt-2 ">
+                <table class="table table-dark table-bordered data table-responsive" id="mytable">
+                    <thead>
+                        <tr>
+                            <th> Kode </th>
+                            <th> Nama Barang </th>
+                            <th colspan="2"> Quantity </th>
+                            <th colspan="2"> Quantity Barang Return </th>
+                            <th> Note </th>
+                            <th> Action </th>
+                        </tr>
+                    </thead>
+                    <tbody id='tbody-table-data'>
+                    </tbody>
+                </table>
+                <input type="hidden" name="halaman_paging" id="halaman_paging" value="1">
+                <div class="row">
+                    <div class="pagination-result offset-7"></div>
+                </div>
+            </div>
+            <div class="row d-flex justify-content-end">
+                <div class="col-5 col-md-4 col-lg-3">
+                    <button class="form-control-button btn btn-outline-light button-action" onclick="clearAllData();"> Clear All </button>
+                </div>
+                <div class="col-5 col-md-4 col-lg-3">
+                    <button class="form-control-button btn btn-outline-light button-action" onclick="return confirmData();"> Confirm </button>
                 </div>
             </div>
         </div>
@@ -377,8 +379,8 @@
                         }
 
                     });
-                }else{
-                    
+                } else {
+
                     alert("quantity barang tidak boleh kosong");
                 }
 

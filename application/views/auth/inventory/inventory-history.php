@@ -1,79 +1,90 @@
-<div class="container-fluid mt-3">
-    <div class="col-md-3 offset-md-1">
-        <h2><?= ucfirst($judul) ?></h2>
+<div class="container mt-3">
+
+    <div class="row">
+        <div class="col-12">
+            <h2><?= ucfirst($judul) ?></h2>
+        </div>
     </div>
-    <div class="col-md-11">
-        <hr style="margin-left:160px;border-width: 2px;border-style: solid;border-color:white">
+
+    <div class="row">
+        <div class="col-12">
+            <hr style="border-width: 2px;border-style: solid;border-color:white">
+        </div>
     </div>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-2 offset-md-1">
-                <div class="input-group">
-                    <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search" onkeyup="searchData()">
-                    <span class="input-group-append">
-                        <button class="btn btn-outline-light" type="button">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </span>
-                </div>
-            </div>
-            <div class="col-md-2 offset-md-6">
-                <div class="input-group">
-                    <span class="input-group-append">
-                        <button class="btn btn-outline-light" type="button">
-                            <span>sort</span>
-                        </button>
-                    </span>
-                    <input class="form-control-paging-date" type="text" id="create_date" name="create_date">
-                </div>
+
+    <div class="row">
+        <div class="col-5 col-md-4 col-lg-3">
+            <div class="input-group">
+                <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search" onkeyup="searchData()">
+                <span class="input-group-append">
+                    <button class="btn btn-outline-light" type="button">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
             </div>
         </div>
-        <div class="row" style="margin-top: 60px;" id="data-trigger">
-            <div class="col-md-7" style="margin-left:9%;margin-top:10px">
-                <div id="data-trigger-content"></div>
-                <input type="hidden" name="halaman_paging_trx" id="halaman_paging_trx" value="1">
-                <div class="pagination-result_trx" style="margin-left:160px;margin-top:10px;margin-left:30%"></div>
+        <div class="col-6 offset-1 col-md-4 offset-md-4 col-lg-3 offset-lg-6">
+            <div class="input-group">
+                <span class="input-group-append">
+                    <button class="btn btn-outline-light" type="button">
+                        <span>sort</span>
+                    </button>
+                </span>
+                <input class="form-control-paging-date" type="text" id="create_date" name="create_date">
             </div>
         </div>
     </div>
-    <div class="container-fluid" style="display: none;margin-top: 30px;" id="div-inventory-update-detail">
-        <div class="row">
-            <div class="col-md-3 offset-md-2">
+
+    <div class="row mt-5" id="data-trigger">
+        <div class="col-7 col-sm-7 col-md-6 col-lg-5">
+            <div id="data-trigger-content"></div>
+            <div class="row mt-3">
+                <div class="col-7 offset-2">
+                    <input type="hidden" name="halaman_paging_trx" id="halaman_paging_trx" value="1">
+                    <div class="pagination-result_trx"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="display: none;" id="div-inventory-update-detail">
+
+        <div class="row mt-5">
+            <div class="col-5 offset-1 col-md-4 col-lg-3">
                 <p id="id_trx_po"></p>
                 <p id="supplier_name"></p>
-                <label for="" class="col-sm-2 offset-md-4 col-form-label"> </label>
             </div>
-            <div class="col-md-2 offset-md-3">
+            <div class="col-5 offset-1 col-md-4 col-lg-3">
                 <p id="date-filter"><?= $date ?></p>
                 <p id="tgl_po"></p>
                 <p id="tgl_penerimaan"></p>
             </div>
         </div>
-        <div class="container-fluid">
-            <div class="row justify-content-center">
-                <div class="row">
-                    <div class="col-md-7 offset-md-2 justify-content-center">
-                        <div class="row mt-2 ">
-                            <table class="table table-dark table-bordered data">
-                                <thead>
-                                    <tr>
-                                        <th> Kode </th>
-                                        <th> Nama Barang </th>
-                                        <th> Quantity </th>
-                                        <th> Quantity Check</th>
-                                        <th> Harga Satuan</th>
-                                        <th> Harga Total</th>
-                                    </tr>
-                                </thead>
-                                <tbody id='tbody-table-data'></tbody>
-                            </table>
-                            <input type="hidden" name="halaman_paging_trx_detail" id="halaman_paging_trx_detail" value="1">
-                            <div class="pagination-result_trx_detail" style="margin-top:10px;margin-left:45%"></div>
-                        </div>
+
+        <div class="row mt-5">
+            <div class="col-12 col-md-7 offset-md-1 justify-content-center">
+                <div class="row mt-2 ">
+                    <table class="table table-dark table-bordered data table-responsive">
+                        <thead>
+                            <tr>
+                                <th> Kode </th>
+                                <th> Nama Barang </th>
+                                <th> Quantity </th>
+                                <th> Quantity Check</th>
+                                <th> Harga Satuan</th>
+                                <th> Harga Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id='tbody-table-data'></tbody>
+                    </table>
+                    <input type="hidden" name="halaman_paging_trx_detail" id="halaman_paging_trx_detail" value="1">
+                    <div class="row">
+                        <div class="pagination-result_trx_detail offset-7"></div>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 
@@ -140,6 +151,10 @@
 
                     dataLoad += '<h4 style="text-decoration: underline;margin-top:2%">' + dateForMonth(response.data[0].create_date) + '</h4>'
 
+                    dataLoad += '<table class="table table-dark table-borderless table-responsive" style="border: none;text-align:left">';
+                    //dataLoad += '<thead></thead>';
+                    dataLoad += '<tbody>';
+
                     for (let i = 0; i < response.length; i++) {
 
                         /*
@@ -150,25 +165,24 @@
                         }
                         */
 
-                        dataLoad += '<table class="table table-dark table-borderless" style="border: none;">';
-                        dataLoad += '<thead></thead>';
-                        dataLoad += '<tbody>';
 
                         var functionOnclick = 'dataPagingDetail("' + response.data[i].id_trx_po + '")';
 
                         dataLoad += "<tr>";
-                        dataLoad += "<td width='19%'>";
+                        dataLoad += "<td class='text-start'>";
                         dataLoad += response.data[i].id_trx_po;
                         dataLoad += "</td>";
-                        dataLoad += "<td><a class='btn-sobat-md' href='#' onclick='" + functionOnclick + "'>";
+                        dataLoad += "<td class='text-start'><a class='btn-sobat-md' href='#' onclick='" + functionOnclick + "'>";
                         //dataLoad += "Purchase From Distributor " + response.data[i].nama.toUpperCase();
                         dataLoad += response.data[i].nama.toUpperCase();
                         dataLoad += "</a></td>";
                         dataLoad += "</tr>";
 
-                        dataLoad += '</tbody>';
-                        dataLoad += '</table>';
+
                     }
+
+                    dataLoad += '</tbody>';
+                    dataLoad += '</table>';
 
                     $("#data-trigger-content").html(dataLoad);
                     var totalDataBarang = response.length_paging;
@@ -184,7 +198,7 @@
 
                 } else {
                     // $("#div-create-date").html("");
-                     $('#data-trigger-content').html("");
+                    $('#data-trigger-content').html("");
                     $('.pagination-result_trx').html("");
                 }
 
@@ -264,17 +278,17 @@
                     $("#date-filter").hide();
                     $("#supplier_name").html("Purchase From : " + response.data[0].nama);
                     $("#tgl_po").html("Tanggal Po : " + dateForShow(response.data[0].create_date));
-                    if(response.data[0].create_date_penerimaan != null){
+                    if (response.data[0].create_date_penerimaan != null) {
                         $("#tgl_penerimaan").html("Tanggal Penerimaan : " + dateForShow(response.data[0].create_date_penerimaan));
-                    }else{
+                    } else {
                         $("#tgl_penerimaan").html("Tanggal Penerimaan : -");
                     }
-                    
+
                     $("#id_trx_po").html(id_trx_po);
                     $("#tbody-table-data").html(dataLoad);
                     $("#data-trigger").hide();
                     $("#div-inventory-update-detail").show();
-                }else{
+                } else {
 
                     $('.pagination-result_trx_detail').html("");
                     $("#tbody-table-data").html("");

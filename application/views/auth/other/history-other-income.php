@@ -1,75 +1,80 @@
-<div class="container-fluid mt-3">
-    <div class="col-md-3 offset-md-1">
-        <h2><?= ucfirst($judul) ?></h2>
+<div class="container mt-3">
+
+    <div class="row">
+        <div class="col-12">
+            <h2><?= ucfirst($judul) ?></h2>
+        </div>
     </div>
-    <div class="col-md-11">
-        <hr style="margin-left:160px;border-width: 2px;border-style: solid;border-color:white">
+
+    <div class="row">
+        <div class="col-12">
+            <hr style="border-width: 2px;border-style: solid;border-color:white">
+        </div>
     </div>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-2 offset-md-1">
-                <div class="input-group">
-                    <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search" onkeyup="searchData()">
-                    <span class="input-group-append">
-                        <button class="btn btn-outline-light" type="button">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </span>
-                </div>
+
+    <div class="row">
+        <div class="col-5 col-md-4 col-lg-3">
+            <div class="input-group">
+                <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search" onkeyup="searchData()">
+                <span class="input-group-append">
+                    <button class="btn btn-outline-light" type="button">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
             </div>
-            <div class="col-md-2 offset-md-6">
-                <div class="input-group">
-                    <span class="input-group-append">
-                        <button class="btn btn-outline-light" type="button">
-                            <span>sort</span>
-                        </button>
-                    </span>
-                    <input class="form-control-paging-date" type="text" id="create_date" name="create_date">
-                </div>
+        </div>
+        <div class="col-6 offset-1 col-md-4 offset-md-4 col-lg-3 offset-lg-6">
+            <div class="input-group">
+                <span class="input-group-append">
+                    <button class="btn btn-outline-light" type="button">
+                        <span>sort</span>
+                    </button>
+                </span>
+                <input class="form-control-paging-date" type="text" id="create_date" name="create_date">
             </div>
         </div>
     </div>
 
-    <div class="container-fluid" style="margin-top: 40px;">
-        <div class="row justify-content-center" id="form-sallary">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-3 offset-md-1" style="margin-top: 30px;">
-                        <div>
-                            <h4 id="data-content-title"></h4>
-                        </div>
-                    </div>
-                    <div class="col-md-5 offset-md-6" style="margin-top: 30px;display: none;" id="penggunaan-dana-div">
-                        <div class="form-group row">
-                            <label for="" class="col-sm-3 col-form-label" style="margin-top: -7px;">
-                                <p>Penggunaan Dana Total </p>
-                            </label>
-                            <div class="col-sm-5">
-                                <p>:&nbsp;Rp. <span id="data-content"></span></p>
-                            </div>
-                        </div>
+    <div class="row justify-content-center" id="form-sallary">
+        <div class="row mt-5">
+            <div class="col-12 justify-content-start">
+                <div>
+                    <h5 id="data-content-title"></h5>
+                </div>
+            </div>
+
+            <div class="col-4" style="display: none;" id="penggunaan-dana-div">
+                <div class="form-group row mt-2">
+                    <label for="" class="col-8 col-md-6 col-form-label">
+                        <p>Penggunaan Dana Total </p>
+                    </label>
+                    <div class="col-4 col-md-6">
+                        <p class="mt-2">:&nbsp;Rp. <span id="data-content"></span></p>
                     </div>
                 </div>
-                <div class="row" style="display: none;" id="data-content-div">
-                    <div class="col-sm-5 offset-md-4" style="margin-top: 20px;">
-                        <table class="table table-dark table-bordered data">
-                            <thead>
-                                <tr>
-                                    <th colspan="4"><span id="data-content-title2"><span></th>
-                                </tr>
-                                <tr>
-                                    <th> Kode </th>
-                                    <th> Pemasukkan Dana</th>
-                                    <th> Keterangan </th>
-                                    <th> Bukti </th>
-                                </tr>
-                            </thead>
-                            <tbody id="data-oi">
-                            </tbody>
-                        </table>
-                        <input type="hidden" name="halaman_paging_oi" id="halaman_paging_oi" value="1">
-                        <div class="pagination-result-oi" style="margin-top:10px;margin-left:45%"></div>
-                    </div>
+            </div>
+        </div>
+
+        <div class="row mt-5" style="display: none;" id="data-content-div">
+            <div class="col-12 col-md-7 offset-md-3 justify-content-center">
+                <table class="table table-dark table-bordered data table-responsive">
+                    <thead>
+                        <tr>
+                            <th colspan="4"><span id="data-content-title2"><span></th>
+                        </tr>
+                        <tr>
+                            <th> Kode </th>
+                            <th> Pemasukkan Dana</th>
+                            <th> Keterangan </th>
+                            <th> Bukti </th>
+                        </tr>
+                    </thead>
+                    <tbody id="data-oi">
+                    </tbody>
+                </table>
+                <input type="hidden" name="halaman_paging_oi" id="halaman_paging_oi" value="1">
+                <div class="row">
+                    <div class="pagination-result-oi offset-7"></div>
                 </div>
             </div>
         </div>
@@ -362,5 +367,4 @@
         $('#halaman_paging_oi').val(halaman)
         getDetail(create_date, keyword, batasTampilData, halaman)
     }
-
 </script>

@@ -1,81 +1,84 @@
-<div class="container-fluid mt-3">
-    <div class="col-md-3 offset-md-1">
-        <h2><?= ucfirst($judul) ?></h2>
-    </div>
-    <div class="col-md-11">
-        <hr style="margin-left:160px;border-width: 2px;border-style: solid;border-color:white">
-    </div>
+<div class="container mt-3">
+
     <div class="row">
-        <div class="col-md-3 offset-md-1"><?= $kode_po ?></div>
-        <div class="col-md-2 offset-md-5 "><?= $date ?></div>
+        <div class="col-12">
+            <h2><?= ucfirst($judul) ?></h2>
+        </div>
     </div>
 
-    <div class="container-fluid" style="margin-top: 40px;">
-        <div class="row justify-content-center offset-md-1">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-5 offset-md-1">
-                        <div class="form-group row">
-                            <label for="" class="col-sm-4 col-form-label">Nomor Invoice </label>
-                            <div class="col-sm-1" style="width:10%">: &nbsp;</div>
-                            <div class="col-sm-5">
-                                <input type="text" class="form-control-label" id="no_invoice_value" name="no_invoice_value">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="" class="col-sm-4 col-form-label"></label>
-                            <div class="col-sm-1"></div>
-                            <div class="col-sm-5" id="payment-history">
-                            </div>
-                        </div>
-                        <div class="form-group row" style="margin-top: 10px;">
-                            <label for="" class="col-sm-4 col-form-label">Nama Pelanggan </label>
-                            <div class="col-sm-1" style="width:10%">: &nbsp;</div>
-                            <div class="col-sm-4">
-                                <label for="" id="nama_pelanggan"></label>
-                            </div>
-                        </div>
-                        <div class="form-group row" >
-                            <label for="" class="col-sm-4 col-form-label">Total Tagihan </label>
-                            <div class="col-sm-1" style="width:10%">: &nbsp;(Rp)</div>
-                            <div class="col-sm-4">
-                                <label for="" id="total_tagihan" style="text-align:right;" ></label>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="" class="col-sm-4 col-form-label">Nominal Pembayaran </label>
-                            <div class="col-sm-1" style="width:10%">: &nbsp;(Rp)</div>
-                            <div class="col-sm-5">
-                                <input type="text" class="form-control-label" id="nominal_pembayaran" name="nominal_pembayaran" style="text-align:right;" >
-                                <input type="hidden" class="form-control" id="total_tagihan_value" name="total_tagihan_value" placeholder="Rp. 0">
-                                <input type="hidden" name="id_trx_payment_co" id="id_trx_payment_co" />
-                            </div>
-                        </div>
-                        <hr style="width: 600px;border-width: 2px;border-style: solid;border-color:white">
-                        <div class="form-group row">
-                            <label for="" class="col-sm-4 col-form-label">Kekurangan Pembayaran </label>
-                            <div class="col-sm-1" style="width:10%">: &nbsp;(Rp)</div>
-                            <div class="col-sm-5">
-                                <label for="" id="kekurangan_pembayaran" style="text-align:right;" ></label>
-                            </div>
-                        </div>
-                    </div>
+    <div class="row">
+        <div class="col-12">
+            <hr style="border-width: 2px;border-style: solid;border-color:white">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-3"><?= $kode_po; ?></div>
+        <div class="col-2 offset-7"><?= $date ?></div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-5 offset-md-1">
+            <div class="form-group row">
+                <label for="" class="col-4 col-md-3 col-lg-4 col-form-label">Nomor Invoice </label>
+                <div class="col-8 col-md-3 col-lg-2">: </div>
+                <div class="col-12 col-md-6 col-lg-5">
+                    <input type="text" class="form-control-label" id="no_invoice_value" name="no_invoice_value">
                 </div>
-                <div class="row d-flex offset-md-7" style="margin-top: 20px;">
-                    <div class="col-md-2">
-                        <button class="form-control-button btn btn-outline-light button-action" onclick="clearAllData();"> Clear All </button>
-                    </div>
-                    <div class="col-md-2">
-                        <button class="form-control-button btn btn-outline-light button-action" onclick="paymentData();"> Confirm </button>
-                    </div>
+            </div>
+            <div class="form-group row">
+                <label for="" class="col-4 col-md-3 col-lg-4 col-form-label"></label>
+                <div class="col-12 col-md-6 col-lg-5">
+                    <div class="col-5" id="payment-history"></div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="" class="col-4 col-md-3 col-lg-4 col-form-label">Nama Pelanggan </label>
+                <div class="col-8 col-md-3 col-lg-2">:</div>
+                <div class="col-12 col-md-6 col-lg-5">
+                    <label for="" id="nama_pelanggan"></label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="" class="col-4 col-md-3 col-lg-4 col-form-label">Total Tagihan </label>
+                <div class="col-8 col-md-3 col-lg-2">: (Rp)</div>
+                <div class="col-12 col-md-6 col-lg-5">
+                    <label for="" id="total_tagihan" style="text-align:right;"></label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="" class="col-4 col-md-3 col-lg-4 col-form-label">Nominal Pembayaran </label>
+                <div class="col-8 col-md-3 col-lg-2">: (Rp)</div>
+                <div class="col-12 col-md-6 col-lg-5">
+                    <input type="text" class="form-control-label" id="nominal_pembayaran" name="nominal_pembayaran" style="text-align:right;">
+                    <input type="hidden" class="form-control" id="total_tagihan_value" name="total_tagihan_value" placeholder="Rp. 0">
+                    <input type="hidden" name="id_trx_payment_co" id="id_trx_payment_co" />
+                </div>
+            </div>
+            <hr style="border-width: 2px;border-style: solid;border-color:white">
+            <div class="form-group row">
+                <label for="" class="col-4 col-md-3 col-lg-4 col-form-label">Kekurangan Pembayaran </label>
+                <div class="col-8 col-md-3 col-lg-2">: (Rp)</div>
+                <div class="col-12 col-md-6 col-lg-5">
+                    <label for="" id="kekurangan_pembayaran" style="text-align:right;"></label>
                 </div>
             </div>
         </div>
     </div>
+    <div class="row d-flex justify-content-center mt-5">
+        <div class="col-4 col-lg-2">
+            <button class="form-control-button btn btn-outline-light button-action" onclick="clearAllData();"> Clear All </button>
+        </div>
+        <div class="col-4 col-lg-2">
+            <button class="form-control-button btn btn-outline-light button-action" onclick="paymentData();"> Confirm </button>
+        </div>
+    </div>
+
+
+
 </div>
 
 <script>
-
     $(document).ready(function() {
 
         $("#nominal_pembayaran").autoNumeric('init', {
@@ -113,7 +116,7 @@
                     loadHistoryPayment(no_invoice);
 
                     $("#nama_pelanggan").html(data[0].nama_pelanggan.toUpperCase());
-                    $("#total_tagihan").html("Rp. " +numberWithCommas(data[0].total_tagihan));
+                    $("#total_tagihan").html("Rp. " + numberWithCommas(data[0].total_tagihan));
                     $("#total_tagihan_value").val(data[0].total_tagihan);
                     $("#id_trx_payment_co").val(data[0].id_trx_payment);
                 } else {
@@ -146,7 +149,7 @@
 
         var result = parseFloat(total_tagihan) - parseFloat(nominal_pembayaran);
 
-        if(result < 0){
+        if (result < 0) {
             alert("nominal pembayaran melebihi total harga");
             $("#nominal_pembayaran").val("0");
         }
@@ -154,14 +157,14 @@
         $("#kekurangan_pembayaran").html("Rp. " + numberWithCommas(result));
     });
 
-    function clearAllData(){
+    function clearAllData() {
         $("#nominal_pembayaran").val("");
         $("#no_invoice_value").val("");
         $("#total_tagihan_value").val("");
         $("#id_trx_payment_co").val("");
         $("#nama_pelanggan").html("");
         $("#total_tagihan").html("");
-        $("#kekurangan_pembayaran").html("");        
+        $("#kekurangan_pembayaran").html("");
     }
 
 
@@ -171,7 +174,7 @@
         if (no_invoice == "") {
             alert("no invoice tidak boleh kosong");
             return;
-        }        
+        }
 
         var total_tagihan = $("#total_tagihan_value").val();
         if (total_tagihan == "") {
@@ -185,7 +188,7 @@
             return;
         }
 
-        if(nominal_bayar.charAt(0)=="0"){
+        if (nominal_bayar.charAt(0) == "0") {
             alert("nominal bayar tidak boleh 0");
             return;
         }
@@ -197,9 +200,9 @@
         $.ajax({
             url: '<?= site_url() ?>/paymentin-save',
             data: {
-                'id_trx_payment_in' : id_trx_payment_in,
+                'id_trx_payment_in': id_trx_payment_in,
                 'no_invoice': no_invoice,
-                'id_trx_payment_co' : id_trx_payment_co,
+                'id_trx_payment_co': id_trx_payment_co,
                 'nominal_bayar': nominal_bayar,
                 'harga_total': total_tagihan
             },
@@ -243,43 +246,43 @@
 
                         var sisa = parseFloat(data[i].harga_total) - parseFloat(data[i].nominal_bayar);
                         dataload += '<div class="collapse" id="collapseExample">';
-                        dataload += '<hr style="width: 275px;border-width: 2px;border-style: solid;border-color:white">' +
+                        dataload += '<hr style="border-width: 2px;border-style: solid;border-color:white">' +
                             '<div style="font-size: 10px;">' +
                             '<div class="form-group row">' +
-                            '<label for="" class="col-sm-6 col-form-label">Nama Pelanggan </label>' +
-                            '<div class="col-sm-1">:</div>' +
-                            '<div class="col-sm-4">' +
+                            '<label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Nama Pelanggan </label>' +
+                            '<div class="col-1 col-md-3 col-lg-2">: </div>' +
+                            '<div class="col-5 col-md-6 col-lg-5">' +
                             '<label >' + data[i].nama_pelanggan.toUpperCase() + '</label>' +
                             '</div>' +
                             '</div>';
 
                         dataload += '<div class="form-group row" >' +
-                            '<label for="" class="col-sm-6 col-form-label">Total Tagihan </label>' +
-                            '<div class="col-sm-1">:</div>' +
-                            '<div class="col-sm-4">' +
+                            '<label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Total Tagihan </label>' +
+                            '<div class="col-1 col-md-3 col-lg-2">: </div>' +
+                            '<div class="col-5 col-md-6 col-lg-5">' +
                             '<label >Rp. ' + data[i].harga_total + '</label>' +
                             '</div>' +
                             '</div>';
 
                         dataload += '<div class="form-group row" >' +
-                            '<label for="" class="col-sm-6 col-form-label">Nominal Pembayaran </label>' +
-                            '<div class="col-sm-1">:</div>' +
-                            '<div class="col-sm-5">' +
+                            '<label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Nominal Pembayaran </label>' +
+                            '<div class="col-1 col-md-3 col-lg-2">: </div>' +
+                            '<div class="col-5 col-md-6 col-lg-5">' +
                             '<label>Rp. ' + data[i].nominal_bayar + '</label>' +
                             '</div>' +
                             '</div>' +
                             '<hr>';
 
                         dataload += '<div class="form-group row" >' +
-                            '<label for="" class="col-sm-6 col-form-label">Kekurangan Pembayaran </label>' +
-                            '<div class="col-sm-1">:</div>' +
-                            '<div class="col-sm-5">' +
+                            '<label for="" class="col-6 col-md-3 col-lg-4 col-form-label">Kekurangan Pembayaran </label>' +
+                            '<div class="col-1 col-md-3 col-lg-2">: </div>' +
+                            '<div class="col-5 col-md-6 col-lg-5">' +
                             '<label >Rp. ' + sisa + '</label>' +
                             '</div>' +
                             '</div>' +
                             '</div>' +
                             '</div>';
-                            
+
 
                     }
 

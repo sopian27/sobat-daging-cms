@@ -1,13 +1,20 @@
-<div class="container-fluid mt-3">
-    <div class="col-md-3 offset-md-1">
-        <h2><?= ucfirst($judul) ?></h2>
+<div class="container mt-3">
+
+    <div class="row">
+        <div class="col-12">
+            <h2><?= ucfirst($judul) ?></h2>
+        </div>
     </div>
-    <div class="col-md-11">
-        <hr style="margin-left:160px;border-width: 2px;border-style: solid;border-color:white">
+
+    <div class="row">
+        <div class="col-12">
+            <hr style="border-width: 2px;border-style: solid;border-color:white">
+        </div>
     </div>
-    <div class="container-fluid" id="data-trigger">
+
+    <div id="data-trigger">
         <div class="row">
-            <div class="col-md-2 offset-md-1">
+            <div class="col-5 col-md-4 col-lg-3">
                 <div class="input-group">
                     <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search" onkeyup="searchData()">
                     <span class="input-group-append">
@@ -18,98 +25,103 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-7" style="margin-top: 20px;margin-left:8%">
+
+        <div class="row mt-5">
+            <div class="col-7">
                 <table class="table table-dark table-borderless" style="border: none;">
-                    <tbody id="data-trigger-content">
-                    </tbody>
+                    <tbody id="data-trigger-content"></tbody>
                 </table>
                 <input type="hidden" name="halaman_paging_trx" id="halaman_paging_trx" value="1">
                 <div class="pagination-result_trx" style="margin-left:160px;margin-top:10px;margin-left:30%"></div>
             </div>
         </div>
     </div>
-    <div class="container-fluid" style="display: none;" id="div-inventory-update-detail">
+
+    <div style="display: none;" id="div-inventory-update-detail">
         <div class="row">
-            <div class="col-md-3 offset-md-1"><?= $id_trx_po ?></div>
-            <div class="col-md-2 offset-md-5"><?= $date ?></div>
-            <p class="col-md-2 offset-md-10">
+            <div class="col-2"><?= $id_trx_po ?></div>
+            <div class="col-2 offset-8"><?= $date ?></div>
+        </div>
+
+        <div class="row justify-content-end mt-2">
+            <div class="col-2">
                 <button class="btn btn-outline-light" type="button" data-bs-toggle="collapse" data-bs-target="#data-barang-collapse" aria-expanded="false" aria-controls="data-barang-collapse">
                     kode
                 </button>
-            </p>
+            </div>
         </div>
 
-        <div class="container-fluid">
-            <div class="row justify-content-center">
-                <div class="row">
-                    <div class="col-md-7 offset-md-2">
-                        <form>
-                            <div class="form-group row">
-                                <label for="" class="col-sm-2 offset-md-4 col-form-label">Purchase From : </label>
-                                <div class="col-sm-3">
-                                    <input type="text" class="form-control-label" id="purchase_from" name="purchase_from">
-                                </div>
-                            </div>
-                        </form>
+        <div class="row">
+            <div class="col-7 offset-3">
+                <form>
+                    <div class="form-group row">
+                        <label class="col-12 col-md-3 col-form-label">Purchase From : </label>
+                        <div class="col-12 col-md-6 col-lg-3">
+                            <input type="text" class="form-control-label" id="purchase_from" name="purchase_from">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-12 col-md-7 offset-md-1 justify-content-center">
+                <div class="row mt-2 ">
+                    <table class="table table-dark table-bordered data table-responsive">
+                        <thead>
+                            <tr>
+                                <th> Kode </th>
+                                <th> Nama Barang </th>
+                                <th> Quantity </th>
+                                <th> Harga Satuan (Rp) </th>
+                                <th> Harga Total (Rp) </th>
+                                <th width="10%"> Action </th>
+                            </tr>
+                        </thead>
+                        <tbody id='tbody-table-data'></tbody>
+                    </table>
+                    <input type="hidden" name="halaman_paging_trx_detail" id="halaman_paging_trx_detail" value="1">
+                    <div class="row">
+                        <div class="pagination-result_trx_detail offset-7"></div>
                     </div>
                 </div>
-                <div class="row" style="margin-top: 20px;">
-                    <div class="col-md-7 offset-md-2 justify-content-center">
-                        <div class="row mt-2 ">
-                            <table class="table table-dark table-bordered data">
-                                <thead>
-                                    <tr>
-                                        <th> Kode </th>
-                                        <th> Nama Barang </th>
-                                        <th> Quantity </th>
-                                        <th> Harga Satuan (Rp) </th>
-                                        <th> Harga Total (Rp) </th>
-                                        <th width="10%"> Action </th>
-                                    </tr>
-                                </thead>
-                                <tbody id='tbody-table-data'></tbody>
-                            </table>
-                            <input type="hidden" name="halaman_paging_trx_detail" id="halaman_paging_trx_detail" value="1">
-                            <div class="pagination-result_trx_detail " style="margin-top:10px;margin-left:45%"></div>
-                        </div>
-                        <div class="row d-flex justify-content-end" style="margin-top:30px">
-                            <div class="col-md-2">
-                                <button class="form-control-button btn btn-outline-light button-action" onclick="clearAllData();"> Clear All </button>
-                            </div>
-                            <div class="col-md-2">
-                                <button class="form-control-button btn btn-outline-light button-action" onclick="return confirmData();"> Confirm </button>
-                            </div>
-                        </div>
-                        <div class="row d-flex justify-content-start formSubmitData" id="formSubmitData">
-                        </div>
+                <div class="row d-flex justify-content-end">
+                    <div class="col-5 col-md-4 col-lg-3">
+                        <button class="form-control-button btn btn-outline-light button-action" onclick="clearAllData();"> Clear All </button>
                     </div>
-                    <div class="col-md-3 justify-content-center">
-                        <div style="min-height: 120px;">
-                            <div class="collapse collapse-horizontal" id="data-barang-collapse">
-                                <div class="card card-body bg-transparent " style="width: 300px; border: 2px solid white;">
-                                    <input type="hidden" name="halaman" id="halaman" value="1">
-                                    <input type="hidden" name="dataBarangCount" id="dataBarangCount" value="<?= $dataBarangCount ?>">
-                                    <div class="row"> </div>
-                                    <div class="row">
-                                        <div class="col-md-7">
-                                            <div class="input-group">
-                                                <input class="form-control-paging" type="text" placeholder="search..." name="keyword-paging" id="keyword-paging">
-                                                <span class="input-group-append">
-                                                    <button class="btn btn-outline-light" type="button" onclick="dataPagingBarang()">
-                                                        <i class="fa fa-search"></i>
-                                                    </button>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4" style="margin-left:6%;margin-top:10px">
-                                            <h4>Kode</h4>
-                                            <hr style="border-width: 2px;border-style: solid;border-color:white">
-                                        </div>
+                    <div class="col-5 col-md-4 col-lg-3">
+                        <button class="form-control-button btn btn-outline-light button-action" onclick="return confirmData();"> Confirm </button>
+                    </div>
+                </div>
+                <div class="row d-flex justify-content-start formSubmitData" id="formSubmitData"></div>
+            </div>
+            <div class="col-7 col-md-4 justify-content-center mt-5">
+                <div style="min-height: 80px;">
+                    <div class="collapse collapse-horizontal" id="data-barang-collapse">
+                        <div class="card card-body bg-transparent " style="width: 300px; border: 2px solid white;">
+                            <input type="hidden" name="halaman" id="halaman" value="1">
+                            <input type="hidden" name="dataBarangCount" id="dataBarangCount" value="<?= $dataBarangCount ?>">
+                            <div class="row">
+                                <div class="col-7">
+                                    <div class="input-group">
+                                        <input class="form-control-paging" type="text" placeholder="search..." name="keyword-paging" id="keyword-paging">
+                                        <span class="input-group-append">
+                                            <button class="btn btn-outline-light" type="button" onclick="dataPagingBarang()">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
                                     </div>
-                                    <div class="data-barang-pagination"></div>
-                                    <div class="pagination-result" style="margin-left:160px;margin-top:10px"></div>
                                 </div>
+                                <div class="col-4">
+                                    <h4>Kode</h4>
+                                    <hr style="border-width: 2px;border-style: solid;border-color:white">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="data-barang-pagination"></div>
+                            </div>
+                            <div class="row">
+                                <div class="pagination-result offset-7"></div>
                             </div>
                         </div>
                     </div>
@@ -340,7 +352,7 @@
 
             if (harga_satuan[index].value > 0) {
                 result = parseInt(value) * parseInt(harga_satuan[index].value);
-                harga_total[index].value = numberWithCommas(result);                
+                harga_total[index].value = numberWithCommas(result);
             }
 
             if (harga_satuan[index].value == "") {

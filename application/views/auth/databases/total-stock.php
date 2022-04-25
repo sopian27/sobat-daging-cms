@@ -1,58 +1,64 @@
-<div class="container-fluid mt-3">
-    <div class="col-md-3 offset-md-1">
-        <h2><?= ucfirst($judul) ?></h2>
-    </div>
-    <div class="col-md-11">
-        <hr style="margin-left:160px;border-width: 2px;border-style: solid;border-color:white">
-    </div>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-2 offset-md-1">
-                <div class="input-group">
-                    <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search" onkeyup="searchData()">
-                    <span class="input-group-append">
-                        <button class="btn btn-outline-light" type="button">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </span>
-                </div>
-            </div>
+<div class="container mt-3">
+
+    <div class="row">
+        <div class="col-12">
+            <h2><?= ucfirst($judul) ?></h2>
         </div>
-        <div class="row" style="margin-top: 60px;" id="content-header">
-            <div class="col-md-3 offset-md-8">
-                <div class="form-group row">
-                    <label for="" class="col-sm-5 col-form-label" style="margin-top: -7px;">Total Harga All : </label>
-                    <div class="col-sm-5" id="total-harga-all"></div>
-                </div>
-                <hr style="border-width: 2px;border-style: solid;border-color:white">
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <hr style="border-width: 2px;border-style: solid;border-color:white">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-5 col-md-4 col-lg-3">
+            <div class="input-group">
+                <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search" onkeyup="searchData()">
+                <span class="input-group-append">
+                    <button class="btn btn-outline-light" type="button">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
             </div>
         </div>
     </div>
 
-    <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="container">
-                <div class="col-md-8 offset-md-2" style="margin-top: 40px;">
-                    <table class="table table-dark table-bordered data">
-                        <thead>
-                            <tr class="align-middle">
-                                <th rowspan="2"> Kode </th>
-                                <th rowspan="2"> Nama Barang </th>
-                                <th rowspan="1" colspan="2"> Quantity</th>
-                                <th rowspan="2"> Harga Terakhir </th>
-                                <th rowspan="2"> Harga Total </th>
-                            </tr>
-                            <tr>
-                                <th> Gudang Luar </th>
-                                <th> Gudang Sobat </th>
-                            </tr>
-                        </thead>
-                        <tbody id="data-stock">
-                        </tbody>
-                    </table>
-                    <input type="hidden" name="halaman_paging" id="halaman_paging" value="1">
-                    <div class="pagination-result" style="margin-top:10px;margin-left:45%"></div>
-                </div>
+    <div class="row justify-content-end" id="content-header">
+        <div class="col-4 ">
+            <div class="form-group row">
+                <label for="" class="col-12 col-md-5 col-form-label">Total Harga All : </label>
+                <div class="col-5 mt-2" id="total-harga-all"></div>
+            </div>
+            <hr style="border-width:2px;border-style: solid;border-color:white">
+        </div>
+    </div>
+
+    <div class="row mt-5 justify-content-center">
+        <div class="col-12 justify-content-center">
+            <div class="table-responsive">
+                <table class="table table-dark table-bordered data">
+                    <thead>
+                        <tr class="align-middle">
+                            <th rowspan="2"> Kode </th>
+                            <th rowspan="2"> Nama Barang </th>
+                            <th rowspan="1" colspan="2"> Quantity</th>
+                            <th rowspan="2"> Harga Terakhir </th>
+                            <th rowspan="2"> Harga Total </th>
+                        </tr>
+                        <tr>
+                            <th> Gudang Luar </th>
+                            <th> Gudang Sobat </th>
+                        </tr>
+                    </thead>
+                    <tbody id="data-stock">
+                    </tbody>
+                </table>
+            </div>
+            <input type="hidden" name="halaman_paging" id="halaman_paging" value="1">
+            <div class="row">
+                <div class="pagination-result offset-7"></div>
             </div>
         </div>
     </div>
@@ -99,7 +105,7 @@
 
                 if (response.length > 0) {
                     for (let i = 0; i < response.datastock.length; i++) {
-                        
+
                         /*
                         if(parseFloat(response.datastock[i].quantity_sobat) > 0){
                             var tot = (parseFloat(response.datastock[i].harga_satuan)) * (parseFloat(response.datastock[i].quantity_sobat)+(parseFloat(response.datastock[i].quantity_pusat)));
@@ -110,9 +116,9 @@
                         }
                         */
 
-                        var tot = (parseFloat(response.datastock[i].harga_satuan)) * (parseFloat(response.datastock[i].quantity_sobat)+(parseFloat(response.datastock[i].quantity_pusat)));
+                        var tot = (parseFloat(response.datastock[i].harga_satuan)) * (parseFloat(response.datastock[i].quantity_sobat) + (parseFloat(response.datastock[i].quantity_pusat)));
                         total += tot;
-                       
+
 
                         dataLoad += "<tr>";
                         dataLoad += "<td >";

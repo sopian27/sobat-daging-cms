@@ -1,12 +1,19 @@
-<div class="container-fluid mt-3">
-    <div class="col-md-3 offset-md-1">
-        <h2><?= ucfirst($judul) ?></h2>
-    </div>
-    <div class="col-md-11">
-        <hr style="margin-left:160px;border-width: 2px;border-style: solid;border-color:white">
-    </div>
+<div class="container mt-3">
+
     <div class="row">
-        <div class="col-md-2 offset-md-1">
+        <div class="col-12">
+            <h2><?= ucfirst($judul) ?></h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <hr style="border-width: 2px;border-style: solid;border-color:white">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-5 col-md-4 col-lg-3">
             <div class="input-group">
                 <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search">
                 <span class="input-group-append">
@@ -16,7 +23,7 @@
                 </span>
             </div>
         </div>
-        <div class="col-md-2 offset-md-6">
+        <div class="col-6 offset-1 col-md-4 offset-md-4 col-lg-3 offset-lg-6">
             <div class="input-group">
                 <span class="input-group-append">
                     <button class="btn btn-outline-light" type="button">
@@ -25,220 +32,220 @@
                 </span>
                 <input class="form-control-paging-date" type="text" id="create_date" name="create_date">
             </div>
-            <p id="date-filter" style="margin-top:30px"><?= $date ?></p>
         </div>
     </div>
 
-    <div class="container-fluid">
-        <div class="row justify-content-center" id="form-pusat">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-2 offset-md-1">
-                        <p id="trx_pst_pusat"><span><input type="text" name="kode_pst_pusat" id="kode_pst_pusat" class="form-control"/></span></p>
-                        <div>
-                            <a class="form-control-button btn" style="background-color: #B89874;border:none;padding:10px;width:50%"> Gudang Luar </a>
-                        </div>
-                        <div style="margin-top:30px">
-                            <a class="form-control-button btn btn-outline-light button-action" style="padding:10px;width:50%" onclick="showSobat();"> Sobat </a>
-                        </div>
-                    </div>
+    <div id="form-pusat">
+        <div class="row mt-5">
+            <div class="col-6 col-md-5 col-lg-4">
+                <p id="trx_pst_pusat"><span><input type="text" name="kode_pst_pusat" id="kode_pst_pusat" class="form-control" /></span></p>
+                <div>
+                    <a class="form-control-button btn" style="background-color: #B89874;border:none;padding:10px;width:50%"> Gudang Luar </a>
                 </div>
-                <div class="row">
-                    <div class="col-md-7" style="display:none">
-                        <form>
-                            <div class="form-group row">
-                                <label for="" class="col-sm-2 offset-md-4 col-form-label">Purchase From : </label>
-                                <div class="col-sm-3">
-                                    <input type="text" class="form-control-label" id="purchase_from-pusat" name="purchase_from">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="" class="col-sm-2 offset-md-4 col-form-label">Pic : </label>
-                                <div class="col-sm-3">
-                                    <input type="text" class="form-control-label" id="pic-pusat" name="pic">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="" class="col-sm-2 offset-md-4 col-form-label">Nomor Handphone : </label>
-                                <div class="col-sm-3">
-                                    <input type="text" class="form-control-label" id="no_hp-pusat" name="no_hp">
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
-                <div class="row" style="margin-top: 40px;">
-                    <div class="col-md-7 offset-md-2 justify-content-center">
-                        <div class="row">
-                            <div class="col-md-1">
-                                <button class="add-pusat form-control-button btn btn-outline-light button-action"> Add </button>
-                            </div>
-                        </div>
-                        <div class="row mt-2 ">
-                            <table class="table table-dark table-bordered data">
-                                <thead>
-                                    <tr>
-                                        <th> Kode </th>
-                                        <th> Nama Barang </th>
-                                        <th colspan="2"> Quantity </th>
-                                        <th> Harga Satuan </th>
-                                        <th> Note </th>
-                                    </tr>
-                                </thead>
-                                <tbody id='tbody-table-data-pusat'></tbody>
-                            </table>
-                        </div>
-                        <div class="row d-flex justify-content-end">
-                            <div class="col-md-2">
-                                <button class="form-control-button btn btn-outline-light button-action" onclick="clearAllDataPst();"> Clear All </button>
-                            </div>
-                            <div class="col-md-2" id="before-loading">
-                                <button class="form-control-button btn btn-outline-light button-action" onclick="saveDataPst(1);"> Confirm </button>
-                            </div>
-                        </div>
-                        <div class="row d-flex justify-content-start formSubmitData" id="formSubmitData-pusat">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row" style="margin-top: 20px;">
-                    <div class="col-md-8 offset-md-2 justify-content-center">
-                        <div class="row mt-2 ">
-                            <table class="table table-dark table-bordered data">
-                                <thead>
-                                    <tr>
-                                        <th> Kode </th>
-                                        <th> Nama Barang</th>
-                                        <th colspan="2"> Jumlah Stock </th>
-                                        <th colspan="2" width="30%"> Update Stock Gudang </th>
-                                        <th> Note </th>
-                                        <th> Action </th>
-                                    </tr>
-                                </thead>
-                                <tbody id="data-pusat"></tbody>
-                            </table>
-                            <input type="hidden" name="halaman_pusat" id="halaman_pusat" value="1">
-                            <div class="pagination-result-pusat" style="margin-top:10px;margin-left:25%"></div>
-                        </div>
-                        <div class="row d-flex justify-content-end" style="margin-top:30px">
-                            <div class="col-md-2">
-                                <button class="form-control-button btn btn-outline-light button-action" onclick="clearAllData();"> Clear All </button>
-                            </div>
-                            <div class="col-md-2">
-                                <button class="form-control-button btn btn-outline-light button-action" onclick="return confirmData();"> Confirm </button>
-                            </div>
-                        </div>
-                    </div>
+                <div class="mt-3">
+                    <a class="form-control-button btn btn-outline-light button-action" style="padding:10px;width:50%" onclick="showSobat();"> Sobat </a>
                 </div>
             </div>
         </div>
 
-        <div class="row justify-content-center" style="display: none;" id="form-sobat">
-            <div class="container">
+        <!--skip-->
+        <div class="row" style="display:none">
+            <div class="col-md-7">
+                <form>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-2 offset-md-4 col-form-label">Purchase From : </label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control-label" id="purchase_from-pusat" name="purchase_from">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-2 offset-md-4 col-form-label">Pic : </label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control-label" id="pic-pusat" name="pic">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-2 offset-md-4 col-form-label">Nomor Handphone : </label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control-label" id="no_hp-pusat" name="no_hp">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-12 col-md-7 offset-md-2 justify-content-center">
                 <div class="row">
-                    <div class="col-md-2 offset-md-1">
-                        <p id="trx_pst_sobat" style="display: none;"><span><input type="text" name="kode_pst_sobat" id="kode_pst_sobat" class="form-control"/></p>
-                        <div>
-                            <a class="form-control-button btn btn-outline-light button-action" onclick="showPusat();" style="width:50%"> Gudang Luar </a>
-                        </div>
-                        <div style="margin-top:30px">
-                            <a class="form-control-button btn" style="background-color: #B89874;border:none;padding:10px;width:50%"> Sobat </a>
-                        </div>
+                    <div class="col-3 col-md-2">
+                        <button class="add form-control-button btn btn-outline-light button-action"> Add </button>
                     </div>
                 </div>
-
-                <div class="row">
-                    <div class="col-md-7" style="display:none">
-                        <form>
-                            <div class="form-group row">
-                                <label for="" class="col-sm-2 offset-md-4 col-form-label">Purchase From : </label>
-                                <div class="col-sm-3">
-                                    <input type="text" class="form-control-label" id="purchase_from-sobat" name="purchase_from">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="" class="col-sm-2 offset-md-4 col-form-label">Pic : </label>
-                                <div class="col-sm-3">
-                                    <input type="text" class="form-control-label" id="pic-sobat" name="pic">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="" class="col-sm-2 offset-md-4 col-form-label">Nomor Handphone : </label>
-                                <div class="col-sm-3">
-                                    <input type="text" class="form-control-label" id="no_hp-sobat" name="no_hp">
-                                </div>
-                            </div>
-                        </form>
+                <div class="row mt-2 ">
+                    <table class="table table-dark table-bordered data table-responsive">
+                        <thead>
+                            <tr>
+                                <th> Kode </th>
+                                <th> Nama Barang </th>
+                                <th colspan="2"> Quantity </th>
+                                <th> Harga Satuan </th>
+                                <th> Note </th>
+                            </tr>
+                        </thead>
+                        <tbody id='tbody-table-data-pusat'></tbody>
+                    </table>
+                </div>
+                <div class="row d-flex justify-content-end">
+                    <div class="col-5 col-md-4 col-lg-3">
+                        <button class="form-control-button btn btn-outline-light button-action" onclick="clearAllDataPst();"> Clear All </button>
+                    </div>
+                    <div class="col-5 col-md-4 col-lg-3" id="before-loading">
+                        <button class="form-control-button btn btn-outline-light button-action" onclick="saveDataPst(1);"> Confirm </button>
                     </div>
                 </div>
+                <div class="row d-flex justify-content-start formSubmitData" id="formSubmitData-pusat"></div>
+            </div>
+        </div>
 
-                <div class="row" style="margin-top: 40px;">
-                    <div class="col-md-7 offset-md-2 justify-content-center">
-                        <div class="row">
-                            <div class="col-md-1">
-                                <button class="add-sobat form-control-button btn btn-outline-light button-action"> Add </button>
-                            </div>
-                        </div>
-                        <div class="row mt-2 ">
-                            <table class="table table-dark table-bordered data">
-                                <thead>
-                                    <tr>
-                                        <th> Kode </th>
-                                        <th> Nama Barang </th>
-                                        <th colspan="2"> Quantity </th>
-                                        <th> Harga Satuan </th>
-                                        <th> Note </th>
-                                    </tr>
-                                </thead>
-                                <tbody id='tbody-table-data-sobat'></tbody>
-                            </table>
-                        </div>
-                        <div class="row d-flex justify-content-end">
-                            <div class="col-md-2">
-                                <button class="form-control-button btn btn-outline-light button-action" onclick="clearAllDataPst();"> Clear All </button>
-                            </div>
-                            <div class="col-md-2" id="before-loading">
-                                <button class="form-control-button btn btn-outline-light button-action" onclick="saveDataPst(2);"> Confirm </button>
-                            </div>
-                        </div>
-                        <div class="row d-flex justify-content-start formSubmitData" id="formSubmitData-sobat">
-                        </div>
+        <div class="row mt-5">
+            <div class="col-12 col-md-7 offset-md-2 justify-content-center">
+                <div class="row mt-2 ">
+                    <table class="table table-dark table-bordered data table-responsive">
+                        <thead>
+                            <tr>
+                                <th> Kode </th>
+                                <th> Nama Barang</th>
+                                <th colspan="2"> Jumlah Stock </th>
+                                <th colspan="2" width="30%"> Update Stock Gudang </th>
+                                <th> Note </th>
+                                <th> Action </th>
+                            </tr>
+                        </thead>
+                        <tbody id="data-pusat"></tbody>
+                    </table>
+                    <input type="hidden" name="halaman_pusat" id="halaman_pusat" value="1">
+                    <div class="row">
+                        <div class="pagination-result-pusat offset-7"></div>
                     </div>
                 </div>
-
-                <div class="row" style="margin-top: 20px;">
-                    <div class="col-md-8 offset-md-2 justify-content-center">
-                        <div class="row mt-2 ">
-                            <table class="table table-dark table-bordered data">
-                                <thead>
-                                    <tr>
-                                        <th> Kode </th>
-                                        <th> Nama Barang</th>
-                                        <th colspan="2"> Jumlah Stock </th>
-                                        <th colspan="2" width="30%"> Update Stock Sobat </th>
-                                        <th> Note </th>
-                                        <th> Action </th>
-                                    </tr>
-                                </thead>
-                                <tbody id="data-sobat"></tbody>
-                            </table>
-                            <input type="hidden" name="halaman_sobat" id="halaman_sobat" value="1">
-                            <div class="pagination-result-sobat" style="margin-top:10px;margin-left:25%"></div>
-                        </div>
-                        <div class="row d-flex justify-content-end" style="margin-top:30px">
-                            <div class="col-md-2">
-                                <button class="form-control-button btn btn-outline-light button-action" onclick="clearAllDataSobat();"> Clear All </button>
-                            </div>
-                            <div class="col-md-2">
-                                <button class="form-control-button btn btn-outline-light button-action" onclick="return confirmDataSobat();"> Confirm </button>
-                            </div>
-                        </div>
+                <div class="row d-flex justify-content-end">
+                    <div class="col-5 col-md-4 col-lg-3">
+                        <button class="form-control-button btn btn-outline-light button-action" onclick="clearAllData();"> Clear All </button>
+                    </div>
+                    <div class="col-5 col-md-4 col-lg-3">
+                        <button class="form-control-button btn btn-outline-light button-action" onclick="return confirmData();"> Confirm </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <div style="display: none;" id="form-sobat">
+        <div class="row mt-5">
+            <div class="col-6 col-md-5 col-lg-4">
+                <p id="trx_pst_sobat" style="display: none;"><span><input type="text" name="kode_pst_sobat" id="kode_pst_sobat" class="form-control" /></p>
+                <div>
+                    <a class="form-control-button btn btn-outline-light button-action" onclick="showPusat();" style="width:50%"> Gudang Luar </a>
+                </div>
+                <div class="mt-3">
+                    <a class="form-control-button btn" style="background-color: #B89874;border:none;padding:10px;width:50%"> Sobat </a>
+                </div>
+            </div>
+        </div>
+
+        <!--skip-->
+        <div class="row" style="display:none">
+            <div class="col-md-7">
+                <form>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-2 offset-md-4 col-form-label">Purchase From : </label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control-label" id="purchase_from-sobat" name="purchase_from">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-2 offset-md-4 col-form-label">Pic : </label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control-label" id="pic-sobat" name="pic">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-sm-2 offset-md-4 col-form-label">Nomor Handphone : </label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control-label" id="no_hp-sobat" name="no_hp">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-12 col-md-7 offset-md-2 justify-content-center">
+                <div class="row">
+                    <div class="col-3 col-md-2">
+                        <button class="add-sobat form-control-button btn btn-outline-light button-action"> Add </button>
+                    </div>
+                </div>
+                <div class="row mt-2 ">
+                    <table class="table table-dark table-bordered data table-responsive">
+                        <thead>
+                            <tr>
+                                <th> Kode </th>
+                                <th> Nama Barang </th>
+                                <th colspan="2"> Quantity </th>
+                                <th> Harga Satuan </th>
+                                <th> Note </th>
+                            </tr>
+                        </thead>
+                        <tbody id='tbody-table-data-sobat'></tbody>
+                    </table>
+                </div>
+                <div class="row d-flex justify-content-end">
+                    <div class="col-5 col-md-4 col-lg-3">
+                        <button class="form-control-button btn btn-outline-light button-action" onclick="clearAllDataPst();"> Clear All </button>
+                    </div>
+                    <div class="col-5 col-md-4 col-lg-3">
+                        <button class="form-control-button btn btn-outline-light button-action" onclick="saveDataPst(2);"> Confirm </button>
+                    </div>
+                </div>
+                <div class="row d-flex justify-content-start formSubmitData" id="formSubmitData-sobat">
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-12 col-md-7 offset-md-2 justify-content-center">
+                <div class="row mt-2 ">
+                    <table class="table table-dark table-bordered data table-responsive">
+                        <thead>
+                            <tr>
+                                <th> Kode </th>
+                                <th> Nama Barang</th>
+                                <th colspan="2"> Jumlah Stock </th>
+                                <th colspan="2" width="30%"> Update Stock Sobat </th>
+                                <th> Note </th>
+                                <th> Action </th>
+                            </tr>
+                        </thead>
+                        <tbody id="data-sobat"></tbody>
+                    </table>
+                    <input type="hidden" name="halaman_sobat" id="halaman_sobat" value="1">
+                    <div class="row">
+                        <div class="pagination-result-sobat offset-7"></div>
+                    </div>
+                </div>
+                <div class="row d-flex justify-content-end" style="margin-top:30px">
+                    <div class="col-5 col-md-4 col-lg-3">
+                        <button class="form-control-button btn btn-outline-light button-action" onclick="clearAllDataSobat();"> Clear All </button>
+                    </div>
+                    <div class="col-5 col-md-4 col-lg-3">
+                        <button class="form-control-button btn btn-outline-light button-action" onclick="return confirmDataSobat();"> Confirm </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div style="margin-top:60px"></div>
 </div>
 
@@ -871,21 +878,21 @@
         if (id == 1) {
             dataTable = document.getElementById('tbody-table-data-pusat').querySelectorAll('tr');
 
-          /*   supplier_name = $("#purchase_from-pusat").val();
-            pic = $("#pic-pusat").val();
-            no_hp = $("#no_hp-pusat").val(); */
+            /*   supplier_name = $("#purchase_from-pusat").val();
+              pic = $("#pic-pusat").val();
+              no_hp = $("#no_hp-pusat").val(); */
 
         } else {
             dataTable = document.getElementById('tbody-table-data-sobat').querySelectorAll('tr');
 
-/*             supplier_name = $("#purchase_from-sobat").val();
-            pic = $("#pic-sobat").val();
-            no_hp = $("#no_hp-sobat").val(); */
+            /*             supplier_name = $("#purchase_from-sobat").val();
+                        pic = $("#pic-sobat").val();
+                        no_hp = $("#no_hp-sobat").val(); */
         }
 
-        supplier_name ="DEFAULT_SUPP";
-        pic           ="DEFAULT_PIC";
-        no_hp         ="DEFAULT_PHONE";
+        supplier_name = "DEFAULT_SUPP";
+        pic = "DEFAULT_PIC";
+        no_hp = "DEFAULT_PHONE";
 
 
         const dataTableLength = dataTable.length

@@ -1,13 +1,20 @@
-<div class="container-fluid mt-3">
-    <div class="col-md-3 offset-md-1">
-        <h2><?= ucfirst($judul) ?></h2>
+<div class="container mt-3">
+
+    <div class="row">
+        <div class="col-12">
+            <h2><?= ucfirst($judul) ?></h2>
+        </div>
     </div>
-    <div class="col-md-11">
-        <hr style="margin-left:160px;border-width: 2px;border-style: solid;border-color:white">
+
+    <div class="row">
+        <div class="col-12">
+            <hr style="border-width: 2px;border-style: solid;border-color:white">
+        </div>
     </div>
-    <div class="container-fluid" id="data-trigger">
+
+    <div id="data-trigger">
         <div class="row">
-            <div class="col-md-2 offset-md-1">
+            <div class="col-5 col-md-4 col-lg-3">
                 <div class="input-group">
                     <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search" onkeyup="searchData()">
                     <span class="input-group-append">
@@ -17,7 +24,7 @@
                     </span>
                 </div>
             </div>
-            <div class="col-md-2 offset-md-6">
+            <div class="col-6 offset-1 col-md-4 offset-md-4 col-lg-3 offset-lg-6">
                 <div class="input-group">
                     <span class="input-group-append">
                         <button class="btn btn-outline-light" type="button">
@@ -28,106 +35,111 @@
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-top: 60px;">
-            <div class="col-md-7" style="margin-left:7%;margin-top:10px">
+
+        <div class="row mt-5">
+            <div class="col-7">
                 <div class="collapse-content"></div>
-                <div class="col-md-1 offset-md-4 justify-content-center" id="button-show-detail">
+                <div class="mt-5 col-3 col-md-2 offset-2 justify-content-center" id="button-show-detail">
                 </div>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-7 offset-2">
                 <input type="hidden" name="halaman_paging_trx" id="halaman_paging_trx" value="1">
-                <div class="pagination-result_trx" style="margin-left:160px;margin-top:10px;margin-left:30%"></div>
+                <div class="pagination-result_trx"></div>
             </div>
         </div>
     </div>
-    <div class="container-fluid" style="display: none;" id="div-inventory-update-detail">
+
+    <div style="display: none;" id="div-inventory-update-detail">
+
         <div class="row">
-            <div class="col-md-3 offset-md-1"><?= $id_trx_order ?></div>
-            <div class="col-md-2 offset-md-5"><?= $date ?></div>
+            <div class="col-2"><?= $id_trx_order ?></div>
+            <div class="col-2 offset-8"><?= $date ?></div>
         </div>
-        <div class="container-fluid" style="margin-top: 20px;">
-            <div class="row justify-content-center">
-                <div class="row">
-                    <div class="col-md-5 offset-md-2">
-                        <div class="form-group row">
-                            <label for="" class="col-sm-3 col-form-label">Nomor Surat Jalan </label>
-                            <div class="col-sm-1">:</div>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control" id="nomor_surat_jalan" name="nomor_surat_jalan">
-                            </div>
-                        </div>
-                        <hr style="border-width: 2px;border-style: solid;border-color:white">
-                        <div class="form-group row">
-                            <label for="" class="col-sm-3 col-form-label">Nama Pelanggan </label>
-                            <div class="col-sm-1">:</div>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control" id="nama_pelanggan" name="nama_pelanggan">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="" class="col-sm-3 col-form-label">Nomor Hp </label>
-                            <div class="col-sm-1">:</div>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control" id="nomor_hp" name="nomor_hp">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="" class="col-sm-3 col-form-label">Alamat Pengiriman</label>
-                            <div class="col-sm-1">:</div>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control" id="alamat" name="alamat">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="" class="col-sm-3 col-form-label">Tanggal Pengiriman</label>
-                            <div class="col-sm-1">:</div>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control" id="tgl_pengiriman" name="tgl_pengiriman">
-                            </div>
-                        </div>
+
+        <div class="row mt-5">
+            <div class="col-12 col-md-7 offset-md-2 offset-lg-1">
+                <div class="form-group row">
+                    <label for="" class="col-6 col-xl-5 col-form-label">Nomor Surat Jalan : </label>
+                    <div class="col-6">
+                        <input type="text" class="form-control mt-1" id="nomor_surat_jalan" name="nomor_surat_jalan">
                     </div>
                 </div>
-                <div class="row" style="margin-top: 20px;">
-                    <div class="col-md-7 offset-md-2 justify-content-center">
-                        <div class="row mt-2 ">
-                            <table class="table table-dark table-bordered data">
-                                <thead>
-                                    <tr class="align-middle">
-                                        <th rowspan="2"> Kode </th>
-                                        <th rowspan="2"> Nama Bahan </th>
-                                        <th rowspan="2"> Nama Barang </th>
-                                        <th rowspan="1" colspan="2"> Quantity</th>
-                                        <th rowspan="2"> Note </th>
-                                        <th rowspan="2"> Action </th>
-                                    </tr>
-                                    <tr>
-                                        <th> Quantity / Kg </th>
-                                        <th> Pcs / Bungkus </th>
-                                    </tr>
-                                </thead>
-                                <tbody id='tbody-table-data'></tbody>
-                            </table>
-                            <input type="hidden" name="halaman_paging_trx_detail" id="halaman_paging_trx_detail" value="1">
-                            <div class="pagination-result_trx_detail" style="margin-top:10px;margin-left:45%"></div>
-                        </div>
-                        <div class="row d-flex justify-content-end">
-                            <div class="col-md-2">
-                                <button class="form-control-button btn btn-outline-light button-action" onclick="clearAllData();"> Clear All </button>
-                            </div>
-                            <div class="col-md-2">
-                                <button class="form-control-button btn btn-outline-light button-action" onclick="return confirmData();"> Confirm </button>
-                            </div>
-                        </div>
-                        <div class="row d-flex justify-content-start formSubmitData" id="formSubmitData">
-                        </div>
+                <hr style="border-width: 2px;border-style: solid;border-color:white">
+                <div class="form-group row">
+                    <label for="" class="col-6 col-xl-5 col-form-label">Nama Pelanggan : </label>
+                    <div class="col-6">
+                        <input type="text" class="form-control mt-1" id="nama_pelanggan" name="nama_pelanggan">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-6 col-xl-5 col-form-label">Nomor Hp : </label>
+                    <div class="col-6">
+                        <input type="text" class="form-control mt-1" id="nomor_hp" name="nomor_hp">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-6 col-xl-5 col-form-label">Alamat Pengiriman :</label>
+                    <div class="col-6">
+                        <input type="text" class="form-control mt-1" id="alamat" name="alamat">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-6 col-xl-5 col-form-label">Tanggal Pengiriman :</label>
+                    <div class="col-6">
+                        <input type="text" class="form-control mt-1" id="tgl_pengiriman" name="tgl_pengiriman">
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="container-fluid" style="display: none;" id="div-live-order-date">
-        <div class="row">
-            <div class="col-md-2 offset-md-1" id="date-live-order"></div>
+
+        <div class="row mt-5">
+            <div class="col-12 col-md-7 offset-md-1 justify-content-center">
+                <div class="row mt-2 ">
+                    <table class="table table-dark table-bordered data table-responsive">
+                        <thead>
+                            <tr class="align-middle">
+                                <th rowspan="2"> Kode </th>
+                                <th rowspan="2"> Nama Bahan </th>
+                                <th rowspan="2"> Nama Barang </th>
+                                <th rowspan="1" colspan="2"> Quantity</th>
+                                <th rowspan="2"> Note </th>
+                                <th rowspan="2"> Action </th>
+                            </tr>
+                            <tr>
+                                <th> Quantity / Kg </th>
+                                <th> Pcs / Bungkus </th>
+                            </tr>
+                        </thead>
+                        <tbody id='tbody-table-data'></tbody>
+                    </table>
+                    <input type="hidden" name="halaman_paging_trx_detail" id="halaman_paging_trx_detail" value="1">
+                    <div class="row">
+                        <div class="pagination-result_trx_detail offset-7"></div>
+                    </div>
+                </div>
+                <div class="row d-flex justify-content-end">
+                    <div class="col-5 col-md-4 col-lg-3">
+                        <button class="form-control-button btn btn-outline-light button-action" onclick="clearAllData();"> Clear All </button>
+                    </div>
+                    <div class="col-5 col-md-4 col-lg-3">
+                        <button class="form-control-button btn btn-outline-light button-action" onclick="return confirmData();"> Confirm </button>
+                    </div>
+                </div>
+                <div class="row d-flex justify-content-start formSubmitData" id="formSubmitData">
+                </div>
+            </div>
         </div>
-        <div class="container-fluid" style="margin-top: 20px;">
+
+    </div>
+
+    <div style="display: none;" id="div-live-order-date">
+        <div class="row">
+            <div class="col-2" id="date-live-order"></div>
+        </div>
+        <div class="row mt-5">
             <div id="data-live-order"></div>
             <input type="hidden" name="halaman_paging_live_order" id="halaman_paging_live_order" value="1">
             <div class="pagination-result-live-order" style="margin-top:10px;margin-left:45%"></div>
@@ -141,14 +153,14 @@
 
         var today = new Date();
         var year = today.getFullYear();
-        var month = today.getMonth()+1;
+        var month = today.getMonth() + 1;
         var date = today.getDate();
-        var createDate = year+prefixMonth(month)+date;
+        var createDate = year + prefixMonth(month) + date;
 
         var batasTampilData = 10;
         var halaman = $('#halaman_paging_trx').val();
 
-        console.log("create_date:"+createDate);
+        console.log("create_date:" + createDate);
         getData(createDate, "", batasTampilData, halaman);
     });
 
@@ -160,7 +172,7 @@
         })
 
         $("#create_date").val("...");
-        
+
     });
 
     function prefixMonth(month) {
@@ -461,14 +473,15 @@
                 if (data.length > 0) {
 
                     var dataload = "";
-                    dataload += '<div class="container"> ';
-                    dataload += '<div class="row"> ';
-                    var dataLoadBtn="";
+                    //dataload += '<div class="container"> ';
+
+                    var dataLoadBtn = "";
 
                     var functionOnclickDate = 'liveOrderPaging("' + data.data[0].create_date + '")';
+
                     dataload += '<h4 style="text-decoration: underline;margin-top:10px">' + dateForShow(data.data[0].create_date) + '</h4>'
                     //dataload += '<a href="#" style="color:white;text-decoration:none"  onclick=' + functionOnclickDate + '><h4 style="text-decoration: underline;margin-top:10px">' + dateForShow(data.data[0].create_date) + '</h4></a>'
-                    dataLoadBtn += '<button class="form-control-button btn btn-outline-light button-action" onclick='+functionOnclickDate+'>Show</button>'
+                    dataLoadBtn += '<button class="form-control-button btn btn-outline-light button-action" onclick=' + functionOnclickDate + '>Show</button>'
 
                     for (i = 0; i < data.length; i++) {
 
@@ -486,38 +499,54 @@
                         var functionOnclick = 'getDetailLiveOrder("' + id_trx_order + '","' + i + '")';
                         var functionOnclickCheck = 'dataPagingDetailCheck("' + id_trx_order + '")';
 
-                        dataload += '<div class="col-md-6" style="margin-top:10px"> ';
+                        dataload += '<div class="row mt-3"> ';
+                        dataload += '<div class="col-5"> ';
                         dataload += '<a style="color:#B89874;text-decoration:none" data-bs-toggle="collapse" ';
                         dataload += 'href="#collapseExample' + i + '"  ';
                         //dataload += "onclick=" + functionOnclick + ">" + "Purchase From Distributor " + data.data[i].nama_pelanggan.toUpperCase(); + '</a>';
                         dataload += "onclick=" + functionOnclick + ">" + data.data[i].nama_pelanggan.toUpperCase(); + '</a>';
                         dataload += '</div>';
-                        dataload += '<div class="col-md-1 offset-md-2"> ';
+                        //dataload += '<div class="col-md-1 offset-md-2"> ';
 
                         if (data.data[i].status >= 2) {
+
+                            dataload += '<div class="col-1"> ';
                             dataload += '<input type="checkbox" checked name="' + data.data[i].id + '" class="" />';
-                            dataload += '<a style="color:#B89874;text-decoration:none;margin-left:10px" data-bs-toggle="collapse" ';
+                            dataload += '</div>';
+
+                            dataload += '<div class="col-1"> ';
+                            dataload += '<a style="color:#B89874;text-decoration:none;" data-bs-toggle="collapse" ';
                             dataload += 'href="#collapseExample' + i + '"  ';
                             dataload += ">" + "<span class='fa fa-edit'></span>" + '</a>';
+                            dataload += '</div>';
+
                         } else {
+
+                            dataload += '<div class="col-1"> ';
                             dataload += '<input type="checkbox" name="' + data.data[i].id + '" class="" />';
-                            dataload += '<a style="color:#B89874;text-decoration:none;margin-left:10px" data-bs-toggle="collapse" ';
+                            dataload += '</div>';
+
+                            dataload += '<div class="col-1"> ';
+                            dataload += '<a style="color:#B89874;text-decoration:none;" data-bs-toggle="collapse" ';
                             dataload += 'href="#collapseExample' + i + '"  ';
                             dataload += "onclick=" + functionOnclickCheck + ">" + "<span class='fa fa-edit'></span>" + '</a>';
+                            dataload += '</div>';
+
                         }
 
 
-                        dataload += '</div>';
+                        //dataload += '</div>';
 
                         dataload += '<div class="collapse" id="collapseExample' + i + '">';
                         dataload += '<div class="card card-body" id="collapse-content' + i + '" style="background-color: transparent;border:none;">';
                         dataload += '</div>';
                         dataload += '</div>';
+                        dataload += '</div>';
 
                     }
 
-                    dataload += '</div>';
-                    dataload += '</div>';
+                    //dataload += '</div>';
+                    //dataload += '</div>';
 
                     $('.collapse-content').html(dataload);
                     $('#button-show-detail').html(dataLoadBtn);
@@ -623,27 +652,27 @@
                     for (i = 0; i < data.length; i++) {
 
                         if (i % 2 == 0) {
-                            dataload += '<div class="col-md-3 offset-md-2"> ';
-                                dataload += '<p style="color:#B89874;">' + data.data[i].nama_pelanggan.toUpperCase() + '</p>';
+                            dataload += '<div class="col-12 col-md-5 col-lg-4 offset-1"> ';
+                            dataload += '<p style="color:#B89874;">' + data.data[i].nama_pelanggan.toUpperCase() + '</p>';
 
                             for (j = 0; j < data.datapo.length; j++) {
                                 if (data.data[i].id_trx_order == data.datapo[j].id_trx_order) {
 
-                                    dataload += '<div class="row" style="margin-top:10px"> ';
-                                        dataload += '<div class="col-md-3"> ';
-                                        dataload += '</div>';
+                                    dataload += '<div class="row mt-3"> ';
+                                    dataload += '<div class="col-3 col-md-2 col-xl-3"> ';
+                                    dataload += '</div>';
 
-                                        dataload += '<div class="col-md-5"> ';
-                                        dataload += data.datapo[j].nama_barang.toUpperCase();
-                                        dataload += '</div>';
+                                    dataload += '<div class="col-5"> ';
+                                    dataload += data.datapo[j].nama_barang.toUpperCase();
+                                    dataload += '</div>';
 
-                                        dataload += '<div class="col-md-2"> ';
-                                        dataload += data.datapo[j].quantity + " " + data.datapo[j].satuan;
-                                        dataload += '</div>';
-                                        
-                                        dataload += '<div class="col-md-2"> ';
-                                        dataload += "<a href='#' class='btn btn-payment-md'><span></span></a>";
-                                        dataload += '</div>';
+                                    dataload += '<div class="col-2 col-md-3 col-xl-2"> ';
+                                    dataload += data.datapo[j].quantity + " " + data.datapo[j].satuan;
+                                    dataload += '</div>';
+
+                                    dataload += '<div class="col-2"> ';
+                                    dataload += "<a href='#' class='btn btn-payment-md'><span></span></a>";
+                                    dataload += '</div>';
                                     dataload += '</div> ';
 
                                 }
@@ -654,28 +683,28 @@
                             dataload += '</div>';
 
                         } else {
-                            dataload += '<div class="col-md-3 offset-md-1"> ';
+                            dataload += '<div class="col-12 col-md-5 col-lg-4 offset-1"> ';
                             dataload += '<p style="color:#B89874;">' + data.data[i].nama_pelanggan.toUpperCase() + '</p>';
 
                             for (j = 0; j < data.datapo.length; j++) {
                                 if (data.data[i].id_trx_order == data.datapo[j].id_trx_order) {
 
-                                    dataload += '<div class="row" style="margin-top:10px"> ';
-                                        dataload += '<div class="col-md-3"> ';
-                                        dataload += '</div>';
+                                    dataload += '<div class="row mt-3"> ';
+                                    dataload += '<div class="col-3 col-md-2 col-xl-3"> ';
+                                    dataload += '</div>';
 
-                                        dataload += '<div class="col-md-5"> ';
-                                        dataload += data.datapo[j].nama_barang.toUpperCase();
-                                        dataload += '</div>';
+                                    dataload += '<div class="col-5"> ';
+                                    dataload += data.datapo[j].nama_barang.toUpperCase();
+                                    dataload += '</div>';
 
-                                        dataload += '<div class="col-md-2"> ';
-                                        dataload += data.datapo[j].quantity + " " + data.datapo[j].satuan;
-                                        dataload += '</div>';
+                                    dataload += '<div class="col-2 col-md-3 col-xl-2"> ';
+                                    dataload += data.datapo[j].quantity + " " + data.datapo[j].satuan;
+                                    dataload += '</div>';
 
-                                        dataload += '<div class="col-md-2"> ';
-                                        dataload += "<a href='#' class='btn btn-payment-md'><span></span></a>";
-                                        dataload += '</div>';
-                                        
+                                    dataload += '<div class="col-2"> ';
+                                    dataload += "<a href='#' class='btn btn-payment-md'><span></span></a>";
+                                    dataload += '</div>';
+
                                     dataload += '</div> ';
                                 }
 
@@ -738,21 +767,21 @@
                 if (data.length > 0) {
 
                     var dataload = "";
-                    dataload += '<div class="container"> ';
+                    //dataload += '<div class="container"> ';
                     dataload += '<div class="row"> ';
 
                     for (i = 0; i < data.length; i++) {
 
-                        dataload += '<div class="col-md-6"> ';
+                        dataload += '<div class="col-5"> ';
                         dataload += data[i].nama_barang;
                         dataload += '</div>';
-                        dataload += '<div class="col-md-2" style="margin-left:-150px"> ';
+                        dataload += '<div class="col-4"> ';
                         dataload += data[i].quantity + " " + data[i].satuan;
                         dataload += '</div>';
 
                     }
                     dataload += '</div>';
-                    dataload += '</div>';
+                    //dataload += '</div>';
 
                     document.getElementById("collapse-content" + index).innerHTML = dataload;
 

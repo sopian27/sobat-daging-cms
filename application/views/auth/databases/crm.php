@@ -1,40 +1,45 @@
-<div class="container-fluid mt-3">
-    <div class="col-md-6 offset-md-1">
-        <h2><?= ucfirst($judul) ?></h2>
+<div class="container mt-3">
+
+    <div class="row">
+        <div class="col-12">
+            <h2><?= ucfirst($judul) ?></h2>
+        </div>
     </div>
-    <div class="col-md-11">
-        <hr style="margin-left:160px;border-width: 2px;border-style: solid;border-color:white">
+
+    <div class="row">
+        <div class="col-12">
+            <hr style="border-width: 2px;border-style: solid;border-color:white">
+        </div>
     </div>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-2 offset-md-1">
-                <div class="input-group">
-                    <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search" onkeyup="searchData()">
-                    <span class="input-group-append">
-                        <button class="btn btn-outline-light" type="button">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </span>
-                </div>
+
+    <div class="row">
+        <div class="col-5 col-md-4 col-lg-3">
+            <div class="input-group">
+                <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search" onkeyup="searchData()">
+                <span class="input-group-append">
+                    <button class="btn btn-outline-light" type="button">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
             </div>
         </div>
     </div>
 
-    <div class="container-fluid" id="customer">
-        <div class="row justify-content-center">
-            <div class="container">
-                <div class="row" style="margin-top:40px">
-                    <div class="col-md-1 offset-md-1">
-                        <div>
-                            <a class="form-control-button btn" style="background-color: #B89874;border:none;padding:10px"> Customer </a>
-                        </div>
-                        <div style="margin-top:30px">
-                            <a class="form-control-button btn btn-outline-light button-action" style="padding:10px" onclick="supplier();"> Supplier </a>
-                        </div>
-                    </div>
+    <div class="row mt-5 justify-content-center" id="customer">
+        <div class="row">
+            <div class="col-12 col-md-3 col-lg-2">
+                <div>
+                    <a class="form-control-button btn" style="background-color: #B89874;border:none;padding:10px"> Customer </a>
                 </div>
-                <div class="col-sm-5 offset-md-3" style="margin-top: 40px;">
-                    <table class="table table-dark table-bordered data" id="mytable1">
+                <div class="mt-3">
+                    <a class="form-control-button btn btn-outline-light button-action" style="padding:10px" onclick="supplier();"> Supplier </a>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5 justify-content-center">
+            <div class="col-12 col-md-6 justify-content-center">
+                <div class="table-responsive">
+                    <table class="table table-dark table-bordered data">
                         <thead>
                             <tr>
                                 <th colspan="4"> Data Pelanggan </th>
@@ -48,26 +53,29 @@
                         </thead>
                         <tbody id="data-crm"></tbody>
                     </table>
-                    <input type="hidden" name="halaman_paging" id="halaman_paging" value="1">
-                    <div class="pagination-result" style="margin-top:10px;margin-left:45%"></div>
+                </div>
+                <input type="hidden" name="halaman_paging" id="halaman_paging" value="1">
+                <div class="row">
+                    <div class="pagination-result offset-7"></div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="container-fluid" style="display: none;" id="supplier">
-        <div class="row justify-content-center">
-            <div class="container">
-                <div class="row" style="margin-top:40px">
-                    <div class="col-md-1 offset-md-1">
-                        <div>
-                            <a class="form-control-button btn btn-outline-light button-action" style="padding:10px" onclick="customer();"> Customer </a>
-                        </div>
-                        <div style="margin-top:30px">
-                            <a class="form-control-button btn" style="background-color: #B89874;border:none;padding:10px"> Supplier </a>
-                        </div>
-                    </div>
+
+    <div class="row mt-5 justify-content-center" id="supplier" style="display: none;">
+        <div class="row">
+            <div class="col-12 col-md-3 col-lg-2">
+                <div>
+                    <a class="form-control-button btn btn-outline-light button-action" style="padding:10px" onclick="customer();"> Customer </a>
                 </div>
-                <div class="col-sm-5 offset-md-3" style="margin-top: 40px;">
+                <div class="mt-3">
+                    <a class="form-control-button btn" style="background-color: #B89874;border:none;padding:10px"> Supplier </a>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5 justify-content-center">
+            <div class="col-12 col-md-6 justify-content-center">
+                <div class="table-responsive">
                     <table class="table table-dark table-bordered data">
                         <thead>
                             <tr>
@@ -82,13 +90,15 @@
                         </thead>
                         <tbody id="data-crm-sup"></tbody>
                     </table>
-                    <input type="hidden" name="halaman_paging_sup" id="halaman_paging_sup" value="1">
-                    <div class="pagination-result-sup" style="margin-top:10px;margin-left:45%"></div>
+                </div>
+                <input type="hidden" name="halaman_paging_sup" id="halaman_paging_sup" value="1">
+                <div class="row">
+                    <div class="pagination-result-sup offset-7"></div>
                 </div>
             </div>
         </div>
+        <div style="margin-top:60px"></div>
     </div>
-    <div style="margin-top:60px"></div>
 </div>
 
 <script>
@@ -136,8 +146,8 @@
             success: function(response) {
 
                 console.log(response);
-                setCustomer(response,create_date, keyword, halaman, batasTampilData);
-                setSupplier(response,create_date, keyword, halaman, batasTampilData);
+                setCustomer(response, create_date, keyword, halaman, batasTampilData);
+                setSupplier(response, create_date, keyword, halaman, batasTampilData);
 
 
             },
@@ -150,7 +160,7 @@
     }
 
 
-    function setCustomer(response,create_date, keyword, halaman, batasTampilData) {
+    function setCustomer(response, create_date, keyword, halaman, batasTampilData) {
 
         var dataLoad = "";
         var total = 0;
@@ -187,7 +197,7 @@
         }
     }
 
-    function setSupplier(response,create_date, keyword, halaman, batasTampilData) {
+    function setSupplier(response, create_date, keyword, halaman, batasTampilData) {
 
         var dataLoad = "";
         var total = 0;

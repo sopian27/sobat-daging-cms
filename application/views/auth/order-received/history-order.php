@@ -1,134 +1,143 @@
-<div class="container-fluid mt-3">
-    <div class="col-md-3 offset-md-1">
-        <h2><?= ucfirst($judul) ?></h2>
+<div class="container mt-3">
+
+    <div class="row">
+        <div class="col-12">
+            <h2><?= ucfirst($judul) ?></h2>
+        </div>
     </div>
-    <div class="col-md-11">
-        <hr style="margin-left:160px;border-width: 2px;border-style: solid;border-color:white">
+
+    <div class="row">
+        <div class="col-12">
+            <hr style="border-width: 2px;border-style: solid;border-color:white">
+        </div>
     </div>
-    <div class="container-fluid">
-        <div class="row" id="date-filter">
-            <div class="col-md-2 offset-md-1">
-                <div class="input-group">
-                    <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search" onkeyup="searchData()">
-                    <span class="input-group-append">
-                        <button class="btn btn-outline-light" type="button">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </span>
-                </div>
-            </div>
-            <div class="col-md-2 offset-md-6">
-                <div class="input-group">
-                    <span class="input-group-append">
-                        <button class="btn btn-outline-light" type="button">
-                            <span>sort</span>
-                        </button>
-                    </span>
-                    <input class="form-control-paging-date" type="text" id="create_date" name="create_date">
-                </div>
+
+    <div class="row" id="date-filter">
+        <div class="col-5 col-md-4 col-lg-3">
+            <div class="input-group">
+                <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search" onkeyup="searchData()">
+                <span class="input-group-append">
+                    <button class="btn btn-outline-light" type="button">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
             </div>
         </div>
-        <div class="row" style="margin-top: 60px;" id="data-trigger">
-            <div class="col-md-7" style="margin-left:7%;margin-top:10px">
-                <div id="data-trigger-content"></div>
+        <div class="col-6 offset-1 col-md-4 offset-md-4 col-lg-3 offset-lg-6">
+            <div class="input-group">
+                <span class="input-group-append">
+                    <button class="btn btn-outline-light" type="button">
+                        <span>sort</span>
+                    </button>
+                </span>
+                <input class="form-control-paging-date" type="text" id="create_date" name="create_date">
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5" id="data-trigger">
+        <div class="col-9 col-sm-8 col-md-6">
+            <div id="data-trigger-content"></div>
+            <div class="col-7 offset-2">
                 <input type="hidden" name="halaman_paging_trx" id="halaman_paging_trx" value="1">
-                <div class="pagination-result_trx" style="margin-left:160px;margin-top:10px;margin-left:30%"></div>
+                <div class="pagination-result_trx"></div>
             </div>
         </div>
     </div>
-    <div class="container-fluid" style="display: none;margin-top: 30px;" id="div-inventory-update-detail">
-        <div class="row">
-            <div class="col-md-4 offset-md-2">
+
+    <div style="display: none;" id="div-inventory-update-detail">
+        <div class="row mt-5">
+            <div class="col-12 col-md-7 col-lg-6 offset-lg-1">
                 <div class="form-group row">
-                    <label for="" class="col-sm-5 col-form-label">Kode CO </label>
-                    <div class="col-sm-1">:</div>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="kode_co" name="kode_co">
+                    <label for="" class="col-6 col-xl-5 col-form-label">Kode CO </label>
+
+                    <div class="col-6">
+                        <input type="text" class="form-control mt-1" id="kode_co" name="kode_co">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="" class="col-sm-5 col-form-label">No Surat Jalan </label>
-                    <div class="col-sm-1">:</div>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="surat_jalan" name="surat_jalan">
+                    <label for="" class="col-6 col-xl-5 col-form-label">No Surat Jalan </label>
+
+                    <div class="col-6">
+                        <input type="text" class="form-control mt-1" id="surat_jalan" name="surat_jalan">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="" class="col-sm-5 col-form-label">Nama Pelanggan </label>
-                    <div class="col-sm-1">:</div>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="nama_pelanggan" name="nama_pelanggan">
+                    <label for="" class="col-6 col-xl-5 col-form-label">Nama Pelanggan </label>
+
+                    <div class="col-6">
+                        <input type="text" class="form-control mt-1" id="nama_pelanggan" name="nama_pelanggan">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="" class="col-sm-5 col-form-label">Nomor Hp </label>
-                    <div class="col-sm-1">:</div>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="nomor_hp" name="nomor_hp">
+                    <label for="" class="col-6 col-xl-5 col-form-label">Nomor Hp </label>
+
+                    <div class="col-6">
+                        <input type="text" class="form-control mt-1" id="nomor_hp" name="nomor_hp">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="" class="col-sm-5 col-form-label">Alamat Pengiriman </label>
-                    <div class="col-sm-1">:</div>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="alamat" name="alamat">
+                    <label for="" class="col-6 col-xl-5 col-form-label">Alamat Pengiriman </label>
+
+                    <div class="col-6">
+                        <input type="text" class="form-control mt-1" id="alamat" name="alamat">
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-12 col-md-4 col-lg-5">
                 <div class="form-group row">
-                    <label for="" class="col-sm-5 col-form-label">Tanggal CO </label>
-                    <div class="col-sm-1">:</div>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="tgl_co" name="tgl_co">
+                    <label for="" class="col-6 col-xl-5 col-form-label">Tanggal CO </label>
+
+                    <div class="col-6">
+                        <input type="text" class="form-control mt-1" id="tgl_co" name="tgl_co">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="" class="col-sm-5 col-form-label">Tanggal Pengiriman </label>
-                    <div class="col-sm-1">:</div>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="tgl_pengiriman" name="tgl_pengiriman">
+                    <label for="" class="col-6 col-xl-5 col-form-label">Tanggal Pengiriman </label>
+
+                    <div class="col-6">
+                        <input type="text" class="form-control mt-1" id="tgl_pengiriman" name="tgl_pengiriman">
                     </div>
                 </div>
             </div>
         </div>
-        <div class="container-fluid">
-            <div class="row justify-content-center">
-                <div class="row">
-                    <div class="col-md-7 offset-md-2 justify-content-center">
-                        <div class="row mt-2 ">
-                            <table class="table table-dark table-bordered data">
-                                <thead>
-                                    <tr class="align-middle">
-                                        <th rowspan="2"> Kode </th>
-                                        <th rowspan="2"> Nama Bahan </th>
-                                        <th rowspan="2"> Nama Barang </th>
-                                        <th rowspan="1" colspan="2"> Quantity</th>
-                                        <th rowspan="2"> Note </th>
-                                    </tr>
-                                    <tr>
-                                        <th> Quantity / Kg </th>
-                                        <th> Pcs / Bungkus </th>
-                                    </tr>
-                                </thead>
-                                <tbody id='tbody-table-data'></tbody>
-                            </table>
-                            <input type="hidden" name="halaman_paging_trx_detail" id="halaman_paging_trx_detail" value="1">
-                            <div class="pagination-result_trx_detail" style="margin-top:10px;margin-left:45%"></div>
-                        </div>
-                        <div class="row d-flex justify-content-end" style="margin-top: 20px;">
-                            <div class="col-md-2">
-                                <button class="form-control-button btn btn-outline-light button-action" onclick="back();"> Back </button>
-                            </div>
-                            <div class="col-md-2" id="loader-confirmed">
-                                <button class="form-control-button btn btn-outline-light button-action" onclick="print();">Print</button>
-                            </div>
-                        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-7 offset-md-1 justify-content-center">
+                <div class="row mt-2 ">
+                    <table class="table table-dark table-bordered data table-responsive">
+                        <thead>
+                            <tr class="align-middle">
+                                <th rowspan="2"> Kode </th>
+                                <th rowspan="2"> Nama Bahan </th>
+                                <th rowspan="2"> Nama Barang </th>
+                                <th rowspan="1" colspan="2"> Quantity</th>
+                                <th rowspan="2"> Note </th>
+                            </tr>
+                            <tr>
+                                <th> Quantity / Kg </th>
+                                <th> Pcs / Bungkus </th>
+                            </tr>
+                        </thead>
+                        <tbody id='tbody-table-data'></tbody>
+                    </table>
+                    <input type="hidden" name="halaman_paging_trx_detail" id="halaman_paging_trx_detail" value="1">
+                    <div class="row">
+                        <div class="pagination-result_trx_detail offset-7"></div>
+                    </div>
+                </div>
+                <div class="row d-flex justify-content-end">
+                    <div class="col-5 col-md-4 col-lg-3">
+                        <button class="form-control-button btn btn-outline-light button-action" onclick="back();"> Back </button>
+                    </div>
+                    <div class="col-5 col-md-4 col-lg-3">
+                        <button class="form-control-button btn btn-outline-light button-action" onclick="print();">Print</button>
                     </div>
                 </div>
             </div>
         </div>
         <div style="margin-top: 10px;"></div>
+
         <form method="post" action="<?= site_url() ?>/history-order/print" id="form-history-order-print" name="form-history-order-print" target="blank">
             <input type="hidden" name="id_trx_order" id="id_trx_order" />
         </form>
@@ -204,7 +213,10 @@
                     $(".pagination-result_trx").html("");
 
                     dataLoad += '<h4 style="text-decoration: underline;margin-top:2%">' + dateForMonth(response.data[0].update_date) + '</h4>'
-
+                    dataLoad += '<table class="table table-dark table-borderless table-responsive" style="border: none;">';
+                    dataLoad += '<thead></thead>';
+                    dataLoad += '<tbody>';
+                    
                     for (let i = 0; i < response.length; i++) {
                         /*
                         if (create_date != "") {
@@ -213,25 +225,23 @@
                             dataLoad += '<h4 style="text-decoration: underline;margin-top:2%">' + dateForShow(response.data[i].create_date) + '</h4>'
                         }*/
 
-                        dataLoad += '<table class="table table-dark table-borderless" style="border: none;">';
-                        dataLoad += '<thead></thead>';
-                        dataLoad += '<tbody>';
-
                         var functionOnclick = 'dataPagingDetail("' + response.data[i].id_trx_order + '")';
 
                         dataLoad += "<tr>";
-                        dataLoad += "<td width='19%'>";
+                        dataLoad += "<td class='text-start'>";
                         dataLoad += response.data[i].id_trx_order;
                         dataLoad += "</td>";
-                        dataLoad += "<td><a class='btn-sobat-md' href='#' onclick='" + functionOnclick + "'>";
+                        dataLoad += "<td class='text-start'><a class='btn-sobat-md' href='#' onclick='" + functionOnclick + "'>";
                         //dataLoad += "Purchase From Distributor " + response.data[i].nama_pelanggan.toUpperCase();
                         dataLoad += response.data[i].nama_pelanggan.toUpperCase();
                         dataLoad += "</a></td>";
                         dataLoad += "</tr>";
 
-                        dataLoad += '</tbody>';
-                        dataLoad += '</table>';
+
                     }
+
+                    dataLoad += '</tbody>';
+                    dataLoad += '</table>';
 
                     $("#data-trigger-content").html(dataLoad);
                     var totalDataBarang = response.length_paging;
@@ -317,13 +327,13 @@
                     $('.pagination-result_trx_detail').html(paginationViewHTMLDetail(halaman, totalHalaman, id_trx_order))
 
                     $("#date-filter").hide();
-                    $("#kode_co").val(id_trx_order);
-                    $("#nama_pelanggan").val(response.data[0].nama_pelanggan);
-                    $("#nomor_hp").val(response.data[0].nomor);
-                    $("#alamat").val(response.data[0].alamat);
-                    $("#tgl_co").val(dateForShow(response.data[0].create_date));
-                    $("#tgl_pengiriman").val(dateForShowVarchar(response.data[0].tgl_pengiriman));
-                    $("#surat_jalan").val((response.data[0].no_surat_jalan));
+                    $("#kode_co").val(": "+id_trx_order);
+                    $("#nama_pelanggan").val(": "+response.data[0].nama_pelanggan);
+                    $("#nomor_hp").val(": "+response.data[0].nomor);
+                    $("#alamat").val(": "+response.data[0].alamat);
+                    $("#tgl_co").val(": "+dateForShow(response.data[0].create_date));
+                    $("#tgl_pengiriman").val(": "+dateForShowVarchar(response.data[0].tgl_pengiriman));
+                    $("#surat_jalan").val(": "+(response.data[0].no_surat_jalan));
                     //$("#id_trx_order").val(id_trx_order);
                     $("#tbody-table-data").html(dataLoad);
                     $("#data-trigger").hide();

@@ -1,99 +1,103 @@
-<div class="container-fluid mt-3">
-    <div class="col-md-3 offset-md-1">
-        <h2><?= ucfirst($judul) ?></h2>
+<div class="container mt-3">
+
+    <div class="row">
+        <div class="col-12">
+            <h2><?= ucfirst($judul) ?></h2>
+        </div>
     </div>
-    <div class="col-md-11">
-        <hr style="margin-left:160px;border-width: 2px;border-style: solid;border-color:white">
+
+    <div class="row">
+        <div class="col-12">
+            <hr style="border-width: 2px;border-style: solid;border-color:white">
+        </div>
     </div>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-2 offset-md-1">
-                <div class="input-group">
-                    <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search">
-                    <span class="input-group-append">
-                        <button class="btn btn-outline-light" type="button" onclick="searchData()">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </span>
-                </div>
-            </div>
-            <div class="col-md-2 offset-md-6">
-                <div class="input-group">
-                    <span class="input-group-append">
-                        <button class="btn btn-outline-light" type="button">
-                            <span>sort</span>
-                        </button>
-                    </span>
-                    <input class="form-control-paging-date" type="text" id="create_date" name="create_date">
-                </div>
+
+    <div class="row">
+        <div class="col-5 col-md-4 col-lg-3">
+            <div class="input-group">
+                <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search">
+                <span class="input-group-append">
+                    <button class="btn btn-outline-light" type="button" onclick="searchData()">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
             </div>
         </div>
-        <div class="row" style="margin-top: 90px;display:none" id="content-header">
-            <div class="col-md-3 offset-md-1">
-                <div class="form-group row">
-                    <label for="" class="col-sm-6 col-form-label" style="margin-top: -7px;" id="trx-ar"> </label>
-                </div>
-                <div class="form-group row">
-                    <label for="" class="col-sm-5 col-form-label" style="margin-top: -7px;"><b>Sobat Daging</b></label>
-                </div>
-                <div class="form-group row">
-                    <label for="" class="col-sm-5 col-form-label" style="margin-top: -7px;" id="trx-ar-month"> </label>
-                </div>
-            </div>
-            <div class="col-md-3 offset-md-8" style="margin-top:-110px">
-                <div class="form-group row">
-                    <label for="" class="col-sm-5 col-form-label" style="margin-top: -7px;">Nominal AR </label>
-                    <div class="col-sm-5" id="nominal-ar"></div>
-                </div>
-                <div class="form-group row">
-                    <label for="" class="col-sm-5 col-form-label" style="margin-top: -7px;">Nominal Pembayaran </label>
-                    <div class="col-sm-5" id="nominal-pembayaran"></div>
-                </div>
-                <hr style="border-width: 2px;border-style: solid;border-color:white">
-                <div class="form-group row">
-                    <label for="" class="col-sm-5 col-form-label" style="margin-top: -7px;">Sisa Pembayaran </label>
-                    <div class="col-sm-5" style="color:yellow" id="sisa-pembayaran"></div>
-                </div>
+        <div class="col-6 offset-1 col-md-4 offset-md-4 col-lg-3 offset-lg-6">
+            <div class="input-group">
+                <span class="input-group-append">
+                    <button class="btn btn-outline-light" type="button">
+                        <span>sort</span>
+                    </button>
+                </span>
+                <input class="form-control-paging-date" type="text" id="create_date" name="create_date">
             </div>
         </div>
     </div>
 
-    <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="container">
-                <div class="col-sm-10 offset-md-1" style="margin-top: 20px;">
-                    <table class="table table-dark table-bordered data">
-                        <thead>
-                            <tr>
-                                <th colspan="14" id="table-title"> </th>
-                            </tr>
-                            <tr>
-                                <th> Nama Pelanggan </th>
-                                <th> Nama Bahan </th>
-                                <th> Nama Barang </th>
-                                <th> Kode </th>
-                                <th> Quantity </th>
-                                <th> Harga Satuan </th>
-                                <th> Harga Total </th>
-                                <th> Nomor Invoice </th>
-                                <th> Tanggal Masuk </th>
-                                <th> Tanggal Invoice </th>
-                                <th style="color:red"> Jatuh Tempo </th>
-                                <th> Tanggal Payment </th>
-                                <th> Nominal Pembayaran </th>
-                                <th style="color:red"> Sisa Pembayaran </th>
-                                <th> S </th>
-                            </tr>
-                        </thead>
-                        <tbody id="data-ar">
-                        </tbody>
-                    </table>
-                </div>
+    <div class="row mt-4" style="display:none" id="content-header">
+        <div class="col-4">
+            <div class="form-group row">
+                <label for="" class="col-6 col-form-label" id="trx-ar"> </label>
+            </div>
+            <div class="form-group row">
+                <label for="" class="col-5 col-form-label"><b>Sobat Daging</b></label>
+            </div>
+            <div class="form-group row">
+                <label for="" class="col-5 col-form-label" id="trx-ar-month"> </label>
+            </div>
+        </div>
+        <div class="col-4 offset-4">
+            <div class="form-group row">
+                <label for="" class="col-5 col-form-label">Nominal AR </label>
+                <div class="col-5" id="nominal-ar"></div>
+            </div>
+            <div class="form-group row">
+                <label for="" class="col-5 col-form-label">Nominal Pembayaran </label>
+                <div class="col-5" id="nominal-pembayaran"></div>
+            </div>
+            <hr style="border-width: 2px;border-style: solid;border-color:white">
+            <div class="form-group row">
+                <label for="" class="col-5 col-form-label">Sisa Pembayaran </label>
+                <div class="col-5" style="color:yellow" id="sisa-pembayaran"></div>
             </div>
         </div>
     </div>
-    <div style="margin-top:60px"></div>
+
+    <div class="row mt-5 justify-content-center">
+        <div class="col-12 justify-content-center">
+            <div class="table-responsive">
+                <table class="table table-dark table-bordered data">
+                    <thead>
+                        <tr>
+                            <th colspan="14" id="table-title"> </th>
+                        </tr>
+                        <tr>
+                            <th> Nama Pelanggan </th>
+                            <th> Nama Bahan </th>
+                            <th> Nama Barang </th>
+                            <th> Kode </th>
+                            <th> Quantity </th>
+                            <th> Harga Satuan </th>
+                            <th> Harga Total </th>
+                            <th> Nomor Invoice </th>
+                            <th> Tanggal Masuk </th>
+                            <th> Tanggal Invoice </th>
+                            <th style="color:red"> Jatuh Tempo </th>
+                            <th> Tanggal Payment </th>
+                            <th> Nominal Pembayaran </th>
+                            <th style="color:red"> Sisa Pembayaran </th>
+                            <th> S </th>
+                        </tr>
+                    </thead>
+                    <tbody id="data-ar">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
+<div style="margin-top:60px"></div>
 
 <script>
     $(document).ready(function() {
@@ -432,12 +436,12 @@
                         dataLoad += "<td >";
                         //dataLoad += isFinished;
                         if (i == 0) {
-                            dataLoad +=isFinished;
+                            dataLoad += isFinished;
                             status = response.rptobj[i].no_invoice;
                         } else if (i > 0 && status.trim() === response.rptobj[i].no_invoice.trim()) {
                             dataLoad += "";
                         } else if (i > 0 && status != response.rptobj[i].no_invoice) {
-                            dataLoad +=isFinished;
+                            dataLoad += isFinished;
                             status = response.rptobj[i].no_invoice;
                         }
                         dataLoad += "</td>";

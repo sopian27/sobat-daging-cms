@@ -14,10 +14,12 @@
   
   .dashboard-div{
       border-radius:50%;
-      width: 120px;
-      height:120px;
+      position:absolut;
+      height:100px;
       background:#B89874;
-      margin-left:40px;
+      /*margin-left:40px;*/
+      margin: auto;
+      width: 100px;
   }
   
   div [class^="col-"]{

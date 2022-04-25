@@ -1,13 +1,20 @@
-<div class="container-fluid mt-3">
-    <div class="col-md-3 offset-md-1">
-        <h2><?= ucfirst($judul) ?></h2>
+<div class="container mt-3">
+
+    <div class="row">
+        <div class="col-12">
+            <h2><?= ucfirst($judul) ?></h2>
+        </div>
     </div>
-    <div class="col-md-11">
-        <hr style="margin-left:160px;border-width: 2px;border-style: solid;border-color:white">
+
+    <div class="row">
+        <div class="col-12">
+            <hr style="border-width: 2px;border-style: solid;border-color:white">
+        </div>
     </div>
-    <div class="container-fluid" id="data-trigger">
+
+    <div id="data-trigger">
         <div class="row">
-            <div class="col-md-2 offset-md-1">
+            <div class="col-5 col-md-4 col-lg-3">
                 <div class="input-group">
                     <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search" onkeyup="searchData()">
                     <span class="input-group-append">
@@ -17,7 +24,7 @@
                     </span>
                 </div>
             </div>
-            <div class="col-md-2 offset-md-6">
+            <div class="col-6 offset-1 col-md-4 offset-md-4 col-lg-3 offset-lg-6">
                 <div class="input-group">
                     <span class="input-group-append">
                         <button class="btn btn-outline-light" type="button">
@@ -28,116 +35,132 @@
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-top: 60px;">
-            <div class="col-md-7" style="margin-left:7%;margin-top:10px">
+        
+        <div class="row mt-5">
+            <div class="col-7">
                 <div class="collapse-content"></div>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-7 offset-2">
                 <input type="hidden" name="halaman_paging_trx" id="halaman_paging_trx" value="1">
-                <div class="pagination-result_trx" style="margin-left:160px;margin-top:10px;margin-left:30%"></div>
+                <div class="pagination-result_trx"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <div style="display: none;" id="div-inventory-update-detail">
+
+        <div class="row">
+            <div class="col-2"><?= $id_trx_po ?></div>
+            <div class="col-2 offset-8"><?= $date ?></div>
+        </div>
+
+        <div class="row justify-content-center">
+
+            <div class="row">
+                <div class="col-7 offset-3">
+                    <form>
+                        <div class="form-group row">
+                            <label class="col-12 col-md-3 col-form-label">Purchase From : </label>
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <input type="text" class="form-control-label" id="purchase_from" name="purchase_from">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-12 col-md-7 offset-md-1 justify-content-center">
+                    <div class="row mt-2 ">
+                        <table class="table table-dark table-bordered data table-responsive">
+                            <thead>
+                                <tr>
+                                    <th> Kode </th>
+                                    <th> Nama Barang </th>
+                                    <th> Quantity </th>
+                                    <th colspan="2"> Quantity Check</th>
+                                    <th width="10%"> Action </th>
+                                </tr>
+                            </thead>
+                            <tbody id='tbody-table-data'></tbody>
+                        </table>
+                        <input type="hidden" name="halaman_paging_trx_detail" id="halaman_paging_trx_detail" value="1">
+                        <div class="row">
+                            <div class="pagination-result_trx_detail offset-7"></div>
+                        </div>
+                    </div>
+                    <div class="row d-flex justify-content-end">
+                        <div class="col-5 col-md-4 col-lg-3">
+                            <button class="form-control-button btn btn-outline-light button-action" onclick="clearAllData();"> Clear All </button>
+                        </div>
+                        <div class="col-5 col-md-4 col-lg-3">
+                            <button class="form-control-button btn btn-outline-light button-action" onclick="return confirmData();"> Confirm </button>
+                        </div>
+                    </div>
+                    <div class="row d-flex justify-content-start formSubmitData" id="formSubmitData"></div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="container-fluid" style="display: none;" id="div-inventory-update-detail">
+
+    <div style="display: none;" id="div-inventory-update">
         <div class="row">
-            <div class="col-md-3 offset-md-1"><?= $id_trx_po ?></div>
-            <div class="col-md-2 offset-md-5"><?= $date ?></div>
+            <div class="col-2" id="div-id-trx-po">><?= $id_trx_po ?></div>
+            <div class="col-2 offset-8"><?= $date ?></div>
         </div>
-        <div class="container-fluid">
-            <div class="row justify-content-center">
-                <div class="row">
-                    <div class="col-md-7 offset-md-2">
-                        <form>
-                            <div class="form-group row">
-                                <label for="" class="col-sm-2 offset-md-4 col-form-label">Purchase From : </label>
-                                <div class="col-sm-3">
-                                    <input type="text" class="form-control" id="purchase_from" name="purchase_from" style="margin-top:2px">
-                                </div>
+
+        <div class="row justify-content-center">
+
+            <div class="row">
+                <div class="col-7 offset-3">
+                    <form>
+                        <div class="form-group row">
+                            <label class="col-12 col-md-3 col-form-label">Purchase From : </label>
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <input type="text" class="form-control-label" id="purchase_from_edit" name="purchase_from_edit">
                             </div>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
-                <div class="row" style="margin-top: 20px;">
-                    <div class="col-md-7 offset-md-2 justify-content-center">
-                        <div class="row mt-2 ">
-                            <table class="table table-dark table-bordered data">
-                                <thead>
-                                    <tr>
-                                        <th> Kode </th>
-                                        <th> Nama Barang </th>
-                                        <th> Quantity </th>
-                                        <th colspan="2"> Quantity Check</th>
-                                        <th width="10%"> Action </th>
-                                    </tr>
-                                </thead>
-                                <tbody id='tbody-table-data'></tbody>
-                            </table>
-                            <input type="hidden" name="halaman_paging_trx_detail" id="halaman_paging_trx_detail" value="1">
-                            <div class="pagination-result_trx_detail" style="margin-top:10px;margin-left:45%"></div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-12 col-md-7 offset-md-1 justify-content-center">
+                    <div class="row mt-2 ">
+                        <table class="table table-dark table-bordered data table-responsive">
+                            <thead>
+                                <tr>
+                                    <th> Kode </th>
+                                    <th> Nama Barang </th>
+                                    <th> Quantity </th>
+                                    <th colspan="2"> Quantity Update</th>
+                                    <th width="10%"> Action </th>
+                                </tr>
+                            </thead>
+                            <tbody id='tbody-table-data-edit'></tbody>
+                        </table>
+                        <input type="hidden" name="halaman_paging_trx_edit" id="halaman_paging_trx_edit" value="1">
+                        <div class="row">
+                            <div class="pagination-result_trx_edit offset-7"></div>
                         </div>
-                        <div class="row d-flex justify-content-end" style="margin-top:30px">
-                            <div class="col-md-2">
-                                <button class="form-control-button btn btn-outline-light button-action" onclick="clearAllData();"> Clear All </button>
-                            </div>
-                            <div class="col-md-2">
-                                <button class="form-control-button btn btn-outline-light button-action" onclick="return confirmData();"> Confirm </button>
-                            </div>
+                    </div>
+                    <div class="row d-flex justify-content-end" style="margin-top:30px">
+                        <div class="col-5 col-md-4 col-lg-3">
+                            <button class="form-control-button btn btn-outline-light button-action" onclick="clearAllDataEdit();"> Clear All </button>
                         </div>
-                        <div class="row d-flex justify-content-start formSubmitData" id="formSubmitData">
+                        <div class="col-5 col-md-4 col-lg-3">
+                            <button class="form-control-button btn btn-outline-light button-action" onclick="return confirmDataEdit();"> Confirm </button>
                         </div>
+                    </div>
+                    <div class="row d-flex justify-content-start formSubmitData" id="formSubmitData">
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="container-fluid" style="display: none;" id="div-inventory-update">
-        <div class="row">
-            <div class="col-md-3 offset-md-1" id="div-id-trx-po"></div>
-            <div class="col-md-2 offset-md-5"><?= $date ?></div>
-        </div>
-        <div class="container-fluid">
-            <div class="row justify-content-center">
-                <div class="row">
-                    <div class="col-md-7 offset-md-2">
-                        <form>
-                            <div class="form-group row">
-                                <label for="" class="col-sm-2 offset-md-4 col-form-label">Purchase From : </label>
-                                <div class="col-sm-3">
-                                    <input type="text" class="form-control" id="purchase_from_edit" name="purchase_from_edit" style="margin-top:2px">
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <div class="row" style="margin-top: 20px;">
-                    <div class="col-md-7 offset-md-2 justify-content-center">
-                        <div class="row mt-2 ">
-                            <table class="table table-dark table-bordered data">
-                                <thead>
-                                    <tr>
-                                        <th> Kode </th>
-                                        <th> Nama Barang </th>
-                                        <th> Quantity </th>
-                                        <th colspan="2"> Quantity Update</th>
-                                        <th width="10%"> Action </th>
-                                    </tr>
-                                </thead>
-                                <tbody id='tbody-table-data-edit'></tbody>
-                            </table>
-                            <input type="hidden" name="halaman_paging_trx_edit" id="halaman_paging_trx_edit" value="1">
-                            <div class="pagination-result_trx_edit" style="margin-top:10px;margin-left:45%"></div>
-                        </div>
-                        <div class="row d-flex justify-content-end" style="margin-top:30px">
-                            <div class="col-md-2">
-                                <button class="form-control-button btn btn-outline-light button-action" onclick="clearAllDataEdit();"> Clear All </button>
-                            </div>
-                            <div class="col-md-2">
-                                <button class="form-control-button btn btn-outline-light button-action" onclick="return confirmDataEdit();"> Confirm </button>
-                            </div>
-                        </div>
-                        <div class="row d-flex justify-content-start formSubmitData" id="formSubmitData">
-                        </div>
-                    </div>
-                </div>
-            </div>
+
         </div>
     </div>
 </div>
@@ -195,8 +218,8 @@
                 if (data.length > 0) {
 
                     var dataload = "";
-                    dataload += '<div class="container"> ';
-                    dataload += '<div class="row"> ';
+                    //dataload += '<div class="container"> ';
+
 
                     dataload += '<h4 style="text-decoration: underline;margin-top:10px">' + dateForShow(data.data[0].create_date) + '</h4>'
 
@@ -213,44 +236,63 @@
                         var functionOnclick = 'getDetailLiveStock("' + id_trx_po + '","' + i + '")';
                         var functionOnclickCheck = 'dataPagingDetailCheck("' + id_trx_po + '")';
                         var functionOnclickEdit = 'dataPagingEditCheck("' + id_trx_po + '")';
-
-                        dataload += '<div class="col-md-6" style="margin-top:10px"> ';
+                        dataload += '<div class="row"> ';
+                        dataload += '<div class="col-5"> ';
                         dataload += '<a style="color:#B89874;text-decoration:none" data-bs-toggle="collapse" ';
                         dataload += 'href="#collapseExample' + i + '"  ';
                         //dataload += "onclick=" + functionOnclick + ">" + "Purchase From Distributor " + data.data[i].nama.toUpperCase(); + '</a>';
                         dataload += "onclick=" + functionOnclick + ">" + data.data[i].nama.toUpperCase(); + '</a>';
                         dataload += '</div>';
-                        dataload += '<div class="col-md-2 offset-md-2"> ';
+                        //dataload += '<div class="col-4 offset-2"> ';
 
                         if (data.data[i].id_trx_live_stocks != "") {
+
+                            dataload += '<div class="col-1"> ';
                             dataload += '<input type="checkbox" checked name="' + data.data[i].id + '" class="" />';
-                            dataload += '<a style="color:#B89874;text-decoration:none;margin-left:10px" data-bs-toggle="collapse" ';
+                            dataload += '</div>';
+
+                            dataload += '<div class="col-1"> ';
+                            dataload += '<a style="color:#B89874;text-decoration:none;" data-bs-toggle="collapse" ';
                             dataload += 'href="#collapseExample' + i + '"  ';
                             dataload += ">" + "<span class='fa fa-eye'></span>" + '</a>';
-                            dataload += '<a style="color:#B89874;text-decoration:none;margin-left:10px" data-bs-toggle="collapse" ';
+                            dataload += '</div>';
+
+                            dataload += '<div class="col-1"> ';
+                            dataload += '<a style="color:#B89874;text-decoration:none" data-bs-toggle="collapse" ';
                             dataload += 'href="#collapseExample' + i + '"  ';
                             dataload += ">" + "<span class='fa fa-edit'></span>" + '</a>';
+                            dataload += '</div>';
                         } else {
+
+                            dataload += '<div class="col-1"> ';
                             dataload += '<input type="checkbox" name="' + data.data[i].id + '" class="" />';
-                            dataload += '<a style="color:#B89874;text-decoration:none;margin-left:10px" data-bs-toggle="collapse" ';
+                            dataload += '</div>';
+
+                            dataload += '<div class="col-1"> ';
+                            dataload += '<a style="color:#B89874;text-decoration:none;" data-bs-toggle="collapse" ';
                             dataload += 'href="#collapseExample' + i + '"  ';
                             dataload += "onclick=" + functionOnclickCheck + ">" + "<span class='fa fa-eye'></span>" + '</a>';
-                            dataload += '<a style="color:#B89874;text-decoration:none;margin-left:10px" data-bs-toggle="collapse" ';
+                            dataload += '</div>';
+
+                            dataload += '<div class="col-1"> ';
+                            dataload += '<a style="color:#B89874;text-decoration:none;" data-bs-toggle="collapse" ';
                             dataload += 'href="#collapseExample' + i + '"  ';
                             dataload += "onclick=" + functionOnclickEdit + ">" + "<span class='fa fa-edit'></span>" + '</a>';
+                            dataload += '</div>';
                         }
 
-                        dataload += '</div>';
+                        //dataload += '</div>';
 
                         dataload += '<div class="collapse" id="collapseExample' + i + '">';
                         dataload += '<div class="card card-body" id="collapse-content' + i + '" style="background-color: transparent;border:none;">';
                         dataload += '</div>';
                         dataload += '</div>';
+                        dataload += '</div>';
 
                     }
 
-                    dataload += '</div>';
-                    dataload += '</div>';
+                    //dataload += '</div>';
+                    //dataload += '</div>';
 
                     $('.collapse-content').html(dataload);
                     var totalDataBarang = data.length_paging;
@@ -288,21 +330,21 @@
                 if (data.length > 0) {
 
                     var dataload = "";
-                    dataload += '<div class="container"> ';
+                    //dataload += '<div class="container"> ';
                     dataload += '<div class="row"> ';
 
                     for (i = 0; i < data.length; i++) {
 
-                        dataload += '<div class="col-md-6"> ';
+                        dataload += '<div class="col-5"> ';
                         dataload += data[i].nama_barang;
                         dataload += '</div>';
-                        dataload += '<div class="col-md-2" style="margin-left:-150px"> ';
+                        dataload += '<div class="col-4"> ';
                         dataload += data[i].quantity + " " + data[i].satuan;
                         dataload += '</div>';
 
                     }
                     dataload += '</div>';
-                    dataload += '</div>';
+                    //dataload += '</div>';
 
                     document.getElementById("collapse-content" + index).innerHTML = dataload;
 
@@ -360,7 +402,7 @@
                         dataLoad += data.data[i].quantity + " " + data.data[i].satuan
                         dataLoad += "</td>";
                         dataLoad += '<td width="20%"><input type="number" step="0.01" name="quantity_check[]" id="quantity_check' + i + '"  value="' + data.data[i].quantity_check + '" class="form-control-label quantity-check" onkeypress="validate(event)"></td>'
-                        dataLoad += '<td class="data" data-dat="satuan" width="7%">'
+                        dataLoad += '<td class="data" data-dat="satuan" width="12%">'
                         dataLoad += '<select name="satuan[]" id="satuan' + i + '" class="form-control">'
                         if (data.data[i].satuan == "Dus") {
                             dataLoad += '<option value="Kg">kg</option>'
@@ -457,7 +499,7 @@
                         dataLoad += data.data[i].quantity + " " + data.data[i].satuan
                         dataLoad += "</td>";
                         dataLoad += '<td width="20%"><input type="number" step="0.01" name="quantity_update[]" id="quantity_update' + i + '"  value="' + data.data[i].quantity_update + '" class="form-control-label quantity-check" onkeypress="validate(event)"></td>'
-                        dataLoad += '<td class="data" data-dat="satuan" width="7%">'
+                        dataLoad += '<td class="data" data-dat="satuan" width="12%">'
                         dataLoad += '<select name="satuan[]" id="satuan' + i + '" class="form-control">'
                         if (data.data[i].satuan == "Dus") {
                             dataLoad += '<option value="Kg">kg</option>'
@@ -473,7 +515,7 @@
                         dataLoad += '<input type="hidden" name="id[]" id="id' + i + '" value="' + data.data[i].id + '" class="form-control-label">'
                         dataLoad += '<input type="hidden" name="id_trx_live_stocks[]" id="id_trx_live_stocks' + i + '"  value="' + id_trx_live_stocks + '" class="form-control-label">'
                         dataLoad += '<input type="hidden" name="id_trx_po[]" id="id_trx_po" value="' + id_trx_po + '" class="form-control-label">'
-                        dataLoad += '<input type="hidden" name="quantity_before[]" id="quantity_before'+i+'" value="' +  data.data[i].quantity + '" class="form-control-label">'
+                        dataLoad += '<input type="hidden" name="quantity_before[]" id="quantity_before' + i + '" value="' + data.data[i].quantity + '" class="form-control-label">'
                         dataLoad += '</td>'
                         dataLoad += "<td>";
 

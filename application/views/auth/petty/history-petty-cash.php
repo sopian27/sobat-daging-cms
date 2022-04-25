@@ -1,163 +1,173 @@
-<div class="container-fluid mt-3">
-    <div class="col-md-3 offset-md-1">
-        <h2><?= ucfirst($judul) ?></h2>
+<div class="container mt-3">
+
+    <div class="row">
+        <div class="col-12">
+            <h2><?= ucfirst($judul) ?></h2>
+        </div>
     </div>
-    <div class="col-md-11">
-        <hr style="margin-left:160px;border-width: 2px;border-style: solid;border-color:white">
+
+    <div class="row">
+        <div class="col-12">
+            <hr style="border-width: 2px;border-style: solid;border-color:white">
+        </div>
     </div>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-2 offset-md-1">
-                <div class="input-group">
-                    <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search" onkeyup="searchData()">
-                    <span class="input-group-append">
-                        <button class="btn btn-outline-light" type="button">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </span>
+
+    <div class="row">
+        <div class="col-5 col-md-4 col-lg-3">
+            <div class="input-group">
+                <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search" onkeyup="searchData()">
+                <span class="input-group-append">
+                    <button class="btn btn-outline-light" type="button">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
+            </div>
+        </div>
+        <div class="col-6 offset-1 col-md-4 offset-md-4 col-lg-3 offset-lg-6">
+            <div class="input-group">
+                <span class="input-group-append">
+                    <button class="btn btn-outline-light" type="button">
+                        <span>sort</span>
+                    </button>
+                </span>
+                <input class="form-control-paging-date" type="text" id="create_date" name="create_date">
+            </div>
+        </div>
+    </div>
+
+    <div id="data-trigger">
+        <div class="row mt-5 justify-content-center">
+            <div class="text-center col-8">
+                <h4 id="data-trigger-title">History Petty Cash</h4>
+                <hr>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-4">
+                <table class="table table-dark table-borderless" style="border: none;width:50%; ">
+                    <thead>
+                    </thead>
+                    <tbody id="data-trigger-content">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="data-content" style="display: none;">
+        <div class="row mt-5">
+            <div class="col-12 justify-content-start">
+                <div>
+                    <h5 id="data-content-title"></h5>
                 </div>
             </div>
-            <div class="col-md-2 offset-md-6">
-                <div class="input-group">
-                    <span class="input-group-append">
-                        <button class="btn btn-outline-light" type="button">
-                            <span>sort</span>
-                        </button>
-                    </span>
-                    <input class="form-control-paging-date" type="text" id="create_date" name="create_date">
+
+            <div class="row mt-1 justify-content-end">
+                <div class="col-12 col-md-7 col-lg-4 offset-lg-1">
+                    <div class="form-group row">
+                        <label for="" class="col-6 col-form-label">
+                            <h5 style="color:red">Current Petty </h5>
+                        </label>
+                        <div class="col-6 mt-1">
+                            <h5 style="color:red">:&nbsp;Rp. <span id="saldo-petty"></span></h5>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="form-group row">
+                        <label for="" class="col-6 col-form-label">
+                            <h5>Petty In </h5>
+                        </label>
+                        <div class="col-6">
+                            <h5>:&nbsp;Rp. <span id="data-content-pettyin"></span></h5>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-6 col-form-label">
+                            <h5>Petty Out </h5>
+                        </label>
+                        <div class="col-6">
+                            <h5>:&nbsp;Rp. <span id="data-content-pettyout"></span></h5>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="form-group row">
+                        <label for="" class="col-6 col-form-label">
+                            <h5>Saldo Petty</h5>
+                        </label>
+                        <div class="col-6">
+                            <h5>:&nbsp;Rp. <span id="data-content-sum"></span></h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-2 justify-content-center">
+            <div class="col-5">
+                <a href="#" style="color:white" onclick="show_petty_in();">Petty In</a> /
+                <a style="color:white" href="#" onclick="show_petty_out();">Petty Out</a>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-12 col-md-7 offset-md-2 justify-content-center" id="div-petty-in">
+                <table class="table table-dark table-bordered data table-responsive">
+                    <thead>
+                        <tr>
+                            <th colspan="4"><span id="data-content-title2"></span></th>
+                        </tr>
+                        <tr>
+                            <th colspan="3"> Petty In </th>
+                        </tr>
+                        <tr>
+                            <th> Kode </th>
+                            <th> Tambahan Saldo</th>
+                            <th> Keterangan </th>
+                            <th> Bukti </th>
+                        </tr>
+                    </thead>
+                    <tbody id="data-petty-in"></tbody>
+                </table>
+                <input type="hidden" name="halaman_paging_petty_in" id="halaman_paging_petty_in" value="1">
+                <div class="row">
+                    <div class="pagination-result-petty-in offset-7"></div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-7 offset-md-2 justify-content-center" style="display:none" id="div-petty-out">
+                <table class="table table-dark table-bordered data table-responsive">
+                    <thead>
+                        <tr>
+                            <th colspan="4"><span id="data-content-title3"></span></th>
+                        </tr>
+                        <tr>
+                            <th colspan="3"> Petty Out </th>
+                        </tr>
+                        <tr>
+                            <th> Kode </th>
+                            <th> Tambahan Saldo</th>
+                            <th> Keterangan </th>
+                            <th> Bukti </th>
+                        </tr>
+                    </thead>
+                    <tbody id="data-petty-out">
+                    </tbody>
+                </table>
+                <input type="hidden" name="halaman_paging_petty_out" id="halaman_paging_petty_out" value="1">
+                <div class="row">
+                    <div class="pagination-result-petty-out offset-7"></div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="container-fluid" id="data-trigger">
-        <div class="row justify-content-center">
-            <div class="container">
-                <div class="row" style="margin: 30px;">
-                    <div class="text-center col-md-6 offset-md-3">
-                        <h4 id="data-trigger-title">History Petty Cash</h4>
-                        <hr>
-                    </div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-sm-4 offset-md-2" style="margin-top: 20px;">
-                        <table class="table table-dark table-borderless" style="border: none;width:50%; ">
-                            <thead>
-                            </thead>
-                            <tbody id="data-trigger-content">
-                            <tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="container-fluid" id="data-content" style="display: none;">
-        <div class="row justify-content-center">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-3 offset-md-1" style="margin-top: 30px;">
-                        <div>
-                            <h5 id="data-content-title"></h5>
-                        </div>
-                    </div>
-                    <div class="col-md-3 offset-md-4" style="margin-top: 30px;">
-                        <div class="form-group row">
-                            <label for="" class="col-sm-5 col-form-label" style="margin-top: -7px;">
-                                <h5 style="color:red">Current Petty </h5>
-                            </label>
-                            <div class="col-sm-5">
-                                <h5 style="color:red">:&nbsp;Rp. <span id="saldo-petty"></span></h5>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="form-group row">
-                            <label for="" class="col-sm-5 col-form-label" style="margin-top: -7px;">
-                                <h5>Petty In </h5>
-                            </label>
-                            <div class="col-sm-5">
-                                <h5>:&nbsp;Rp. <span id="data-content-pettyin"></span></h5>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="" class="col-sm-5 col-form-label" style="margin-top: -7px;">
-                                <h5>Petty Out </h5>
-                            </label>
-                            <div class="col-sm-5">
-                                <h5>:&nbsp;Rp. <span id="data-content-pettyout"></span></h5>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="form-group row">
-                            <label for="" class="col-sm-5 col-form-label" style="margin-top: -7px;">
-                                <h5>Saldo Petty</h5>
-                            </label>
-                            <div class="col-sm-5">
-                                <h5>:&nbsp;Rp. <span id="data-content-sum"></span></h5>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="text-center col-md-6" style="margin-top:20px">
-                    <a href="#" style="color:white" onclick="show_petty_in();">Petty In</a> /
-                    <a style="color:white" href="#" onclick="show_petty_out();">Petty Out</a>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 offset-md-3" style="margin-top: 20px;" id="div-petty-in">
-                        <table class="table table-dark table-bordered data">
-                            <thead>
-                                <tr>
-                                    <th colspan="4"><span id="data-content-title2"></span></th>
-                                </tr>
-                                <tr>
-                                    <th colspan="3"> Petty In </th>
-                                </tr>
-                                <tr>
-                                    <th> Kode </th>
-                                    <th> Tambahan Saldo</th>
-                                    <th> Keterangan </th>
-                                    <th> Bukti </th>
-                                </tr>
-                            </thead>
-                            <tbody id="data-petty-in">
-                            </tbody>
-                        </table>
-                        <input type="hidden" name="halaman_paging_petty_in" id="halaman_paging_petty_in" value="1">
-                        <div class="pagination-result-petty-in" style="margin-top:10px;margin-left:45%"></div>
-                    </div>
-                    <div class="col-md-6 offset-md-3" style="margin-top: 20px;display:none" id="div-petty-out">
-                        <table class="table table-dark table-bordered data">
-                            <thead>
-                                <tr>
-                                    <th colspan="4"><span id="data-content-title3"></span></th>
-                                </tr>
-                                <tr>
-                                    <th colspan="3"> Petty Out </th>
-                                </tr>
-                                <tr>
-                                    <th> Kode </th>
-                                    <th> Tambahan Saldo</th>
-                                    <th> Keterangan </th>
-                                    <th> Bukti </th>
-                                </tr>
-                            </thead>
-                            <tbody id="data-petty-out">
-                            </tbody>
-                        </table>
-                        <input type="hidden" name="halaman_paging_petty_out" id="halaman_paging_petty_out" value="1">
-                        <div class="pagination-result-petty-out" style="margin-top:10px;margin-left:45%"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <div style="margin-top: 20px;"></div>
     <form id="form-download" name="form-download" action="<?= site_url() ?>/history-petty-cash/download" target="blank" method="post">
         <input type="hidden" name="filename" id="filename" />
     </form>
 </div>
 <script>
+
     $(document).ready(function() {
 
         var today = new Date();
@@ -598,9 +608,9 @@
                 ket = response.data_in[i].keterangan;
             }
 
-            var functionOnclick ="";
-            
-            if( response.data_in[i].upload_bukti != "")
+            var functionOnclick = "";
+
+            if (response.data_in[i].upload_bukti != "")
                 functionOnclick = 'getDetailDataOther("' + response.data_in[i].upload_bukti + '")';
 
             dataLoadIn += "<tr>";
@@ -614,12 +624,12 @@
             dataLoadIn += ket;
             dataLoadIn += "</td>";
             dataLoadIn += "<td>";
-            if( response.data_in[i].upload_bukti != ""){
+            if (response.data_in[i].upload_bukti != "") {
                 dataLoadIn += "<span>view </span><a href='#' onclick=" + functionOnclick + " class='btn btn-payment-md'><span></span></a>";
-            }else{
+            } else {
                 dataLoadIn += "<span>-</span>";
             }
-            
+
             dataLoadIn += "</td>";
             dataLoadIn += "</tr>";
 
@@ -655,9 +665,9 @@
                 ket = response.data_out[i].keterangan;
             }
 
-            var functionOnclick="";
+            var functionOnclick = "";
 
-            if( response.data_out[i].upload_bukti != "")
+            if (response.data_out[i].upload_bukti != "")
                 functionOnclick = 'getDetailDataOther("' + response.data_out[i].upload_bukti + '")';
 
 
@@ -672,12 +682,12 @@
             dataLoadOut += ket;
             dataLoadOut += "</td>";
             dataLoadOut += "<td>";
-            if( response.data_out[i].upload_bukti != ""){
+            if (response.data_out[i].upload_bukti != "") {
                 dataLoadOut += "<span>view </span><a href='#' onclick=" + functionOnclick + " class='btn btn-payment-md'><span></span></a>";
-            }else{
+            } else {
                 dataLoadOut += "<span>-</span>";
             }
-           
+
             dataLoadOut += "</td>";
             dataLoadOut += "</tr>";
 

@@ -1,106 +1,113 @@
-<div class="container-fluid mt-3">
-    <div class="col-md-3 offset-md-1">
-        <h2><?= ucfirst($judul) ?></h2>
+<div class="container mt-3">
+
+    <div class="row">
+        <div class="col-12">
+            <h2><?= ucfirst($judul) ?></h2>
+        </div>
     </div>
-    <div class="col-md-11">
-        <hr style="margin-left:160px;border-width: 2px;border-style: solid;border-color:white">
+
+    <div class="row">
+        <div class="col-12">
+            <hr style="border-width: 2px;border-style: solid;border-color:white">
+        </div>
     </div>
-    <div class="container-fluid">
+
+    <div class="row">
+        <div class="col-5 col-md-4 col-lg-3">
+            <div class="input-group">
+                <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search">
+                <span class="input-group-append">
+                    <button class="btn btn-outline-light" type="button" onclick="searchData()">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
+            </div>
+        </div>
+        <div class="col-6 offset-1 col-md-4 offset-md-4 col-lg-3 offset-lg-6">
+            <div class="input-group">
+                <span class="input-group-append">
+                    <button class="btn btn-outline-light" type="button">
+                        <span>sort</span>
+                    </button>
+                </span>
+                <input class="form-control-paging-date" type="text" id="create_date" name="create_date">
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5 justify-content-center" id="mutasi-masuk">
         <div class="row">
-            <div class="col-md-2 offset-md-1">
-                <div class="input-group">
-                    <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search">
-                    <span class="input-group-append">
-                        <button class="btn btn-outline-light" type="button" onclick="searchData()">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </span>
+            <div class="col-12 col-md-3 col-lg-2">
+                <div>
+                    <a class="form-control-button btn" style="background-color: #B89874;border:none;padding:10px"> Mutasi Masuk </a>
+                </div>
+                <div class="mt-3">
+                    <a class="form-control-button btn btn-outline-light button-action" style="padding:10px" onclick="mutasiKeluar();"> Mutasi Keluar </a>
                 </div>
             </div>
-            <div class="col-md-2 offset-md-6">
-                <div class="input-group">
-                    <span class="input-group-append">
-                        <button class="btn btn-outline-light" type="button">
-                            <span>sort</span>
-                        </button>
-                    </span>
-                    <input class="form-control-paging-date" type="text" id="create_date" name="create_date">
+        </div>
+        <div class="row mt-5 justify-content-center">
+            <div class="col-12 col-md-6 justify-content-center">
+                <div class="table-responsive">
+                    <table class="table table-dark table-bordered data">
+                        <thead>
+                            <tr>
+                                <th colspan="5" id="mutasi-masuk-title"></th>
+                            </tr>
+                            <tr>
+                                <th> Nama Pelanggan </th>
+                                <th> Nomor Invoice </th>
+                                <th> Jatuh Tempo </th>
+                                <th> Nominal </th>
+                                <th> S </th>
+                            </tr>
+                        </thead>
+                        <tbody id="mutasi-masuk-data">
+                        </tbody>
+                    </table>
+                </div>
+                <input type="hidden" name="halaman_paging_mutasi_masuk" id="halaman_paging_mutasi_masuk" value="1">
+                <div class="row">
+                    <div class="pagination-result-mutasi-masuk offset-7"></div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="container-fluid" style="margin-top: 40px;">
-        <div class="row justify-content-center" id="mutasi-masuk">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-2 offset-md-1">
-                        <div>
-                            <a class="form-control-button btn" style="background-color: #B89874;border:none;padding:10px"> Mutasi Masuk </a>
-                        </div>
-                        <div style="margin-top:30px">
-                            <a class="form-control-button btn btn-outline-light button-action" style="padding:10px" onclick="mutasiKeluar();"> Mutasi Keluar </a>
-                        </div>
-                    </div>
+    <div class="row mt-5 justify-content-center" style="display: none;" id="mutasi-keluar">
+        <div class="row">
+            <div class="col-12 col-md-3 col-lg-2">
+                <div>
+                    <a class="form-control-button btn btn-outline-light button-action" onclick="mutasiMasuk();"> Mutasi Masuk </a>
                 </div>
-                <div class="row">
-                    <div class="col-sm-5 offset-md-4">
-                        <table class="table table-dark table-bordered data">
-                            <thead>
-                                <tr>
-                                    <th colspan="5" id="mutasi-masuk-title"></th>
-                                </tr>
-                                <tr>
-                                    <th> Nama Pelanggan </th>
-                                    <th> Nomor Invoice </th>
-                                    <th> Jatuh Tempo </th>
-                                    <th> Nominal </th>
-                                    <th> S </th>
-                                </tr>
-                            </thead>
-                            <tbody id="mutasi-masuk-data">
-                            </tbody>
-                        </table>
-                        <input type="hidden" name="halaman_paging_mutasi_masuk" id="halaman_paging_mutasi_masuk" value="1">
-                        <div class="pagination-result-mutasi-masuk" style="margin-top:10px;margin-left:45%"></div>
-                    </div>
+                <div class="mt-3">
+                    <a class="form-control-button btn" style="background-color: #B89874;border:none;padding:10px"> Mutasi Keluar </a>
                 </div>
             </div>
         </div>
-
-        <div class="row justify-content-center" style="display: none;" id="mutasi-keluar">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-2 offset-md-1">
-                        <div>
-                            <a class="form-control-button btn btn-outline-light button-action" onclick="mutasiMasuk();"> Mutasi Masuk </a>
-                        </div>
-                        <div style="margin-top:30px">
-                            <a class="form-control-button btn" style="background-color: #B89874;border:none;padding:10px"> Mutasi Keluar </a>
-                        </div>
-                    </div>
+        <div class="row mt-5 justify-content-center ">
+            <div class="col-12 col-md-6 justify-content-center">
+                <div class="table-responsive">
+                    <table class="table table-dark table-bordered data">
+                        <thead>
+                            <tr>
+                                <th colspan="5" id="mutasi-keluar-title"> </th>
+                            </tr>
+                            <tr>
+                                <th> Pembelian Dari </th>
+                                <th> Nomor Invoice </th>
+                                <th> Jatuh Tempo </th>
+                                <th> Nominal </th>
+                                <th> S </th>
+                            </tr>
+                        </thead>
+                        <tbody id="mutasi-keluar-data">
+                        </tbody>
+                    </table>
                 </div>
+                <input type="hidden" name="halaman_paging_mutasi_keluar" id="halaman_paging_mutasi_keluar" value="1">
                 <div class="row">
-                    <div class="col-sm-5 offset-md-4">
-                        <table class="table table-dark table-bordered data">
-                            <thead>
-                                <tr>
-                                    <th colspan="5" id="mutasi-keluar-title"> </th>
-                                </tr>
-                                <tr>
-                                    <th> Pembelian Dari </th>
-                                    <th> Nomor Invoice </th>
-                                    <th> Jatuh Tempo </th>
-                                    <th> Nominal </th>
-                                    <th> S </th>
-                                </tr>
-                            </thead>
-                            <tbody id="mutasi-keluar-data">
-                            </tbody>
-                        </table>
-                        <input type="hidden" name="halaman_paging_mutasi_keluar" id="halaman_paging_mutasi_keluar" value="1">
-                        <div class="pagination-result-mutasi-keluar" style="margin-top:10px;margin-left:45%"></div>
-                    </div>
+                    <div class="pagination-result-mutasi-keluar offset-7"></div>
                 </div>
             </div>
         </div>
@@ -215,7 +222,7 @@
     function setMutasiMasuk(response, create_date, keyword, halaman, batasTampilData) {
 
         dataLoad = "";
-        var nama_supplier="";
+        var nama_supplier = "";
         for (let i = 0; i < response.length_in; i++) {
 
             var isFinished = "";

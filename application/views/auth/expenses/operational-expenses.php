@@ -1,58 +1,60 @@
-<div class="container-fluid mt-3">
-    <div class="col-md-3 offset-md-1">
-        <h2><?= ucfirst($judul) ?></h2>
-    </div>
-    <div class="col-md-11">
-        <hr style="margin-left:160px;border-width: 2px;border-style: solid;border-color:white">
-    </div>
-    <div class="row">
-        <div class="col-md-3 offset-md-1"><?= $kode_po ?></div>
-        <div class="col-md-2 offset-md-5 "><?= $date ?></div>
-    </div>
+<div class="container mt-3">
 
-    <div class="container-fluid" style="margin-top: 40px;">
-        <div class="row justify-content-center offset-md-1">
-            <div class="container">
-                <form method="post"  id="form-expenses-save" name="form-expenses-save" enctype="multipart/form-data">
-                    <div class="row">
-                        <div class="col-md-5 offset-md-1">
-                            <div class="form-group row">
-                                <label for="" class="col-sm-4 col-form-label">Penggunaan Dana </label>
-                                <div class="col-sm-1" style="width:10%">: &nbsp;(Rp)</div>
-                                <div class="col-sm-5">
-                                    <input type="text" class="form-control-label" id="penggunaan_dana" style="text-align:right;" name="penggunaan_dana" placeholder="0">
-                                    <input type="hidden" class="form-control-label" id="id_trx_ex_opt" name="id_trx_ex_opt" value="<?= $kode_po ?>">
-                                </div>
-                            </div>
-                            <div class="form-group row" style="margin-top: 10px;">
-                                <label for="" class="col-sm-4 col-form-label">Keterangan </label>
-                                <div class="col-sm-1" style="width:10%">: &nbsp;</div>
-                                <div class="col-sm-5">
-                                    <input type="text" class="form-control-label" id="keterangan" name="keterangan" placeholder="keterangan...">
-                                </div>
-                            </div>
-                            <div class="form-group row" style="margin-top: 10px;">
-                                <label for="" class="col-sm-4 col-form-label">Upload Bukti </label>
-                                <div class="col-sm-1" style="width:10%">: &nbsp;</div>
-                                <div class="col-sm-5">
-                                    <input type="file" id="upload_bukti" name="upload_bukti" class="form-control-label">
-                                    <label><small>Jpeg/Png only (max 10MB)</small></label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row d-flex offset-md-7" style="margin-top: 20px;">
-                        <div class="col-md-2">
-                            <button class="form-control-button btn btn-outline-light button-action" onclick="clearAllData();"> Clear All </button>
-                        </div>
-                        <div class="col-md-2">
-                            <button class="form-control-button btn btn-outline-light button-action" onclick="return confirm();"> Confirm </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+    <div class="row">
+        <div class="col-12">
+            <h2><?= ucfirst($judul) ?></h2>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-12">
+            <hr style="border-width: 2px;border-style: solid;border-color:white">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-3"><?= $kode_po; ?></div>
+        <div class="col-2 offset-7"><?= $date ?></div>
+    </div>
+
+
+    <div class="row mt-5">
+        <form method="post" id="form-expenses-save" name="form-expenses-save" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-md-5 offset-md-1">
+                    <div class="form-group row">
+                        <label for="" class="col-12 col-md-5 col-lg-5 col-form-label">Penggunaan Dana : (Rp) </label>
+                        <div class="col-12 col-md-7 col-lg-7">
+                            <input type="text" class="form-control-label" id="penggunaan_dana" style="text-align:right;" name="penggunaan_dana" placeholder="0">
+                            <input type="hidden" class="form-control-label" id="id_trx_ex_opt" name="id_trx_ex_opt" value="<?= $kode_po ?>">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-12 col-md-5 col-lg-5 col-form-label">Keterangan </label>
+                        <div class="col-12 col-md-7 col-lg-7">
+                            <input type="text" class="form-control-label" id="keterangan" name="keterangan" placeholder="keterangan...">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-12 col-md-5 col-lg-5 col-form-label">Upload Bukti </label>
+                        <div class="col-12 col-md-7 col-lg-7">
+                            <input type="file" id="upload_bukti" name="upload_bukti" class="form-control-label">
+                            <label><small>Jpeg/Png only (max 10MB)</small></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row d-flex offset-md-7 mt-5">
+                <div class="col-4 col-lg-2">
+                    <button class="form-control-button btn btn-outline-light button-action" onclick="clearAllData();"> Clear All </button>
+                </div>
+                <div class="col-4 col-lg-2">
+                    <button class="form-control-button btn btn-outline-light button-action" onclick="return confirm();"> Confirm </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
 </div>
 
 <script>
@@ -130,7 +132,7 @@
         return false;
     }
 
-    function clearAllData(){
+    function clearAllData() {
         location.href = "<?= site_url() ?>/expenses";
     }
 </script>

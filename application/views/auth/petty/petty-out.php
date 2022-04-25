@@ -1,64 +1,63 @@
-<div class="container-fluid mt-3">
-    <div class="col-md-3 offset-md-1">
-        <h2><?= ucfirst($judul) ?></h2>
-    </div>
-    <div class="col-md-11">
-        <hr style="margin-left:160px;border-width: 2px;border-style: solid;border-color:white">
-    </div>
+<div class="container mt-3">
+
     <div class="row">
-        <div class="col-md-3 offset-md-1"><?= $kode_po ?></div>
-        <div class="col-md-2 offset-md-5 "><?= $date ?></div>
+        <div class="col-12">
+            <h2><?= ucfirst($judul) ?></h2>
+        </div>
     </div>
 
-    <div class="container-fluid" style="margin-top: 40px;">
-        <div class="row justify-content-center offset-md-1">
-            <div class="container">
-                <form id="data" method="post" enctype="multipart/form-data">
-                    <div class="row">
-                        <div class="col-md-5 offset-md-1">
-                            <div class="form-group row">
-                                <label for="" class="col-sm-4 col-form-label">Saldo Awal </label>
-                                <div class="col-sm-1" style="width:10%">: &nbsp;(Rp)</div>
-                                <div class="col-sm-5">
-                                    <input type="text" class="form-control-label" style="text-align:right;" readonly="readonly" id="saldo-init">
-                                    <input type="hidden" class="form-control-label" id="saldo_awal" name="saldo_awal">
-                                    <input type="hidden" class="form-control-label" id="id_trx_petty_cash" name="id_trx_petty_cash" value="<?= $kode_po ?> ">
-                                </div>
-                            </div>
-                            <div class="form-group row" style="margin-top: 10px;">
-                                <label for="" class="col-sm-4 col-form-label">Penggunaan Saldo</label>
-                                <div class="col-sm-1" style="width:10%">: &nbsp;(Rp)</div>
-                                <div class="col-sm-5">
-                                    <input type="text" class="form-control-label" id="tambahan_saldo" style="text-align:right;" name="tambahan_saldo" placeholder="Rp. 0">
-                                </div>
-                            </div>
-                            <div class="form-group row" style="margin-top: 10px;">
-                                <label for="" class="col-sm-4 col-form-label">Keterangan </label>
-                                <div class="col-sm-1" style="width:10%">: &nbsp;</div>
-                                <div class="col-sm-5">
-                                    <textarea id="keterangan" name="keterangan" class="form-control-label"></textarea>
-                                </div>
-                            </div>
-                            <div class="form-group row" style="margin-top: 10px;">
-                                <label for="" class="col-sm-4 col-form-label">Upload Bukti </label>
-                                <div class="col-sm-1" style="width:10%">: &nbsp;</div>
-                                <div class="col-sm-5">
-                                    <input type="file" id="upload_bukti" name="upload_bukti" class="form-control-label">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row d-flex offset-md-7" style="margin-top: 20px;">
-                        <div class="col-md-2">
-                            <button class="form-control-button btn btn-outline-light button-action" onclick="clearAllData();"> Clear All </button>
-                        </div>
-                        <div class="col-md-2">
-                            <button class="form-control-button btn btn-outline-light button-action" type="submit"> Confirm </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+    <div class="row">
+        <div class="col-12">
+            <hr style="border-width: 2px;border-style: solid;border-color:white">
         </div>
+    </div>
+
+    <div class="row">
+        <div class="col-3"><?= $kode_po; ?></div>
+        <div class="col-2 offset-7"><?= $date ?></div>
+    </div>
+
+    <div class="row mt-5">
+        <form id="data" method="post" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-md-5 offset-md-1">
+                    <div class="form-group row">
+                        <label for="" class="col-12 col-md-5 col-lg-4 col-form-label">Saldo Awal : (Rp) </label>
+                        <div class="col-12 col-md-6">
+                            <input type="text" class="form-control-label" style="text-align:right;" readonly="readonly" id="saldo-init">
+                            <input type="hidden" class="form-control-label" id="saldo_awal" name="saldo_awal">
+                            <input type="hidden" class="form-control-label" id="id_trx_petty_cash" name="id_trx_petty_cash" value="<?= $kode_po ?> ">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-12 col-md-5 col-lg-4 col-form-label">Penggunaan Saldo : (Rp)</label>
+                        <div class="col-12 col-md-6">
+                            <input type="text" class="form-control-label" id="tambahan_saldo" style="text-align:right;" name="tambahan_saldo" placeholder="Rp. 0">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-12 col-md-5 col-lg-4 col-form-label">Keterangan : </label>
+                        <div class="col-12 col-md-6 ">
+                            <textarea id="keterangan" name="keterangan" class="form-control-label"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-12 col-md-5 col-lg-4 col-form-label">Upload Bukti : </label>
+                        <div class="col-12 col-md-6">
+                            <input type="file" id="upload_bukti" name="upload_bukti" class="form-control-label">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row d-flex justify-content-center mt-5">
+                <div class="col-4 col-lg-2">
+                    <button class="form-control-button btn btn-outline-light button-action" onclick="clearAllData();"> Clear All </button>
+                </div>
+                <div class="col-4 col-lg-2">
+                    <button class="form-control-button btn btn-outline-light button-action" type="submit"> Confirm </button>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 

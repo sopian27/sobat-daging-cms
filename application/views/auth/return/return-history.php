@@ -1,99 +1,100 @@
-<div class="container-fluid mt-3">
-    <div class="col-md-3 offset-md-1">
-        <h2><?= ucfirst($judul) ?></h2>
+<div class="container mt-3">
+
+    <div class="row">
+        <div class="col-12">
+            <h2><?= ucfirst($judul) ?></h2>
+        </div>
     </div>
-    <div class="col-md-11">
-        <hr style="margin-left:160px;border-width: 2px;border-style: solid;border-color:white">
+
+    <div class="row">
+        <div class="col-12">
+            <hr style="border-width: 2px;border-style: solid;border-color:white">
+        </div>
     </div>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-2 offset-md-1">
-                <div class="input-group">
-                    <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search">
-                    <span class="input-group-append">
-                        <button class="btn btn-outline-light" type="button" onclick="searchData()">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </span>
-                </div>
+
+    <div class="row">
+        <div class="col-5 col-md-4 col-lg-3">
+            <div class="input-group">
+                <input class="form-control-paging" type="text" placeholder="search..." id="search" name="search">
+                <span class="input-group-append">
+                    <button class="btn btn-outline-light" type="button" onclick="searchData()">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
             </div>
-            <div class="col-md-2 offset-md-6">
-                <div class="input-group">
-                    <span class="input-group-append">
-                        <button class="btn btn-outline-light" type="button">
-                            <span>sort</span>
-                        </button>
-                    </span>
-                    <input class="form-control-paging-date" type="text" id="create_date" name="create_date">
-                </div>
+        </div>
+        <div class="col-6 offset-1 col-md-4 offset-md-4 col-lg-3 offset-lg-6">
+            <div class="input-group">
+                <span class="input-group-append">
+                    <button class="btn btn-outline-light" type="button">
+                        <span>sort</span>
+                    </button>
+                </span>
+                <input class="form-control-paging-date" type="text" id="create_date" name="create_date">
             </div>
         </div>
     </div>
-    <div class="container-fluid" id="return-filter">
-        <div class="row">
-            <div class="row" style="margin-top: 50px;">
-                <div class="col-md-7 offset-md-1">
-                    <div class="row">
-                        <div class="col-md-4 offset-md-6 text-center">
-                            <h2 id="div-create-date"></h2>
-                        </div>
-                    </div>
-                    <div class="row mt-2 offset-md-1">
-                        <div class="collapse-content">
-                        </div>
-                        <input type="hidden" name="halaman_paging_trx" id="halaman_paging_trx" value="1">
-                        <div class="pagination-result_trx" style="margin-left:160px;margin-top:10px;margin-left:30%"></div>
-                    </div>
-                    <div class="row d-flex justify-content-start formSubmitData" id="formSubmitData">
+
+    <div id="return-filter">
+        <div class="row mt-5">
+            <div class="col-7">
+                <div class="row">
+                    <div class="col-4">
+                        <h2 id="div-create-date"></h2>
                     </div>
                 </div>
+                <div class="row mt-2">
+                    <div class="collapse-content"></div>
+                    <input type="hidden" name="halaman_paging_trx" id="halaman_paging_trx" value="1">
+                    <div class="pagination-result_trx" style="margin-left:160px;margin-top:10px;margin-left:30%"></div>
+                </div>
+                <div class="row d-flex justify-content-start formSubmitData" id="formSubmitData"></div>
             </div>
         </div>
     </div>
-    <div class="container-fluid" style="margin-top: 60px;display:none" id="return-content">
+
+    <div id="return-content">
         <div class="row justify-content-center">
             <form method="post" name="form-return-save" id="form-return-save">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-5 ">
-                            <div class="form-group row">
-                                <label for="" class="col-sm-4 col-form-label">Nomor Invoice </label>
-                                <div class="col-sm-1">:</div>
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control-label" id="no_invoice" name="no_invoice">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="" class="col-sm-4 col-form-label">Nama Pelanggan </label>
-                                <div class="col-sm-1">:</div>
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control-label" id="nama_pelanggan" name="nama_pelanggan">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="" class="col-sm-4 col-form-label">Tanggal Pengiriman </label>
-                                <div class="col-sm-1">:</div>
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control-label" id="tgl_pengiriman" name="tgl_pengiriman">
-                                </div>
+
+                <div class="row mt-5">
+                    <div class="col-12 col-md-6">
+                        <div class="form-group row">
+                            <label for="" class="col-12 col-md-6 col-xl-5 col-form-label">Nomor Invoice : </label>
+
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <input type="text" class="form-control-label" id="no_invoice" name="no_invoice">
                             </div>
                         </div>
-                        <div class="col-md-4 offset-md-1">
-                            <div class="form-group row">
-                                <label for="" class="col-sm-5 col-form-label">Tanggal Return </label>
-                                <div class="col-sm-1">:</div>
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control-label" id="tgl_return" name="tgl_return">
-                                </div>
-                            </div>
+                        <div class="form-group row">
+                            <label for="" class="col-12 col-md-6 col-xl-5 col-form-label">Nama Pelanggan : </label>
 
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <input type="text" class="form-control-label" id="nama_pelanggan" name="nama_pelanggan" readonly="readonly">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-12 col-md-6 col-xl-5 col-form-label">Tanggal Pengiriman : </label>
+
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <input type="text" class="form-control-label" id="tgl_pengiriman" name="tgl_pengiriman" readonly="readonly">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-5 offset-md-1">
+                        <div class="form-group row">
+                            <label for="" class="col-12 col-md-6 col-xl-5 col-form-label">Tanggal Return : </label>
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <input type="text" class="form-control-label" id="tgl_return" name="tgl_return">
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="row" style="margin-top: 50px;">
-                    <div class="col-md-6 offset-md-2 justify-content-center">
+
+                <div class="row mt-5">
+                    <div class="col-12 col-md-8 offset-md-1 justify-content-center">
                         <div class="row mt-2 ">
-                            <table class="table table-dark table-bordered data" id="mytable">
+                            <table class="table table-dark table-bordered data table-responsive" id="mytable">
                                 <thead>
                                     <tr>
                                         <th> Kode </th>
@@ -107,10 +108,13 @@
                                 </tbody>
                             </table>
                             <input type="hidden" name="halaman_paging_trx_detail" id="halaman_paging_trx_detail" value="1">
-                            <div class="pagination-result_trx_detail" style="margin-top:10px;margin-left:45%"></div>
+                            <div class="row">
+                                <div class="pagination-result_trx_detail offset-7"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
+
             </form>
         </div>
     </div>
@@ -147,7 +151,7 @@
     });
 
     function searchData() {
-        
+
         $("#return-filter").show();
         $("#return-content").hide();
 
@@ -178,8 +182,8 @@
                 if (data.length > 0) {
 
                     var dataload = "";
-                    dataload += '<div class="container"> ';
-                    dataload += '<div class="row"> ';
+                    // dataload += '<div class="container"> ';
+                    dataload += '<div class="row mt-3"> ';
 
                     if (create_date != "") {
                         dataload += '<h4 style="text-decoration: underline;margin-top:10px">' + dateForShow(data.data[0].tgl_return) + '</h4>'
@@ -195,7 +199,7 @@
                         var no_invoice = data.data[i].no_invoice;
                         var functionOnclickCheck = 'dataPagingDetailCheck("' + no_invoice + '")';
 
-                        dataload += '<div class="col-md-12" style="margin-top:10px"> ';
+                        dataload += '<div class="col-12"> ';
                         dataload += '<a class="btn-sobat-md" href="#"';
                         dataload += "onclick=" + functionOnclickCheck + ">" + dateOnlyDay(data.data[i].tgl_return) + "<span style='margin-left:20px'>" + data.data[i].nama_pelanggan.toUpperCase(); + '</span></a>';
                         dataload += '</div>';
@@ -203,7 +207,7 @@
                     }
 
                     dataload += '</div>';
-                    dataload += '</div>';
+                    //dataload += '</div>';
 
                     $('.collapse-content').html(dataload);
                     var totalDataBarang = data.length_paging;
@@ -435,8 +439,6 @@
                     $("#return-filter").hide();
                     $("#tbody-table-data").html(dataload);
                     $("#return-content").show();
-
-
 
                 } else {
 
